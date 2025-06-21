@@ -1,248 +1,318 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add lilToon PCSS Extension to VCC</title>
+    <title>VCC Repository - lilToon PCSS Extension</title>
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/zapabob/liltoon-pcss-extension/main/docs/assets/favicon.png">
+    
+    <!-- VCC Auto-Add Repository -->
+    <script>
+        // VCC Repository Auto-Add Function
+        function addToVCC() {
+            const vccUrl = 'vcc://vpm/addRepo?url=' + encodeURIComponent('https://zapabob.github.io/liltoon-pcss-extension/index.json');
+            
+            // Try to open VCC
+            window.location.href = vccUrl;
+            
+            // Fallback: Show manual instructions after 3 seconds
+            setTimeout(() => {
+                document.getElementById('manual-instructions').style.display = 'block';
+                document.getElementById('auto-add-section').style.display = 'none';
+            }, 3000);
+        }
+        
+        // Auto-add on page load
+        window.addEventListener('load', () => {
+            // Check if user came from VCC
+            const urlParams = new URLSearchParams(window.location.search);
+            const autoAdd = urlParams.get('auto');
+            
+            if (autoAdd === 'true') {
+                addToVCC();
+            }
+        });
+    </script>
+    
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            color: #333;
             min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+        
         .container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: white;
             border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             padding: 40px;
+            max-width: 600px;
+            width: 90%;
             text-align: center;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
+        
         .logo {
-            font-size: 3em;
-            margin-bottom: 20px;
-        }
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .subtitle {
-            font-size: 1.2em;
-            margin-bottom: 30px;
-            opacity: 0.9;
-        }
-        .add-button {
-            display: inline-block;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
             color: white;
-            text-decoration: none;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-size: 1.2em;
             font-weight: bold;
-            margin: 20px 10px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
-        .add-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 28px;
         }
-        .manual-steps {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 25px;
-            margin: 30px 0;
-            text-align: left;
+        
+        .subtitle {
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 16px;
         }
-        .manual-steps h3 {
-            margin-top: 0;
-            color: #4ecdc4;
-        }
-        .manual-steps ol {
-            padding-left: 20px;
-        }
-        .manual-steps li {
-            margin: 10px 0;
-            line-height: 1.6;
-        }
-        .url-box {
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px solid #4ecdc4;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 15px 0;
-            font-family: 'Courier New', monospace;
-            font-size: 1.1em;
-            word-break: break-all;
-            color: #4ecdc4;
-        }
-        .copy-button {
-            background: #4ecdc4;
+        
+        .btn {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
             color: white;
             border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
-            margin-left: 10px;
-            font-size: 0.9em;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
         }
-        .copy-button:hover {
-            background: #45b7aa;
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
+        
+        .btn.secondary {
+            background: #ecf0f1;
+            color: #2c3e50;
         }
-        .feature {
-            background: rgba(255, 255, 255, 0.1);
+        
+        .instructions {
+            background: #f8f9fa;
             border-radius: 10px;
             padding: 20px;
-            text-align: center;
-        }
-        .feature-icon {
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
-        .warning {
-            background: rgba(255, 193, 7, 0.2);
-            border: 2px solid #ffc107;
-            border-radius: 10px;
-            padding: 15px;
             margin: 20px 0;
+            text-align: left;
         }
-        .warning-icon {
-            color: #ffc107;
-            font-size: 1.2em;
-            margin-right: 10px;
+        
+        .instructions h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        
+        .url-box {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            margin: 10px 0;
+            word-break: break-all;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .url-box:hover {
+            background: #34495e;
+        }
+        
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status.info {
+            background: #cce7ff;
+            color: #004085;
+            border: 1px solid #99d3ff;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="logo">🌟</div>
+        <div class="logo">🎨</div>
         <h1>lilToon PCSS Extension</h1>
-        <div class="subtitle">All-in-One Edition v1.2.0</div>
+        <p class="subtitle">All-in-One Edition - VCC Repository</p>
         
-        <p>The ultimate PCSS solution for VRChat avatars with complete lilToon integration!</p>
-        
-        <!-- VCC Add Button -->
-        <a href="vcc://vpm/addRepo?url=https%3A%2F%2Fzapabob.github.io%2Fliltoon-pcss-extension%2Findex.json" class="add-button">
-            🚀 Add to VCC (One-Click)
-        </a>
-        
-        <a href="https://zapabob.github.io/liltoon-pcss-extension/" class="add-button" style="background: linear-gradient(45deg, #667eea, #764ba2);">
-            📖 View Documentation
-        </a>
-
-        <div class="warning">
-            <span class="warning-icon">⚠️</span>
-            <strong>Note:</strong> Make sure you have VRChat Creator Companion v2.1.0 or newer installed before clicking the "Add to VCC" button.
-        </div>
-
-        <div class="manual-steps">
-            <h3>📋 Manual Installation Steps</h3>
-            <p>If the one-click button doesn't work, follow these steps:</p>
-            <ol>
-                <li>Open <strong>VRChat Creator Companion</strong></li>
-                <li>Go to <strong>Settings</strong> → <strong>Packages</strong></li>
-                <li>Click <strong>"Add Repository"</strong></li>
-                <li>Copy and paste this URL:</li>
-            </ol>
-            
-            <div class="url-box">
-                <span id="repo-url">https://zapabob.github.io/liltoon-pcss-extension/index.json</span>
-                <button class="copy-button" onclick="copyToClipboard()">📋 Copy</button>
+        <!-- Auto-Add Section -->
+        <div id="auto-add-section">
+            <div class="status info">
+                <p>🚀 VCC Repository を自動追加中...</p>
+                <div class="spinner"></div>
             </div>
             
-            <ol start="5">
-                <li>Click <strong>"Add"</strong></li>
-                <li>Review the repository information and click <strong>"I Understand, Add Repository"</strong></li>
-                <li>Navigate to your VRChat project and install <strong>"lilToon PCSS Extension - All-in-One Edition"</strong></li>
-            </ol>
+            <button class="btn" onclick="addToVCC()">
+                🔄 再試行
+            </button>
         </div>
-
-        <div class="features">
-            <div class="feature">
-                <div class="feature-icon">✨</div>
-                <h4>PCSS Shadows</h4>
-                <p>Realistic distance-based shadow softening</p>
+        
+        <!-- Manual Instructions -->
+        <div id="manual-instructions" class="hidden">
+            <div class="status success">
+                <p>✅ 手動でVCCリポジトリを追加してください</p>
             </div>
-            <div class="feature">
-                <div class="feature-icon">🎨</div>
-                <h4>lilToon Integration</h4>
-                <p>Seamless compatibility with lilToon v1.10.3</p>
+            
+            <div class="instructions">
+                <h3>📋 VCC手動追加手順</h3>
+                <ol>
+                    <li>VRChat Creator Companion (VCC) を開く</li>
+                    <li><strong>Settings</strong> → <strong>Packages</strong> をクリック</li>
+                    <li><strong>Add Repository</strong> ボタンをクリック</li>
+                    <li>以下のURLをコピーして貼り付け</li>
+                    <li><strong>Add</strong> ボタンをクリック</li>
+                </ol>
             </div>
-            <div class="feature">
-                <div class="feature-icon">🚀</div>
-                <h4>VRChat Optimized</h4>
-                <p>Performance-tuned for VRChat environments</p>
+            
+            <div class="url-box" onclick="copyToClipboard(this.textContent)" title="クリックでコピー">
+https://zapabob.github.io/liltoon-pcss-extension/index.json
             </div>
-            <div class="feature">
-                <div class="feature-icon">📱</div>
-                <h4>Quest Support</h4>
-                <p>Optimized rendering for mobile VR</p>
+            
+            <div class="instructions">
+                <h3>🎯 パッケージインストール</h3>
+                <ol>
+                    <li>VCCでプロジェクトを開く</li>
+                    <li><strong>Manage Project</strong> をクリック</li>
+                    <li><strong>Add Package</strong> セクションを確認</li>
+                    <li><strong>"lilToon PCSS Extension - All-in-One Edition"</strong> を選択</li>
+                    <li><strong>Install</strong> ボタンをクリック</li>
+                </ol>
             </div>
-            <div class="feature">
-                <div class="feature-icon">🤖</div>
-                <h4>ModularAvatar</h4>
-                <p>Non-destructive avatar modification</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">⚡</div>
-                <h4>One-Click Setup</h4>
-                <p>Automatic VRChat expression generation</p>
-            </div>
+            
+            <a href="https://zapabob.github.io/liltoon-pcss-extension/installation/" class="btn">
+                📖 詳細インストールガイド
+            </a>
+            
+            <a href="https://zapabob.github.io/liltoon-pcss-extension/" class="btn secondary">
+                🏠 メインサイトに戻る
+            </a>
         </div>
-
-        <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2);">
-            <p>
-                <a href="https://github.com/zapabob/liltoon-pcss-extension" style="color: #4ecdc4; text-decoration: none;">
-                    📂 View on GitHub
-                </a> | 
-                <a href="https://zapabob.github.io/liltoon-pcss-extension/support/" style="color: #4ecdc4; text-decoration: none;">
-                    🛠️ Get Support
-                </a> | 
-                <a href="https://zapabob.github.io/liltoon-pcss-extension/download/" style="color: #4ecdc4; text-decoration: none;">
-                    📥 Download
-                </a>
-            </p>
-            <p style="opacity: 0.7; font-size: 0.9em;">
-                © 2025 lilToon PCSS Extension Team | MIT License
-            </p>
+        
+        <!-- Direct Add Button -->
+        <div style="margin-top: 30px;">
+            <a href="vcc://vpm/addRepo?url=https%3A%2F%2Fzapabob.github.io%2Fliltoon-pcss-extension%2Findex.json" class="btn">
+                ⚡ VCCで直接開く
+            </a>
+        </div>
+        
+        <!-- Troubleshooting -->
+        <div class="instructions" style="margin-top: 30px;">
+            <h3>🔧 トラブルシューティング</h3>
+            <ul style="padding-left: 20px;">
+                <li><strong>VCCが開かない場合</strong>: VCCが正しくインストールされているか確認</li>
+                <li><strong>リポジトリが見つからない場合</strong>: URLが正確にコピーされているか確認</li>
+                <li><strong>ダウンロードエラー</strong>: インターネット接続を確認し、数分後に再試行</li>
+                <li><strong>その他の問題</strong>: <a href="https://zapabob.github.io/liltoon-pcss-extension/support/" style="color: #3498db;">サポートページ</a>をご確認ください</li>
+            </ul>
         </div>
     </div>
-
+    
     <script>
-        function copyToClipboard() {
-            const url = document.getElementById('repo-url').textContent;
-            navigator.clipboard.writeText(url).then(function() {
-                const button = document.querySelector('.copy-button');
-                const originalText = button.textContent;
-                button.textContent = '✅ Copied!';
-                button.style.background = '#28a745';
+        // Copy to clipboard function
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                // Show success message
+                const originalText = event.target.textContent;
+                event.target.textContent = '✅ コピーしました！';
+                event.target.style.background = '#27ae60';
+                
                 setTimeout(() => {
-                    button.textContent = originalText;
-                    button.style.background = '#4ecdc4';
+                    event.target.textContent = originalText;
+                    event.target.style.background = '#2c3e50';
                 }, 2000);
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                alert('URLをコピーしました: ' + text);
             });
         }
-
-        // Auto-redirect to VCC if the page is opened with vcc parameter
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('auto') === 'true') {
-            window.location.href = 'vcc://vpm/addRepo?url=https%3A%2F%2Fzapabob.github.io%2Fliltoon-pcss-extension%2Findex.json';
+        
+        // Check if VCC is available
+        function checkVCCAvailability() {
+            // This is a simple check - in reality, we can't reliably detect VCC
+            // So we'll always show the manual instructions as fallback
+            setTimeout(() => {
+                document.getElementById('manual-instructions').style.display = 'block';
+            }, 1000);
         }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if auto-add parameter is present
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('auto') !== 'true') {
+                // Show manual instructions immediately if not auto-adding
+                document.getElementById('auto-add-section').style.display = 'none';
+                document.getElementById('manual-instructions').style.display = 'block';
+            }
+        });
     </script>
 </body>
 </html> 

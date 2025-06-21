@@ -2,7 +2,7 @@
   "name": "lilToon PCSS Extension - All-in-One Edition Repository",
   "id": "com.liltoon.pcss-extension.vpm-repository",
   "url": "https://zapabob.github.io/liltoon-pcss-extension/index.json",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
     "name": "lilToon PCSS Extension Team",
     "email": "r.minegishi1987@gmail.com",
@@ -77,7 +77,9 @@
           ],
           "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
           "documentationUrl": "https://zapabob.github.io/liltoon-pcss-extension/documentation/",
-          "hideInEditor": false
+          "hideInEditor": false,
+          "legacyFolders": {},
+          "legacyFiles": {}
         }
       }
     }
