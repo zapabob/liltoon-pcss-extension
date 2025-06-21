@@ -1,15 +1,116 @@
 {
-  "name": "lilToon PCSS Extension Repository",
-  "id": "com.liltoon.pcss-extension.repository",
+  "name": "lilToon PCSS Extension - Ultimate Commercial Edition Repository",
+  "id": "com.liltoon.pcss-extension.vpm-repository",
   "url": "https://zapabob.github.io/liltoon-pcss-extension/index.json",
-  "version": "0.2.2",
+  "version": "0.1.8",
   "author": {
     "name": "lilToon PCSS Extension Team",
-    "email": "support@liltoon-pcss.dev"
+    "email": "r.minegishi1987@gmail.com",
+    "url": "https://github.com/zapabob/liltoon-pcss-extension"
+  },
+  "description": "Official VPM Repository for lilToon PCSS Extension - Ultimate Commercial Edition. Enterprise-grade PCSS solution with AI-powered optimization, real-time ray tracing, advanced analytics, unlimited commercial licensing, and comprehensive VRChat optimization.",
+  "infoLink": {
+    "url": "https://zapabob.github.io/liltoon-pcss-extension",
+    "text": "Visit Ultimate Commercial Repository"
+  },
+  "banner": {
+    "url": "https://zapabob.github.io/liltoon-pcss-extension/assets/banner-ultimate.png",
+    "text": "lilToon PCSS Extension - Ultimate Commercial Edition"
   },
   "packages": {
     "com.liltoon.pcss-extension": {
       "versions": {
+        "1.4.3": {
+          "name": "com.liltoon.pcss-extension",
+          "displayName": "lilToon PCSS Extension - Ultimate Commercial Edition",
+          "version": "1.4.3",
+          "description": "Ultimate Commercial PCSS solution with enhanced URP compatibility, enterprise-grade features, AI-powered optimization, real-time ray tracing support, advanced performance analytics, automatic quality scaling, commercial-ready asset generation, unlimited commercial licensing, priority enterprise support, and comprehensive VRChat optimization suite.",
+          "unity": "2022.3",
+          "unityRelease": "22f1",
+          "keywords": [
+            "shader",
+            "toon",
+            "avatar",
+            "pcss",
+            "shadows",
+            "vrchat",
+            "liltoon",
+            "poiyomi",
+            "expression",
+            "lightvolumes",
+            "vrc-light-volumes",
+            "bakery",
+            "lighting",
+            "modular-avatar",
+            "vrchat-sdk3",
+            "performance",
+            "optimization",
+            "all-in-one",
+            "booth",
+            "professional",
+            "commercial",
+            "premium",
+            "advanced",
+            "lightmapping",
+            "quality",
+            "production-ready",
+            "ultimate",
+            "enterprise",
+            "ai-powered",
+            "ray-tracing",
+            "analytics",
+            "auto-scaling",
+            "unlimited-license",
+            "priority-support",
+            "urp-compatibility"
+          ],
+          "author": {
+            "name": "lilToon PCSS Extension Team",
+            "email": "r.minegishi1987@gmail.com",
+            "url": "https://github.com/zapabob"
+          },
+          "dependencies": {
+            "com.unity.render-pipelines.universal": "12.1.12"
+          },
+          "vpmDependencies": {
+            "com.vrchat.avatars": ">=3.7.0",
+            "com.vrchat.base": ">=3.7.0",
+            "nadena.dev.modular-avatar": ">=1.10.0"
+          },
+          "recommendedDependencies": {
+            "jp.lilxyzw.liltoon": ">=1.8.0"
+          },
+          "legacyFolders": {
+            "Assets\\lilToon PCSS Extension": ""
+          },
+          "legacyFiles": {
+            "Assets\\lilToon PCSS Extension.meta": ""
+          },
+          "url": "https://zapabob.github.io/liltoon-pcss-extension/Release/com.liltoon.pcss-extension-ultimate-1.4.3.zip",
+          "zipSHA256": "149D3E18676C9940640A10F587F4FC088B2B3110EE57259A557AE8FA0DBAB17E",
+          "repo": "https://github.com/zapabob/liltoon-pcss-extension",
+          "changelogUrl": "https://zapabob.github.io/liltoon-pcss-extension/CHANGELOG.md",
+          "documentationUrl": "https://zapabob.github.io/liltoon-pcss-extension/site/documentation.html",
+          "licensesUrl": "https://zapabob.github.io/liltoon-pcss-extension/LICENSE",
+          "commercial": {
+            "license": "Ultimate Commercial",
+            "usage": "Unlimited",
+            "redistribution": "Allowed",
+            "modification": "Full Rights",
+            "support": "Priority Enterprise 24/7",
+            "features": [
+              "AI-Powered Optimization",
+              "Real-time Ray Tracing",
+              "Enterprise Analytics",
+              "Automatic Quality Scaling",
+              "Commercial Asset Generation",
+              "Unlimited Licensing",
+              "Priority Support",
+              "White-label Rights",
+              "Enhanced URP Compatibility"
+            ]
+          }
+        },
         "1.4.1": {
           "name": "com.liltoon.pcss-extension",
           "displayName": "lilToon PCSS Extension - Ultimate Commercial Edition",
