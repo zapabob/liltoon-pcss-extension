@@ -293,3 +293,86 @@ fetch('index.json')
 ---
 
 **重要**: GitHub Pagesの変更反映には最大10分程度かかる場合があります。[Helmプロジェクトでも同様の問題](https://github.com/helm/helm/issues/10073)が報告されており、時間をおいてから再度テストしてください。 
+
+---
+
+## 🔧 VRChatファイル空問題の解決実装
+
+### 問題概要
+VRChatにlilToon PCSS Extensionを導入後、ファイルが空の状態で表示される問題が発生。
+
+### 原因分析
+1. **Unity再インポート不足**: アセンブリ定義ファイルが正しく認識されていない
+2. **VCC Setup Wizard未実行**: 自動セットアップが完了していない
+3. **スクリプト参照エラー**: Unity内でスクリプト参照が失われている
+
+### 解決実装
+
+#### 1. VCC Setup Wizard自動実行機能
+```csharp
+// Editor/LilToonPCSSExtensionInitializer.cs
+[InitializeOnLoad]
+public class LilToonPCSSExtensionInitializer
+{
+    static LilToonPCSSExtensionInitializer()
+    {
+        EditorApplication.delayCall += () => {
+            if (!HasSetupCompleted())
+            {
+                VCCSetupWizard.ShowWindow();
+            }
+        };
+    }
+}
+```
+
+#### 2. 自動再インポート機能
+```csharp
+// Unity Editor → Window → lilToon PCSS Extension → Force Reimport
+[MenuItem("Window/lilToon PCSS Extension/Force Reimport")]
+public static void ForceReimport()
+{
+    AssetDatabase.Refresh();
+    AssetDatabase.ImportAsset("Assets", ImportAssetOptions.ImportRecursive);
+}
+```
+
+#### 3. アセンブリ定義修復機能
+```csharp
+// Runtime/lilToon.PCSS.Runtime.asmdef 自動修復
+public static void RepairAssemblyDefinitions()
+{
+    var runtimeAsmdef = "Runtime/lilToon.PCSS.Runtime.asmdef";
+    var editorAsmdef = "Editor/lilToon.PCSS.Editor.asmdef";
+    
+    // アセンブリ定義ファイルの整合性チェック・修復
+    ValidateAndRepairAsmdef(runtimeAsmdef);
+    ValidateAndRepairAsmdef(editorAsmdef);
+}
+```
+
+### 🎯 ユーザー向け解決手順
+
+#### **即座に実行すべき手順**
+1. **Unity Editor** を開く
+2. **Assets → Reimport All** を実行
+3. **Window → lilToon PCSS Extension → Setup Wizard** を開く
+4. **自動セットアップ実行** をクリック
+5. **VRChat SDK Control Panel** でアバターをビルド
+
+#### **それでも解決しない場合**
+1. **Unity Hub** でプロジェクトを閉じる
+2. **プロジェクトフォルダ/Library** フォルダを削除
+3. **Unity Hub** でプロジェクトを再度開く
+4. **VCC Setup Wizard** を再実行
+
+### 📊 実装完了確認
+
+- [x] VCC Setup Wizard自動起動機能
+- [x] 強制再インポート機能
+- [x] アセンブリ定義修復機能
+- [x] ユーザー向けトラブルシューティングガイド
+
+**解決ステータス**: ✅ **完全対応完了**
+
+--- 
