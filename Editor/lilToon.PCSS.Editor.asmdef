@@ -4,7 +4,10 @@
     "references": [
         "lilToon.PCSS.Runtime",
         "Unity.RenderPipelines.Core",
-        "Unity.RenderPipelines.Universal"
+        "Unity.RenderPipelines.Universal",
+        "VRC.SDK3.Avatars",
+        "VRC.SDKBase",
+        "nadena.dev.modular-avatar.core"
     ],
     "includePlatforms": [
         "Editor"
@@ -20,6 +23,16 @@
             "name": "com.unity.render-pipelines.universal",
             "expression": "7.1.8",
             "define": "URP_AVAILABLE"
+        },
+        {
+            "name": "com.vrchat.avatars",
+            "expression": "",
+            "define": "VRCHAT_SDK_AVAILABLE"
+        },
+        {
+            "name": "nadena.dev.modular-avatar",
+            "expression": "",
+            "define": "MODULAR_AVATAR_AVAILABLE"
         }
     ],
     "noEngineReferences": false

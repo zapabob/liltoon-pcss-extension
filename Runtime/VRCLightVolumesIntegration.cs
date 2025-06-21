@@ -2,6 +2,10 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using System.Collections.Generic;
 using System.Linq;
+#if VRCHAT_SDK_AVAILABLE
+using VRC.SDKBase;
+using VRC.SDK3.Avatars.Components;
+#endif
 
 namespace lilToon.PCSS
 {
@@ -54,7 +58,104 @@ namespace lilToon.PCSS
             {
                 UpdateLightVolumes();
                 lastUpdateTime = Time.time;
+                
+                // VRChatパフォーマンス監視
+                MonitorVRChatPerformance();
             }
+        }
+        
+        /// <summary>
+        /// VRChatパフォーマンス監視
+        /// </summary>
+        private void MonitorVRChatPerformance()
+        {
+            float currentFPS = 1f / Time.deltaTime;
+            
+            // フレームレートが低下した場合の自動最適化
+            if (currentFPS < 45f && !enableMobileOptimization)
+            {
+                Debug.LogWarning("VRC Light Volumes: Low framerate detected. Enabling mobile optimization.");
+                enableMobileOptimization = true;
+                ApplyMobileOptimizations();
+            }
+            
+            // Quest環境での追加最適化
+            if (IsQuestEnvironment() && lightVolumeIntensity > 0.5f)
+            {
+                lightVolumeIntensity = Mathf.Min(lightVolumeIntensity, 0.5f);
+                Debug.Log("VRC Light Volumes: Quest optimization applied - intensity reduced.");
+            }
+        }
+        
+        /// <summary>
+        /// Quest環境検出
+        /// </summary>
+        private bool IsQuestEnvironment()
+        {
+            return SystemInfo.deviceModel.Contains("Oculus") || 
+                   Application.platform == RuntimePlatform.Android;
+        }
+        
+        /// <summary>
+        /// モバイル最適化適用
+        /// </summary>
+        private void ApplyMobileOptimizations()
+        {
+            maxLightVolumeDistance = Mathf.Min(maxLightVolumeDistance, 50);
+            updateFrequency = Mathf.Max(updateFrequency, 0.2f);
+            lightVolumeIntensity *= 0.8f;
+            
+            // VRChat Avatar Culling設定を考慮
+            ApplyVRChatCullingOptimizations();
+        }
+        
+        /// <summary>
+        /// VRChat Avatar Culling最適化
+        /// </summary>
+        private void ApplyVRChatCullingOptimizations()
+        {
+            // VRChatの"Hide Avatars Beyond"設定を模倣
+            int avatarCount = CountNearbyAvatars();
+            
+            if (avatarCount > 10)
+            {
+                // アバターが多い場合はLight Volume距離を短縮
+                maxLightVolumeDistance = Mathf.Min(maxLightVolumeDistance, 30);
+                lightVolumeIntensity *= 0.9f;
+            }
+        }
+        
+        /// <summary>
+        /// 近くのアバター数をカウント
+        /// </summary>
+        private int CountNearbyAvatars()
+        {
+            var renderers = FindObjectsOfType<Renderer>();
+            int count = 0;
+            
+            foreach (var renderer in renderers)
+            {
+                if (IsAvatarRenderer(renderer))
+                {
+                    float distance = Vector3.Distance(transform.position, renderer.transform.position);
+                    if (distance <= maxLightVolumeDistance)
+                    {
+                        count++;
+                    }
+                }
+            }
+            
+            return count;
+        }
+        
+        /// <summary>
+        /// アバターのレンダラーかチェック
+        /// </summary>
+        private bool IsAvatarRenderer(Renderer renderer)
+        {
+            return renderer.gameObject.layer != LayerMask.NameToLayer("UI") &&
+                   !renderer.gameObject.name.Contains("World") &&
+                   renderer.gameObject.GetComponent<Animator>() != null;
         }
         
         /// <summary>

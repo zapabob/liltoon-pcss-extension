@@ -2,7 +2,7 @@
   "name": "com.liltoon.pcss-extension",
   "displayName": "lilToon PCSS Extension",
   "version": "1.2.0",
-  "description": "PCSS (Percentage-Closer Soft Shadows) extension for lilToon and Poiyomi shader systems with VRChat Expression support and VRC Light Volumes integration",
+  "description": "PCSS (Percentage-Closer Soft Shadows) extension for lilToon and Poiyomi shader systems with VRChat Expression support, VRC Light Volumes integration, and ModularAvatar compatibility",
   "unity": "2019.4",
   "unityRelease": "0f1",
   "keywords": [
@@ -18,10 +18,15 @@
     "lightvolumes",
     "vrc-light-volumes",
     "bakery",
-    "lighting"
+    "lighting",
+    "modular-avatar",
+    "vrchat-sdk3",
+    "performance",
+    "optimization"
   ],
   "author": {
-    "name": "lilToon PCSS Extension Team"
+    "name": "lilToon PCSS Extension Team",
+    "email": "support@liltoon-pcss.dev"
   },
   "dependencies": {
     "com.unity.render-pipelines.universal": "7.1.8"

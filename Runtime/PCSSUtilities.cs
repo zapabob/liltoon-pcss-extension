@@ -1,4 +1,11 @@
 using UnityEngine;
+#if VRCHAT_SDK_AVAILABLE
+using VRC.SDKBase;
+using VRC.SDK3.Avatars.Components;
+#endif
+#if MODULAR_AVATAR_AVAILABLE
+using nadena.dev.modular_avatar.core;
+#endif
 
 namespace lilToon.PCSS
 {
@@ -174,6 +181,139 @@ namespace lilToon.PCSS
             }
             
             return "";
+        }
+        
+        /// <summary>
+        /// VRChat最適化設定を適用
+        /// </summary>
+        /// <param name="material">対象マテリアル</param>
+        /// <param name="isQuest">Quest環境かどうか</param>
+        /// <param name="isVR">VR環境かどうか</param>
+        /// <param name="avatarCount">現在のアバター数</param>
+        public static void ApplyVRChatOptimizations(Material material, bool isQuest, bool isVR, int avatarCount)
+        {
+            if (!IsPCSSMaterial(material)) return;
+            
+            // Quest最適化
+            if (isQuest)
+            {
+                ApplyQuestOptimizations(material);
+            }
+            
+            // VR最適化
+            if (isVR)
+            {
+                ApplyVROptimizations(material);
+            }
+            
+            // アバター密度最適化
+            ApplyAvatarDensityOptimizations(material, avatarCount);
+        }
+        
+        /// <summary>
+        /// Quest専用最適化
+        /// </summary>
+        private static void ApplyQuestOptimizations(Material material)
+        {
+            // Quest用低負荷設定
+            float currentSamples = material.GetFloat("_PCSSSampleCount");
+            material.SetFloat("_PCSSSampleCount", Mathf.Min(currentSamples, 16f));
+            
+            float currentRadius = material.GetFloat("_PCSSFilterRadius");
+            material.SetFloat("_PCSSFilterRadius", currentRadius * 0.7f);
+            
+            material.SetFloat("_PCSSBlockerSearchRadius", 
+                Mathf.Min(material.GetFloat("_PCSSBlockerSearchRadius"), 0.01f));
+            
+            // Quest用シェーダーキーワード
+            material.EnableKeyword("VRC_QUEST_OPTIMIZATION");
+        }
+        
+        /// <summary>
+        /// VR最適化
+        /// </summary>
+        private static void ApplyVROptimizations(Material material)
+        {
+            // VR用フレームレート最適化
+            float currentRadius = material.GetFloat("_PCSSFilterRadius");
+            material.SetFloat("_PCSSFilterRadius", currentRadius * 0.9f);
+            
+            // VR用サンプル数調整
+            float currentSamples = material.GetFloat("_PCSSSampleCount");
+            if (currentSamples > 32f)
+            {
+                material.SetFloat("_PCSSSampleCount", 32f);
+            }
+        }
+        
+        /// <summary>
+        /// アバター密度に応じた最適化
+        /// </summary>
+        private static void ApplyAvatarDensityOptimizations(Material material, int avatarCount)
+        {
+            // アバター数に応じて品質を動的調整
+            float densityFactor = Mathf.Clamp01(1.0f - (avatarCount - 5) * 0.05f);
+            
+            if (densityFactor < 1.0f)
+            {
+                float currentRadius = material.GetFloat("_PCSSFilterRadius");
+                material.SetFloat("_PCSSFilterRadius", currentRadius * densityFactor);
+                
+                float currentSamples = material.GetFloat("_PCSSSampleCount");
+                material.SetFloat("_PCSSSampleCount", 
+                    Mathf.Max(8f, currentSamples * densityFactor));
+            }
+        }
+        
+        /// <summary>
+        /// マテリアルの現在の品質レベルを取得
+        /// </summary>
+        public static PCSSQuality GetMaterialQuality(Material material)
+        {
+            if (!IsPCSSMaterial(material)) return PCSSQuality.Medium;
+            
+            float samples = material.GetFloat("_PCSSSampleCount");
+            return samples switch
+            {
+                >= 48f => PCSSQuality.Ultra,
+                >= 24f => PCSSQuality.High,
+                >= 12f => PCSSQuality.Medium,
+                _ => PCSSQuality.Low
+            };
+        }
+        
+        /// <summary>
+        /// VRChat品質設定に基づく推奨PCSS品質を取得
+        /// </summary>
+        public static PCSSQuality GetRecommendedQualityForVRChat(string vrcQuality, bool isQuest, int avatarCount)
+        {
+            // Quest環境では常に低品質
+            if (isQuest)
+            {
+                return avatarCount > 8 ? PCSSQuality.Low : PCSSQuality.Medium;
+            }
+            
+            // VRChat品質設定マッピング
+            PCSSQuality baseQuality = vrcQuality switch
+            {
+                "VRC Ultra" => PCSSQuality.Ultra,
+                "VRC High" => PCSSQuality.High,
+                "VRC Medium" => PCSSQuality.Medium,
+                "VRC Low" => PCSSQuality.Low,
+                _ => PCSSQuality.Medium
+            };
+            
+            // アバター数による調整
+            if (avatarCount > 15)
+            {
+                baseQuality = (PCSSQuality)Mathf.Max(0, (int)baseQuality - 2);
+            }
+            else if (avatarCount > 10)
+            {
+                baseQuality = (PCSSQuality)Mathf.Max(0, (int)baseQuality - 1);
+            }
+            
+            return baseQuality;
         }
     }
 } 

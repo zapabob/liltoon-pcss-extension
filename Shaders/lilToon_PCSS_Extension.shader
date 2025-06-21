@@ -240,7 +240,7 @@ Shader "lilToon/PCSS Extension"
                 return PCF(uv, zReceiver, penumbraRadius * _PCSSFilterRadius);
             }
             
-            // VRC Light Volumes統合関数
+            // VRC Light Volumes統合関数（VRChat最適化対応）
             float3 SampleVRCLightVolumes(float3 worldPos)
             {
                 #if defined(VRC_LIGHT_VOLUMES_ENABLED) && defined(_USEVRCLIGHT_VOLUMES_ON)
@@ -254,21 +254,55 @@ Shader "lilToon/PCSS Extension"
                     if (any(volumeUV < 0.0) || any(volumeUV > 1.0))
                         return float3(1, 1, 1); // デフォルト値
                     
-                    // Light Volumeテクスチャからサンプリング
-                    float3 lightVolume = tex3D(_VRCLightVolumeTexture, volumeUV).rgb;
+                    // VRChat品質設定に基づくサンプリング
+                    float3 lightVolume;
+                    #ifdef VRC_QUEST_OPTIMIZATION
+                        // Quest: 点サンプリングでパフォーマンス優先
+                        lightVolume = tex3Dlod(_VRCLightVolumeTexture, float4(volumeUV, 0)).rgb;
+                    #elif defined(VRC_LIGHT_VOLUMES_MOBILE)
+                        // モバイル: 低品質サンプリング
+                        lightVolume = tex3D(_VRCLightVolumeTexture, volumeUV).rgb;
+                    #else
+                        // PC: 高品質トライリニアサンプリング
+                        lightVolume = tex3D(_VRCLightVolumeTexture, volumeUV).rgb;
+                    #endif
                     
                     // 強度と色調を適用
                     lightVolume *= _VRCLightVolumeIntensity * _VRCLightVolumeTint.rgb;
                     
-                    // 距離による減衰
-                    lightVolume *= _VRCLightVolumeDistanceFactor;
+                    // VRChatのAvatar Culling距離を考慮した減衰
+                    float distance = length(worldPos - _WorldSpaceCameraPos);
+                    float maxDistance = _VRCLightVolumeDistanceFactor * 100.0; // 基準距離
                     
-                    // モバイル最適化
-                    #ifdef VRC_LIGHT_VOLUMES_MOBILE
-                        lightVolume = saturate(lightVolume * 0.8); // モバイルでは少し抑える
+                    #ifdef VRC_QUEST_OPTIMIZATION
+                        maxDistance *= 0.5; // Quest: 短いカリング距離
+                    #elif defined(VRC_LIGHT_VOLUMES_MOBILE)
+                        maxDistance *= 0.7; // モバイル: 中程度のカリング距離
                     #endif
                     
-                    return lightVolume;
+                    float attenuation = saturate(1.0 - distance / maxDistance);
+                    lightVolume *= attenuation;
+                    
+                    // プラットフォーム別最適化
+                    #ifdef VRC_QUEST_OPTIMIZATION
+                        // Quest: 積極的な最適化（60%に削減）
+                        lightVolume = saturate(lightVolume * 0.6);
+                    #elif defined(VRC_LIGHT_VOLUMES_MOBILE)
+                        // モバイル: 中程度の最適化（80%に削減）
+                        lightVolume = saturate(lightVolume * 0.8);
+                    #endif
+                    
+                    // VRChatのShadow Quality設定を考慮
+                    #ifdef SHADOWS_SCREEN
+                        // 高品質シャドウ: フルエフェクト
+                        return lightVolume;
+                    #elif defined(SHADOWS_DEPTH)
+                        // 中品質シャドウ: 90%エフェクト
+                        return lightVolume * 0.9;
+                    #else
+                        // 低品質/シャドウなし: 70%エフェクト
+                        return lightVolume * 0.7;
+                    #endif
                 #else
                     return float3(1, 1, 1); // VRC Light Volumes無効時はデフォルト値
                 #endif
