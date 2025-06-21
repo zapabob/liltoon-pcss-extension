@@ -1,10 +1,10 @@
 {
   "name": "com.liltoon.pcss-extension",
-  "displayName": "lilToon PCSS Extension",
+  "displayName": "lilToon PCSS Extension - All-in-One Edition",
   "version": "1.2.0",
-  "description": "PCSS (Percentage-Closer Soft Shadows) extension for lilToon and Poiyomi shader systems with VRChat Expression support, VRC Light Volumes integration, and ModularAvatar compatibility",
+  "description": "Complete PCSS (Percentage-Closer Soft Shadows) solution with automatic lilToon compatibility management, VRChat SDK3 integration, VRC Light Volumes support, and one-click setup via VCC. Compatible with lilToon v1.10.3 and VRC Light Volumes.",
   "unity": "2019.4",
-  "unityRelease": "0f1",
+  "unityRelease": "31f1",
   "keywords": [
     "shader",
     "toon",
@@ -22,7 +22,9 @@
     "modular-avatar",
     "vrchat-sdk3",
     "performance",
-    "optimization"
+    "optimization",
+    "all-in-one",
+    "booth"
   ],
   "author": {
     "name": "lilToon PCSS Extension Team",
@@ -33,10 +35,10 @@
     "com.unity.render-pipelines.universal": "7.1.8"
   },
   "vpmDependencies": {
-    "com.vrchat.avatars": "3.4.0",
-    "com.vrchat.base": "3.4.0",
-    "jp.lilxyzw.liltoon": "1.3.0",
-    "nadena.dev.modular-avatar": "1.9.0"
+    "com.vrchat.avatars": "3.7.0",
+    "com.vrchat.base": "3.7.0",
+    "jp.lilxyzw.liltoon": "1.10.3",
+    "nadena.dev.modular-avatar": "1.10.0"
   },
   "legacyFolders": {
     "Assets\\lilToon PCSS Extension": ""
@@ -71,8 +73,8 @@
   ],
   "vrc": {
     "dependencies": {
-      "com.vrchat.avatars": "3.4.0",
-      "com.vrchat.base": "3.4.0"
+      "com.vrchat.avatars": "3.7.0",
+      "com.vrchat.base": "3.7.0"
     }
   }
 } 

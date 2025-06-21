@@ -1,16 +1,15 @@
-﻿# PCSSMaterials Sample
+﻿# PCSSMaterials
 
-This sample demonstrates the usage of lilToon PCSS Extension v1.2.0.
+Sample materials demonstrating PCSS effects
 
 ## Installation
 
-1. Import this sample through Unity Package Manager
-2. Follow the setup instructions in the main documentation
+1. Open VCC (VRChat Creator Companion)
+2. Add this package to your project
+3. Import this sample from the Package Manager
+4. Follow the setup instructions in the main README
 
-## Contents
+## Support
 
-- Sample materials and prefabs
-- Configuration examples
-- Best practice demonstrations
-
-For detailed documentation, visit: https://github.com/zapabob/liltoon-pcss-extension
+For support and documentation, visit:
+https://github.com/zapabob/liltoon-pcss-extension

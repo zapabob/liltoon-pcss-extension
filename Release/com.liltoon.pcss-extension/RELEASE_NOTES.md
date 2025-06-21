@@ -1,52 +1,63 @@
-﻿# lilToon PCSS Extension v1.2.0 Release Notes
+﻿# lilToon PCSS Extension - All-in-One Edition v1.2.0
 
-## 脂 譁ｰ讖溯・
+## 脂 Release Highlights
 
-### VCC (VRChat Creator Companion) 螳悟・蟇ｾ蠢・
-- 繝ｯ繝ｳ繧ｯ繝ｪ繝・け繧､繝ｳ繧ｹ繝医・繝ｫ蟇ｾ蠢・
-- 閾ｪ蜍穂ｾ晏ｭ倬未菫りｧ｣豎ｺ
-- VPM繝ｪ繝昴ず繝医Μ蟇ｾ蠢・
+- **lilToon v1.10.3 Compatibility**: Full support for the latest lilToon version
+- **VRC Light Volumes Integration**: Next-generation lighting system support
+- **All-in-One Solution**: Complete PCSS implementation with automatic setup
+- **VRChat SDK3 Optimization**: Performance-optimized for VRChat environments
+- **One-Click Installation**: VCC integration for easy setup
 
-### VRC Light Volumes邨ｱ蜷・
-- 谺｡荳紋ｻ｣繝懊け繧ｻ繝ｫ繝ｩ繧､繝・ぅ繝ｳ繧ｰ繧ｷ繧ｹ繝・Β蟇ｾ蠢・
-- 繝ｪ繧｢繝ｫ繧ｿ繧､繝蜈画ｺ占ｿｽ霍｡
-- 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ譛驕ｩ蛹・
+## 搭 What's Included
 
-### ModularAvatar邨ｱ蜷亥ｼｷ蛹・
-- 閾ｪ蜍輔お繧ｯ繧ｹ繝励Ξ繝・す繝ｧ繝ｳ險ｭ螳・
-- 繝励Ξ繝上ヶ繝吶・繧ｹ縺ｮ邁｡蜊伜ｰ主・
-- 髱樒ｴ螢顔噪繧｢繝舌ち繝ｼ謾ｹ螟・
+### Core Components
+- **Runtime Scripts**: 5 optimized C# scripts for PCSS functionality
+- **Editor Tools**: 6 editor scripts including VCC Setup Wizard
+- **Shaders**: lilToon and Poiyomi PCSS extensions
+- **Samples**: Ready-to-use materials and prefabs
 
-## 肌 謾ｹ蝟・せ
+### Key Features
+- 笨・Automatic lilToon compatibility management
+- 笨・VRChat performance optimization
+- 笨・Quest platform support
+- 笨・ModularAvatar integration
+- 笨・Expression menu generation
+- 笨・VRC Light Volumes support
 
-### 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ譛驕ｩ蛹・
-- VRChat蜩∬ｳｪ險ｭ螳夐｣蜍・
-- Quest蟇ｾ蠢懷ｼｷ蛹・
-- 繝｡繝｢繝ｪ菴ｿ逕ｨ驥丞炎貂・
+## 肌 Installation
 
-### 繝ｦ繝ｼ繧ｶ繝薙Μ繝・ぅ蜷台ｸ・
-- 繧ｻ繝・ヨ繧｢繝・・繧ｦ繧｣繧ｶ繝ｼ繝芽ｿｽ蜉
-- 繧ｨ繝ｩ繝ｼ繝上Φ繝峨Μ繝ｳ繧ｰ蠑ｷ蛹・
-- 隧ｳ邏ｰ繝峨く繝･繝｡繝ｳ繝域紛蛯・
+### Method 1: VCC (Recommended)
+1. Open VRChat Creator Companion
+2. Add repository: \https://github.com/zapabob/liltoon-pcss-extension\
+3. Install "lilToon PCSS Extension - All-in-One Edition"
+4. Run the setup wizard that appears
 
-## 菅 繝舌げ菫ｮ豁｣
+### Method 2: Unity Package Manager
+1. Open Unity Package Manager
+2. Add package from git URL: \https://github.com/zapabob/liltoon-pcss-extension.git\
+3. Import the package and run setup
 
-- 繧ｷ繧ｧ繝ｼ繝繝ｼ繧ｳ繝ｳ繝代う繝ｫ繧ｨ繝ｩ繝ｼ菫ｮ豁｣
-- Quest迺ｰ蠅・〒縺ｮ螳牙ｮ壽ｧ蜷台ｸ・
-- 繝｡繝｢繝ｪ繝ｪ繝ｼ繧ｯ蝠城｡瑚ｧ｣豎ｺ
+## 識 Compatibility
 
-## 答 繝峨く繝･繝｡繝ｳ繝・
+- **Unity**: 2019.4.31f1 or later
+- **lilToon**: v1.10.3 (latest)
+- **VRChat SDK**: 3.7.0 or later
+- **ModularAvatar**: 1.10.0 or later
+- **VRC Light Volumes**: Supported
 
-- VCC蟆主・繧ｬ繧､繝芽ｿｽ蜉
-- 繝医Λ繝悶Ν繧ｷ繝･繝ｼ繝・ぅ繝ｳ繧ｰ蠑ｷ蛹・
-- API 繝ｪ繝輔ぃ繝ｬ繝ｳ繧ｹ譖ｴ譁ｰ
+## 答 Documentation
 
-## 迫 繝ｪ繝ｳ繧ｯ
+Complete documentation available at:
+https://github.com/zapabob/liltoon-pcss-extension/blob/main/README.md
 
-- GitHub: https://github.com/zapabob/liltoon-pcss-extension
-- VPM Repository: https://zapabob.github.io/liltoon-pcss-extension/
-- Documentation: https://github.com/zapabob/liltoon-pcss-extension/blob/main/README.md
+## 屏・・Support
+
+- **Issues**: https://github.com/zapabob/liltoon-pcss-extension/issues
+- **Discord**: [Community Server]
+- **Email**: r.minegishi1987@gmail.com
 
 ---
-**Release Date**: 2025-06-21
-**Build**: Automated Release Build
+
+**Release Date**: 2025-06-21  
+**Version**: v1.2.0  
+**License**: MIT
