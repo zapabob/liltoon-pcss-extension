@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 #if UNITY_EDITOR
 namespace lilToon.PCSS
@@ -150,7 +151,7 @@ namespace lilToon.PCSS
                     // 品質プリセット
                     EditorGUILayout.LabelField("品質プリセット", EditorStyles.boldLabel);
                     int quality = (int)_PCSSQuality.floatValue;
-                    quality = EditorGUILayout.IntPopup("品質", quality, qualityLabels, qualityValues);
+                    quality = EditorGUILayout.IntPopup("品質", quality, qualityLabels.Select(x => x.text).ToArray(), qualityValues);
                     _PCSSQuality.floatValue = quality;
                     
                     // プリセットに基づいて値を自動設定

@@ -24,7 +24,7 @@ namespace lilToon.PCSS
             if (currentProfile == null)
             {
                 currentProfile = CreateInstance<VRChatOptimizationProfile>();
-                LoadDefaultProfile();
+                window.LoadDefaultProfile();
             }
         }
         
