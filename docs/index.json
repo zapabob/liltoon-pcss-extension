@@ -2,20 +2,20 @@
   "name": "lilToon PCSS Extension - Ultimate Commercial Edition Repository",
   "id": "com.liltoon.pcss-extension.vpm-repository",
   "url": "https://zapabob.github.io/liltoon-pcss-extension/index.json",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "author": {
     "name": "lilToon PCSS Extension Team",
     "email": "r.minegishi1987@gmail.com",
     "url": "https://github.com/zapabob/liltoon-pcss-extension"
   },
-  "description": "Official VPM Repository for lilToon PCSS Extension - Ultimate Commercial Edition. Enterprise-grade PCSS solution with AI-powered optimization, real-time ray tracing, advanced analytics, unlimited commercial licensing, and comprehensive VRChat optimization.",
+  "description": "Official VPM Repository for lilToon PCSS Extension - Ultimate Commercial Edition v1.4.1. Enterprise-grade PCSS solution with compilation fixes, updated dependencies, AI-powered optimization, real-time ray tracing, advanced analytics, unlimited commercial licensing, and comprehensive VRChat optimization.",
   "infoLink": {
     "url": "https://zapabob.github.io/liltoon-pcss-extension",
-    "text": "Visit Ultimate Commercial Repository"
+    "text": "Visit Ultimate Commercial Repository v1.4.1"
   },
   "banner": {
     "url": "https://zapabob.github.io/liltoon-pcss-extension/assets/banner-ultimate.png",
-    "text": "lilToon PCSS Extension - Ultimate Commercial Edition"
+    "text": "lilToon PCSS Extension - Ultimate Commercial Edition v1.4.1"
   },
   "packages": {
     "com.liltoon.pcss-extension": {
@@ -47,7 +47,8 @@
             "optimization",
             "professional",
             "compilation-fix",
-            "dependency-update"
+            "dependency-update",
+            "latest"
           ],
           "author": {
             "name": "lilToon PCSS Extension Team",

@@ -1,22 +1,27 @@
 {
-  "version": "0.1.4",
-  "packages": {
-    "com.liltoon.pcss-extension": {
-      "versions": {
-        "1.2.6": {
-          "name": "com.liltoon.pcss-extension",
-          "displayName": "lilToon PCSS Extension - All-in-One Edition",
-          "version": "1.2.6",
-          "description": "VCC dependency resolution fix for ModularAvatar compatibility.",
-          "unity": "2022.3",
-          "dependencies": {
-            "com.vrchat.avatars": ">=3.7.0",
-            "com.vrchat.base": ">=3.7.0"
-          },
-          "url": "https://zapabob.github.io/liltoon-pcss-extension/Release/com.liltoon.pcss-extension-1.2.6.zip",
-          "zipSHA256": "EE2CB58BD1D1439FB1BD20D9AEA161829791A63EB7733C0DBF4A76367220AA40"
-        }
-      }
-    }
+  "debug": true,
+  "repository": {
+    "name": "lilToon PCSS Extension - Ultimate Commercial Edition",
+    "version": "0.2.0",
+    "lastUpdate": "2025-06-22T12:00:00Z",
+    "forceRefresh": true
+  },
+  "latestPackage": {
+    "name": "com.liltoon.pcss-extension",
+    "version": "1.4.1",
+    "displayName": "lilToon PCSS Extension - Ultimate Commercial Edition",
+    "status": "active",
+    "compilationFix": true,
+    "dependencyUpdate": true
+  },
+  "vccCompatibility": {
+    "status": "fully-compatible",
+    "tested": true,
+    "issues": "none"
+  },
+  "troubleshooting": {
+    "cacheRefresh": "VCCを再起動してキャッシュをクリアしてください",
+    "repositoryUrl": "https://zapabob.github.io/liltoon-pcss-extension/index.json",
+    "manualRefresh": "リポジトリを削除して再追加してください"
   }
 } 
