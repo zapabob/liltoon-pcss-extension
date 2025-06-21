@@ -10,7 +10,7 @@ Write-Host "================================" -ForegroundColor Cyan
 Write-Host "Version: $Version" -ForegroundColor Green
 Write-Host "Title: $ReleaseTitle" -ForegroundColor Green
 Write-Host "ZIP File: $ZipFile" -ForegroundColor Green
-Write-Host "SHA256: 11cf55fde82caf8df9800c34039a55dadff1aa2a66644c3bc407e88fd620a9bb" -ForegroundColor Green
+Write-Host "SHA256: 5c29502d019ad50c63beb9a9f83f955824db7173903f53da207fa0df5c3e0cfa" -ForegroundColor Green
 
 Write-Host ""
 Write-Host "搭 Release Creation Steps:" -ForegroundColor Yellow
