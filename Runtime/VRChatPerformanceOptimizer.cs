@@ -10,6 +10,9 @@ using nadena.dev.modular_avatar.core;
 
 namespace lilToon.PCSS
 {
+    // PCSS品質設定の定義を削除（PCSSUtilitiesに委譲）
+    // public enum PCSSQuality { Low, Medium, High, Ultra }
+
     /// <summary>
     /// VRChat品質設定連動最適化システム
     /// VRChatのGraphics Quality設定に応じてPCSS品質を自動調整
@@ -27,11 +30,11 @@ namespace lilToon.PCSS
         [SerializeField] private int maxAvatarsForHighQuality = 10;
         
         [Header("VRChat Quality Mapping")]
-        [SerializeField] private PCSSQuality vrcUltraQuality = PCSSQuality.Ultra;
-        [SerializeField] private PCSSQuality vrcHighQuality = PCSSQuality.High;
-        [SerializeField] private PCSSQuality vrcMediumQuality = PCSSQuality.Medium;
-        [SerializeField] private PCSSQuality vrcLowQuality = PCSSQuality.Low;
-        [SerializeField] private PCSSQuality vrcMobileQuality = PCSSQuality.Low;
+        [SerializeField] private PCSSUtilities.PCSSQuality vrcUltraQuality = PCSSUtilities.PCSSQuality.Ultra;
+        [SerializeField] private PCSSUtilities.PCSSQuality vrcHighQuality = PCSSUtilities.PCSSQuality.High;
+        [SerializeField] private PCSSUtilities.PCSSQuality vrcMediumQuality = PCSSUtilities.PCSSQuality.Medium;
+        [SerializeField] private PCSSUtilities.PCSSQuality vrcLowQuality = PCSSUtilities.PCSSQuality.Low;
+        [SerializeField] private PCSSUtilities.PCSSQuality vrcMobileQuality = PCSSUtilities.PCSSQuality.Low;
         
         private float frameRateHistory = 90f;
         private int currentAvatarCount = 0;
@@ -144,7 +147,7 @@ namespace lilToon.PCSS
         
         private void OptimizePCSSSettings(string vrcQuality)
         {
-            PCSSQuality targetQuality = GetPCSSQualityForVRCQuality(vrcQuality);
+            PCSSUtilities.PCSSQuality targetQuality = GetPCSSQualityForVRCQuality(vrcQuality);
             
             // フレームレートベース調整
             if (frameRateHistory < lowFramerateThreshold)
@@ -165,7 +168,7 @@ namespace lilToon.PCSS
             ApplyPCSSQuality(targetQuality);
         }
         
-        private PCSSQuality GetPCSSQualityForVRCQuality(string vrcQuality)
+        private PCSSUtilities.PCSSQuality GetPCSSQualityForVRCQuality(string vrcQuality)
         {
             return vrcQuality switch
             {
@@ -174,23 +177,23 @@ namespace lilToon.PCSS
                 "VRC Medium" => vrcMediumQuality,
                 "VRC Low" => vrcLowQuality,
                 "VRC Mobile" => vrcMobileQuality,
-                _ => PCSSQuality.Medium
+                _ => PCSSUtilities.PCSSQuality.Medium
             };
         }
         
-        private PCSSQuality DowngradeQuality(PCSSQuality current)
+        private PCSSUtilities.PCSSQuality DowngradeQuality(PCSSUtilities.PCSSQuality current)
         {
             return current switch
             {
-                PCSSQuality.Ultra => PCSSQuality.High,
-                PCSSQuality.High => PCSSQuality.Medium,
-                PCSSQuality.Medium => PCSSQuality.Low,
-                PCSSQuality.Low => PCSSQuality.Low,
-                _ => PCSSQuality.Low
+                PCSSUtilities.PCSSQuality.Ultra => PCSSUtilities.PCSSQuality.High,
+                PCSSUtilities.PCSSQuality.High => PCSSUtilities.PCSSQuality.Medium,
+                PCSSUtilities.PCSSQuality.Medium => PCSSUtilities.PCSSQuality.Low,
+                PCSSUtilities.PCSSQuality.Low => PCSSUtilities.PCSSQuality.Low,
+                _ => PCSSUtilities.PCSSQuality.Low
             };
         }
         
-        private void OptimizeVRCLightVolumes(PCSSQuality quality)
+        private void OptimizeVRCLightVolumes(PCSSUtilities.PCSSQuality quality)
         {
             var lightVolumeIntegration = GetComponent<VRCLightVolumesIntegration>();
             if (lightVolumeIntegration == null) return;
@@ -198,25 +201,25 @@ namespace lilToon.PCSS
             // VRC Light Volumes最適化設定
             switch (quality)
             {
-                case PCSSQuality.Ultra:
+                case PCSSUtilities.PCSSQuality.Ultra:
                     lightVolumeIntegration.maxLightVolumeDistance = 150;
                     lightVolumeIntegration.updateFrequency = 0.05f;
                     lightVolumeIntegration.enableMobileOptimization = false;
                     break;
                 
-                case PCSSQuality.High:
+                case PCSSUtilities.PCSSQuality.High:
                     lightVolumeIntegration.maxLightVolumeDistance = 100;
                     lightVolumeIntegration.updateFrequency = 0.1f;
                     lightVolumeIntegration.enableMobileOptimization = false;
                     break;
                 
-                case PCSSQuality.Medium:
+                case PCSSUtilities.PCSSQuality.Medium:
                     lightVolumeIntegration.maxLightVolumeDistance = 75;
                     lightVolumeIntegration.updateFrequency = 0.15f;
                     lightVolumeIntegration.enableMobileOptimization = true;
                     break;
                 
-                case PCSSQuality.Low:
+                case PCSSUtilities.PCSSQuality.Low:
                     lightVolumeIntegration.maxLightVolumeDistance = 50;
                     lightVolumeIntegration.updateFrequency = 0.2f;
                     lightVolumeIntegration.enableMobileOptimization = true;
@@ -224,7 +227,7 @@ namespace lilToon.PCSS
             }
         }
         
-        private void ApplyPCSSQuality(PCSSQuality quality)
+        private void ApplyPCSSQuality(PCSSUtilities.PCSSQuality quality)
         {
             // シーン内のすべてのPCSSマテリアルに適用
             var materials = FindPCSSMaterials();
@@ -257,8 +260,10 @@ namespace lilToon.PCSS
             return pcssMaterials.ToArray();
         }
         
-        private void ApplyVRChatSpecificOptimizations(Material material, PCSSQuality quality)
+        private void ApplyVRChatSpecificOptimizations(Material material, PCSSUtilities.PCSSQuality quality)
         {
+            if (!PCSSUtilities.IsPCSSMaterial(material)) return;
+            
             // VRChatのShadow Quality設定を考慮
             var shadowQuality = QualitySettings.shadowResolution;
             
@@ -296,11 +301,11 @@ namespace lilToon.PCSS
             maxAvatarsForHighQuality = 5; // Quest用アバター数制限
             
             // Quest用品質マッピング
-            vrcUltraQuality = PCSSQuality.Medium;
-            vrcHighQuality = PCSSQuality.Medium;
-            vrcMediumQuality = PCSSQuality.Low;
-            vrcLowQuality = PCSSQuality.Low;
-            vrcMobileQuality = PCSSQuality.Low;
+            vrcUltraQuality = PCSSUtilities.PCSSQuality.Medium;
+            vrcHighQuality = PCSSUtilities.PCSSQuality.Medium;
+            vrcMediumQuality = PCSSUtilities.PCSSQuality.Low;
+            vrcLowQuality = PCSSUtilities.PCSSQuality.Low;
+            vrcMobileQuality = PCSSUtilities.PCSSQuality.Low;
         }
         
         /// <summary>
@@ -310,23 +315,23 @@ namespace lilToon.PCSS
         {
             return new PerformanceStats
             {
-                CurrentFPS = frameRateHistory,
-                AvatarCount = currentAvatarCount,
-                IsQuest = isQuest,
-                IsVRMode = isVRMode,
+                CurrentFPS = this.frameRateHistory,
+                AvatarCount = this.currentAvatarCount,
+                IsQuest = this.isQuest,
+                IsVRMode = this.isVRMode,
                 VRCQuality = GetVRChatQualityLevel(),
                 CurrentPCSSQuality = GetCurrentPCSSQuality()
             };
         }
         
-        private PCSSQuality GetCurrentPCSSQuality()
+        private PCSSUtilities.PCSSQuality GetCurrentPCSSQuality()
         {
             var materials = FindPCSSMaterials();
             if (materials.Length > 0)
             {
                 return PCSSUtilities.GetMaterialQuality(materials[0]);
             }
-            return PCSSQuality.Medium;
+            return PCSSUtilities.PCSSQuality.Medium;
         }
         
         /// <summary>
@@ -347,6 +352,6 @@ namespace lilToon.PCSS
         public bool IsQuest;
         public bool IsVRMode;
         public string VRCQuality;
-        public PCSSQuality CurrentPCSSQuality;
+        public PCSSUtilities.PCSSQuality CurrentPCSSQuality;
     }
 } 

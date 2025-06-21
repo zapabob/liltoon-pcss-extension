@@ -102,6 +102,10 @@ Shader "lilToon/PCSS Extension"
             #include "AutoLight.cginc"
             #include "Lighting.cginc"
 
+            // PCSSとVRC Light Volumesのインクルードファイル
+            #include "Includes/lil_pcss_common.hlsl"
+            #include "Includes/lil_pcss_shadows.hlsl"
+
             // プロパティの宣言
             sampler2D _MainTex;
             float4 _MainTex_ST;
@@ -150,252 +154,44 @@ Shader "lilToon/PCSS Extension"
                 UNITY_VERTEX_OUTPUT_STEREO
             };
 
-            // 改良されたPoisson Disk Sampling for PCSS
-            static const float2 poissonDisk[64] = {
-                float2(-0.613392, 0.617481), float2(0.170019, -0.040254), float2(-0.299417, 0.791925), float2(0.645680, 0.493210),
-                float2(-0.651784, 0.717887), float2(0.421003, 0.027070), float2(-0.817194, -0.271096), float2(-0.705374, -0.668203),
-                float2(0.977050, -0.108615), float2(0.063326, 0.142369), float2(0.203528, 0.214331), float2(-0.667531, 0.326090),
-                float2(-0.098422, -0.295755), float2(-0.885922, 0.215369), float2(0.566637, 0.605213), float2(0.039766, -0.396100),
-                float2(0.751946, 0.453352), float2(0.078707, -0.715323), float2(-0.075838, -0.529344), float2(0.724479, -0.580798),
-                float2(0.222999, -0.215125), float2(-0.467574, -0.405438), float2(-0.248268, -0.814753), float2(0.354411, -0.887570),
-                float2(0.175817, 0.382366), float2(0.487472, -0.063082), float2(-0.084078, 0.898312), float2(0.488876, -0.783441),
-                float2(0.470016, 0.217933), float2(-0.696890, -0.549791), float2(-0.149693, 0.605762), float2(0.034211, 0.979980),
-                float2(0.503098, -0.308878), float2(-0.016205, -0.872921), float2(0.385784, -0.393902), float2(-0.146886, -0.859249),
-                float2(0.643361, 0.164098), float2(0.634388, -0.049471), float2(-0.688894, 0.007843), float2(0.464034, -0.188818),
-                float2(-0.440840, 0.137486), float2(0.364483, 0.511704), float2(0.034028, 0.325968), float2(0.099094, -0.308023),
-                float2(0.693960, -0.366253), float2(0.678884, -0.204688), float2(0.001801, 0.780328), float2(0.145177, -0.898984),
-                float2(0.062655, -0.611866), float2(0.315226, -0.604297), float2(-0.780145, 0.486251), float2(-0.371868, 0.882138),
-                float2(0.200476, 0.494430), float2(-0.494552, -0.711051), float2(0.612476, 0.705252), float2(-0.578845, -0.768792),
-                float2(-0.772454, -0.090976), float2(0.504440, 0.372295), float2(0.155736, 0.065157), float2(0.391522, 0.849605),
-                float2(-0.620106, -0.328104), float2(0.789239, -0.419965), float2(-0.545396, 0.538133), float2(-0.178564, -0.596057)
-            };
-
-            // PCSS Blocker Search - 改良版
-            float findBlocker(float2 uv, float zReceiver, float searchRadius)
-            {
-                float blockerSum = 0.0;
-                int numBlockers = 0;
-                int sampleCount = min(_PCSSSampleCount, 64);
-                
-                for(int i = 0; i < sampleCount; i++)
-                {
-                    float2 sampleUV = uv + poissonDisk[i] * searchRadius;
-                    
-                    // UV座標のクランプ
-                    sampleUV = clamp(sampleUV, 0.0, 1.0);
-                    
-                    float shadowMapDepth = SAMPLE_DEPTH_TEXTURE(_ShadowMapTexture, sampleUV);
-                    shadowMapDepth = LinearEyeDepth(shadowMapDepth);
-                    
-                    if(shadowMapDepth < zReceiver - _PCSSBias)
-                    {
-                        blockerSum += shadowMapDepth;
-                        numBlockers++;
-                    }
-                }
-                
-                return numBlockers > 0 ? blockerSum / numBlockers : -1.0;
-            }
-
-            // PCSS Penumbra Size Estimation - 改良版
-            float penumbraSize(float zReceiver, float zBlocker, float lightSize)
-            {
-                return lightSize * (zReceiver - zBlocker) / max(zBlocker, 0.001);
-            }
-
-            // PCF Filtering - 改良版
-            float PCF(float2 uv, float zReceiver, float filterRadius)
-            {
-                float sum = 0.0;
-                int sampleCount = min(_PCSSSampleCount, 64);
-                
-                for(int i = 0; i < sampleCount; i++)
-                {
-                    float2 sampleUV = uv + poissonDisk[i] * filterRadius;
-                    sampleUV = clamp(sampleUV, 0.0, 1.0);
-                    
-                    float shadowMapDepth = SAMPLE_DEPTH_TEXTURE(_ShadowMapTexture, sampleUV);
-                    shadowMapDepth = LinearEyeDepth(shadowMapDepth);
-                    
-                    sum += (shadowMapDepth >= zReceiver - _PCSSBias) ? 1.0 : 0.0;
-                }
-                
-                return sum / sampleCount;
-            }
-
-            // PCSS Main Function - 改良版
-            float PCSS(float2 uv, float zReceiver)
-            {
-                // Step 1: Blocker Search
-                float avgBlockerDepth = findBlocker(uv, zReceiver, _PCSSBlockerSearchRadius);
-                
-                if(avgBlockerDepth < 0.0) // No blockers
-                    return 1.0;
-                
-                // Step 2: Penumbra Size
-                float penumbraRadius = penumbraSize(zReceiver, avgBlockerDepth, _PCSSLightSize);
-                penumbraRadius = clamp(penumbraRadius, 0.0, _PCSSFilterRadius * 10.0);
-                
-                // Step 3: PCF
-                return PCF(uv, zReceiver, penumbraRadius * _PCSSFilterRadius);
-            }
-            
-            // VRC Light Volumes統合関数（VRChat最適化対応）
-            float3 SampleVRCLightVolumes(float3 worldPos)
-            {
-                #if defined(VRC_LIGHT_VOLUMES_ENABLED) && defined(_USEVRCLIGHT_VOLUMES_ON)
-                    // ワールド座標をLight Volume座標系に変換
-                    float3 volumePos = mul(_VRCLightVolumeWorldToLocal, float4(worldPos, 1.0)).xyz;
-                    
-                    // UV座標に変換（0-1範囲）
-                    float3 volumeUV = volumePos * 0.5 + 0.5;
-                    
-                    // 範囲外チェック
-                    if (any(volumeUV < 0.0) || any(volumeUV > 1.0))
-                        return float3(1, 1, 1); // デフォルト値
-                    
-                    // VRChat品質設定に基づくサンプリング
-                    float3 lightVolume;
-                    #ifdef VRC_QUEST_OPTIMIZATION
-                        // Quest: 点サンプリングでパフォーマンス優先
-                        lightVolume = tex3Dlod(_VRCLightVolumeTexture, float4(volumeUV, 0)).rgb;
-                    #elif defined(VRC_LIGHT_VOLUMES_MOBILE)
-                        // モバイル: 低品質サンプリング
-                        lightVolume = tex3D(_VRCLightVolumeTexture, volumeUV).rgb;
-                    #else
-                        // PC: 高品質トライリニアサンプリング
-                        lightVolume = tex3D(_VRCLightVolumeTexture, volumeUV).rgb;
-                    #endif
-                    
-                    // 強度と色調を適用
-                    lightVolume *= _VRCLightVolumeIntensity * _VRCLightVolumeTint.rgb;
-                    
-                    // VRChatのAvatar Culling距離を考慮した減衰
-                    float distance = length(worldPos - _WorldSpaceCameraPos);
-                    float maxDistance = _VRCLightVolumeDistanceFactor * 100.0; // 基準距離
-                    
-                    #ifdef VRC_QUEST_OPTIMIZATION
-                        maxDistance *= 0.5; // Quest: 短いカリング距離
-                    #elif defined(VRC_LIGHT_VOLUMES_MOBILE)
-                        maxDistance *= 0.7; // モバイル: 中程度のカリング距離
-                    #endif
-                    
-                    float attenuation = saturate(1.0 - distance / maxDistance);
-                    lightVolume *= attenuation;
-                    
-                    // プラットフォーム別最適化
-                    #ifdef VRC_QUEST_OPTIMIZATION
-                        // Quest: 積極的な最適化（60%に削減）
-                        lightVolume = saturate(lightVolume * 0.6);
-                    #elif defined(VRC_LIGHT_VOLUMES_MOBILE)
-                        // モバイル: 中程度の最適化（80%に削減）
-                        lightVolume = saturate(lightVolume * 0.8);
-                    #endif
-                    
-                    // VRChatのShadow Quality設定を考慮
-                    #ifdef SHADOWS_SCREEN
-                        // 高品質シャドウ: フルエフェクト
-                        return lightVolume;
-                    #elif defined(SHADOWS_DEPTH)
-                        // 中品質シャドウ: 90%エフェクト
-                        return lightVolume * 0.9;
-                    #else
-                        // 低品質/シャドウなし: 70%エフェクト
-                        return lightVolume * 0.7;
-                    #endif
-                #else
-                    return float3(1, 1, 1); // VRC Light Volumes無効時はデフォルト値
-                #endif
-            }
-            
-            // 改良されたライティング計算（VRC Light Volumes統合）
-            float3 CalculateLighting(float3 worldPos, float3 worldNormal, float shadow)
-            {
-                // 基本的な指向性ライト
-                float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
-                float NdotL = max(0, dot(worldNormal, lightDir));
-                float3 lighting = _LightColor0.rgb * NdotL * shadow;
-                
-                // VRC Light Volumesを統合
-                #if defined(_USEVRCLIGHT_VOLUMES_ON)
-                if (_UseVRCLightVolumes > 0.5)
-                {
-                    float3 volumeLighting = SampleVRCLightVolumes(worldPos);
-                    
-                    // ライティングをブレンド
-                    lighting = lerp(lighting, lighting * volumeLighting, _VRCLightVolumeIntensity);
-                    
-                    // 環境光の補強
-                    lighting += volumeLighting * 0.3; // 少し環境光として追加
-                }
-                #endif
-                
-                return lighting;
-            }
-
-            v2f vert(appdata v)
+            v2f vert (appdata v)
             {
                 v2f o;
                 UNITY_SETUP_INSTANCE_ID(v);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-                
                 o.pos = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
                 o.worldNormal = UnityObjectToWorldNormal(v.normal);
-                
-                TRANSFER_SHADOW(o);
+                UNITY_TRANSFER_SHADOW(o);
                 UNITY_TRANSFER_FOG(o, o.pos);
-                
                 return o;
             }
 
-            fixed4 frag(v2f i) : SV_Target
+            // PCSS関連の関数群を削除し、インクルードファイルに委譲
+
+            fixed4 frag (v2f i) : SV_Target
             {
-                // Base color
                 fixed4 col = tex2D(_MainTex, i.uv) * _Color;
                 
-                // Alpha test
-                clip(col.a - _Cutoff);
-                
-                // Light calculation
-                float3 worldNormal = normalize(i.worldNormal);
-                float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
-                float NdotL = max(0, dot(worldNormal, lightDir));
-                
-                // Shadow calculation
                 float shadow = 1.0;
-                
-                #ifdef _USEPCSS_ON
-                if(_UsePCSS > 0.5)
-                {
-                    float2 shadowUV = i._ShadowCoord.xy / i._ShadowCoord.w;
-                    float receiverDepth = LinearEyeDepth(i._ShadowCoord.z / i._ShadowCoord.w);
-                    shadow = PCSS(shadowUV, receiverDepth);
-                }
-                else
-                #endif
-                {
+
+                #if defined(_USEPCSS_ON)
+                    shadow = PCSS(i.shadowCoord, i.pos.z);
+                #elif defined(_USESHADOW_ON)
                     shadow = SHADOW_ATTENUATION(i);
-                }
-                
-                // Apply shadow
-                #ifdef _USESHADOW_ON
-                if(_UseShadow > 0.5)
-                {
-                    float shadowMask = smoothstep(_ShadowBorder - _ShadowBlur, _ShadowBorder + _ShadowBlur, shadow);
-                    fixed4 shadowColor = tex2D(_ShadowColorTex, i.uv);
-                    col.rgb = lerp(shadowColor.rgb * col.rgb, col.rgb, shadowMask);
-                }
                 #endif
                 
-                // Apply lighting (VRC Light Volumes統合)
-                float3 finalLighting = CalculateLighting(i.worldPos, worldNormal, shadow);
-                col.rgb *= finalLighting;
+                // VRC Light Volumesからのライティングを適用
+                #if defined(VRC_LIGHT_VOLUMES_ENABLED) && defined(_USEVRCLIGHT_VOLUMES_ON)
+                    float3 lightVolumeColor = SampleVRCLightVolumes(i.worldPos);
+                    col.rgb *= lightVolumeColor;
+                #endif
+
+                // 影を適用
+                col.rgb *= lerp(tex2D(_ShadowColorTex, i.uv).rgb, float3(1,1,1), shadow);
                 
-                // Apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
-                
                 return col;
             }
             ENDHLSL
@@ -462,5 +258,5 @@ Shader "lilToon/PCSS Extension"
     }
     
     // Fallback
-    FallBack "lilToon"
+    FallBack "Transparent/Cutout/VertexLit"
 } 

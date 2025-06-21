@@ -22,9 +22,9 @@ namespace lilToon.PCSS
         [SerializeField] private Color lightVolumeTint = Color.white;
         
         [Header("Performance Settings")]
-        [SerializeField] private bool enableMobileOptimization = true;
-        [SerializeField] private int maxLightVolumeDistance = 100;
-        [SerializeField] private float updateFrequency = 0.1f;
+        [SerializeField] public bool enableMobileOptimization = true;
+        [SerializeField] public int maxLightVolumeDistance = 100;
+        [SerializeField] public float updateFrequency = 0.1f;
         
         private static readonly int _VRCLightVolumeTexture = Shader.PropertyToID("_VRCLightVolumeTexture");
         private static readonly int _VRCLightVolumeParams = Shader.PropertyToID("_VRCLightVolumeParams");

@@ -178,47 +178,9 @@ Shader "Poiyomi/Toon/PCSS Extension"
             float _OutlineWidth;
             fixed4 _OutlineColor;
             
-            // Poisson Disk Samples for PCSS
-            static const float2 poissonDisk[64] = {
-                float2(-0.94201624, -0.39906216), float2(0.94558609, -0.76890725),
-                float2(-0.094184101, -0.92938870), float2(0.34495938, 0.29387760),
-                float2(-0.91588581, 0.45771432), float2(-0.81544232, -0.87912464),
-                float2(-0.38277543, 0.27676845), float2(0.97484398, 0.75648379),
-                float2(0.44323325, -0.97511554), float2(0.53742981, -0.47373420),
-                float2(-0.26496911, -0.41893023), float2(0.79197514, 0.19090188),
-                float2(-0.24188840, 0.99706507), float2(-0.81409955, 0.91437590),
-                float2(0.19984126, 0.78641367), float2(0.14383161, -0.14100790),
-                float2(-0.53028528, 0.54825181), float2(-0.96935031, -0.58618694),
-                float2(0.09006737, -0.58618694), float2(-0.68906021, -0.58618694),
-                float2(0.56201732, 0.22681643), float2(-0.17418010, -0.11844508),
-                float2(0.89261341, -0.29282066), float2(-0.41893023, -0.26496911),
-                float2(0.75648379, 0.97484398), float2(-0.47373420, 0.53742981),
-                float2(0.19090188, 0.79197514), float2(0.99706507, -0.24188840),
-                float2(0.91437590, -0.81409955), float2(0.78641367, 0.19984126),
-                float2(-0.14100790, 0.14383161), float2(0.54825181, -0.53028528),
-                float2(-0.58618694, -0.96935031), float2(-0.58618694, 0.09006737),
-                float2(-0.58618694, -0.68906021), float2(0.22681643, 0.56201732),
-                float2(-0.11844508, -0.17418010), float2(-0.29282066, 0.89261341),
-                float2(-0.26496911, -0.41893023), float2(0.97484398, 0.75648379),
-                float2(0.53742981, -0.47373420), float2(0.79197514, 0.19090188),
-                float2(-0.24188840, 0.99706507), float2(-0.81409955, 0.91437590),
-                float2(0.19984126, 0.78641367), float2(0.14383161, -0.14100790),
-                float2(-0.53028528, 0.54825181), float2(-0.96935031, -0.58618694),
-                float2(0.09006737, -0.58618694), float2(-0.68906021, -0.58618694),
-                float2(0.56201732, 0.22681643), float2(-0.17418010, -0.11844508),
-                float2(0.89261341, -0.29282066), float2(-0.41893023, -0.26496911),
-                float2(0.75648379, 0.97484398), float2(-0.47373420, 0.53742981),
-                float2(0.19090188, 0.79197514), float2(0.99706507, -0.24188840),
-                float2(0.91437590, -0.81409955), float2(0.78641367, 0.19984126),
-                float2(-0.14100790, 0.14383161), float2(0.54825181, -0.53028528),
-                float2(-0.58618694, -0.96935031), float2(-0.58618694, 0.09006737),
-                float2(-0.58618694, -0.68906021), float2(0.22681643, 0.56201732),
-                float2(-0.11844508, -0.17418010), float2(-0.29282066, 0.89261341),
-                float2(-0.26496911, -0.41893023), float2(0.97484398, 0.75648379),
-                float2(0.53742981, -0.47373420), float2(0.79197514, 0.19090188),
-                float2(-0.24188840, 0.99706507), float2(-0.81409955, 0.91437590),
-                float2(0.19984126, 0.78641367), float2(0.14383161, -0.14100790)
-            };
+            // PCSS関連の関数群は外部インクルードファイルに委譲
+            #include "Includes/lil_pcss_common.hlsl"
+            #include "Includes/lil_pcss_shadows.hlsl"
             
             struct appdata
             {
@@ -239,95 +201,7 @@ Shader "Poiyomi/Toon/PCSS Extension"
                 UNITY_FOG_COORDS(5)
             };
             
-            // PCSS Functions
-            float FindBlocker(float2 uv, float zReceiver, float searchRadius, int sampleCount)
-            {
-                float blockerDepthSum = 0;
-                int blockerCount = 0;
-                
-                for (int i = 0; i < sampleCount && i < 64; i++)
-                {
-                    float2 offset = poissonDisk[i] * searchRadius;
-                    float shadowDepth = tex2D(_ShadowMapTexture, uv + offset).r;
-                    
-                    if (shadowDepth < zReceiver - _PCSSShadowBias)
-                    {
-                        blockerDepthSum += shadowDepth;
-                        blockerCount++;
-                    }
-                }
-                
-                return blockerCount > 0 ? blockerDepthSum / blockerCount : -1;
-            }
-            
-            float PCF(float2 uv, float zReceiver, float filterRadius, int sampleCount)
-            {
-                float shadow = 0;
-                
-                for (int i = 0; i < sampleCount && i < 64; i++)
-                {
-                    float2 offset = poissonDisk[i] * filterRadius;
-                    float shadowDepth = tex2D(_ShadowMapTexture, uv + offset).r;
-                    
-                    shadow += (shadowDepth >= zReceiver - _PCSSShadowBias) ? 1.0 : 0.0;
-                }
-                
-                return shadow / sampleCount;
-            }
-            
-            float PCSS(float2 uv, float zReceiver)
-            {
-                // VRChat Expression Control
-                float pcssEnabled = _PCSSEnabled;
-                float sampleCount = _PCSSSampleCount;
-                float searchRadius = _PCSSBlockerSearchRadius;
-                float filterRadius = _PCSSFilterRadius;
-                
-                #ifdef _VRCHAT_EXPRESSION
-                if (_VRChatExpression > 0.5)
-                {
-                    pcssEnabled = _PCSSToggleParam;
-                    
-                    // Quality control via expression
-                    float qualityParam = _PCSSQualityParam;
-                    if (qualityParam < 0.25) // Low
-                    {
-                        sampleCount = 8;
-                        searchRadius *= 0.5;
-                        filterRadius *= 0.5;
-                    }
-                    else if (qualityParam < 0.5) // Medium
-                    {
-                        sampleCount = 16;
-                    }
-                    else if (qualityParam < 0.75) // High
-                    {
-                        sampleCount = 32;
-                        searchRadius *= 1.5;
-                        filterRadius *= 1.5;
-                    }
-                    else // Ultra
-                    {
-                        sampleCount = 64;
-                        searchRadius *= 2.0;
-                        filterRadius *= 2.0;
-                    }
-                }
-                #endif
-                
-                if (pcssEnabled < 0.5) return 1.0;
-                
-                // Step 1: Blocker Search
-                float avgBlockerDepth = FindBlocker(uv, zReceiver, searchRadius, sampleCount / 4);
-                if (avgBlockerDepth < 0) return 1.0; // No blockers found
-                
-                // Step 2: Penumbra Size Estimation
-                float penumbraSize = (zReceiver - avgBlockerDepth) * _PCSSLightSize / avgBlockerDepth;
-                float finalFilterRadius = filterRadius * penumbraSize;
-                
-                // Step 3: Percentage Closer Filtering
-                return PCF(uv, zReceiver, finalFilterRadius, sampleCount);
-            }
+            // PCSS関数群は外部インクルードファイルに委譲
             
             v2f vert(appdata v)
             {
