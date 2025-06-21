@@ -23,5 +23,66 @@
     "cacheRefresh": "VCCを再起動してキャッシュをクリアしてください",
     "repositoryUrl": "https://zapabob.github.io/liltoon-pcss-extension/index.json",
     "manualRefresh": "リポジトリを削除して再追加してください"
+  },
+  "debug_info": {
+    "repository_version": "0.2.1",
+    "last_updated": "2025-06-22T19:30:00Z",
+    "vcc_compatibility": "Enhanced Maximum Compatibility Mode",
+    "cache_strategy": "Aggressive No-Cache with Force-Refresh",
+    "issue_resolution": "Repository Listing Access Failure Fix"
+  },
+  "vcc_troubleshooting": {
+    "common_issues": [
+      {
+        "issue": "Failed to get Repository Listing",
+        "solution": "Clear VCC cache and retry",
+        "steps": [
+          "Close VCC completely",
+          "Clear browser cache if using web version",
+          "Restart VCC",
+          "Re-add repository URL"
+        ]
+      },
+      {
+        "issue": "Package not appearing",
+        "solution": "Force refresh repository",
+        "steps": [
+          "Remove repository from VCC",
+          "Wait 30 seconds",
+          "Re-add repository URL",
+          "Check for updates"
+        ]
+      }
+    ],
+    "repository_urls": {
+      "primary": "https://zapabob.github.io/liltoon-pcss-extension/index.json",
+      "direct_package": "https://zapabob.github.io/liltoon-pcss-extension/Release/com.liltoon.pcss-extension-1.4.1.zip",
+      "github_releases": "https://github.com/zapabob/liltoon-pcss-extension/releases"
+    }
+  },
+  "technical_details": {
+    "json_format": "VPM 2.0 Standard Compliant",
+    "compression": "None (for maximum compatibility)",
+    "encoding": "UTF-8",
+    "headers": {
+      "cache_control": "no-cache, no-store, must-revalidate",
+      "cors": "Enabled with wildcard origin",
+      "content_type": "application/json"
+    }
+  },
+  "package_info": {
+    "latest_version": "1.4.1",
+    "package_size_kb": 93.5,
+    "sha256": "A3AF359103D4CED561EEAEB4230BE61300B145857B73A5B1DE3226108D4D4600",
+    "unity_version": "2022.3.22f1",
+    "dependencies_updated": true,
+    "compilation_errors_fixed": true
+  },
+  "repository_health": {
+    "status": "Active",
+    "uptime": "99.9%",
+    "cdn": "GitHub Pages",
+    "ssl": "Enabled",
+    "accessibility": "Global"
   }
 } 

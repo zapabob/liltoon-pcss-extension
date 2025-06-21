@@ -65,4 +65,36 @@
 /
   Content-Type: text/html; charset=utf-8
   X-Frame-Options: SAMEORIGIN
-  X-Content-Type-Options: nosniff 
+  X-Content-Type-Options: nosniff
+
+# VPM Repository Headers - VCC Maximum Compatibility
+/index.json
+  Cache-Control: no-cache, no-store, must-revalidate, max-age=0, s-maxage=0
+  Pragma: no-cache
+  Expires: 0
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, HEAD, OPTIONS
+  Access-Control-Allow-Headers: Content-Type, User-Agent, X-Requested-With
+  Content-Type: application/json; charset=utf-8
+  X-Content-Type-Options: nosniff
+  X-VPM-Repository-Version: 0.2.1
+  X-VPM-Force-Refresh: true
+  X-VCC-Compatible: true
+  Vary: User-Agent
+
+# Package Files
+/Release/*
+  Cache-Control: public, max-age=3600
+  Access-Control-Allow-Origin: *
+  Content-Type: application/zip
+
+# JSON Info Page
+/json-info.html
+  Cache-Control: no-cache, max-age=0
+  Content-Type: text/html; charset=utf-8
+
+# Main Site
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin 
