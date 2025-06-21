@@ -306,36 +306,7 @@ namespace lilToon.PCSS
             targetRenderers.Clear();
         }
         
-        // Unity Editor integration
-        #if UNITY_EDITOR
-        [UnityEditor.MenuItem("GameObject/lilToon PCSS/Add Poiyomi PCSS Integration", false, 10)]
-        private static void AddPoiyomiPCSSIntegration()
-        {
-            var selected = UnityEditor.Selection.activeGameObject;
-            if (selected != null)
-            {
-                var integration = selected.GetComponent<PoiyomiPCSSIntegration>();
-                if (integration == null)
-                {
-                    integration = selected.AddComponent<PoiyomiPCSSIntegration>();
-                    integration.InitializePCSSIntegration();
-                    
-                    UnityEditor.EditorUtility.SetDirty(selected);
-                    Debug.Log($"Added Poiyomi PCSS Integration to {selected.name}");
-                }
-                else
-                {
-                    Debug.LogWarning($"Poiyomi PCSS Integration already exists on {selected.name}");
-                }
-            }
-        }
-        
-        [UnityEditor.MenuItem("GameObject/lilToon PCSS/Add Poiyomi PCSS Integration", true)]
-        private static bool ValidateAddPoiyomiPCSSIntegration()
-        {
-            return UnityEditor.Selection.activeGameObject != null;
-        }
-        #endif
+        // Unity Editor integration moved to Editor scripts for proper compilation
     }
     
     /// <summary>

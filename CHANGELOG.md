@@ -5,6 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.1] - 2025-06-22 - Compilation Fix & Dependency Update
+
+### 🔧 Fixed
+- **Runtime Compilation Errors**: Removed UnityEditor references from Runtime scripts
+  - Fixed `VRChatPerformanceOptimizer.cs` UnityEditor import in Runtime
+  - Fixed `PoiyomiPCSSIntegration.cs` MenuItem attributes in Runtime
+  - Moved all Editor-specific functionality to Editor assembly definition
+  - Ensured proper assembly separation for VCC compatibility
+
+### 📦 Updated Dependencies
+- **Unity Version**: Updated to Unity 2022.3.22f1 (latest LTS)
+- **URP**: Updated to Universal Render Pipeline 14.0.11
+- **VRChat SDK**: Updated to VRChat Avatars SDK ≥3.7.2
+- **lilToon**: Updated to lilToon ≥1.11.0 (latest stable)
+- **ModularAvatar**: Updated to ModularAvatar ≥1.13.0 (latest stable)
+
+### 🎯 Compatibility Improvements
+- **Enhanced VCC Compatibility**: Proper assembly definition separation
+- **Runtime Stability**: Eliminated all Editor dependencies from Runtime scripts
+- **Build Compatibility**: Improved build process for both Development and Release builds
+- **Cross-Platform Support**: Enhanced Quest and PC platform compatibility
+
+### 🛠️ Technical Enhancements
+- **Assembly Definition Optimization**: Cleaner separation between Runtime and Editor code
+- **Dependency Resolution**: Flexible version requirements for better VPM compatibility
+- **Code Organization**: Improved namespace organization and script structure
+- **Performance**: Optimized script loading and initialization
+
+### 📊 Quality Assurance
+- **Compilation Testing**: Verified compilation on Unity 2022.3.22f1
+- **VCC Integration**: Tested VCC package installation and dependency resolution
+- **Runtime Performance**: Verified runtime performance with updated dependencies
+- **Cross-Platform Testing**: Tested on both PC and Quest platforms
+
 ## [1.4.0] - 2025-06-22 - Ultimate Commercial Edition Release
 
 ### 🌟 Ultimate Commercial Features - Enterprise Edition

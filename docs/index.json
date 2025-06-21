@@ -2,7 +2,7 @@
   "name": "lilToon PCSS Extension Repository",
   "id": "com.liltoon.pcss-extension.repository",
   "url": "https://zapabob.github.io/liltoon-pcss-extension/index.json",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": {
     "name": "lilToon PCSS Extension Team",
     "email": "support@liltoon-pcss.dev"
@@ -36,10 +36,10 @@
             "com.unity.render-pipelines.universal": "14.0.11"
           },
           "vpmDependencies": {
-            "com.vrchat.avatars": ">=3.7.2",
-            "com.vrchat.base": ">=3.7.2",
-            "jp.lilxyzw.liltoon": ">=1.11.0",
-            "nadena.dev.modular-avatar": ">=1.13.0"
+            "com.vrchat.avatars": ">=3.7.0",
+            "com.vrchat.base": ">=3.7.0",
+            "jp.lilxyzw.liltoon": ">=1.7.0",
+            "nadena.dev.modular-avatar": ">=1.10.0"
           },
           "url": "https://zapabob.github.io/liltoon-pcss-extension/Release/com.liltoon.pcss-extension-1.4.1.zip",
           "zipSHA256": "A3AF359103D4CED561EEAEB4230BE61300B145857B73A5B1DE3226108D4D4600",

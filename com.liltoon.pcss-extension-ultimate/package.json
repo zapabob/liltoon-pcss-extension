@@ -1,10 +1,10 @@
 {
   "name": "com.liltoon.pcss-extension",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "displayName": "lilToon PCSS Extension - Ultimate Commercial Edition",
-  "description": "🎉特価¥1,980！Ultimate Commercial PCSS solution with enterprise-grade features, AI-powered optimization, real-time ray tracing support, advanced performance analytics, automatic quality scaling, commercial-ready asset generation, unlimited commercial licensing, priority enterprise support, and comprehensive VRChat optimization suite. 競合の10倍機能で同等価格！The definitive professional solution for commercial VRChat content creation.",
+  "description": "Ultimate Commercial PCSS solution with enterprise-grade features, AI-powered optimization, real-time ray tracing support, advanced performance analytics, automatic quality scaling, commercial-ready asset generation, unlimited commercial licensing, priority enterprise support, and comprehensive VRChat optimization suite.",
   "unity": "2022.3",
-  "unityRelease": "10",
+  "unityRelease": "22f1",
   "keywords": [
     "shader",
     "toon",
@@ -47,13 +47,13 @@
     "url": "https://github.com/zapabob"
   },
   "dependencies": {
-    "com.unity.render-pipelines.universal": "7.1.8"
+    "com.unity.render-pipelines.universal": "14.0.11"
   },
   "vpmDependencies": {
     "com.vrchat.avatars": ">=3.7.0",
     "com.vrchat.base": ">=3.7.0",
-    "jp.lilxyzw.liltoon": ">=1.10.3",
-    "nadena.dev.modular-avatar": ">=1.12.0"
+    "jp.lilxyzw.liltoon": ">=1.7.0",
+    "nadena.dev.modular-avatar": ">=1.10.0"
   },
   "legacyFolders": {
     "Assets\\lilToon PCSS Extension": ""
