@@ -122,7 +122,7 @@ Package Information:
 
 #### v1.2.4 Release Notes
 ```markdown
-## [1.2.4] - 2025-01-28
+## [1.2.4] - 2025-06-22
 
 ### 🧹 Cleanup
 - **Development Files Removed**: Cleaned up VCC and BOOTH development files from repository

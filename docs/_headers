@@ -1,0 +1,31 @@
+# VCC (VRChat Creator Companion) compatibility headers
+/index.json
+  Content-Type: application/json; charset=utf-8
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, HEAD, OPTIONS
+  Access-Control-Allow-Headers: Content-Type, User-Agent, Accept
+  Cache-Control: public, max-age=300
+
+/vpm.json
+  Content-Type: application/json; charset=utf-8
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, HEAD, OPTIONS
+  Access-Control-Allow-Headers: Content-Type, User-Agent, Accept
+  Cache-Control: public, max-age=300
+
+/vcc-debug.json
+  Content-Type: application/json; charset=utf-8
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, HEAD, OPTIONS
+  Access-Control-Allow-Headers: Content-Type, User-Agent, Accept
+  Cache-Control: public, max-age=60
+
+# All JSON files
+/*.json
+  Content-Type: application/json; charset=utf-8
+  Access-Control-Allow-Origin: *
+
+# Release files
+/Release/*
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=86400 

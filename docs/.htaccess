@@ -1,0 +1,20 @@
+# VCC (VRChat Creator Companion) compatibility headers
+<Files "index.json">
+    Header set Content-Type "application/json; charset=utf-8"
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, HEAD, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, User-Agent"
+    Header set Cache-Control "public, max-age=300"
+</Files>
+
+# Enable CORS for all JSON files
+<FilesMatch "\.(json)$">
+    Header set Access-Control-Allow-Origin "*"
+    Header set Content-Type "application/json; charset=utf-8"
+</FilesMatch>
+
+# VPM repository specific settings
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^vpm\.json$ index.json [L] 

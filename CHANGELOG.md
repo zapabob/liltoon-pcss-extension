@@ -5,6 +5,86 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.6] - 2025-06-22
+
+### 🔧 Fixed
+- **VCC Dependency Resolution**: Fixed ModularAvatar dependency version conflict
+  - Updated `nadena.dev.modular-avatar` from `1.10.0` to `>=1.12.0`
+  - Updated all VPM dependencies to use flexible versioning (`>=` instead of exact versions)
+  - Resolved "Could not find required dependency nadena.dev.modular-avatar 1.10.0" error
+  - Improved compatibility with latest VPM repositories
+
+### 🎯 Technical Changes
+- **Package Dependencies**: Updated to flexible version requirements
+  - `com.vrchat.avatars`: `>=3.7.0` (was `3.7.0`)
+  - `com.vrchat.base`: `>=3.7.0` (was `3.7.0`)
+  - `jp.lilxyzw.liltoon`: `>=1.10.3` (was `1.10.3`)
+  - `nadena.dev.modular-avatar`: `>=1.12.0` (was `1.10.0`)
+- **VPM Repository**: Updated repository version to `0.1.2`
+
+### 📊 Compatibility
+- ✅ **ModularAvatar**: v1.12.0+ (latest stable)
+- ✅ **VRChat SDK**: v3.7.0+ (flexible compatibility)
+- ✅ **lilToon**: v1.10.3+ (backward compatible)
+- ✅ **Unity**: 2019.4.31f1+ (unchanged)
+
+## [1.2.5] - 2025-06-22
+
+### 🎨 Major Update: GitHub Pages Beautiful Redesign
+- **Complete UI Overhaul**: Modern, responsive design with professional aesthetics
+- **Dark/Light Theme**: Automatic system preference detection with manual toggle
+- **Enhanced Documentation**: Comprehensive guides with sidebar navigation
+- **Mobile Optimization**: Perfect mobile experience with responsive breakpoints
+- **Performance**: Optimized loading, minimal dependencies, smooth animations
+
+### 🌟 New Features
+- **Installation Guide**: Step-by-step VCC integration with progress indicators
+- **Documentation Hub**: API reference, troubleshooting, and advanced guides
+- **Support Center**: Service status, FAQ, community links, and contact form
+- **Copy-to-Clipboard**: One-click VPM repository URL copying
+- **Accessibility**: WCAG 2.1 AA compliance with keyboard navigation
+
+### 🎯 Technical Improvements
+- **CSS Variables**: Complete theming system with color palette
+- **Typography**: Google Fonts integration (Inter, JetBrains Mono)
+- **Grid Layout**: Modern CSS Grid and Flexbox implementation
+- **Animations**: Smooth transitions and hover effects
+- **SEO**: Enhanced meta tags and structured data
+
+### 🎨 UI/UX Enhancement
+- **GitHub Pages Complete Redesign**: Modern, responsive design with dark mode support
+- **Beautiful Landing Page**: Gradient headers, smooth animations, interactive elements
+- **Comprehensive Documentation**: Structured documentation with navigation sidebar
+- **Professional Installation Guide**: Step-by-step visual guide with progress indicators
+- **Enhanced Support Page**: FAQ section, troubleshooting guides, community links
+
+### ✨ New Features
+- **Dark/Light Theme Toggle**: Automatic system preference detection with manual override
+- **Responsive Design**: Perfect display on desktop, tablet, and mobile devices
+- **Interactive Elements**: Hover effects, smooth transitions, copy-to-clipboard functionality
+- **Service Status Dashboard**: Real-time status indicators for all services
+- **Enhanced Navigation**: Sticky navigation, smooth scrolling, breadcrumb navigation
+
+### 📖 Documentation Improvements
+- **Visual Documentation**: Rich typography, code highlighting, interactive examples
+- **Comprehensive FAQ**: Expandable FAQ section with common issues and solutions
+- **API Reference**: Complete API documentation with code examples
+- **Troubleshooting Guide**: Detailed troubleshooting steps with visual indicators
+- **Community Resources**: Links to Discord, Twitter, YouTube, and other community platforms
+
+### 🎯 User Experience
+- **Professional Design**: Modern color scheme with CSS variables for theming
+- **Accessibility**: Proper contrast ratios, keyboard navigation, screen reader support
+- **Performance**: Optimized loading, minimal dependencies, efficient animations
+- **SEO Optimization**: Meta tags, Open Graph tags, structured data
+- **Mobile-First**: Responsive grid layouts, touch-friendly interface
+
+### 🔧 Technical Improvements
+- **Modern CSS**: CSS Grid, Flexbox, CSS Variables, smooth animations
+- **JavaScript Enhancement**: Theme persistence, smooth scrolling, interactive features
+- **Font Integration**: Google Fonts (Inter, JetBrains Mono) for better typography
+- **Icon System**: Emoji-based icon system for cross-platform compatibility
+
 ## [1.2.4] - 2025-06-22
 
 ### 🧹 Cleanup
