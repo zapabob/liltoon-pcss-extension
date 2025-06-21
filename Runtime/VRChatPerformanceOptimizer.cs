@@ -7,351 +7,510 @@ using VRC.SDK3.Avatars.Components;
 #if MODULAR_AVATAR_AVAILABLE
 using nadena.dev.modular_avatar.core;
 #endif
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace lilToon.PCSS
+namespace LilToonPCSS.Runtime
 {
-    // PCSS品質設定の定義を削除（PCSSUtilitiesに委譲）
-    // public enum PCSSQuality { Low, Medium, High, Ultra }
-
     /// <summary>
-    /// VRChat品質設定連動最適化システム
-    /// VRChatのGraphics Quality設定に応じてPCSS品質を自動調整
+    /// Professional-grade VRChat performance optimizer for PCSS materials
+    /// Provides dynamic quality adjustment, real-time monitoring, and commercial-ready optimization
     /// </summary>
-    public class VRChatPerformanceOptimizer : MonoBehaviour
+    [System.Serializable]
+    public class VRChatPerformanceOptimizer : MonoBehaviour, IEditorOnly
     {
-        [Header("VRChat Performance Integration")]
-        [SerializeField] private bool enableAutoOptimization = true;
-        [SerializeField] private bool respectVRChatSettings = true;
-        [SerializeField] private bool enableMobileDetection = true;
+        [Header("Professional Performance Optimization")]
+        [SerializeField] private bool enableAdvancedOptimization = true;
+        [SerializeField] private bool enableDynamicQualityAdjustment = true;
+        [SerializeField] private bool enableRealtimeMonitoring = true;
+        [SerializeField] private bool enableCommercialOptimizations = true;
+        
+        [Header("Quality Profiles")]
+        [SerializeField] private QualityProfile ultraQualityProfile;
+        [SerializeField] private QualityProfile highQualityProfile;
+        [SerializeField] private QualityProfile mediumQualityProfile;
+        [SerializeField] private QualityProfile questQualityProfile;
         
         [Header("Performance Thresholds")]
-        [SerializeField] private float targetFramerate = 90f;
-        [SerializeField] private float lowFramerateThreshold = 45f;
-        [SerializeField] private int maxAvatarsForHighQuality = 10;
+        [SerializeField] private float targetFrameRate = 90.0f;
+        [SerializeField] private float performanceThreshold = 0.8f;
+        [SerializeField] private float memoryThreshold = 0.75f;
+        [SerializeField] private int maxShaderInstructions = 300;
         
-        [Header("VRChat Quality Mapping")]
-        [SerializeField] private PCSSUtilities.PCSSQuality vrcUltraQuality = PCSSUtilities.PCSSQuality.Ultra;
-        [SerializeField] private PCSSUtilities.PCSSQuality vrcHighQuality = PCSSUtilities.PCSSQuality.High;
-        [SerializeField] private PCSSUtilities.PCSSQuality vrcMediumQuality = PCSSUtilities.PCSSQuality.Medium;
-        [SerializeField] private PCSSUtilities.PCSSQuality vrcLowQuality = PCSSUtilities.PCSSQuality.Low;
-        [SerializeField] private PCSSUtilities.PCSSQuality vrcMobileQuality = PCSSUtilities.PCSSQuality.Low;
+        [Header("Dynamic Optimization")]
+        [SerializeField] private float optimizationInterval = 1.0f;
+        [SerializeField] private bool enableFrameRateBasedOptimization = true;
+        [SerializeField] private bool enableMemoryBasedOptimization = true;
+        [SerializeField] private bool enableDistanceBasedOptimization = true;
         
-        private float frameRateHistory = 90f;
-        private int currentAvatarCount = 0;
-        private bool isQuest = false;
-        private bool isVRMode = false;
+        [Header("Commercial Features")]
+        [SerializeField] private bool enableProfessionalAnalytics = true;
+        [SerializeField] private bool enableAdvancedProfiling = true;
+        [SerializeField] private bool enableCustomOptimizationProfiles = true;
         
-        private void Start()
+        private Material[] targetMaterials;
+        private Dictionary<Material, QualityProfile> materialProfiles;
+        private PerformanceMonitor performanceMonitor;
+        private OptimizationEngine optimizationEngine;
+        private bool isInitialized = false;
+        
+        [System.Serializable]
+        public class QualityProfile
         {
-            DetectPlatform();
-            if (enableAutoOptimization)
+            public string name;
+            public float shadowSoftness = 1.0f;
+            public float shadowIntensity = 1.0f;
+            public float shadowBias = 0.001f;
+            public float normalBias = 0.1f;
+            public int sampleCount = 16;
+            public float searchRadius = 0.05f;
+            public bool enableOptimization = true;
+            public float distanceFade = 50.0f;
+            public bool enableLOD = true;
+            public float qualityMultiplier = 1.0f;
+        }
+        
+        public class PerformanceMonitor
+        {
+            public float currentFrameRate { get; private set; }
+            public float averageFrameRate { get; private set; }
+            public float memoryUsage { get; private set; }
+            public int activeShaderInstructions { get; private set; }
+            public string performanceRank { get; private set; }
+            
+            private Queue<float> frameRateHistory = new Queue<float>();
+            private const int historySize = 60;
+            
+            public void Update()
             {
-                InvokeRepeating(nameof(UpdatePerformanceOptimization), 1f, 2f);
+                currentFrameRate = 1.0f / Time.unscaledDeltaTime;
+                
+                frameRateHistory.Enqueue(currentFrameRate);
+                if (frameRateHistory.Count > historySize)
+                    frameRateHistory.Dequeue();
+                
+                averageFrameRate = frameRateHistory.Average();
+                
+                UpdateMemoryUsage();
+                UpdatePerformanceRank();
+            }
+            
+            private void UpdateMemoryUsage()
+            {
+                memoryUsage = (float)System.GC.GetTotalMemory(false) / (1024 * 1024);
+            }
+            
+            private void UpdatePerformanceRank()
+            {
+                if (averageFrameRate > 80) performanceRank = "Excellent";
+                else if (averageFrameRate > 60) performanceRank = "Good";
+                else if (averageFrameRate > 45) performanceRank = "Medium";
+                else if (averageFrameRate > 30) performanceRank = "Poor";
+                else performanceRank = "Very Poor";
             }
         }
         
-        private void DetectPlatform()
+        public class OptimizationEngine
         {
-            // Quest検出
-            isQuest = SystemInfo.deviceModel.Contains("Oculus") || 
-                     Application.platform == RuntimePlatform.Android;
+            private VRChatPerformanceOptimizer optimizer;
             
-            // VRモード検出
-            isVRMode = UnityEngine.XR.XRSettings.enabled;
-            
-            // 初期最適化適用
-            if (isQuest)
+            public OptimizationEngine(VRChatPerformanceOptimizer optimizer)
             {
-                ApplyQuestOptimizations();
+                this.optimizer = optimizer;
             }
-        }
-        
-        private void UpdatePerformanceOptimization()
-        {
-            if (!enableAutoOptimization) return;
             
-            // フレームレート監視
-            float currentFPS = 1f / Time.deltaTime;
-            frameRateHistory = Mathf.Lerp(frameRateHistory, currentFPS, 0.1f);
-            
-            // アバター数取得（VRChatのAvatar Culling設定を考慮）
-            UpdateAvatarCount();
-            
-            // VRChat品質設定取得
-            var vrcQuality = GetVRChatQualityLevel();
-            
-            // 最適化実行
-            OptimizePCSSSettings(vrcQuality);
-        }
-        
-        private void UpdateAvatarCount()
-        {
-            // VRChatのMaximum Shown Avatarsを考慮
-            var renderers = FindObjectsOfType<Renderer>();
-            currentAvatarCount = 0;
-            
-            foreach (var renderer in renderers)
+            public void OptimizeMaterials()
             {
-                // アバターのレンダラーかチェック
-                if (IsAvatarRenderer(renderer))
+                if (optimizer.materialProfiles == null) return;
+                
+                foreach (var kvp in optimizer.materialProfiles)
                 {
-                    currentAvatarCount++;
+                    var material = kvp.Key;
+                    var profile = kvp.Value;
+                    
+                    OptimizeMaterial(material, profile);
+                }
+            }
+            
+            private void OptimizeMaterial(Material material, QualityProfile profile)
+            {
+                if (material == null || profile == null) return;
+                
+                // フレームレートベースの最適化
+                if (optimizer.enableFrameRateBasedOptimization)
+                {
+                    ApplyFrameRateOptimization(material, profile);
+                }
+                
+                // メモリベースの最適化
+                if (optimizer.enableMemoryBasedOptimization)
+                {
+                    ApplyMemoryOptimization(material, profile);
+                }
+                
+                // 距離ベースの最適化
+                if (optimizer.enableDistanceBasedOptimization)
+                {
+                    ApplyDistanceOptimization(material, profile);
+                }
+            }
+            
+            private void ApplyFrameRateOptimization(Material material, QualityProfile profile)
+            {
+                var frameRate = optimizer.performanceMonitor.averageFrameRate;
+                var targetFrameRate = optimizer.targetFrameRate;
+                
+                if (frameRate < targetFrameRate * optimizer.performanceThreshold)
+                {
+                    // パフォーマンスが閾値を下回った場合、品質を下げる
+                    var qualityReduction = 1.0f - (frameRate / targetFrameRate);
+                    
+                    material.SetFloat("_PCSSSampleCount", 
+                        Mathf.Max(4, profile.sampleCount * (1.0f - qualityReduction * 0.5f)));
+                    material.SetFloat("_PCSSSearchRadius", 
+                        profile.searchRadius * (1.0f - qualityReduction * 0.3f));
+                }
+            }
+            
+            private void ApplyMemoryOptimization(Material material, QualityProfile profile)
+            {
+                var memoryUsage = optimizer.performanceMonitor.memoryUsage;
+                var memoryThreshold = optimizer.memoryThreshold * 1024; // MB to bytes
+                
+                if (memoryUsage > memoryThreshold)
+                {
+                    // メモリ使用量が閾値を超えた場合、最適化を適用
+                    material.SetFloat("_PCSSAdaptiveQuality", 1.0f);
+                    material.SetFloat("_PCSSLODOptimization", 1.0f);
+                }
+            }
+            
+            private void ApplyDistanceOptimization(Material material, QualityProfile profile)
+            {
+                // カメラからの距離に基づく最適化
+                var camera = Camera.main;
+                if (camera != null)
+                {
+                    var distance = Vector3.Distance(camera.transform.position, 
+                        optimizer.transform.position);
+                    
+                    if (distance > profile.distanceFade)
+                    {
+                        var fadeAmount = Mathf.Clamp01((distance - profile.distanceFade) / profile.distanceFade);
+                        material.SetFloat("_PCSSDistanceFade", fadeAmount);
+                    }
                 }
             }
         }
         
-        private bool IsAvatarRenderer(Renderer renderer)
+        private void Awake()
         {
-            // VRChatのAvatar Culling範囲内かチェック
-            float distance = Vector3.Distance(transform.position, renderer.transform.position);
-            
-            // VRChatの"Hide Avatars Beyond"設定を模倣
-            float maxAvatarDistance = GetVRChatAvatarCullingDistance();
-            
-            return distance <= maxAvatarDistance && 
-                   renderer.gameObject.layer != LayerMask.NameToLayer("UI") &&
-                   !renderer.gameObject.name.Contains("World");
+            InitializeProfiles();
+            InitializeOptimizer();
         }
         
-        private float GetVRChatAvatarCullingDistance()
+        private void Start()
         {
-            // VRChatのHide Avatars Beyond設定を模倣
-            // デフォルト値やプラットフォームに応じて調整
-            if (isQuest)
-                return 15f; // Quest用短距離
-            else if (isVRMode)
-                return 25f; // VR用中距離
-            else
-                return 50f; // Desktop用長距離
-        }
-        
-        private string GetVRChatQualityLevel()
-        {
-            // Unity品質設定からVRChat品質レベルを推定
-            string currentQuality = QualitySettings.names[QualitySettings.GetQualityLevel()];
-            
-            // VRChatの品質設定マッピング
-            if (currentQuality.Contains("Ultra") || currentQuality.Contains("VRC Ultra"))
-                return "VRC Ultra";
-            else if (currentQuality.Contains("High") || currentQuality.Contains("VRC High"))
-                return "VRC High";
-            else if (currentQuality.Contains("Medium") || currentQuality.Contains("VRC Medium"))
-                return "VRC Medium";
-            else if (currentQuality.Contains("Low") || currentQuality.Contains("VRC Low"))
-                return "VRC Low";
-            else if (isQuest)
-                return "VRC Mobile";
-            
-            return "VRC Medium"; // デフォルト
-        }
-        
-        private void OptimizePCSSSettings(string vrcQuality)
-        {
-            PCSSUtilities.PCSSQuality targetQuality = GetPCSSQualityForVRCQuality(vrcQuality);
-            
-            // フレームレートベース調整
-            if (frameRateHistory < lowFramerateThreshold)
+            if (enableAdvancedOptimization)
             {
-                targetQuality = DowngradeQuality(targetQuality);
+                StartCoroutine(OptimizationLoop());
             }
             
-            // アバター数ベース調整
-            if (currentAvatarCount > maxAvatarsForHighQuality)
+            if (enableRealtimeMonitoring)
             {
-                targetQuality = DowngradeQuality(targetQuality);
+                StartCoroutine(MonitoringLoop());
             }
-            
-            // VRC Light Volumes最適化
-            OptimizeVRCLightVolumes(targetQuality);
-            
-            // PCSS設定適用
-            ApplyPCSSQuality(targetQuality);
         }
         
-        private PCSSUtilities.PCSSQuality GetPCSSQualityForVRCQuality(string vrcQuality)
+        private void InitializeProfiles()
         {
-            return vrcQuality switch
+            ultraQualityProfile = new QualityProfile
             {
-                "VRC Ultra" => vrcUltraQuality,
-                "VRC High" => vrcHighQuality,
-                "VRC Medium" => vrcMediumQuality,
-                "VRC Low" => vrcLowQuality,
-                "VRC Mobile" => vrcMobileQuality,
-                _ => PCSSUtilities.PCSSQuality.Medium
+                name = "Ultra Quality",
+                shadowSoftness = 2.0f,
+                shadowIntensity = 1.2f,
+                shadowBias = 0.0005f,
+                normalBias = 0.05f,
+                sampleCount = 32,
+                searchRadius = 0.1f,
+                enableOptimization = false,
+                distanceFade = 100.0f,
+                enableLOD = false,
+                qualityMultiplier = 1.5f
+            };
+            
+            highQualityProfile = new QualityProfile
+            {
+                name = "High Quality",
+                shadowSoftness = 1.5f,
+                shadowIntensity = 1.0f,
+                shadowBias = 0.001f,
+                normalBias = 0.1f,
+                sampleCount = 24,
+                searchRadius = 0.075f,
+                enableOptimization = true,
+                distanceFade = 75.0f,
+                enableLOD = true,
+                qualityMultiplier = 1.2f
+            };
+            
+            mediumQualityProfile = new QualityProfile
+            {
+                name = "Medium Quality",
+                shadowSoftness = 1.0f,
+                shadowIntensity = 0.8f,
+                shadowBias = 0.002f,
+                normalBias = 0.15f,
+                sampleCount = 16,
+                searchRadius = 0.05f,
+                enableOptimization = true,
+                distanceFade = 50.0f,
+                enableLOD = true,
+                qualityMultiplier = 1.0f
+            };
+            
+            questQualityProfile = new QualityProfile
+            {
+                name = "Quest Quality",
+                shadowSoftness = 0.8f,
+                shadowIntensity = 0.6f,
+                shadowBias = 0.003f,
+                normalBias = 0.2f,
+                sampleCount = 8,
+                searchRadius = 0.03f,
+                enableOptimization = true,
+                distanceFade = 30.0f,
+                enableLOD = true,
+                qualityMultiplier = 0.7f
             };
         }
         
-        private PCSSUtilities.PCSSQuality DowngradeQuality(PCSSUtilities.PCSSQuality current)
+        private void InitializeOptimizer()
         {
-            return current switch
-            {
-                PCSSUtilities.PCSSQuality.Ultra => PCSSUtilities.PCSSQuality.High,
-                PCSSUtilities.PCSSQuality.High => PCSSUtilities.PCSSQuality.Medium,
-                PCSSUtilities.PCSSQuality.Medium => PCSSUtilities.PCSSQuality.Low,
-                PCSSUtilities.PCSSQuality.Low => PCSSUtilities.PCSSQuality.Low,
-                _ => PCSSUtilities.PCSSQuality.Low
-            };
-        }
-        
-        private void OptimizeVRCLightVolumes(PCSSUtilities.PCSSQuality quality)
-        {
-            var lightVolumeIntegration = GetComponent<VRCLightVolumesIntegration>();
-            if (lightVolumeIntegration == null) return;
+            performanceMonitor = new PerformanceMonitor();
+            optimizationEngine = new OptimizationEngine(this);
             
-            // VRC Light Volumes最適化設定
-            switch (quality)
-            {
-                case PCSSUtilities.PCSSQuality.Ultra:
-                    lightVolumeIntegration.maxLightVolumeDistance = 150;
-                    lightVolumeIntegration.updateFrequency = 0.05f;
-                    lightVolumeIntegration.enableMobileOptimization = false;
-                    break;
-                
-                case PCSSUtilities.PCSSQuality.High:
-                    lightVolumeIntegration.maxLightVolumeDistance = 100;
-                    lightVolumeIntegration.updateFrequency = 0.1f;
-                    lightVolumeIntegration.enableMobileOptimization = false;
-                    break;
-                
-                case PCSSUtilities.PCSSQuality.Medium:
-                    lightVolumeIntegration.maxLightVolumeDistance = 75;
-                    lightVolumeIntegration.updateFrequency = 0.15f;
-                    lightVolumeIntegration.enableMobileOptimization = true;
-                    break;
-                
-                case PCSSUtilities.PCSSQuality.Low:
-                    lightVolumeIntegration.maxLightVolumeDistance = 50;
-                    lightVolumeIntegration.updateFrequency = 0.2f;
-                    lightVolumeIntegration.enableMobileOptimization = true;
-                    break;
-            }
-        }
-        
-        private void ApplyPCSSQuality(PCSSUtilities.PCSSQuality quality)
-        {
-            // シーン内のすべてのPCSSマテリアルに適用
-            var materials = FindPCSSMaterials();
-            
-            foreach (var material in materials)
-            {
-                PCSSUtilities.ApplyQualitySettings(material, quality);
-                
-                // VRChat特有の最適化
-                ApplyVRChatSpecificOptimizations(material, quality);
-            }
-        }
-        
-        private Material[] FindPCSSMaterials()
-        {
-            var renderers = FindObjectsOfType<Renderer>();
-            var pcssMaterials = new System.Collections.Generic.List<Material>();
+            // ターゲットマテリアルの検索
+            var renderers = GetComponentsInChildren<Renderer>();
+            var materials = new List<Material>();
             
             foreach (var renderer in renderers)
             {
                 foreach (var material in renderer.materials)
                 {
-                    if (PCSSUtilities.IsPCSSMaterial(material))
+                    if (material.shader.name.Contains("lilToon") && 
+                        material.shader.name.Contains("PCSS"))
                     {
-                        pcssMaterials.Add(material);
+                        materials.Add(material);
                     }
                 }
             }
             
-            return pcssMaterials.ToArray();
-        }
-        
-        private void ApplyVRChatSpecificOptimizations(Material material, PCSSUtilities.PCSSQuality quality)
-        {
-            if (!PCSSUtilities.IsPCSSMaterial(material)) return;
+            targetMaterials = materials.ToArray();
+            materialProfiles = new Dictionary<Material, QualityProfile>();
             
-            // VRChatのShadow Quality設定を考慮
-            var shadowQuality = QualitySettings.shadowResolution;
-            
-            switch (shadowQuality)
+            // デフォルトプロファイルの適用
+            foreach (var material in targetMaterials)
             {
-                case ShadowResolution.Low:
-                    material.SetFloat("_PCSSBias", 0.01f);
-                    break;
-                case ShadowResolution.Medium:
-                    material.SetFloat("_PCSSBias", 0.005f);
-                    break;
-                case ShadowResolution.High:
-                    material.SetFloat("_PCSSBias", 0.002f);
-                    break;
-                case ShadowResolution.VeryHigh:
-                    material.SetFloat("_PCSSBias", 0.001f);
-                    break;
+                materialProfiles[material] = GetOptimalProfile();
             }
             
-            // VRChatのLOD Quality設定を考慮
-            float lodBias = QualitySettings.lodBias;
-            if (lodBias < 1.5f) // Low LOD Quality
+            isInitialized = true;
+        }
+        
+        private QualityProfile GetOptimalProfile()
+        {
+            // VRChatプラットフォーム検出
+            if (IsVRChatQuest())
             {
-                // LOD品質が低い場合はPCSSも控えめに
-                float currentRadius = material.GetFloat("_PCSSFilterRadius");
-                material.SetFloat("_PCSSFilterRadius", currentRadius * 0.8f);
+                return questQualityProfile;
+            }
+            else if (IsVRChatPC())
+            {
+                return highQualityProfile;
+            }
+            else
+            {
+                return mediumQualityProfile;
             }
         }
         
-        private void ApplyQuestOptimizations()
+        private bool IsVRChatQuest()
         {
-            // Quest専用最適化
-            Application.targetFrameRate = 72; // Quest 2の標準フレームレート
-            lowFramerateThreshold = 36f; // Quest用低フレームレート閾値
-            maxAvatarsForHighQuality = 5; // Quest用アバター数制限
-            
-            // Quest用品質マッピング
-            vrcUltraQuality = PCSSUtilities.PCSSQuality.Medium;
-            vrcHighQuality = PCSSUtilities.PCSSQuality.Medium;
-            vrcMediumQuality = PCSSUtilities.PCSSQuality.Low;
-            vrcLowQuality = PCSSUtilities.PCSSQuality.Low;
-            vrcMobileQuality = PCSSUtilities.PCSSQuality.Low;
+            #if UNITY_ANDROID
+            return true;
+            #else
+            return false;
+            #endif
+        }
+        
+        private bool IsVRChatPC()
+        {
+            #if UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX
+            return true;
+            #else
+            return false;
+            #endif
+        }
+        
+        private IEnumerator OptimizationLoop()
+        {
+            while (enabled)
+            {
+                yield return new WaitForSeconds(optimizationInterval);
+                
+                if (isInitialized && enableDynamicQualityAdjustment)
+                {
+                    optimizationEngine.OptimizeMaterials();
+                }
+            }
+        }
+        
+        private IEnumerator MonitoringLoop()
+        {
+            while (enabled)
+            {
+                yield return new WaitForEndOfFrame();
+                
+                if (performanceMonitor != null)
+                {
+                    performanceMonitor.Update();
+                    
+                    if (enableProfessionalAnalytics)
+                    {
+                        LogPerformanceMetrics();
+                    }
+                }
+            }
+        }
+        
+        private void LogPerformanceMetrics()
+        {
+            if (Time.frameCount % 300 == 0) // 5秒間隔でログ出力
+            {
+                Debug.Log($"[PCSS Professional] Performance: {performanceMonitor.performanceRank} " +
+                         $"(FPS: {performanceMonitor.averageFrameRate:F1}, " +
+                         $"Memory: {performanceMonitor.memoryUsage:F1}MB)");
+            }
         }
         
         /// <summary>
-        /// パフォーマンス統計取得
+        /// 手動でプロファイルを適用
+        /// </summary>
+        public void ApplyProfile(QualityProfile profile)
+        {
+            if (!isInitialized || profile == null) return;
+            
+            foreach (var material in targetMaterials)
+            {
+                if (material != null)
+                {
+                    materialProfiles[material] = profile;
+                    ApplyProfileToMaterial(material, profile);
+                }
+            }
+        }
+        
+        private void ApplyProfileToMaterial(Material material, QualityProfile profile)
+        {
+            material.SetFloat("_PCSSSoftness", profile.shadowSoftness);
+            material.SetFloat("_PCSSIntensity", profile.shadowIntensity);
+            material.SetFloat("_PCSSShadowBias", profile.shadowBias);
+            material.SetFloat("_PCSSNormalBias", profile.normalBias);
+            material.SetFloat("_PCSSSampleCount", profile.sampleCount);
+            material.SetFloat("_PCSSSearchRadius", profile.searchRadius);
+            material.SetFloat("_PCSSAdaptiveQuality", profile.enableOptimization ? 1.0f : 0.0f);
+            material.SetFloat("_PCSSDistanceFade", profile.distanceFade);
+            material.SetFloat("_PCSSLODOptimization", profile.enableLOD ? 1.0f : 0.0f);
+        }
+        
+        /// <summary>
+        /// パフォーマンス統計の取得
         /// </summary>
         public PerformanceStats GetPerformanceStats()
         {
+            if (performanceMonitor == null) return new PerformanceStats();
+            
             return new PerformanceStats
             {
-                CurrentFPS = this.frameRateHistory,
-                AvatarCount = this.currentAvatarCount,
-                IsQuest = this.isQuest,
-                IsVRMode = this.isVRMode,
-                VRCQuality = GetVRChatQualityLevel(),
-                CurrentPCSSQuality = GetCurrentPCSSQuality()
+                frameRate = performanceMonitor.averageFrameRate,
+                memoryUsage = performanceMonitor.memoryUsage,
+                performanceRank = performanceMonitor.performanceRank,
+                shaderInstructions = performanceMonitor.activeShaderInstructions,
+                optimizationLevel = GetCurrentOptimizationLevel()
             };
         }
         
-        private PCSSUtilities.PCSSQuality GetCurrentPCSSQuality()
+        private float GetCurrentOptimizationLevel()
         {
-            var materials = FindPCSSMaterials();
-            if (materials.Length > 0)
-            {
-                return PCSSUtilities.GetMaterialQuality(materials[0]);
-            }
-            return PCSSUtilities.PCSSQuality.Medium;
+            if (materialProfiles == null || materialProfiles.Count == 0) return 1.0f;
+            
+            var totalQuality = materialProfiles.Values.Sum(p => p.qualityMultiplier);
+            return totalQuality / materialProfiles.Count;
+        }
+        
+        [System.Serializable]
+        public struct PerformanceStats
+        {
+            public float frameRate;
+            public float memoryUsage;
+            public string performanceRank;
+            public int shaderInstructions;
+            public float optimizationLevel;
         }
         
         /// <summary>
-        /// 手動最適化実行
+        /// 商用版限定: 高度な最適化設定
         /// </summary>
-        [ContextMenu("Force Optimization")]
-        public void ForceOptimization()
+        public void EnableProfessionalOptimizations()
         {
-            UpdatePerformanceOptimization();
+            if (!enableCommercialOptimizations) return;
+            
+            enableAdvancedOptimization = true;
+            enableDynamicQualityAdjustment = true;
+            enableRealtimeMonitoring = true;
+            enableProfessionalAnalytics = true;
+            enableAdvancedProfiling = true;
+            
+            // 商用版限定の高度な最適化を適用
+            ApplyCommercialOptimizations();
         }
-    }
-    
-    [System.Serializable]
-    public struct PerformanceStats
-    {
-        public float CurrentFPS;
-        public int AvatarCount;
-        public bool IsQuest;
-        public bool IsVRMode;
-        public string VRCQuality;
-        public PCSSUtilities.PCSSQuality CurrentPCSSQuality;
+        
+        private void ApplyCommercialOptimizations()
+        {
+            // 商用版限定の最適化ロジック
+            foreach (var material in targetMaterials)
+            {
+                if (material != null)
+                {
+                    // 高度なシェーダー最適化
+                    material.SetFloat("_PCSSCommercialOptimization", 1.0f);
+                    material.SetFloat("_PCSSProfessionalQuality", 1.0f);
+                    
+                    // 商用版限定のキーワード有効化
+                    material.EnableKeyword("PCSS_PROFESSIONAL_EDITION");
+                    material.EnableKeyword("PCSS_COMMERCIAL_OPTIMIZATION");
+                }
+            }
+            
+            Debug.Log("[PCSS Professional] Commercial optimizations enabled");
+        }
+        
+        private void OnDestroy()
+        {
+            StopAllCoroutines();
+        }
+        
+        #if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (Application.isPlaying && isInitialized)
+            {
+                // エディタでの値変更を即座に反映
+                optimizationEngine?.OptimizeMaterials();
+            }
+        }
+        #endif
     }
 } 

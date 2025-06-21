@@ -1,17 +1,100 @@
 {
-  "name": "lilToon PCSS Extension - All-in-One Edition Repository",
+  "name": "lilToon PCSS Extension - Professional Edition Repository",
   "id": "com.liltoon.pcss-extension.vpm-repository",
   "url": "https://zapabob.github.io/liltoon-pcss-extension/index.json",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "author": {
     "name": "lilToon PCSS Extension Team",
     "email": "r.minegishi1987@gmail.com",
     "url": "https://github.com/zapabob/liltoon-pcss-extension"
   },
-  "description": "Official VPM Repository for lilToon PCSS Extension - All-in-One Edition. The ultimate PCSS solution for VRChat avatars with complete lilToon integration, VRC Light Volumes support, and one-click VCC installation.",
+  "description": "Official VPM Repository for lilToon PCSS Extension - Professional Edition. The ultimate PCSS solution for VRChat avatars with commercial-grade features, advanced optimization, and professional support.",
   "packages": {
     "com.liltoon.pcss-extension": {
       "versions": {
+        "1.3.0": {
+          "name": "com.liltoon.pcss-extension",
+          "displayName": "lilToon PCSS Extension - Professional Edition",
+          "version": "1.3.0",
+          "description": "Professional-grade PCSS solution with commercial license, advanced performance optimization, dynamic quality adjustment, real-time monitoring, Bakery integration, and comprehensive commercial support. Includes professional quality profiles, advanced analytics, and unlimited commercial usage rights.",
+          "unity": "2022.3",
+          "unityRelease": "10",
+          "keywords": [
+            "shader",
+            "toon",
+            "avatar",
+            "pcss",
+            "shadows",
+            "vrchat",
+            "liltoon",
+            "professional",
+            "commercial",
+            "premium",
+            "advanced",
+            "optimization",
+            "analytics",
+            "bakery",
+            "lightmapping",
+            "quality",
+            "performance",
+            "monitoring",
+            "vcc",
+            "quest",
+            "modular-avatar",
+            "professional-edition",
+            "commercial-license"
+          ],
+          "author": {
+            "name": "lilToon PCSS Extension Team",
+            "email": "support@liltoon-pcss.dev",
+            "url": "https://zapabob.github.io/liltoon-pcss-extension"
+          },
+          "dependencies": {
+            "com.unity.render-pipelines.universal": "7.1.8"
+          },
+          "vpmDependencies": {
+            "com.vrchat.avatars": ">=3.7.0",
+            "com.vrchat.base": ">=3.7.0",
+            "jp.lilxyzw.liltoon": ">=1.10.3",
+            "nadena.dev.modular-avatar": ">=1.12.0"
+          },
+          "legacyFolders": {},
+          "legacyFiles": {},
+          "url": "https://zapabob.github.io/liltoon-pcss-extension/Release/com.liltoon.pcss-extension-1.3.0.zip",
+          "zipSHA256": "1EA1E61A5FDE512C6DAF57BCF58D64925B83ADF0A3919A4972F00BEE5B4145D5",
+          "repo": "https://github.com/zapabob/liltoon-pcss-extension",
+          "changelogUrl": "https://zapabob.github.io/liltoon-pcss-extension/CHANGELOG.md",
+          "documentationUrl": "https://zapabob.github.io/liltoon-pcss-extension/site/documentation.html",
+          "licensesUrl": "https://zapabob.github.io/liltoon-pcss-extension/LICENSE",
+          "samples": [
+            {
+              "displayName": "Professional PCSS Materials",
+              "description": "Premium quality materials demonstrating advanced PCSS effects with professional-grade settings for commercial use",
+              "path": "Samples~/ProfessionalPCSSMaterials"
+            },
+            {
+              "displayName": "VRChat Expression Setup Pro",
+              "description": "Advanced VRChat Expression Menu and Parameters with professional optimization for commercial avatars",
+              "path": "Samples~/VRChatExpressionsPro"
+            },
+            {
+              "displayName": "ModularAvatar Professional Prefabs",
+              "description": "Commercial-ready ModularAvatar prefabs with advanced optimization and professional configuration",
+              "path": "Samples~/ModularAvatarProfessionalPrefabs"
+            },
+            {
+              "displayName": "Bakery Integration Suite",
+              "description": "Complete Bakery lightmapping integration with professional-grade lighting setups",
+              "path": "Samples~/BakeryIntegration"
+            },
+            {
+              "displayName": "Performance Optimization Toolkit",
+              "description": "Advanced performance optimization tools and presets for commercial VRChat content",
+              "path": "Samples~/PerformanceOptimization"
+            }
+          ],
+          "hideInEditor": false
+        },
         "1.2.6": {
           "name": "com.liltoon.pcss-extension",
           "displayName": "lilToon PCSS Extension - All-in-One Edition",
