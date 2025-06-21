@@ -55,9 +55,9 @@
             "com.vrchat.avatars": "3.7.0",
             "com.vrchat.base": "3.7.0"
           },
-          "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.2.0/com.liltoon.pcss-extension-1.2.0.zip",
+          "url": "https://zapabob.github.io/liltoon-pcss-extension/Release/com.liltoon.pcss-extension-1.2.0.zip",
           "repo": "https://github.com/zapabob/liltoon-pcss-extension",
-          "zipSHA256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "zipSHA256": "9B513884E03A4CC65CF4FA38CBB1A7852366E5B6ADF3807F7DA9C099D8255EB3",
           "samples": [
             {
               "displayName": "PCSS Sample Materials",
