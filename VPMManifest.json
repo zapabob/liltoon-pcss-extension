@@ -9,6 +9,99 @@
   "packages": {
     "com.liltoon.pcss-extension": {
       "versions": {
+        "1.2.2": {
+          "name": "com.liltoon.pcss-extension",
+          "displayName": "lilToon PCSS Extension - All-in-One Edition",
+          "version": "1.2.2",
+          "description": "Complete PCSS (Percentage-Closer Soft Shadows) solution with automatic lilToon compatibility management, VRChat SDK3 integration, VRC Light Volumes support, and one-click setup via VCC. Fixed all C# compilation errors for stable Unity integration.",
+          "unity": "2019.4",
+          "unityRelease": "31f1",
+          "author": {
+            "name": "lilToon PCSS Extension Team",
+            "email": "r.minegishi1987@gmail.com",
+            "url": "https://github.com/zapabob"
+          },
+          "vpmDependencies": {
+            "com.vrchat.avatars": "3.7.0",
+            "com.vrchat.base": "3.7.0",
+            "jp.lilxyzw.liltoon": "1.10.3",
+            "nadena.dev.modular-avatar": "1.10.0"
+          },
+          "url": "https://zapabob.github.io/liltoon-pcss-extension/Release/com.liltoon.pcss-extension-1.2.2.zip",
+          "repo": "https://github.com/zapabob/liltoon-pcss-extension.git",
+          "license": "MIT",
+          "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE",
+          "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
+          "documentationUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/README.md",
+          "keywords": [
+            "shader",
+            "toon",
+            "avatar",
+            "pcss",
+            "shadows",
+            "vrchat",
+            "liltoon",
+            "poiyomi",
+            "expression",
+            "lightvolumes",
+            "vrc-light-volumes",
+            "bakery",
+            "lighting",
+            "modular-avatar",
+            "vrchat-sdk3",
+            "performance",
+            "optimization",
+            "all-in-one",
+            "booth",
+            "compilation-fix"
+          ]
+        },
+        "1.2.1": {
+          "name": "com.liltoon.pcss-extension",
+          "displayName": "lilToon PCSS Extension - All-in-One Edition",
+          "version": "1.2.1",
+          "description": "Complete PCSS (Percentage-Closer Soft Shadows) solution with automatic lilToon compatibility management, VRChat SDK3 integration, VRC Light Volumes support, and one-click setup via VCC. Compatible with lilToon v1.10.3 and VRC Light Volumes.",
+          "unity": "2019.4",
+          "unityRelease": "31f1",
+          "author": {
+            "name": "lilToon PCSS Extension Team",
+            "email": "r.minegishi1987@gmail.com",
+            "url": "https://github.com/zapabob"
+          },
+          "vpmDependencies": {
+            "com.vrchat.avatars": "3.7.0",
+            "com.vrchat.base": "3.7.0",
+            "jp.lilxyzw.liltoon": "1.10.3",
+            "nadena.dev.modular-avatar": "1.10.0"
+          },
+          "url": "https://zapabob.github.io/liltoon-pcss-extension/Release/com.liltoon.pcss-extension-1.2.1.zip",
+          "repo": "https://github.com/zapabob/liltoon-pcss-extension.git",
+          "license": "MIT",
+          "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE",
+          "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
+          "documentationUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/README.md",
+          "keywords": [
+            "shader",
+            "toon",
+            "avatar",
+            "pcss",
+            "shadows",
+            "vrchat",
+            "liltoon",
+            "poiyomi",
+            "expression",
+            "lightvolumes",
+            "vrc-light-volumes",
+            "bakery",
+            "lighting",
+            "modular-avatar",
+            "vrchat-sdk3",
+            "performance",
+            "optimization",
+            "all-in-one",
+            "booth"
+          ]
+        },
         "1.2.0": {
           "name": "com.liltoon.pcss-extension",
           "displayName": "lilToon PCSS Extension",

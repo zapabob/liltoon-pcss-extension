@@ -8,7 +8,7 @@ namespace lilToon.PCSS
     {
         [Header("PCSS Configuration")]
         public bool enablePCSS = true;
-        public PCSSQuality quality = PCSSQuality.Medium;
+        public PCSSUtilities.PCSSQuality quality = PCSSUtilities.PCSSQuality.Medium;
         public float blockerSearchRadius = 0.01f;
         public float filterRadius = 0.01f;
         public int sampleCount = 16;
@@ -25,13 +25,8 @@ namespace lilToon.PCSS
         public bool autoDetectPoiyomiShader = true;
     }
     
-    public enum PCSSQuality
-    {
-        Low = 0,
-        Medium = 1,
-        High = 2,
-        Ultra = 3
-    }
+    // PCSSQuality enum is now defined in PCSSUtilities class
+    // Use PCSSUtilities.PCSSQuality instead
     
     /// <summary>
     /// Poiyomi PCSS Integration Component
@@ -48,13 +43,13 @@ namespace lilToon.PCSS
         private Dictionary<string, float> expressionParameters = new Dictionary<string, float>();
         
         // Quality presets
-        private static readonly Dictionary<PCSSQuality, PCSSQualityData> qualityPresets = 
-            new Dictionary<PCSSQuality, PCSSQualityData>
+        private static readonly Dictionary<PCSSUtilities.PCSSQuality, PCSSQualityData> qualityPresets = 
+            new Dictionary<PCSSUtilities.PCSSQuality, PCSSQualityData>
         {
-            { PCSSQuality.Low, new PCSSQualityData(8, 0.005f, 0.005f, 0.05f, 0.0005f) },
-            { PCSSQuality.Medium, new PCSSQualityData(16, 0.01f, 0.01f, 0.1f, 0.001f) },
-            { PCSSQuality.High, new PCSSQualityData(32, 0.015f, 0.015f, 0.15f, 0.0015f) },
-            { PCSSQuality.Ultra, new PCSSQualityData(64, 0.02f, 0.02f, 0.2f, 0.002f) }
+            { PCSSUtilities.PCSSQuality.Low, new PCSSQualityData(8, 0.005f, 0.005f, 0.05f, 0.0005f) },
+            { PCSSUtilities.PCSSQuality.Medium, new PCSSQualityData(16, 0.01f, 0.01f, 0.1f, 0.001f) },
+            { PCSSUtilities.PCSSQuality.High, new PCSSQualityData(32, 0.015f, 0.015f, 0.15f, 0.0015f) },
+            { PCSSUtilities.PCSSQuality.Ultra, new PCSSQualityData(64, 0.02f, 0.02f, 0.2f, 0.002f) }
         };
         
         public PoiyomiPCSSSettings Settings => settings;
@@ -255,7 +250,7 @@ namespace lilToon.PCSS
         /// <summary>
         /// Set PCSS quality
         /// </summary>
-        public void SetPCSSQuality(PCSSQuality quality)
+        public void SetPCSSQuality(PCSSUtilities.PCSSQuality quality)
         {
             settings.quality = quality;
             ApplyPCSSSettings();
@@ -277,7 +272,7 @@ namespace lilToon.PCSS
         /// <summary>
         /// Get current PCSS quality
         /// </summary>
-        public PCSSQuality GetPCSSQuality()
+        public PCSSUtilities.PCSSQuality GetPCSSQuality()
         {
             return settings.quality;
         }

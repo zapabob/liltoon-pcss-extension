@@ -296,7 +296,7 @@ namespace lilToon.PCSS
         private void ApplyQuestOptimizations()
         {
             // Quest専用最適化
-            targetFramerate = 72f; // Quest 2の標準フレームレート
+            Application.targetFrameRate = 72; // Quest 2の標準フレームレート
             lowFramerateThreshold = 36f; // Quest用低フレームレート閾値
             maxAvatarsForHighQuality = 5; // Quest用アバター数制限
             
