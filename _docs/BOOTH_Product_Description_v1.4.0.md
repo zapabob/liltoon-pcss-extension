@@ -199,18 +199,14 @@
 ### 💌 お問い合わせ
 
 - **Discord**: [lilToon PCSS Community](https://discord.gg/liltoon-pcss)
-- **メール**: enterprise@liltoon-pcss.dev
+- **メール**: Boothのメールよりどうぞ
 - **GitHub**: [Issues & Support](https://github.com/zapabob/liltoon-pcss-extension/issues)
-- **Twitter**: [@lilToonPCSS](https://twitter.com/lilToonPCSS)
+- **Twitter**: [@zapabob_ouj](https://twitter.com/zapabob_ouj)
 
 ---
 
 **🌟 映画品質のソフトシャドウで、あなたのアバターを次のレベルへ！**  
 **💰 競合の10倍機能で同等価格の衝撃コスパ！**  
 **🚀 今すぐダウンロードして、VRChatライフを革新しよう！**
-
----
-
-*本製品は継続的にアップデートされ、購入者には無料で提供されます。*  
-*商用利用・再配布・改変すべて込みの完全ライセンスです。*  
+  
 *24/7エンタープライズサポートで安心してご利用いただけます。* 
