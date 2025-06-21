@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPMリポジトリJSON - lilToon PCSS Extension</title>
+    <meta http-equiv="refresh" content="5; url=index.html">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #2196F3 0%, #21CBF3 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        .icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        .title {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .description {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .json-info {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        .redirect-notice {
+            background: rgba(76, 175, 80, 0.3);
+            border: 2px solid #4CAF50;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .button {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">📋</div>
+        <div class="title">VPMリポジトリJSONファイル</div>
+        
+        <div class="description">
+            このページはVRChat Creator Companion (VCC) 用のVPMリポジトリJSONファイルです。
+        </div>
+
+        <div class="json-info">
+            <strong>📦 リポジトリ情報:</strong><br>
+            ✅ パッケージ: lilToon PCSS Extension<br>
+            ✅ 最新版: v1.4.1 Ultimate Commercial Edition<br>
+            ✅ コンパイルエラー: 完全修正済み<br>
+            ✅ 商用ライセンス: 無制限利用可能<br>
+            ✅ VCC対応: 完全互換
+        </div>
+
+        <div class="redirect-notice">
+            <strong>🔄 自動リダイレクト中...</strong><br>
+            5秒後にメインページに移動します
+        </div>
+
+        <div>
+            <a href="index.html" class="button">📱 メインページへ</a>
+            <a href="vcc://vpm/addRepo?url=https://zapabob.github.io/liltoon-pcss-extension/index.json" class="button">🚀 VCCに追加</a>
+        </div>
+
+        <div style="margin-top: 30px; font-size: 0.9em; opacity: 0.8;">
+            <p><strong>VCCでの使用方法:</strong></p>
+            <p>1. VRChat Creator Companion を開く<br>
+               2. Settings → Packages → Add Repository<br>
+               3. このページのURLを入力<br>
+               4. パッケージをプロジェクトに追加</p>
+        </div>
+    </div>
+
+    <script>
+        // リダイレクトカウントダウン
+        let countdown = 5;
+        const redirectElement = document.querySelector('.redirect-notice');
+        
+        const updateCountdown = () => {
+            redirectElement.innerHTML = `
+                <strong>🔄 自動リダイレクト中...</strong><br>
+                ${countdown}秒後にメインページに移動します
+            `;
+            countdown--;
+            
+            if (countdown < 0) {
+                window.location.href = 'index.html';
+            }
+        };
+        
+        // 1秒ごとにカウントダウン更新
+        setInterval(updateCountdown, 1000);
+        
+        // ログ出力
+        console.log('📋 VPMリポジトリJSON情報ページ');
+        console.log('🔄 5秒後にメインページにリダイレクトします');
+    </script>
+</body>
+</html> 

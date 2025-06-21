@@ -5,6 +5,10 @@
   Access-Control-Allow-Methods: GET, HEAD, OPTIONS
   Access-Control-Allow-Headers: Content-Type, User-Agent, Accept
   Cache-Control: public, max-age=300
+  X-Content-Type-Options: nosniff
+  X-VPM-Repository: lilToon PCSS Extension Ultimate Commercial
+  X-VPM-Version: 1.4.1
+  X-VPM-Status: Active
 
 /vpm.json
   Content-Type: application/json; charset=utf-8
@@ -20,12 +24,32 @@
   Access-Control-Allow-Headers: Content-Type, User-Agent, Accept
   Cache-Control: public, max-age=60
 
+# JSON情報ページ
+/json-info.html
+  Content-Type: text/html; charset=utf-8
+  Cache-Control: public, max-age=3600
+  X-Robots-Tag: noindex, nofollow
+
 # All JSON files
 /*.json
   Content-Type: application/json; charset=utf-8
   Access-Control-Allow-Origin: *
+  X-Robots-Tag: noindex, nofollow
 
 # Release files
 /Release/*
   Access-Control-Allow-Origin: *
-  Cache-Control: public, max-age=86400 
+  Cache-Control: public, max-age=86400
+
+# HTML pages
+/*.html
+  Content-Type: text/html; charset=utf-8
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+
+# Root index page
+/
+  Content-Type: text/html; charset=utf-8
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff 

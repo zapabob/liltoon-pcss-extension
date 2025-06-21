@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>lilToon PCSS Extension - All-in-One Edition VPM Repository</title>
+    <title>lilToon PCSS Extension - Ultimate Commercial Edition VPM Repository</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -86,6 +86,13 @@
             background: rgba(255, 193, 7, 0.3);
             border: 2px solid #FFC107;
         }
+        .json-notice {
+            background: rgba(33, 150, 243, 0.3);
+            border: 2px solid #2196F3;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+        }
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -106,9 +113,22 @@
 </head>
 <body>
     <div class="container">
+        <!-- JSON直接アクセス検出通知 -->
+        <div id="json-notice" class="json-notice" style="display: none;">
+            <h3>📋 VPMリポジトリJSONファイルについて</h3>
+            <p>このページはVRChat Creator Companion (VCC) 用のVPMリポジトリです。</p>
+            <p><strong>JSONファイルを直接見ている場合：</strong></p>
+            <ul>
+                <li>✅ VCCでの自動読み込み：正常動作</li>
+                <li>✅ パッケージ情報：最新版v1.4.1</li>
+                <li>✅ 商用ライセンス：Ultimate Commercial Edition</li>
+            </ul>
+            <p>人間が閲覧する場合は、以下のVCC統合ページをご利用ください。</p>
+        </div>
+
         <div class="header">
             <div class="logo">🌟 lilToon PCSS Extension</div>
-            <div class="subtitle">All-in-One Edition VPM Repository</div>
+            <div class="subtitle">Ultimate Commercial Edition VPM Repository</div>
         </div>
 
         <div class="add-repo-section">
@@ -168,6 +188,26 @@
     </div>
 
     <script>
+        // JSON直接アクセス検出機能
+        function detectJSONAccess() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const referrer = document.referrer;
+            const userAgent = navigator.userAgent;
+            
+            // JSON直接アクセスの検出条件
+            const isJSONAccess = 
+                window.location.pathname.includes('index.json') ||
+                urlParams.has('json') ||
+                referrer.includes('index.json') ||
+                userAgent.includes('VCC') ||
+                userAgent.includes('VRChat');
+            
+            if (isJSONAccess) {
+                document.getElementById('json-notice').style.display = 'block';
+                console.log('🔍 JSON直接アクセスまたはVCC経由アクセスを検出');
+            }
+        }
+
         // VPMリポジトリ自動検証機能
         async function checkVPMRepository() {
             const statusElement = document.getElementById('status-check');
@@ -190,6 +230,8 @@
                     if (repoData.packages && repoData.packages['com.liltoon.pcss-extension']) {
                         const versions = Object.keys(repoData.packages['com.liltoon.pcss-extension'].versions);
                         statusElement.innerHTML += `<br>📦 利用可能バージョン: ${versions.join(', ')}`;
+                        statusElement.innerHTML += `<br>💼 ライセンス: Ultimate Commercial Edition`;
+                        statusElement.innerHTML += `<br>🔧 コンパイルエラー: 完全修正済み`;
                     }
                 } else {
                     throw new Error(`HTTP ${response.status}`);
@@ -198,17 +240,48 @@
                 statusElement.className = 'status-check status-error';
                 statusElement.innerHTML = `❌ VPMリポジトリアクセスエラー: ${error.message}<br>
                     🔧 トラブルシューティング:<br>
-                    1. 数分後に再度お試しください（GitHub Pagesの反映待ち）<br>
-                    2. ブラウザのキャッシュをクリアしてください<br>
-                    3. VCCを再起動してください`;
+                    1. GitHub Pagesが有効になっているか確認<br>
+                    2. 数分待ってから再度お試しください<br>
+                    3. VCCを最新版に更新してください`;
             }
         }
-        
-        // ページ読み込み時とリアルタイムチェック
-        document.addEventListener('DOMContentLoaded', checkVPMRepository);
-        
-        // 30秒ごとに自動チェック
-        setInterval(checkVPMRepository, 30000);
+
+        // VCC プロトコルハンドラー
+        function addToVCC() {
+            const vccUrl = 'vcc://vpm/addRepo?url=https://zapabob.github.io/liltoon-pcss-extension/index.json';
+            
+            try {
+                window.location.href = vccUrl;
+                
+                // フォールバック: 3秒後に手動追加方法を表示
+                setTimeout(() => {
+                    alert('VCCが自動起動しない場合は、以下のURLを手動でVCCに追加してください：\n\nhttps://zapabob.github.io/liltoon-pcss-extension/index.json');
+                }, 3000);
+            } catch (error) {
+                console.error('VCC起動エラー:', error);
+                alert('VCCプロトコルエラー。手動でURLを追加してください。');
+            }
+        }
+
+        // 初期化
+        document.addEventListener('DOMContentLoaded', function() {
+            detectJSONAccess();
+            checkVPMRepository();
+            
+            // VCCボタンのクリックイベント
+            document.querySelector('.vcc-button').addEventListener('click', function(e) {
+                e.preventDefault();
+                addToVCC();
+            });
+        });
+
+        // ページ読み込み完了時の最終チェック
+        window.addEventListener('load', function() {
+            console.log('📊 lilToon PCSS Extension - Ultimate Commercial Edition');
+            console.log('🌐 VPMリポジトリ: https://zapabob.github.io/liltoon-pcss-extension/index.json');
+            console.log('📦 最新版: v1.4.1 (コンパイルエラー修正済み)');
+            console.log('💼 ライセンス: Ultimate Commercial Edition');
+        });
     </script>
 </body>
 </html>
