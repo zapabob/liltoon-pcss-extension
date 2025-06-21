@@ -1,17 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
   <meta charset="utf-8">
-  <title>Redirecting...</title>
-  <meta http-equiv="refresh" content="0; url=./site/">
-  <link rel="canonical" href="https://zapabob.github.io/liltoon-pcss-extension/site/" />
+  <title>lilToon PCSS Extension - VPM Repository</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Official VPM Repository for lilToon PCSS Extension - All-in-One Edition">
+  <style>
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+      margin: 0; padding: 20px; background: #f5f5f5; 
+    }
+    .container { 
+      max-width: 800px; margin: 0 auto; background: white; 
+      border-radius: 8px; padding: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+    }
+    .header { text-align: center; margin-bottom: 30px; }
+    .title { color: #2c3e50; margin-bottom: 10px; }
+    .subtitle { color: #7f8c8d; margin-bottom: 20px; }
+    .vpm-info { 
+      background: #e8f4fd; border: 1px solid #bee5eb; 
+      border-radius: 6px; padding: 20px; margin: 20px 0; 
+    }
+    .vpm-url { 
+      background: #f8f9fa; border: 1px solid #dee2e6; 
+      border-radius: 4px; padding: 10px; font-family: monospace; 
+      word-break: break-all; margin: 10px 0; 
+    }
+    .button { 
+      display: inline-block; background: #007bff; color: white; 
+      padding: 12px 24px; text-decoration: none; border-radius: 6px; 
+      margin: 10px 5px; transition: background 0.3s; 
+    }
+    .button:hover { background: #0056b3; }
+    .button.secondary { background: #6c757d; }
+    .button.secondary:hover { background: #545b62; }
+    .status { margin: 20px 0; }
+    .status.success { color: #28a745; }
+    .status.info { color: #17a2b8; }
+  </style>
 </head>
 <body>
-  <p>
-    Redirecting to the main site...
-  </p>
-  <p>
-    If you are not redirected automatically, please <a href="./site/">click here</a>.
-  </p>
+  <div class="container">
+    <div class="header">
+      <h1 class="title">🎨 lilToon PCSS Extension</h1>
+      <p class="subtitle">All-in-One Edition - VPM Repository</p>
+    </div>
+
+    <div class="vpm-info">
+      <h3>📦 VCC (VRChat Creator Companion) 統合</h3>
+      <p>以下のURLをVCCに追加してください：</p>
+      <div class="vpm-url">https://zapabob.github.io/liltoon-pcss-extension/index.json</div>
+      <p><strong>最新バージョン:</strong> v1.2.2 (C# compilation errors fixed)</p>
+    </div>
+
+    <div class="status success" id="vpm-status">
+      ✅ VPMリポジトリは正常に配信中です
+    </div>
+
+    <div style="text-align: center; margin: 30px 0;">
+      <a href="vcc://vpm/addRepo?url=https%3A%2F%2Fzapabob.github.io%2Fliltoon-pcss-extension%2Findex.json" class="button">
+        🚀 VCCに自動追加
+      </a>
+      <a href="./site/" class="button secondary">
+        📖 詳細ドキュメント
+      </a>
+      <a href="./Release/com.liltoon.pcss-extension-1.2.2.zip" class="button secondary">
+        💾 直接ダウンロード
+      </a>
+    </div>
+
+    <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #dee2e6; color: #6c757d; font-size: 14px;">
+      <p><strong>JSON Repository:</strong> <a href="./index.json">index.json</a></p>
+      <p><strong>GitHub:</strong> <a href="https://github.com/zapabob/liltoon-pcss-extension">zapabob/liltoon-pcss-extension</a></p>
+    </div>
+  </div>
+
+  <script>
+    // VPMリポジトリアクセス可能性チェック
+    fetch('./index.json')
+      .then(response => {
+        if (response.ok) {
+          document.getElementById('vpm-status').innerHTML = '✅ VPMリポジトリは正常に配信中です';
+          return response.json();
+        } else {
+          throw new Error('Repository not accessible');
+        }
+      })
+      .then(data => {
+        console.log('✅ VPM Repository loaded successfully:', data);
+        if (data.packages && data.packages['com.liltoon.pcss-extension']) {
+          const versions = Object.keys(data.packages['com.liltoon.pcss-extension'].versions);
+          const latestVersion = versions.sort((a, b) => b.localeCompare(a, undefined, {numeric: true}))[0];
+          console.log('📦 Latest version:', latestVersion);
+        }
+      })
+      .catch(error => {
+        console.error('❌ VPM Repository access failed:', error);
+        document.getElementById('vpm-status').innerHTML = '⚠️ VPMリポジトリ配信準備中... (GitHub Pages デプロイ中)';
+        document.getElementById('vmp-status').className = 'status info';
+      });
+  </script>
 </body>
 </html> 
