@@ -1,12 +1,12 @@
 {
   "name": "lilToon PCSS Extension - All-in-One Edition Repository",
   "id": "com.liltoon.pcss-extension.vpm-repository",
-  "url": "https://zapabob.github.io/lilToon-PCSS-Extension/index.json",
+  "url": "https://zapabob.github.io/liltoon-pcss-extension/index.json",
   "version": "0.1.1",
   "author": {
     "name": "lilToon PCSS Extension Team",
     "email": "r.minegishi1987@gmail.com",
-    "url": "https://github.com/zapabob/lilToon-PCSS-Extension"
+    "url": "https://github.com/zapabob/liltoon-pcss-extension"
   },
   "description": "Official VPM Repository for lilToon PCSS Extension - All-in-One Edition. The ultimate PCSS solution for VRChat avatars with complete lilToon integration, VRC Light Volumes support, and one-click VCC installation.",
   "packages": {
@@ -43,10 +43,10 @@
           "author": {
             "name": "lilToon PCSS Extension Team",
             "email": "r.minegishi1987@gmail.com",
-            "url": "https://github.com/zapabob/lilToon-PCSS-Extension"
+            "url": "https://github.com/zapabob/liltoon-pcss-extension"
           },
           "license": "MIT",
-          "licensesUrl": "https://github.com/zapabob/lilToon-PCSS-Extension/blob/main/LICENSE",
+          "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE",
           "dependencies": {
             "com.vrchat.avatars": "3.7.0",
             "com.vrchat.base": "3.7.0"
@@ -55,8 +55,8 @@
             "com.vrchat.avatars": "3.7.0",
             "com.vrchat.base": "3.7.0"
           },
-          "url": "https://zapabob.github.io/lilToon-PCSS-Extension/Release/com.liltoon.pcss-extension-1.2.0.zip",
-          "repo": "https://github.com/zapabob/lilToon-PCSS-Extension",
+          "url": "https://zapabob.github.io/liltoon-pcss-extension/Release/com.liltoon.pcss-extension-1.2.0.zip",
+          "repo": "https://github.com/zapabob/liltoon-pcss-extension",
           "zipSHA256": "D146FEBEA0ED50C9A018A6ACD653581879CF653437EE006B9DC0386E15A013C3",
           "samples": [
             {
@@ -75,8 +75,8 @@
               "path": "Samples~/ModularAvatarPrefabs"
             }
           ],
-          "changelogUrl": "https://github.com/zapabob/lilToon-PCSS-Extension/blob/main/CHANGELOG.md",
-          "documentationUrl": "https://zapabob.github.io/lilToon-PCSS-Extension/documentation/",
+          "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
+          "documentationUrl": "https://zapabob.github.io/liltoon-pcss-extension/documentation/",
           "hideInEditor": false,
           "legacyFolders": {},
           "legacyFiles": {}
@@ -114,10 +114,10 @@
           "author": {
             "name": "lilToon PCSS Extension Team",
             "email": "r.minegishi1987@gmail.com",
-            "url": "https://github.com/zapabob/lilToon-PCSS-Extension"
+            "url": "https://github.com/zapabob/liltoon-pcss-extension"
           },
           "license": "MIT",
-          "licensesUrl": "https://github.com/zapabob/lilToon-PCSS-Extension/blob/main/LICENSE",
+          "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE",
           "dependencies": {
             "com.vrchat.avatars": "3.7.0",
             "com.vrchat.base": "3.7.0"
@@ -126,8 +126,8 @@
             "com.vrchat.avatars": "3.7.0",
             "com.vrchat.base": "3.7.0"
           },
-          "url": "https://zapabob.github.io/lilToon-PCSS-Extension/Release/com.liltoon.pcss-extension-1.2.1.zip",
-          "repo": "https://github.com/zapabob/lilToon-PCSS-Extension",
+          "url": "https://zapabob.github.io/liltoon-pcss-extension/Release/com.liltoon.pcss-extension-1.2.1.zip",
+          "repo": "https://github.com/zapabob/liltoon-pcss-extension",
           "zipSHA256": "DB14F0294DF830B15B6AE7035D4B325885713D02C74CF80973309C51A3FBA8FE",
           "samples": [
             {
@@ -146,8 +146,8 @@
               "path": "Samples~/ModularAvatarPrefabs"
             }
           ],
-          "changelogUrl": "https://github.com/zapabob/lilToon-PCSS-Extension/blob/main/CHANGELOG.md",
-          "documentationUrl": "https://zapabob.github.io/lilToon-PCSS-Extension/documentation/",
+          "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
+          "documentationUrl": "https://zapabob.github.io/liltoon-pcss-extension/documentation/",
           "hideInEditor": false,
           "legacyFolders": {},
           "legacyFiles": {}
