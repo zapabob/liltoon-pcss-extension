@@ -3,9 +3,14 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Unity Version](https://img.shields.io/badge/Unity-2019.4%2B-blue.svg)](https://unity3d.com/get-unity/download)
 [![lilToon Compatible](https://img.shields.io/badge/lilToon-Compatible-purple.svg)](https://github.com/lilxyzw/lilToon)
+[![Poiyomi Compatible](https://img.shields.io/badge/Poiyomi-Compatible-pink.svg)](https://poiyomi.com/)
 [![VRChat Ready](https://img.shields.io/badge/VRChat-Ready-green.svg)](https://hello.vrchat.com/)
+[![Expression Control](https://img.shields.io/badge/VRChat-Expression%20Control-red.svg)](https://hello.vrchat.com/)
+[![VRC Light Volumes](https://img.shields.io/badge/VRC%20Light%20Volumes-Supported-orange.svg)](https://github.com/REDSIM/VRCLightVolumes)
 
-**高品質なソフトシャドウをアバターに。lilToon用PCSS（Percentage-Closer Soft Shadows）拡張プラグイン**
+**高品質なソフトシャドウをアバターに。lilToon & Poiyomi用PCSS（Percentage-Closer Soft Shadows）拡張プラグイン**
+
+> **🆕 v1.2.0 新機能**: VRC Light Volumes統合！次世代ライティングシステムとPCSSの完全融合！
 
 ![PCSS Extension Banner](https://via.placeholder.com/800x300/2D3748/FFFFFF?text=lilToon+PCSS+Extension)
 
@@ -15,11 +20,13 @@
 - **PCSS技術採用**: 光源からの距離に応じて自然にぼけるリアルな影
 - **高品質サンプリング**: 64点Poisson Diskサンプリングによるノイズレス処理
 - **アンチエイリアス**: 滑らかで美しい影の境界
+- **🆕 VRC Light Volumes統合**: 次世代ボクセルライティングシステム対応
 
 ### 🚀 **簡単操作**
 - **ワンクリック設定**: 品質プリセットで即座に最適化
-- **lilToon完全統合**: 既存のワークフローを変更せずに使用可能
-- **GUI統合**: lilToonスタイルの直感的なインスペクター
+- **lilToon & Poiyomi統合**: 既存のワークフローを変更せずに使用可能
+- **VRChatエクスプレッション**: ゲーム内でのリアルタイム制御
+- **GUI統合**: 直感的なインスペクター
 
 ### ⚡ **高性能**
 - **適応的サンプリング**: 品質とパフォーマンスの最適バランス
@@ -35,8 +42,9 @@
 ## 🎯 対象ユーザー
 
 - **VRChatアバター制作者**: より美しいアバターを作りたい方
-- **lilToonユーザー**: 既存のワークフローを活かしたい方
+- **lilToon & Poiyomiユーザー**: 既存のワークフローを活かしたい方
 - **品質重視のクリエイター**: 映画品質の影表現を求める方
+- **エクスプレッション活用者**: ゲーム内で動的に設定を変更したい方
 
 ## 🔧 システム要件
 
@@ -44,6 +52,8 @@
 |------|------|
 | **Unity** | 2019.4 LTS以降 |
 | **lilToon** | 最新版推奨 |
+| **Poiyomi** | Toon Shader 8.0以降（オプション） |
+| **VRChat SDK** | 最新版（エクスプレッション機能使用時） |
 | **レンダーパイプライン** | Built-in RP / URP |
 | **プラットフォーム** | PC（モバイルは制限あり） |
 
@@ -70,9 +80,16 @@
 
 ### 1. マテリアル設定
 
+#### lilToon使用時
 1. **新しいマテリアルを作成**
 2. **シェーダーを「lilToon/PCSS Extension」に変更**
 3. **「PCSS効果を使用」をON**
+4. **品質プリセットを選択**
+
+#### Poiyomi使用時
+1. **新しいマテリアルを作成**
+2. **シェーダーを「Poiyomi/Toon/PCSS Extension」に変更**
+3. **「Enable PCSS」をON**
 4. **品質プリセットを選択**
 
 ```
@@ -197,9 +214,10 @@ bool isPCSSMaterial = PCSSUtilities.IsPCSSMaterial(material);
 
 ## 📚 ドキュメント
 
-- [📖 使用ガイド](Documentation/liltoon_pcss_readme.md)
-- [🔧 ModularAvatar統合ガイド](Documentation/PCSS_ModularAvatar_Guide.md)
-- [💻 実装ログ](_docs/2025-01-24_liltoon-pcss-extension.md)
+- [📖 基本使用ガイド](liltoon_pcss_readme.md)
+- [🎮 ModularAvatar統合ガイド](PCSS_ModularAvatar_Guide.md)
+- [🎨 Poiyomi & VRChatエクスプレッションガイド](PCSS_Poiyomi_VRChat_Guide.md)
+- [📋 実装ログ](_docs/2025-01-24_liltoon-pcss-extension.md)
 
 ## 🤝 コントリビューション
 

@@ -24,6 +24,13 @@ Shader "lilToon/PCSS Extension"
         _PCSSLightSize                              ("PCSS Light Size", Range(0.1, 10.0)) = 1.0
         _PCSSBias                                   ("PCSS Bias", Range(0.0, 0.1)) = 0.005
         
+        // VRC Light Volumes統合
+        [Header(VRC Light Volumes Integration)]
+        [lilToggleLeft] _UseVRCLightVolumes         ("Use VRC Light Volumes", Int) = 1
+        _VRCLightVolumeIntensity                    ("Light Volume Intensity", Range(0.0, 2.0)) = 1.0
+        _VRCLightVolumeTint                         ("Light Volume Tint", Color) = (1,1,1,1)
+        _VRCLightVolumeDistanceFactor               ("Distance Factor", Range(0.0, 1.0)) = 1.0
+        
         // 通常のliltoonシャドウプロパティ
         [lilToggleLeft] _UseShadow                  ("sShadow", Int) = 0
         _ShadowBorder                               ("sBorder", Range(0, 1)) = 0.5
@@ -85,6 +92,11 @@ Shader "lilToon/PCSS Extension"
             // PCSS機能を有効にするシェーダーキーワード
             #pragma shader_feature _USEPCSS_ON
             #pragma shader_feature _USESHADOW_ON
+            #pragma shader_feature _USEVRCLIGHT_VOLUMES_ON
+            
+            // VRC Light Volumes統合キーワード
+            #pragma multi_compile _ VRC_LIGHT_VOLUMES_ENABLED
+            #pragma multi_compile _ VRC_LIGHT_VOLUMES_MOBILE
 
             #include "UnityCG.cginc"
             #include "AutoLight.cginc"
@@ -103,6 +115,15 @@ Shader "lilToon/PCSS Extension"
             int _PCSSSampleCount;
             float _PCSSLightSize;
             float _PCSSBias;
+            
+            // VRC Light Volumes関連の変数
+            float _UseVRCLightVolumes;
+            float _VRCLightVolumeIntensity;
+            float4 _VRCLightVolumeTint;
+            float _VRCLightVolumeDistanceFactor;
+            sampler3D _VRCLightVolumeTexture;
+            float4 _VRCLightVolumeParams;
+            float4x4 _VRCLightVolumeWorldToLocal;
             
             // シャドウ関連
             float _UseShadow;
@@ -218,6 +239,65 @@ Shader "lilToon/PCSS Extension"
                 // Step 3: PCF
                 return PCF(uv, zReceiver, penumbraRadius * _PCSSFilterRadius);
             }
+            
+            // VRC Light Volumes統合関数
+            float3 SampleVRCLightVolumes(float3 worldPos)
+            {
+                #if defined(VRC_LIGHT_VOLUMES_ENABLED) && defined(_USEVRCLIGHT_VOLUMES_ON)
+                    // ワールド座標をLight Volume座標系に変換
+                    float3 volumePos = mul(_VRCLightVolumeWorldToLocal, float4(worldPos, 1.0)).xyz;
+                    
+                    // UV座標に変換（0-1範囲）
+                    float3 volumeUV = volumePos * 0.5 + 0.5;
+                    
+                    // 範囲外チェック
+                    if (any(volumeUV < 0.0) || any(volumeUV > 1.0))
+                        return float3(1, 1, 1); // デフォルト値
+                    
+                    // Light Volumeテクスチャからサンプリング
+                    float3 lightVolume = tex3D(_VRCLightVolumeTexture, volumeUV).rgb;
+                    
+                    // 強度と色調を適用
+                    lightVolume *= _VRCLightVolumeIntensity * _VRCLightVolumeTint.rgb;
+                    
+                    // 距離による減衰
+                    lightVolume *= _VRCLightVolumeDistanceFactor;
+                    
+                    // モバイル最適化
+                    #ifdef VRC_LIGHT_VOLUMES_MOBILE
+                        lightVolume = saturate(lightVolume * 0.8); // モバイルでは少し抑える
+                    #endif
+                    
+                    return lightVolume;
+                #else
+                    return float3(1, 1, 1); // VRC Light Volumes無効時はデフォルト値
+                #endif
+            }
+            
+            // 改良されたライティング計算（VRC Light Volumes統合）
+            float3 CalculateLighting(float3 worldPos, float3 worldNormal, float shadow)
+            {
+                // 基本的な指向性ライト
+                float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
+                float NdotL = max(0, dot(worldNormal, lightDir));
+                float3 lighting = _LightColor0.rgb * NdotL * shadow;
+                
+                // VRC Light Volumesを統合
+                #if defined(_USEVRCLIGHT_VOLUMES_ON)
+                if (_UseVRCLightVolumes > 0.5)
+                {
+                    float3 volumeLighting = SampleVRCLightVolumes(worldPos);
+                    
+                    // ライティングをブレンド
+                    lighting = lerp(lighting, lighting * volumeLighting, _VRCLightVolumeIntensity);
+                    
+                    // 環境光の補強
+                    lighting += volumeLighting * 0.3; // 少し環境光として追加
+                }
+                #endif
+                
+                return lighting;
+            }
 
             v2f vert(appdata v)
             {
@@ -275,8 +355,9 @@ Shader "lilToon/PCSS Extension"
                 }
                 #endif
                 
-                // Apply lighting
-                col.rgb *= _LightColor0.rgb * NdotL * shadow;
+                // Apply lighting (VRC Light Volumes統合)
+                float3 finalLighting = CalculateLighting(i.worldPos, worldNormal, shadow);
+                col.rgb *= finalLighting;
                 
                 // Apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
