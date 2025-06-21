@@ -1,3 +1,105 @@
+# lilToon PCSS Extension - Ultimate Commercial Edition v1.4.3
+
+## 🚀 最新版 v1.4.3 - Enhanced URP Compatibility Release
+
+### ✨ 新機能・改善点
+- 🔧 **Enhanced URP Compatibility**: URP 12.1.12での安定性向上
+- 🛠️ **Improved Shader Compilation**: シェーダーコンパイルの安定性強化
+- ⚡ **Advanced Performance Optimization**: パフォーマンス最適化の向上
+- 🎯 **Enhanced ModularAvatar Compatibility**: ModularAvatarとの互換性強化
+
+## 💎 Ultimate Commercial Edition - 商用利用完全対応
+
+### 🏢 商用ライセンス特典
+- ✅ **無制限商用利用権**: 個人・法人問わず無制限使用
+- ✅ **再配布権限**: 改変・再配布完全許可
+- ✅ **ホワイトラベル権**: 自社ブランドでの販売可能
+- ✅ **優先企業サポート**: 24時間365日専用サポート
+
+### 🤖 AI-Powered Features
+- 🧠 **AI自動最適化システム**: リアルタイム品質調整
+- 📊 **企業向けアナリティクス**: 詳細パフォーマンス分析
+- ⚡ **自動品質スケーリング**: デバイス性能に応じた自動調整
+- 🎨 **商用アセット自動生成**: ワンクリックでプロ品質素材作成
+
+### 🌟 Core Features
+- 🎭 **PCSS (Percentage-Closer Soft Shadows)**: 高品質ソフトシャドウ
+- 🎨 **lilToon & Poiyomi対応**: 主要トゥーンシェーダー完全サポート
+- 🎮 **VRChat最適化**: Quest対応・パフォーマンス最適化
+- 🔧 **ModularAvatar統合**: ワンクリックセットアップ
+- 💡 **VRC Light Volumes**: 高度なライティング制御
+- 🍞 **Bakery統合**: プロ品質ライトマッピング
+
+### 🎯 VRChat専用機能
+- 📱 **Expression Menu**: 直感的シャドウ制御
+- ⚡ **PhysBone連動**: 物理演算との完璧同期
+- 🎮 **Quest最適化**: モバイル端末での安定動作
+- 📊 **パフォーマンス監視**: リアルタイム最適化提案
+
+### 🛠️ Technical Specifications
+- 🎯 **Unity**: 2022.3.22f1以上
+- 🔧 **URP**: 12.1.12 (Enhanced Compatibility)
+- 📦 **VCC対応**: ワンクリックインストール
+- 💾 **ファイルサイズ**: 98.8KB (超軽量)
+- 🔒 **SHA256**: A873ADD096EE2627AA2026A803CF6ABE2BA5D03FE78ED45C0E8BC4AC5450C17A
+
+### 📦 Package Contents
+- 🎨 **Ultimate PCSS Materials Suite**: 企業グレード素材集
+- 🎮 **VRChat Expression Pro Max**: 高度なExpression制御
+- 🤖 **ModularAvatar Ultimate Prefabs**: プロ仕様プリファブ集
+- 🍞 **Enterprise Bakery Integration**: 企業向けライトマッピング
+- 🧠 **AI Performance Optimization**: AI最適化スイート
+- ⚡ **Ray Tracing Enhancement**: リアルタイムレイトレーシング
+- 🏭 **Commercial Asset Generator**: 商用アセット自動生成
+- 📊 **Enterprise Analytics Dashboard**: 企業向け分析ダッシュボード
+
+### 💰 価格・ライセンス
+- 💎 **Ultimate Commercial**: ¥4,980
+- 🏢 **Enterprise License**: 無制限商用利用
+- 🔄 **Free Updates**: 永続無料アップデート
+- 🛡️ **Priority Support**: 24/7専用サポート
+
+### 🎯 対象ユーザー
+- 🎨 **VRChatクリエイター**: アバター・ワールド制作者
+- 🏢 **商用利用者**: 企業・個人事業主
+- 🎮 **ゲーム開発者**: Unity開発者
+- 💼 **プロフェッショナル**: 商用品質を求める方
+
+### 📞 サポート・コミュニティ
+- 📧 **専用サポート**: r.minegishi1987@gmail.com
+- 📚 **完全ドキュメント**: 詳細マニュアル付属
+- 🔄 **定期アップデート**: 継続的機能追加
+- 💬 **コミュニティサポート**: Discord・GitHub
+
+### 🎁 Special Bonus
+- 🎨 **Professional Materials Pack**: プロ品質素材集
+- 📖 **Commercial Usage Guide**: 商用利用完全ガイド
+- 🛠️ **Setup Automation Tools**: 自動セットアップツール
+- 📊 **Performance Analytics**: 詳細パフォーマンス分析
+
+---
+
+## 🚀 今すぐ始めよう！
+
+### ⚡ クイックスタート
+1. **VCC経由インストール** - ワンクリックセットアップ
+2. **自動最適化実行** - AI powered optimization
+3. **商用利用開始** - 即座に商用プロジェクトで使用可能
+
+### 🎯 Why Choose Ultimate Commercial?
+- ✅ **商用利用完全対応** - 法的安心保証
+- ✅ **企業グレード品質** - プロダクション ready
+- ✅ **AI自動最適化** - 手間なし高品質
+- ✅ **優先サポート** - 24/7専用対応
+- ✅ **永続ライセンス** - 一度購入で永続利用
+
+---
+
+**🎉 限定価格での提供中！プロフェッショナルなVRChatコンテンツ制作を今すぐ始めましょう！**
+
+### タグ
+`#VRChat` `#lilToon` `#PCSS` `#Unity` `#Shader` `#Commercial` `#Enterprise` `#AI` `#Optimization` `#URP` `#ModularAvatar` `#Quest` `#Professional` `#Ultimate`
+
 # 【特価¥1,980】lilToon PCSS Extension v1.4.0 Ultimate Commercial Edition
 ## 🎉nHaruka製品と同価格で10倍の機能！映画品質ソフトシャドウ
 

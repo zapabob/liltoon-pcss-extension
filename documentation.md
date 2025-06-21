@@ -223,6 +223,162 @@ float shadow = SamplePCSSShadow(shadowCoord, _PCSSLightSize, _PCSSFilterRadius);
 - ✅ Basic lilToon integration
 - ✅ VRChat SDK3 support
 
+# lilToon PCSS Extension - Ultimate Commercial Edition
+
+## Version 1.4.3 - Enhanced URP Compatibility Release
+
+### 🆕 What's New in v1.4.3
+- **Enhanced URP Compatibility**: Improved stability with URP 12.1.12
+- **Improved Shader Compilation**: Enhanced compilation stability across different Unity versions
+- **Advanced Performance Optimization**: Better performance optimization algorithms
+- **Enhanced ModularAvatar Compatibility**: Improved integration with ModularAvatar systems
+
+### 🔧 System Requirements
+
+#### Unity Compatibility
+- **Unity Version**: 2022.3.22f1 or higher
+- **Render Pipeline**: Universal Render Pipeline (URP) 12.1.12
+- **Platform Support**: Windows, macOS, Android (Quest), iOS
+
+#### VRChat SDK Requirements
+- **VRChat SDK3 Avatars**: 3.7.0 or higher
+- **VRChat SDK3 Base**: 3.7.0 or higher
+
+#### Dependencies
+- **lilToon**: 1.7.0 or higher (automatically managed)
+- **ModularAvatar**: 1.10.0 or higher (optional but recommended)
+- **URP**: 12.1.12 (Enhanced compatibility)
+
+### 📊 Compatibility Matrix
+
+| Component | Version | Status | Notes |
+|-----------|---------|--------|-------|
+| Unity 2022.3.22f1+ | ✅ | Fully Supported | Recommended version |
+| Unity 2023.1+ | ✅ | Supported | Tested and compatible |
+| URP 12.1.12 | ✅ | Enhanced Support | Optimized compatibility |
+| URP 14.0+ | ⚠️ | Partial Support | May require manual setup |
+| lilToon 1.7.0+ | ✅ | Fully Supported | Auto-compatibility management |
+| Poiyomi 8.1+ | ✅ | Supported | Full feature support |
+| ModularAvatar 1.10+ | ✅ | Enhanced Support | Advanced integration |
+| VRChat SDK3 3.7+ | ✅ | Fully Supported | All features available |
+| Quest Platform | ✅ | Optimized | Performance-optimized |
+
+### 🚀 Installation Guide
+
+#### Method 1: VCC (Recommended)
+1. Add VPM Repository: `https://zapabob.github.io/liltoon-pcss-extension/index.json`
+2. Install "lilToon PCSS Extension - Ultimate Commercial Edition"
+3. Run automatic setup wizard
+
+#### Method 2: Manual Installation
+1. Download `com.liltoon.pcss-extension-ultimate-1.4.3.zip`
+2. Extract to Unity project's Packages folder
+3. Run setup from Window > lilToon PCSS Extension
+
+### ⚡ Performance Optimization
+
+#### Quest Optimization
+- Automatic LOD system for mobile platforms
+- Dynamic quality scaling based on device capabilities
+- Optimized shader variants for Quest hardware
+
+#### PC Optimization
+- Advanced PCSS sampling algorithms
+- GPU-optimized shadow calculations
+- Intelligent culling system
+
+### 🎯 Feature Compatibility
+
+#### VRChat Features
+- ✅ Expression Menus (Full support)
+- ✅ PhysBone Integration (Enhanced)
+- ✅ Avatar Dynamics (Optimized)
+- ✅ Quest Compatibility (Performance-optimized)
+- ✅ World Constraints (Supported)
+
+#### Shader Compatibility
+- ✅ lilToon (Full integration)
+- ✅ Poiyomi (Advanced support)
+- ✅ Custom shaders (API available)
+- ✅ Built-in materials (Conversion tools)
+
+### 🔍 Troubleshooting
+
+#### Common Issues
+
+**Shader Compilation Errors**
+- Ensure Unity 2022.3.22f1 or higher
+- Verify URP 12.1.12 installation
+- Run "Fix Compilation Issues" from setup menu
+
+**VCC Installation Issues**
+- Clear VCC cache
+- Refresh package listings
+- Verify repository URL
+
+**Performance Issues**
+- Enable Quest optimization for mobile
+- Adjust PCSS quality settings
+- Use performance profiler tools
+
+### 📈 Version History
+
+#### v1.4.3 (Current)
+- Enhanced URP 12.1.12 compatibility
+- Improved shader compilation stability
+- Advanced performance optimization
+- Enhanced ModularAvatar integration
+
+#### v1.4.1
+- Initial Ultimate Commercial release
+- Enterprise-grade features
+- AI-powered optimization
+- Commercial licensing support
+
+#### v1.2.6
+- VCC dependency resolution fixes
+- ModularAvatar compatibility improvements
+- Performance optimizations
+
+### 🏢 Commercial Licensing
+
+#### Ultimate Commercial License
+- **Usage Rights**: Unlimited commercial use
+- **Redistribution**: Full rights included
+- **Modification**: Complete source access
+- **White-labeling**: Rebranding permitted
+- **Support**: Priority 24/7 enterprise support
+
+#### Enterprise Features
+- AI-powered optimization system
+- Real-time performance analytics
+- Automatic quality scaling
+- Commercial asset generation tools
+- Priority technical support
+
+### 📞 Support & Resources
+
+#### Documentation
+- [Installation Guide](installation.html)
+- [Performance Optimization](performance.html)
+- [Commercial Usage Guide](commercial.html)
+- [API Reference](api.html)
+
+#### Community
+- **GitHub**: [Issues & Discussions](https://github.com/zapabob/liltoon-pcss-extension)
+- **Email Support**: r.minegishi1987@gmail.com
+- **Discord**: Community server available
+
+#### Professional Support
+- 24/7 priority support for commercial users
+- Custom implementation services
+- Training and consultation available
+- Enterprise deployment assistance
+
+---
+
+*For the latest updates and detailed technical documentation, visit our [GitHub repository](https://github.com/zapabob/liltoon-pcss-extension).*
+
 ---
 
 **Need more help?** 📞
