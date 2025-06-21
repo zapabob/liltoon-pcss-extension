@@ -107,9 +107,28 @@ namespace lilToon.PCSS
         {
             EditorGUILayout.BeginVertical(GUI.skin.box);
             GUILayout.Label("🎬 lilToon PCSS Extension", headerStyle);
-            GUILayout.Label("Setup Wizard v1.2.0", EditorStyles.centeredGreyMiniLabel);
+            GUILayout.Label("All-in-One Edition - Setup Wizard v1.2.0", EditorStyles.centeredGreyMiniLabel);
             EditorGUILayout.Space(5);
             GUILayout.Label("映画品質のソフトシャドウをアバターに追加", EditorStyles.centeredGreyMiniLabel);
+            
+            // lilToon互換性ステータス
+            EditorGUILayout.Space(5);
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.Label("lilToon Status:", EditorStyles.miniLabel);
+            var compatibilityManager = FindObjectOfType<LilToonCompatibilityManager>();
+            if (compatibilityManager != null && compatibilityManager.isCompatible)
+            {
+                GUI.color = Color.green;
+                GUILayout.Label($"✓ Compatible ({compatibilityManager.detectedLilToonVersion})", EditorStyles.miniLabel);
+            }
+            else
+            {
+                GUI.color = Color.yellow;
+                GUILayout.Label("⚠ lilToon 1.7.0+ Required", EditorStyles.miniLabel);
+            }
+            GUI.color = Color.white;
+            EditorGUILayout.EndHorizontal();
+            
             EditorGUILayout.EndVertical();
         }
 
@@ -375,26 +394,24 @@ namespace lilToon.PCSS
 
         private void ConvertMaterialToPCSS(Material material)
         {
-            var shaderName = material.shader.name;
+            if (material == null) return;
             
-            if (shaderName.Contains("lilToon"))
+            // lilToon互換性マネージャーを使用
+            var compatibilityManager = FindObjectOfType<LilToonCompatibilityManager>();
+            if (compatibilityManager == null)
             {
-                var pcssShader = Shader.Find("lilToon/PCSS Extension");
-                if (pcssShader != null)
-                {
-                    material.shader = pcssShader;
-                    SetMaterialQuality(material);
-                }
+                // 互換性マネージャーを作成
+                var managerGO = new GameObject("LilToon Compatibility Manager");
+                compatibilityManager = managerGO.AddComponent<LilToonCompatibilityManager>();
             }
-            else if (shaderName.Contains("Poiyomi"))
-            {
-                var pcssShader = Shader.Find("Poiyomi/PCSS Extension");
-                if (pcssShader != null)
-                {
-                    material.shader = pcssShader;
-                    SetMaterialQuality(material);
-                }
-            }
+            
+            // マテリアルを管理リストに追加して同期
+            compatibilityManager.AddMaterialToManagement(material);
+            
+            // 品質設定を適用
+            SetMaterialQuality(material);
+            
+            Debug.Log($"Material '{material.name}' converted with lilToon compatibility");
         }
 
         private void SetMaterialQuality(Material material)

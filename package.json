@@ -1,8 +1,8 @@
 {
   "name": "com.liltoon.pcss-extension",
-  "displayName": "lilToon PCSS Extension",
+  "displayName": "lilToon PCSS Extension - All-in-One Edition",
   "version": "1.2.0",
-  "description": "PCSS (Percentage-Closer Soft Shadows) extension for lilToon and Poiyomi shader systems with VRChat Expression support, VRC Light Volumes integration, and ModularAvatar compatibility",
+  "description": "Complete PCSS (Percentage-Closer Soft Shadows) solution with automatic lilToon compatibility management, VRChat SDK3 integration, VRC Light Volumes support, and one-click setup via VCC",
   "unity": "2019.4",
   "unityRelease": "0f1",
   "keywords": [
