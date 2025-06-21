@@ -239,15 +239,17 @@ Shader "Poiyomi/Toon/PCSS Extension"
                 float shadow = 1.0;
                 
                 #ifdef PCSS_ENABLED
-                #ifdef SHADOWS_SCREEN
-                float2 shadowUV = i._ShadowCoord.xy / i._ShadowCoord.w;
-                float shadowZ = i._ShadowCoord.z / i._ShadowCoord.w;
-                shadow = PCSS(shadowUV, shadowZ);
+                    #ifdef SHADOWS_SCREEN
+                        #ifdef LIL_PCSS_MOBILE_PLATFORM
+                            shadow = PCSSMobile(i._ShadowCoord, i.pos.z);
+                        #else
+                            shadow = PCSS(i._ShadowCoord, i.pos.z);
+                        #endif
+                    #else
+                        shadow = SHADOW_ATTENUATION(i);
+                    #endif
                 #else
-                shadow = SHADOW_ATTENUATION(i);
-                #endif
-                #else
-                shadow = SHADOW_ATTENUATION(i);
+                    shadow = SHADOW_ATTENUATION(i);
                 #endif
                 
                 // Apply shadow

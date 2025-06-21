@@ -1,13 +1,12 @@
 //----------------------------------------------------------------------------------------------------------------------
-// lilToon PCSS Extension - PCSS Shadows Include
+// lilToon PCSS Extension - Shadow Functions
 // Copyright (c) 2025 lilToon PCSS Extension Team
-// 
-// This file provides PCSS (Percentage-Closer Soft Shadows) functionality for lilToon shaders
-// Compatible with lilToon v1.10.3+ and VRChat SDK3
 //----------------------------------------------------------------------------------------------------------------------
 
 #ifndef LIL_PCSS_SHADOWS_INCLUDED
 #define LIL_PCSS_SHADOWS_INCLUDED
+
+#include "lil_pcss_common.hlsl"
 
 //----------------------------------------------------------------------------------------------------------------------
 // PCSS Configuration
@@ -36,7 +35,7 @@ CBUFFER_END
 //----------------------------------------------------------------------------------------------------------------------
 // Sampling Patterns
 //----------------------------------------------------------------------------------------------------------------------
-static const float2 poissonDisk[16] = {
+static const float2 PoissonDisk[16] = {
     float2(-0.94201624, -0.39906216),
     float2(0.94558609, -0.76890725),
     float2(-0.094184101, -0.92938870),
@@ -58,122 +57,160 @@ static const float2 poissonDisk[16] = {
 //----------------------------------------------------------------------------------------------------------------------
 // Utility Functions
 //----------------------------------------------------------------------------------------------------------------------
-float random(float2 seed)
+float Random(float2 seed)
 {
     return frac(sin(dot(seed, float2(12.9898, 78.233))) * 43758.5453);
 }
 
 float2 randomRotation(float2 uv)
 {
-    float angle = random(uv) * 6.28318530718; // 2 * PI
+    float angle = Random(uv) * 6.28318530718; // 2 * PI
     float cosAngle = cos(angle);
     float sinAngle = sin(angle);
     return float2(cosAngle, sinAngle);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-// PCSS Shadow Sampling
+// PCSS Shadow Sampling Functions
 //----------------------------------------------------------------------------------------------------------------------
-float PCSSBlockerSearch(float2 shadowCoord, float zReceiver, float searchRadius)
+
+// Sample shadow map
+float SampleShadowMap(float2 uv, float compareValue)
+{
+    #if defined(SHADER_API_D3D11) || defined(SHADER_API_D3D12) || defined(SHADER_API_VULKAN)
+        return SAMPLE_TEXTURE2D_SHADOW(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture, float3(uv, compareValue));
+    #else
+        float shadowSample = SAMPLE_TEXTURE2D(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture, uv).r;
+        return step(compareValue, shadowSample);
+    #endif
+}
+
+// Blocker search for PCSS
+float FindBlockerDistance(float2 shadowCoord, float receiverDepth, float searchRadius, int numSamples)
 {
     float blockerSum = 0.0;
-    float numBlockers = 0.0;
+    int numBlockers = 0;
     
-    float2 rotation = randomRotation(shadowCoord);
+    float2 randomOffset = float2(Random(shadowCoord), Random(shadowCoord.yx));
     
-    for (int i = 0; i < PCSS_BLOCKER_SEARCH_SAMPLES; ++i)
+    for (int i = 0; i < numSamples; i++)
     {
-        float2 offset = poissonDisk[i] * searchRadius;
+        float2 offset = PoissonDisk[i % 16] * searchRadius;
+        offset = lerp(offset, offset + randomOffset * 0.1, 0.5); // Add slight randomization
         
-        // Apply rotation
-        float2 rotatedOffset = float2(
-            offset.x * rotation.x - offset.y * rotation.y,
-            offset.x * rotation.y + offset.y * rotation.x
-        );
-        
-        float2 sampleCoord = shadowCoord + rotatedOffset;
+        float2 sampleCoord = shadowCoord + offset;
         float shadowDepth = SAMPLE_TEXTURE2D(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture, sampleCoord).r;
         
-        if (shadowDepth < zReceiver)
+        if (shadowDepth < receiverDepth)
         {
             blockerSum += shadowDepth;
-            numBlockers += 1.0;
+            numBlockers++;
         }
     }
     
-    return numBlockers > 0.0 ? blockerSum / numBlockers : -1.0;
+    return numBlockers > 0 ? blockerSum / numBlockers : -1.0;
 }
 
-float PCSSFilter(float2 shadowCoord, float zReceiver, float filterRadius)
+// PCF filtering
+float PCF(float2 shadowCoord, float receiverDepth, float filterRadius, int numSamples)
 {
     float shadow = 0.0;
-    float2 rotation = randomRotation(shadowCoord);
+    float2 randomOffset = float2(Random(shadowCoord), Random(shadowCoord.yx));
     
-    for (int i = 0; i < PCSS_SAMPLE_COUNT; ++i)
+    for (int i = 0; i < numSamples; i++)
     {
-        float2 offset = poissonDisk[i] * filterRadius;
+        float2 offset = PoissonDisk[i % 16] * filterRadius;
+        offset = lerp(offset, offset + randomOffset * 0.1, 0.5); // Add slight randomization
         
-        // Apply rotation
-        float2 rotatedOffset = float2(
-            offset.x * rotation.x - offset.y * rotation.y,
-            offset.x * rotation.y + offset.y * rotation.x
-        );
-        
-        float2 sampleCoord = shadowCoord + rotatedOffset;
-        float shadowDepth = SAMPLE_TEXTURE2D(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture, sampleCoord).r;
-        
-        shadow += (shadowDepth >= zReceiver - _PCSSBias) ? 1.0 : 0.0;
+        float2 sampleCoord = shadowCoord + offset;
+        shadow += SampleShadowMap(sampleCoord, receiverDepth);
     }
     
-    return shadow / PCSS_SAMPLE_COUNT;
+    return shadow / numSamples;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
-// Main PCSS Function
-//----------------------------------------------------------------------------------------------------------------------
-float SamplePCSSShadow(float4 shadowCoord, float3 worldPos, float3 normal)
+// Main PCSS function
+float PCSS(float4 shadowCoord, float receiverDepth)
 {
-    // Early exit if PCSS is disabled
-    if (_PCSSEnabled < 0.5)
-    {
-        return SAMPLE_TEXTURE2D(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture, shadowCoord.xy).r;
-    }
-    
+    // Normalize shadow coordinates
     float3 projCoords = shadowCoord.xyz / shadowCoord.w;
     
-    // Check if fragment is in shadow map bounds
+    // Check if we're outside the shadow map
     if (projCoords.x < 0.0 || projCoords.x > 1.0 || 
-        projCoords.y < 0.0 || projCoords.y > 1.0 || 
-        projCoords.z > 1.0)
+        projCoords.y < 0.0 || projCoords.y > 1.0 ||
+        projCoords.z < 0.0 || projCoords.z > 1.0)
     {
-        return 1.0;
+        return 1.0; // No shadow
     }
     
-    float zReceiver = projCoords.z;
-    float2 shadowMapCoord = projCoords.xy;
+    float2 shadowUV = projCoords.xy;
+    float depth = projCoords.z;
+    
+    // Apply bias to reduce shadow acne
+    depth -= _PCSSBias * 0.001;
     
     // Step 1: Blocker search
-    float searchRadius = _PCSSLightSize * (zReceiver - 0.1) / zReceiver;
-    float avgBlockerDepth = PCSSBlockerSearch(shadowMapCoord, zReceiver, searchRadius);
+    float avgBlockerDepth = FindBlockerDistance(shadowUV, depth, _PCSSBlockerSearchRadius, LIL_PCSS_DEFAULT_BLOCKER_SAMPLES);
     
-    // No blockers found
     if (avgBlockerDepth < 0.0)
     {
-        return 1.0;
+        return 1.0; // No blockers found
     }
     
     // Step 2: Penumbra estimation
-    float penumbraRatio = (zReceiver - avgBlockerDepth) / avgBlockerDepth;
-    float filterRadius = penumbraRatio * _PCSSLightSize * _PCSSFilterRadius;
+    float penumbraWidth = (depth - avgBlockerDepth) / avgBlockerDepth;
+    penumbraWidth *= _PCSSLightSize;
+    penumbraWidth = max(penumbraWidth, 0.001); // Minimum filter size
     
-    // Step 3: Filtering
-    float shadow = PCSSFilter(shadowMapCoord, zReceiver, filterRadius);
+    // Step 3: PCF filtering
+    float filterRadius = penumbraWidth * _PCSSFilterRadius;
+    int sampleCount = clamp(_PCSSSampleCount, 4, LIL_PCSS_DEFAULT_SAMPLE_COUNT);
     
-    // Apply intensity and bias
-    shadow = lerp(0.0, 1.0, shadow);
-    shadow = pow(shadow, _PCSSIntensity);
+    return PCF(shadowUV, depth, filterRadius, sampleCount);
+}
+
+// Simplified PCSS for mobile platforms
+float PCSSMobile(float4 shadowCoord, float receiverDepth)
+{
+    float3 projCoords = shadowCoord.xyz / shadowCoord.w;
     
-    return shadow;
+    if (projCoords.x < 0.0 || projCoords.x > 1.0 || 
+        projCoords.y < 0.0 || projCoords.y > 1.0 ||
+        projCoords.z < 0.0 || projCoords.z > 1.0)
+    {
+        return 1.0;
+    }
+    
+    float2 shadowUV = projCoords.xy;
+    float depth = projCoords.z - _PCSSBias * 0.001;
+    
+    // Simplified single-step PCF for mobile
+    return PCF(shadowUV, depth, _PCSSFilterRadius * 0.5, 8);
+}
+
+// VRC Light Volumes integration
+float3 SampleVRCLightVolumes(float3 worldPos)
+{
+    #if defined(VRC_LIGHT_VOLUMES_ENABLED)
+        // Transform world position to light volume local space
+        float3 localPos = mul(_VRCLightVolumeWorldToLocal, float4(worldPos, 1.0)).xyz;
+        
+        // Sample the 3D light volume texture
+        float3 lightColor = tex3D(_VRCLightVolumeTexture, localPos).rgb;
+        
+        // Apply intensity and tint
+        lightColor *= _VRCLightVolumeIntensity;
+        lightColor *= _VRCLightVolumeTint.rgb;
+        
+        // Apply distance-based falloff
+        float distance = length(localPos - 0.5);
+        float falloff = 1.0 - saturate(distance * _VRCLightVolumeDistanceFactor);
+        lightColor *= falloff;
+        
+        return lightColor;
+    #else
+        return float3(1.0, 1.0, 1.0); // Default white light
+    #endif
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -182,7 +219,7 @@ float SamplePCSSShadow(float4 shadowCoord, float3 worldPos, float3 normal)
 float lilGetPCSSShadow(float4 shadowCoord, float3 worldPos, float3 normal)
 {
     #if defined(LIL_FEATURE_SHADOW) && defined(_MAIN_LIGHT_SHADOWS)
-        return SamplePCSSShadow(shadowCoord, worldPos, normal);
+        return PCSS(shadowCoord, worldPos.z);
     #else
         return 1.0;
     #endif
@@ -208,7 +245,7 @@ float lilGetPCSSShadowOptimized(float4 shadowCoord, float3 worldPos, float3 norm
         return SAMPLE_TEXTURE2D(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture, shadowCoord.xy).r;
     }
     
-    return SamplePCSSShadow(shadowCoord, worldPos, normal);
+    return PCSS(shadowCoord, worldPos.z);
 }
 
 //----------------------------------------------------------------------------------------------------------------------

@@ -3,10 +3,7 @@
     "rootNamespace": "lilToon.PCSS",
     "references": [
         "Unity.RenderPipelines.Core",
-        "Unity.RenderPipelines.Universal",
-        "VRC.SDK3.Avatars",
-        "VRC.SDKBase",
-        "nadena.dev.modular-avatar.core"
+        "Unity.RenderPipelines.Universal"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -30,6 +27,11 @@
             "name": "nadena.dev.modular-avatar",
             "expression": "",
             "define": "MODULAR_AVATAR_AVAILABLE"
+        },
+        {
+            "name": "jp.lilxyzw.liltoon",
+            "expression": "",
+            "define": "LILTOON_AVAILABLE"
         }
     ],
     "noEngineReferences": false

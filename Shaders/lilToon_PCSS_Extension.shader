@@ -163,7 +163,7 @@ Shader "lilToon/PCSS Extension"
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
                 o.worldNormal = UnityObjectToWorldNormal(v.normal);
-                UNITY_TRANSFER_SHADOW(o);
+                UNITY_TRANSFER_SHADOW(o, o.worldPos);
                 UNITY_TRANSFER_FOG(o, o.pos);
                 return o;
             }
@@ -177,7 +177,11 @@ Shader "lilToon/PCSS Extension"
                 float shadow = 1.0;
 
                 #if defined(_USEPCSS_ON)
-                    shadow = PCSS(i.shadowCoord, i.pos.z);
+                    #ifdef LIL_PCSS_MOBILE_PLATFORM
+                        shadow = PCSSMobile(i._ShadowCoord, i.pos.z);
+                    #else
+                        shadow = PCSS(i._ShadowCoord, i.pos.z);
+                    #endif
                 #elif defined(_USESHADOW_ON)
                     shadow = SHADOW_ATTENUATION(i);
                 #endif
