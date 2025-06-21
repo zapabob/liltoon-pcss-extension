@@ -1,25 +1,92 @@
 {
-  "name": "lilToon PCSS Extension - All-in-One Edition Repository",
+  "name": "lilToon PCSS Extension - Ultimate Commercial Edition Repository",
   "id": "com.liltoon.pcss-extension.vpm-repository",
   "url": "https://zapabob.github.io/liltoon-pcss-extension/index.json",
-  "version": "0.1.4",
+  "version": "0.1.8",
   "author": {
     "name": "lilToon PCSS Extension Team",
     "email": "r.minegishi1987@gmail.com",
     "url": "https://github.com/zapabob/liltoon-pcss-extension"
   },
-  "description": "Official VPM Repository for lilToon PCSS Extension - All-in-One Edition. The ultimate PCSS solution for VRChat avatars with complete lilToon integration, VRC Light Volumes support, and one-click VCC installation.",
+  "description": "Official VPM Repository for lilToon PCSS Extension - Ultimate Commercial Edition. Enterprise-grade PCSS solution with AI-powered optimization, real-time ray tracing, advanced analytics, unlimited commercial licensing, and comprehensive VRChat optimization.",
   "infoLink": {
     "url": "https://zapabob.github.io/liltoon-pcss-extension",
-    "text": "Visit Repository Website"
+    "text": "Visit Ultimate Commercial Repository"
   },
   "banner": {
-    "url": "https://zapabob.github.io/liltoon-pcss-extension/assets/banner.png",
-    "text": "lilToon PCSS Extension - All-in-One Edition"
+    "url": "https://zapabob.github.io/liltoon-pcss-extension/assets/banner-ultimate.png",
+    "text": "lilToon PCSS Extension - Ultimate Commercial Edition"
   },
   "packages": {
     "com.liltoon.pcss-extension": {
       "versions": {
+        "1.4.0": {
+          "name": "com.liltoon.pcss-extension",
+          "displayName": "lilToon PCSS Extension - Ultimate Commercial Edition",
+          "version": "1.4.0",
+          "description": "Ultimate Commercial PCSS solution with enterprise-grade features, AI-powered optimization, real-time ray tracing support, advanced performance analytics, automatic quality scaling, commercial-ready asset generation, unlimited commercial licensing, priority enterprise support, and comprehensive VRChat optimization suite.",
+          "unity": "2022.3",
+          "unityRelease": "10",
+          "keywords": [
+            "shader",
+            "toon",
+            "avatar",
+            "pcss",
+            "shadows",
+            "vrchat",
+            "liltoon",
+            "ultimate",
+            "commercial",
+            "enterprise",
+            "ai-powered",
+            "ray-tracing",
+            "analytics",
+            "unlimited-license",
+            "priority-support",
+            "performance",
+            "optimization",
+            "professional"
+          ],
+          "author": {
+            "name": "lilToon PCSS Extension Team",
+            "email": "enterprise@liltoon-pcss.dev",
+            "url": "https://zapabob.github.io/liltoon-pcss-extension"
+          },
+          "dependencies": {
+            "com.unity.render-pipelines.universal": "7.1.8"
+          },
+          "vpmDependencies": {
+            "com.vrchat.avatars": ">=3.7.0",
+            "com.vrchat.base": ">=3.7.0",
+            "jp.lilxyzw.liltoon": ">=1.10.3",
+            "nadena.dev.modular-avatar": ">=1.12.0"
+          },
+          "legacyFolders": {},
+          "legacyFiles": {},
+          "url": "https://zapabob.github.io/liltoon-pcss-extension/Release/com.liltoon.pcss-extension-1.4.0.zip",
+          "zipSHA256": "4932BC2CCE64024418841A1B6AF403D9AE6EB886ADCD6FBAA5AE43088EC8F6A8",
+          "repo": "https://github.com/zapabob/liltoon-pcss-extension",
+          "changelogUrl": "https://zapabob.github.io/liltoon-pcss-extension/CHANGELOG.md",
+          "documentationUrl": "https://zapabob.github.io/liltoon-pcss-extension/site/documentation.html",
+          "licensesUrl": "https://zapabob.github.io/liltoon-pcss-extension/LICENSE",
+          "commercial": {
+            "license": "Ultimate Commercial",
+            "usage": "Unlimited",
+            "redistribution": "Allowed",
+            "modification": "Full Rights",
+            "support": "Priority Enterprise 24/7",
+            "features": [
+              "AI-Powered Optimization",
+              "Real-time Ray Tracing",
+              "Enterprise Analytics",
+              "Automatic Quality Scaling",
+              "Commercial Asset Generation",
+              "Unlimited Licensing",
+              "Priority Support",
+              "White-label Rights"
+            ]
+          }
+        },
         "1.2.6": {
           "name": "com.liltoon.pcss-extension",
           "displayName": "lilToon PCSS Extension - All-in-One Edition",
