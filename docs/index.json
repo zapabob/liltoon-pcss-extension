@@ -1,13 +1,14 @@
 {
-  "name": "lilToon PCSS Extension VPM Repository",
-  "id": "com.liltoon.pcss-extension.vpm",
+  "name": "lilToon PCSS Extension - All-in-One Edition Repository",
+  "id": "com.liltoon.pcss-extension.vpm-repository",
   "url": "https://zapabob.github.io/liltoon-pcss-extension/index.json",
   "version": "0.1.0",
   "author": {
     "name": "lilToon PCSS Extension Team",
     "email": "r.minegishi1987@gmail.com",
-    "url": "https://github.com/zapabob"
+    "url": "https://github.com/zapabob/liltoon-pcss-extension"
   },
+  "description": "Official VPM Repository for lilToon PCSS Extension - All-in-One Edition. The ultimate PCSS solution for VRChat avatars with complete lilToon integration, VRC Light Volumes support, and one-click VCC installation.",
   "packages": {
     "com.liltoon.pcss-extension": {
       "versions": {
@@ -18,32 +19,6 @@
           "description": "Complete PCSS (Percentage-Closer Soft Shadows) solution with automatic lilToon compatibility management, VRChat SDK3 integration, VRC Light Volumes support, and one-click setup via VCC. Compatible with lilToon v1.10.3 and VRC Light Volumes.",
           "unity": "2019.4",
           "unityRelease": "31f1",
-          "author": {
-            "name": "lilToon PCSS Extension Team",
-            "email": "r.minegishi1987@gmail.com",
-            "url": "https://github.com/zapabob"
-          },
-          "dependencies": {
-            "com.unity.render-pipelines.universal": "7.1.8"
-          },
-          "vpmDependencies": {
-            "com.vrchat.avatars": "3.7.0",
-            "com.vrchat.base": "3.7.0",
-            "jp.lilxyzw.liltoon": "1.10.3",
-            "nadena.dev.modular-avatar": "1.10.0"
-          },
-          "legacyFolders": {
-            "Assets\\lilToon PCSS Extension": ""
-          },
-          "legacyFiles": {
-            "Assets\\lilToon PCSS Extension.meta": ""
-          },
-          "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.2.0/com.liltoon.pcss-extension-1.2.0.zip",
-          "repo": "https://github.com/zapabob/liltoon-pcss-extension.git",
-          "license": "MIT",
-          "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE",
-          "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
-          "documentationUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/README.md",
           "keywords": [
             "shader",
             "toon",
@@ -65,29 +40,44 @@
             "all-in-one",
             "booth"
           ],
+          "author": {
+            "name": "lilToon PCSS Extension Team",
+            "email": "r.minegishi1987@gmail.com",
+            "url": "https://github.com/zapabob/liltoon-pcss-extension"
+          },
+          "license": "MIT",
+          "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE",
+          "dependencies": {
+            "com.vrchat.avatars": "3.7.0",
+            "com.vrchat.base": "3.7.0"
+          },
+          "vpmDependencies": {
+            "com.vrchat.avatars": "3.7.0",
+            "com.vrchat.base": "3.7.0"
+          },
+          "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.2.0/com.liltoon.pcss-extension-1.2.0.zip",
+          "repo": "https://github.com/zapabob/liltoon-pcss-extension",
+          "zipSHA256": "0000000000000000000000000000000000000000000000000000000000000000",
           "samples": [
             {
               "displayName": "PCSS Sample Materials",
-              "description": "Sample materials demonstrating PCSS effects with lilToon and Poiyomi shaders",
+              "description": "Basic PCSS effect demonstration materials",
               "path": "Samples~/PCSSMaterials"
             },
             {
               "displayName": "VRChat Expression Setup",
-              "description": "Pre-configured VRChat Expression Menu and Parameters for PCSS control",
+              "description": "Pre-configured expression menus and parameters",
               "path": "Samples~/VRChatExpressions"
             },
             {
               "displayName": "ModularAvatar Prefabs",
-              "description": "Ready-to-use ModularAvatar prefabs for easy avatar integration",
+              "description": "Ready-to-use ModularAvatar prefabs for non-destructive setup",
               "path": "Samples~/ModularAvatarPrefabs"
             }
           ],
-          "vrc": {
-            "dependencies": {
-              "com.vrchat.avatars": "3.7.0",
-              "com.vrchat.base": "3.7.0"
-            }
-          }
+          "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
+          "documentationUrl": "https://zapabob.github.io/liltoon-pcss-extension/documentation/",
+          "hideInEditor": false
         }
       }
     }

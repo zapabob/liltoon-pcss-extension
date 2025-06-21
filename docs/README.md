@@ -1,73 +1,121 @@
-# lilToon PCSS Extension VPM Repository
+# lilToon PCSS Extension - All-in-One Edition
 
-[![VCC Ready](https://img.shields.io/badge/VCC-Ready-green.svg)](https://vcc.docs.vrchat.com/)
-[![lilToon Compatible](https://img.shields.io/badge/lilToon-Compatible-purple.svg)](https://github.com/lilxyzw/lilToon)
-[![Poiyomi Compatible](https://img.shields.io/badge/Poiyomi-Compatible-pink.svg)](https://poiyomi.com/)
+**The Ultimate PCSS Solution for VRChat Avatars**
 
-**VRChat Creator Companion (VCC)対応の公式VPMリポジトリです。**
+[![GitHub Release](https://img.shields.io/github/v/release/zapabob/liltoon-pcss-extension?style=for-the-badge&logo=github)](https://github.com/zapabob/liltoon-pcss-extension/releases)
+[![lilToon Compatibility](https://img.shields.io/badge/lilToon-v1.10.3-blue?style=for-the-badge&logo=unity)](https://github.com/lilxyzw/lilToon)
+[![VRChat SDK](https://img.shields.io/badge/VRChat%20SDK-3.7.0-green?style=for-the-badge&logo=vrchat)](https://vrchat.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-## 🚀 クイックスタート
+## 🚀 Quick Install
 
-### VCCでのインストール
+### One-Click VCC Installation
+[![Add to VCC](https://img.shields.io/badge/Add%20to%20VCC-One%20Click%20Install-blue?style=for-the-badge&logo=vrchat)](https://zapabob.github.io/liltoon-pcss-extension/vcc-add-repo.html)
 
-1. **VCCを起動**
-2. **Settings** → **Packages** → **Add Repository**
-3. **以下のURLを入力**:
-   ```
-   https://zapabob.github.io/liltoon-pcss-extension/index.json
-   ```
-4. **Add**をクリック
-5. プロジェクトで**lilToon PCSS Extension**を検索してインストール
+**VPM Repository URL**: `https://zapabob.github.io/liltoon-pcss-extension/index.json`
 
-## 📦 利用可能なパッケージ
+### Manual VCC Installation
+1. Open **VRChat Creator Companion**
+2. Go to **Settings** → **Packages** → **Add Repository**
+3. Enter: `https://zapabob.github.io/liltoon-pcss-extension/index.json`
+4. Click **Add** and install **"lilToon PCSS Extension - All-in-One Edition"**
 
-### lilToon PCSS Extension v1.2.0
+## 🎉 All-in-One Edition Features
 
-**映画品質のソフトシャドウをVRChatアバターに**
+### ✨ Complete PCSS Solution
+- **Automatic lilToon Compatibility**: Smart version detection and synchronization
+- **VRC Light Volumes Integration**: Next-generation voxel-based lighting
+- **VRChat SDK3 Optimization**: Performance-tuned for VRChat environments
+- **Quest Platform Support**: Optimized rendering pipeline
+- **One-Click VCC Installation**: Seamless setup experience
 
-- **PCSS技術**: 光源距離に応じた自然な影のぼけ
-- **VRChat SDK3完全対応**: 最新VRChatシステムとの完全互換性
-- **ModularAvatar統合**: ワンクリックでエクスプレッション自動セットアップ
-- **VRC Light Volumes統合**: 次世代ボクセルライティングシステム対応
-- **インテリジェント最適化**: VRChat品質設定に自動連動
+### 🚀 Key Highlights
 
-#### 依存関係
+| Feature | Description | Status |
+|---------|-------------|--------|
+| **lilToon v1.10.3** | Latest version compatibility | ✅ Supported |
+| **VRC Light Volumes** | Advanced lighting system | ✅ Integrated |
+| **ModularAvatar** | Non-destructive avatar modification | ✅ Compatible |
+| **Expression Menus** | Automatic VRChat control generation | ✅ Automated |
+| **Performance Optimization** | Dynamic VRChat settings adjustment | ✅ Optimized |
 
-- **VRChat SDK3 Avatars** (3.4.0以降)
-- **VRChat SDK3 Base** (3.4.0以降)
-- **lilToon** (1.3.0以降)
-- **ModularAvatar** (1.9.0以降)
+## 📦 Installation Methods
 
-#### サンプル
+### Method 1: VCC (Recommended) 🌟
+[![Add to VCC](https://img.shields.io/badge/Add%20to%20VCC-Recommended-blue?style=for-the-badge&logo=vrchat)](vcc://vpm/addRepo?url=https%3A%2F%2Fzapabob.github.io%2Fliltoon-pcss-extension%2Findex.json)
 
-- **PCSS Sample Materials**: 基本的なPCSS効果デモ
-- **VRChat Expression Setup**: 事前設定済みエクスプレッションメニュー
-- **ModularAvatar Prefabs**: 即座に使用可能なプレハブ
+**Repository URL**: `https://zapabob.github.io/liltoon-pcss-extension/index.json`
 
-## 🔧 動作環境
+1. Click the "Add to VCC" button above (requires VCC 2.1.0+)
+2. Or manually add the repository URL in VCC Settings
+3. Install **"lilToon PCSS Extension - All-in-One Edition"**
+4. Run the setup wizard that automatically appears
 
-- **Unity**: 2019.4 LTS以降 (2022.3 LTS推奨)
-- **プラットフォーム**: PC・Quest両対応
-- **レンダーパイプライン**: URP 7.1.8以降
+### Method 2: Unity Package Manager
+1. Open **Unity Package Manager**
+2. Add package from git URL: `https://github.com/zapabob/liltoon-pcss-extension.git`
+3. Import the package and follow setup instructions
 
-## 📚 ドキュメント
+### Method 3: Direct Download
+1. Download from [GitHub Releases](https://github.com/zapabob/liltoon-pcss-extension/releases)
+2. Extract to your Unity project's `Packages` folder
+3. Unity will automatically import the package
 
-- **メインドキュメント**: [README.md](https://github.com/zapabob/liltoon-pcss-extension/blob/main/README.md)
-- **VCC導入ガイド**: [VCC Setup Guide](https://github.com/zapabob/liltoon-pcss-extension/blob/main/VCC_Setup_Guide.md)
-- **変更履歴**: [CHANGELOG.md](https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md)
+## 🎯 Compatibility
 
-## 🛠️ サポート
+- **Unity**: 2019.4.31f1 or later
+- **lilToon**: v1.10.3 (latest)
+- **VRChat SDK**: 3.7.0 or later
+- **ModularAvatar**: 1.10.0 or later
+- **Poiyomi Pro**: 8.0 or later
 
-- **GitHub Issues**: [問題を報告](https://github.com/zapabob/liltoon-pcss-extension/issues)
-- **Discord**: [VRChatアバター制作サーバー](https://discord.gg/vrchat-creators)
-- **Twitter**: [@zapabob_ouj](https://twitter.com/zapabob_ouj)
+## 📚 Documentation
 
-## 📄 ライセンス
+- [📖 Complete Setup Guide](https://github.com/zapabob/liltoon-pcss-extension/blob/main/README.md)
+- [🔧 VCC Installation Guide](https://github.com/zapabob/liltoon-pcss-extension/blob/main/VCC_Setup_Guide.md)
+- [💡 VRC Light Volumes Integration](https://github.com/zapabob/liltoon-pcss-extension/blob/main/VRC_Light_Volumes_Integration_Guide.md)
+- [🤖 ModularAvatar Setup](https://github.com/zapabob/liltoon-pcss-extension/blob/main/PCSS_ModularAvatar_Guide.md)
 
-MIT License - 詳細は[LICENSE](https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE)をご覧ください。
+## 🛒 Get It Now
+
+### GitHub (Free & Open Source)
+- [![Add to VCC](https://img.shields.io/badge/Add%20to%20VCC-Free-blue?style=flat-square&logo=vrchat)](vcc://vpm/addRepo?url=https%3A%2F%2Fzapabob.github.io%2Fliltoon-pcss-extension%2Findex.json) **VCC Repository**
+- [Download Latest Release](https://github.com/zapabob/liltoon-pcss-extension/releases/latest)
+- [VPM Repository](https://zapabob.github.io/liltoon-pcss-extension/)
+
+### BOOTH (Premium Support)
+- [lilToon PCSS Extension - All-in-One Edition](https://booth.pm/) *(Coming Soon)*
+- Price: ¥2,980 - ¥6,980
+- Includes premium support and exclusive updates
+
+## 🛠️ Support
+
+- **🐛 Issues**: [GitHub Issues](https://github.com/zapabob/liltoon-pcss-extension/issues)
+- **💬 Discussions**: [GitHub Discussions](https://github.com/zapabob/liltoon-pcss-extension/discussions)
+- **📧 Direct Support**: r.minegishi1987@gmail.com
+
+## 📈 Why Choose All-in-One Edition?
+
+### vs. Poiyomi Pro
+- **One-time purchase** vs $15/month subscription
+- **Complete lilToon integration** vs separate shader system
+- **VRChat-optimized** vs general-purpose solution
+
+### vs. Manual PCSS Implementation
+- **Automatic setup** vs hours of manual configuration
+- **Performance optimization** vs trial-and-error tuning
+- **Ongoing updates** vs outdated implementations
+
+## 🎊 What's New in v1.2.0
+
+- ✅ **lilToon v1.10.3 Compatibility**: Full support for the latest version
+- ✅ **VRC Light Volumes**: Next-generation lighting integration
+- ✅ **Enhanced Performance**: Quest-specific optimizations
+- ✅ **Improved UX**: One-click VCC installation
+- ✅ **Extended Documentation**: Comprehensive guides and tutorials
 
 ---
 
-**lilToon PCSS Extension Team**  
-**Email**: r.minegishi1987@gmail.com  
-**GitHub**: https://github.com/zapabob/liltoon-pcss-extension 
+**Transform your avatar lighting today!** 🌟
+
+[![Add to VCC](https://img.shields.io/badge/Add%20to%20VCC-Get%20Started-blue?style=for-the-badge&logo=vrchat)](vcc://vpm/addRepo?url=https%3A%2F%2Fzapabob.github.io%2Fliltoon-pcss-extension%2Findex.json) | [Documentation](https://github.com/zapabob/liltoon-pcss-extension/blob/main/README.md) | [Support]({{ site.baseurl }}/support/) 
