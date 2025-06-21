@@ -53,7 +53,9 @@
           },
           "vpmDependencies": {
             "com.vrchat.avatars": "3.7.0",
-            "com.vrchat.base": "3.7.0"
+            "com.vrchat.base": "3.7.0",
+            "jp.lilxyzw.liltoon": "1.10.3",
+            "nadena.dev.modular-avatar": "1.10.0"
           },
           "url": "https://zapabob.github.io/liltoon-pcss-extension/Release/com.liltoon.pcss-extension-1.2.0.zip",
           "repo": "https://github.com/zapabob/liltoon-pcss-extension",
@@ -124,7 +126,9 @@
           },
           "vpmDependencies": {
             "com.vrchat.avatars": "3.7.0",
-            "com.vrchat.base": "3.7.0"
+            "com.vrchat.base": "3.7.0",
+            "jp.lilxyzw.liltoon": "1.10.3",
+            "nadena.dev.modular-avatar": "1.10.0"
           },
           "url": "https://zapabob.github.io/liltoon-pcss-extension/Release/com.liltoon.pcss-extension-1.2.1.zip",
           "repo": "https://github.com/zapabob/liltoon-pcss-extension",
