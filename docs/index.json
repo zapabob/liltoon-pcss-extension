@@ -1,7 +1,7 @@
 {
   "name": "lilToon PCSS Extension - All-in-One Edition Repository",
   "id": "com.liltoon.pcss-extension.vpm-repository",
-  "url": "https://zapabob.github.io/liltoon-pcss-extension/index.json",
+  "url": "https://zapabob.github.io/liltoon-pcss-extension/vpm/index.json",
   "version": "0.1.1",
   "author": {
     "name": "lilToon PCSS Extension Team",
