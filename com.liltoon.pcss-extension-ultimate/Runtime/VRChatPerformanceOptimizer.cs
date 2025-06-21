@@ -13,7 +13,7 @@ using System.Linq;
 using System;
 using System.Threading.Tasks;
 
-// UnityEditor references moved to Editor-only scripts
+
 
 namespace LilToonPCSS.Runtime
 {
@@ -23,7 +23,11 @@ namespace LilToonPCSS.Runtime
     /// and commercial-ready features for VRChat content creation
     /// </summary>
     [System.Serializable]
+#if VRCHAT_SDK_AVAILABLE
     public class VRChatPerformanceOptimizer : MonoBehaviour, IEditorOnly
+#else
+    public class VRChatPerformanceOptimizer : MonoBehaviour
+#endif
     {
         [Header("🌟 Ultimate Commercial Edition - Performance Optimizer")]
         [Space(5)]

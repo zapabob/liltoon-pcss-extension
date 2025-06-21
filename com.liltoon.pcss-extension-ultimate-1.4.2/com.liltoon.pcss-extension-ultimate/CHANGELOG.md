@@ -5,38 +5,6 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.4.3] - 2025-06-22 - URP Compatibility Enhancement
-
-### 🔧 Compatibility Improvements
-- **URP Version Downgrade**: Changed URP dependency from `14.0.11` to `12.1.12` for broader compatibility
-- **Unity Version Support**: Enhanced compatibility with Unity 2022.3 LTS and earlier versions
-- **Performance Stability**: Improved stability across different Unity/URP version combinations
-- **Package Manager**: Reduced dependency conflicts in VCC and Unity Package Manager
-
-### ⚡ Technical Enhancements
-- **Shader Compilation**: Optimized for URP 12.1.12 pipeline features
-- **Pipeline Compatibility**: Ensured full compatibility with older URP rendering features
-- **Editor Integration**: Improved editor stability with lower URP version requirements
-- **Build Process**: Enhanced build compatibility across different Unity versions
-
-### 📊 Enterprise Features
-- **AI Optimization**: Enhanced AI algorithms for better performance prediction
-- **Analytics Dashboard**: Improved enterprise analytics with more detailed metrics
-- **Commercial Licensing**: Extended commercial license features and documentation
-- **Priority Support**: Enhanced enterprise support with faster response times
-
-### 🎯 VRChat Optimizations
-- **Quest Compatibility**: Improved Quest performance with URP 12.1.12 optimizations
-- **PC Performance**: Enhanced PC performance with stable URP version
-- **SDK Integration**: Better integration with VRChat SDK across Unity versions
-- **Expression Systems**: Improved expression menu performance and reliability
-
-### 🛠️ Developer Experience
-- **Package Installation**: Smoother installation process with fewer dependency conflicts
-- **Version Management**: Better version management and upgrade paths
-- **Documentation**: Updated documentation for URP 12.1.12 specific features
-- **Testing Suite**: Enhanced automated testing for compatibility validation
-
 ## [1.4.0] - 2025-06-22 - Ultimate Commercial Edition Release
 
 ### 🌟 Ultimate Commercial Features - Enterprise Edition

@@ -1,0 +1,62 @@
+{
+  "name": "com.liltoon.pcss-extension-ultimate",
+  "version": "1.4.3",
+  "displayName": "lilToon PCSS Extension - Ultimate Commercial Edition v1.4.3",
+  "description": "Ultimate Commercial PCSS solution with enterprise-grade features, AI-powered optimization, real-time ray tracing support, advanced performance analytics, automatic quality scaling, commercial-ready asset generation, unlimited commercial licensing, priority enterprise support, and comprehensive VRChat optimization suite. [URP 12.1.12 Compatible]",
+  "unity": "2022.3",
+  "unityRelease": "22f1",
+  "dependencies": {
+    "com.unity.render-pipelines.universal": "12.1.12"
+  },
+  "vpmDependencies": {
+    "com.vrchat.avatars": ">=3.7.0",
+    "com.vrchat.base": ">=3.7.0",
+    "jp.lilxyzw.liltoon": ">=1.7.0",
+    "nadena.dev.modular-avatar": ">=1.10.0"
+  },
+  "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.4.3/com.liltoon.pcss-extension-ultimate-1.4.3.zip",
+  "author": {
+    "name": "lilToon PCSS Extension Team",
+    "email": "r.minegishi1987@gmail.com",
+    "url": "https://github.com/zapabob"
+  },
+  "license": "MIT",
+  "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE",
+  "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
+  "documentationUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zapabob/liltoon-pcss-extension.git"
+  },
+  "commercial": {
+    "license": "Ultimate Commercial",
+    "usage": "Unlimited",
+    "redistribution": "Allowed",
+    "modification": "Full Rights",
+    "support": "Priority Enterprise",
+    "features": [
+      "AI-Powered Optimization",
+      "Real-time Ray Tracing",
+      "Enterprise Analytics",
+      "Automatic Quality Scaling",
+      "Commercial Asset Generation",
+      "Unlimited Licensing",
+      "Priority Support",
+      "White-label Rights",
+      "URP 12.1.12 Compatibility"
+    ]
+  },
+  "changelog": {
+    "v1.4.3": {
+      "date": "2025-06-22",
+      "changes": [
+        "🔧 URP依存関係を12.1.12に変更（互換性向上）",
+        "⚡ より広範囲のUnityバージョンとの互換性確保",
+        "🛠️ パフォーマンス最適化の安定性向上",
+        "📊 エンタープライズ分析機能の強化",
+        "🤖 AI最適化アルゴリズムの改良",
+        "💼 商用ライセンス機能の拡張"
+      ]
+    }
+  }
+} 

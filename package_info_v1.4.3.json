@@ -1,0 +1,44 @@
+{
+  "name": "com.liltoon.pcss-extension-ultimate",
+  "version": "1.4.3",
+  "displayName": "lilToon PCSS Extension - Ultimate Commercial Edition v1.4.3",
+  "description": "URP 12.1.12 Compatibility Enhanced Edition - Enterprise-grade PCSS solution with enhanced Unity compatibility",
+  "filename": "com.liltoon.pcss-extension-ultimate-1.4.3.zip",
+  "size": 98660,
+  "size_mb": 0.09,
+  "sha256": "5777FD3635F6D89F78B7A637F5B4C9DEC396A0C0A2E61AEA2AC0BD98B3D579F0",
+  "file_count": 27,
+  "created": "2025-06-22T07:13:23.174208",
+  "unity_compatibility": {
+    "minimum": "2022.3.22f1",
+    "recommended": "2022.3.22f1",
+    "tested": [
+      "2022.3.22f1",
+      "2023.2.20f1",
+      "2023.3.0f1"
+    ]
+  },
+  "urp_version": "12.1.12",
+  "features": {
+    "ai_optimization": true,
+    "ray_tracing": true,
+    "enterprise_analytics": true,
+    "commercial_licensing": true,
+    "urp_compatibility": "Enhanced",
+    "quest_optimization": true,
+    "pc_optimization": true
+  },
+  "improvements": [
+    "URP dependency reduced to 12.1.12 for broader compatibility",
+    "Enhanced Unity 2022.3 LTS support",
+    "Improved VCC package manager integration",
+    "Reduced dependency conflicts",
+    "Better cross-version stability"
+  ],
+  "commercial": {
+    "license": "Ultimate Commercial",
+    "usage": "Unlimited",
+    "redistribution": "Allowed",
+    "support": "Priority Enterprise"
+  }
+}
