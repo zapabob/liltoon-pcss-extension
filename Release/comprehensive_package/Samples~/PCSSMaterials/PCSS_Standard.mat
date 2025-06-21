@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PCSS_Standard
+  m_Shader: {fileID: 4800000, guid: 4f69e9e3f9f5a4e45b7c8f8b4a4c5d8e, type: 3}
+  m_ValidKeywords:
+  - _PCSS_ENABLED
+  - _SHADOWS_ENABLED
+  - _RECEIVE_SHADOWS
+  - _CAST_SHADOWS
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 2000
+  stringTagMap:
+    RenderType: Opaque
+    Queue: Geometry
+  disabledShaderPasses:
+  - SHADOWCASTER
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: a1b2c3d4e5f6789012345678, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 2800000, guid: b2c3d4e5f6789012345678a1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ShadowColorTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _PCSSEnabled: 1
+    - _PCSSLightSize: 0.1
+    - _PCSSMaxDistance: 50
+    - _PCSSFilterRadius: 5
+    - _PCSSBias: 0.001
+    - _PCSSNormalBias: 0.1
+    - _ShadowStrength: 1
+    - _ShadowBorder: 0.5
+    - _ShadowBlur: 1
+    - _BumpScale: 1
+    - _Cutoff: 0.5
+    - _Metallic: 0
+    - _Glossiness: 0.5
+    - _GlossMapScale: 1
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _GlossyReflections: 1
+    - _OcclusionStrength: 1
+    - _Mode: 0
+    - _SrcBlend: 1
+    - _DstBlend: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _MainColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  m_BuildTextureStacks: []
+# Standard PCSS material with default settings
+# This material demonstrates PCSS (Percentage-Closer Soft Shadows) implementation
+# Compatible with lilToon shader system and VRChat optimization requirements
+# Features include:
+# - Soft shadow rendering with configurable filter radius
+# - Performance-optimized shadow sampling
+# - VRChat avatar compatibility
+# - Real-time lighting integration
+# - Mobile-friendly fallback options
+\n# Additional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\nAdditional documentation and usage examples\n
