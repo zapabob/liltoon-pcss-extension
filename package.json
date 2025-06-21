@@ -1,0 +1,35 @@
+{
+  "name": "com.liltoon.pcss-extension",
+  "displayName": "lilToon PCSS Extension",
+  "version": "1.0.0",
+  "description": "PCSS (Percentage-Closer Soft Shadows) extension for lilToon shader system",
+  "unity": "2019.4",
+  "unityRelease": "0f1",
+  "keywords": [
+    "shader",
+    "toon",
+    "avatar",
+    "pcss",
+    "shadows",
+    "vrchat",
+    "liltoon"
+  ],
+  "author": {
+    "name": "lilToon PCSS Extension Team"
+  },
+  "dependencies": {
+    "com.unity.render-pipelines.universal": "7.1.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zapabob/liltoon-pcss-extension.git"
+  },
+  "license": "MIT",
+  "samples": [
+    {
+      "displayName": "PCSS Sample Materials",
+      "description": "Sample materials demonstrating PCSS effects",
+      "path": "Samples~/PCSSMaterials"
+    }
+  ]
+} 
