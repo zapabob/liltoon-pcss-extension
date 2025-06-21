@@ -1,0 +1,4 @@
+﻿# lilToon PCSS Extension v1.2.0 - Checksums
+# Generated: 2025-06-21 22:09:33
+SHA256: 0E46F9FEBDDCF96E3C67F86F867807B156AD196C63E777E3FD0C14FB81BF7C6D - com.liltoon.pcss-extension-1.2.0.zip
+
