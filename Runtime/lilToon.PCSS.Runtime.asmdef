@@ -1,0 +1,23 @@
+{
+    "name": "lilToon.PCSS.Runtime",
+    "rootNamespace": "lilToon.PCSS",
+    "references": [
+        "Unity.RenderPipelines.Core",
+        "Unity.RenderPipelines.Universal"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.render-pipelines.universal",
+            "expression": "7.1.8",
+            "define": "URP_AVAILABLE"
+        }
+    ],
+    "noEngineReferences": false
+} 

@@ -52,6 +52,18 @@ Shader "lilToon/PCSS Extension"
         Tags {"RenderType"="Opaque" "Queue"="Geometry"}
         LOD 200
 
+        // Stencil設定
+        Stencil
+        {
+            Ref [_StencilRef]
+            ReadMask [_StencilReadMask]
+            WriteMask [_StencilWriteMask]
+            Comp [_StencilComp]
+            Pass [_StencilPass]
+            Fail [_StencilFail]
+            ZFail [_StencilZFail]
+        }
+
         // Forward Pass with PCSS
         Pass
         {
@@ -72,6 +84,7 @@ Shader "lilToon/PCSS Extension"
 
             // PCSS機能を有効にするシェーダーキーワード
             #pragma shader_feature _USEPCSS_ON
+            #pragma shader_feature _USESHADOW_ON
 
             #include "UnityCG.cginc"
             #include "AutoLight.cginc"
@@ -89,6 +102,7 @@ Shader "lilToon/PCSS Extension"
             float _PCSSFilterRadius;
             int _PCSSSampleCount;
             float _PCSSLightSize;
+            float _PCSSBias;
             
             // シャドウ関連
             float _UseShadow;
@@ -115,7 +129,7 @@ Shader "lilToon/PCSS Extension"
                 UNITY_VERTEX_OUTPUT_STEREO
             };
 
-            // Poisson Disk Sampling for PCSS
+            // 改良されたPoisson Disk Sampling for PCSS
             static const float2 poissonDisk[64] = {
                 float2(-0.613392, 0.617481), float2(0.170019, -0.040254), float2(-0.299417, 0.791925), float2(0.645680, 0.493210),
                 float2(-0.651784, 0.717887), float2(0.421003, 0.027070), float2(-0.817194, -0.271096), float2(-0.705374, -0.668203),
@@ -135,18 +149,24 @@ Shader "lilToon/PCSS Extension"
                 float2(-0.620106, -0.328104), float2(0.789239, -0.419965), float2(-0.545396, 0.538133), float2(-0.178564, -0.596057)
             };
 
-            // PCSS Blocker Search
+            // PCSS Blocker Search - 改良版
             float findBlocker(float2 uv, float zReceiver, float searchRadius)
             {
                 float blockerSum = 0.0;
                 int numBlockers = 0;
+                int sampleCount = min(_PCSSSampleCount, 64);
                 
-                for(int i = 0; i < _PCSSSampleCount; i++)
+                for(int i = 0; i < sampleCount; i++)
                 {
                     float2 sampleUV = uv + poissonDisk[i] * searchRadius;
-                    float shadowMapDepth = tex2D(_ShadowMapTexture, sampleUV).r;
                     
-                    if(shadowMapDepth < zReceiver)
+                    // UV座標のクランプ
+                    sampleUV = clamp(sampleUV, 0.0, 1.0);
+                    
+                    float shadowMapDepth = SAMPLE_DEPTH_TEXTURE(_ShadowMapTexture, sampleUV);
+                    shadowMapDepth = LinearEyeDepth(shadowMapDepth);
+                    
+                    if(shadowMapDepth < zReceiver - _PCSSBias)
                     {
                         blockerSum += shadowMapDepth;
                         numBlockers++;
@@ -156,36 +176,44 @@ Shader "lilToon/PCSS Extension"
                 return numBlockers > 0 ? blockerSum / numBlockers : -1.0;
             }
 
-            // PCSS Penumbra Size Estimation
+            // PCSS Penumbra Size Estimation - 改良版
             float penumbraSize(float zReceiver, float zBlocker, float lightSize)
             {
-                return lightSize * (zReceiver - zBlocker) / zBlocker;
+                return lightSize * (zReceiver - zBlocker) / max(zBlocker, 0.001);
             }
 
-            // PCF Filtering
+            // PCF Filtering - 改良版
             float PCF(float2 uv, float zReceiver, float filterRadius)
             {
                 float sum = 0.0;
-                for(int i = 0; i < _PCSSSampleCount; i++)
+                int sampleCount = min(_PCSSSampleCount, 64);
+                
+                for(int i = 0; i < sampleCount; i++)
                 {
                     float2 sampleUV = uv + poissonDisk[i] * filterRadius;
-                    float shadowMapDepth = tex2D(_ShadowMapTexture, sampleUV).r;
-                    sum += (shadowMapDepth >= zReceiver) ? 1.0 : 0.0;
+                    sampleUV = clamp(sampleUV, 0.0, 1.0);
+                    
+                    float shadowMapDepth = SAMPLE_DEPTH_TEXTURE(_ShadowMapTexture, sampleUV);
+                    shadowMapDepth = LinearEyeDepth(shadowMapDepth);
+                    
+                    sum += (shadowMapDepth >= zReceiver - _PCSSBias) ? 1.0 : 0.0;
                 }
-                return sum / _PCSSSampleCount;
+                
+                return sum / sampleCount;
             }
 
-            // PCSS Main Function
+            // PCSS Main Function - 改良版
             float PCSS(float2 uv, float zReceiver)
             {
                 // Step 1: Blocker Search
                 float avgBlockerDepth = findBlocker(uv, zReceiver, _PCSSBlockerSearchRadius);
                 
-                if(avgBlockerDepth == -1.0) // No blockers
+                if(avgBlockerDepth < 0.0) // No blockers
                     return 1.0;
                 
                 // Step 2: Penumbra Size
                 float penumbraRadius = penumbraSize(zReceiver, avgBlockerDepth, _PCSSLightSize);
+                penumbraRadius = clamp(penumbraRadius, 0.0, _PCSSFilterRadius * 10.0);
                 
                 // Step 3: PCF
                 return PCF(uv, zReceiver, penumbraRadius * _PCSSFilterRadius);
@@ -216,43 +244,39 @@ Shader "lilToon/PCSS Extension"
                 // Alpha test
                 clip(col.a - _Cutoff);
                 
-                // Lighting calculation
+                // Light calculation
                 float3 worldNormal = normalize(i.worldNormal);
                 float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
                 float NdotL = max(0, dot(worldNormal, lightDir));
                 
                 // Shadow calculation
                 float shadow = 1.0;
-                if(_UseShadow > 0.5)
+                
+                #ifdef _USEPCSS_ON
+                if(_UsePCSS > 0.5)
                 {
-                    #if defined(_USEPCSS_ON)
-                        if(_UsePCSS > 0.5)
-                        {
-                            // Use PCSS
-                            float4 shadowCoord = i._ShadowCoord;
-                            float2 shadowUV = shadowCoord.xy / shadowCoord.w;
-                            float zReceiver = shadowCoord.z / shadowCoord.w;
-                            shadow = PCSS(shadowUV, zReceiver);
-                        }
-                        else
-                        {
-                            // Use standard shadow
-                            shadow = SHADOW_ATTENUATION(i);
-                        }
-                    #else
-                        shadow = SHADOW_ATTENUATION(i);
-                    #endif
-                    
-                    // Apply shadow border and blur
-                    shadow = smoothstep(_ShadowBorder - _ShadowBlur * 0.5, _ShadowBorder + _ShadowBlur * 0.5, shadow);
-                    
-                    // Apply shadow color
-                    float3 shadowColor = tex2D(_ShadowColorTex, float2(0.5, 0.5)).rgb;
-                    col.rgb = lerp(col.rgb * shadowColor, col.rgb, shadow);
+                    float2 shadowUV = i._ShadowCoord.xy / i._ShadowCoord.w;
+                    float receiverDepth = LinearEyeDepth(i._ShadowCoord.z / i._ShadowCoord.w);
+                    shadow = PCSS(shadowUV, receiverDepth);
+                }
+                else
+                #endif
+                {
+                    shadow = SHADOW_ATTENUATION(i);
                 }
                 
+                // Apply shadow
+                #ifdef _USESHADOW_ON
+                if(_UseShadow > 0.5)
+                {
+                    float shadowMask = smoothstep(_ShadowBorder - _ShadowBlur, _ShadowBorder + _ShadowBlur, shadow);
+                    fixed4 shadowColor = tex2D(_ShadowColorTex, i.uv);
+                    col.rgb = lerp(shadowColor.rgb * col.rgb, col.rgb, shadowMask);
+                }
+                #endif
+                
                 // Apply lighting
-                col.rgb *= NdotL * _LightColor0.rgb + unity_AmbientSky.rgb;
+                col.rgb *= _LightColor0.rgb * NdotL * shadow;
                 
                 // Apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
@@ -261,8 +285,8 @@ Shader "lilToon/PCSS Extension"
             }
             ENDHLSL
         }
-
-        // Shadow Caster Pass
+        
+        // Shadow caster pass
         Pass
         {
             Name "ShadowCaster"
@@ -270,21 +294,20 @@ Shader "lilToon/PCSS Extension"
             
             ZWrite On
             ZTest LEqual
-            Cull [_Cull]
-
+            
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
             #pragma multi_compile_shadowcaster
             #pragma multi_compile_instancing
-
+            
             #include "UnityCG.cginc"
-
+            
             sampler2D _MainTex;
             float4 _MainTex_ST;
             fixed4 _Color;
             float _Cutoff;
-
+            
             struct appdata
             {
                 float4 vertex : POSITION;
@@ -292,14 +315,14 @@ Shader "lilToon/PCSS Extension"
                 float3 normal : NORMAL;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
-
+            
             struct v2f
             {
                 V2F_SHADOW_CASTER;
                 float2 uv : TEXCOORD1;
                 UNITY_VERTEX_OUTPUT_STEREO
             };
-
+            
             v2f vert(appdata v)
             {
                 v2f o;
@@ -307,22 +330,22 @@ Shader "lilToon/PCSS Extension"
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
                 
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                TRANSFER_SHADOW_CASTER_NORMALOFFSET(o);
+                TRANSFER_SHADOW_CASTER_NORMALOFFSET(o)
                 
                 return o;
             }
-
-            float4 frag(v2f i) : SV_Target
+            
+            fixed4 frag(v2f i) : SV_Target
             {
                 fixed4 col = tex2D(_MainTex, i.uv) * _Color;
                 clip(col.a - _Cutoff);
                 
-                SHADOW_CASTER_FRAGMENT(i);
+                SHADOW_CASTER_FRAGMENT(i)
             }
             ENDHLSL
         }
     }
     
-    CustomEditor "lilToon.lilToonInspector"
-    Fallback "VertexLit"
+    // Fallback
+    FallBack "lilToon"
 } 
