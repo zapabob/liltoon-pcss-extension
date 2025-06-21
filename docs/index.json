@@ -12,6 +12,80 @@
   "packages": {
     "com.liltoon.pcss-extension": {
       "versions": {
+        "1.2.3": {
+          "name": "com.liltoon.pcss-extension",
+          "displayName": "lilToon PCSS Extension - All-in-One Edition",
+          "version": "1.2.3",
+          "description": "Complete PCSS (Percentage-Closer Soft Shadows) solution with Git repository fixes, enhanced stability, automatic lilToon compatibility management, VRChat SDK3 integration, VRC Light Volumes support, and one-click setup via VCC. Fully stable Unity integration with comprehensive error handling.",
+          "unity": "2019.4",
+          "unityRelease": "31f1",
+          "keywords": [
+            "shader",
+            "toon",
+            "avatar",
+            "pcss",
+            "shadows",
+            "vrchat",
+            "liltoon",
+            "poiyomi",
+            "expression",
+            "lightvolumes",
+            "vrc-light-volumes",
+            "bakery",
+            "lighting",
+            "modular-avatar",
+            "vrchat-sdk3",
+            "performance",
+            "optimization",
+            "all-in-one",
+            "booth",
+            "git-fix",
+            "repository-fix",
+            "unity-stable"
+          ],
+          "author": {
+            "name": "lilToon PCSS Extension Team",
+            "email": "r.minegishi1987@gmail.com",
+            "url": "https://github.com/zapabob/liltoon-pcss-extension"
+          },
+          "license": "MIT",
+          "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE",
+          "dependencies": {
+            "com.vrchat.avatars": "3.7.0",
+            "com.vrchat.base": "3.7.0"
+          },
+          "vpmDependencies": {
+            "com.vrchat.avatars": "3.7.0",
+            "com.vrchat.base": "3.7.0",
+            "jp.lilxyzw.liltoon": "1.10.3",
+            "nadena.dev.modular-avatar": "1.10.0"
+          },
+          "url": "https://zapabob.github.io/liltoon-pcss-extension/Release/com.liltoon.pcss-extension-1.2.3.zip",
+          "repo": "https://github.com/zapabob/liltoon-pcss-extension",
+          "zipSHA256": "30F736A069925A938A903A6C6B40B2C56549309FE258277E12C158DBC7F88001",
+          "samples": [
+            {
+              "displayName": "PCSS Sample Materials",
+              "description": "Enhanced PCSS effect demonstration materials with Git repository fixes",
+              "path": "Samples~/PCSSMaterials"
+            },
+            {
+              "displayName": "VRChat Expression Setup",
+              "description": "Pre-configured expression menus and parameters with stability improvements",
+              "path": "Samples~/VRChatExpressions"
+            },
+            {
+              "displayName": "ModularAvatar Prefabs",
+              "description": "Ready-to-use ModularAvatar prefabs with enhanced error handling",
+              "path": "Samples~/ModularAvatarPrefabs"
+            }
+          ],
+          "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
+          "documentationUrl": "https://zapabob.github.io/liltoon-pcss-extension/documentation/",
+          "hideInEditor": false,
+          "legacyFolders": {},
+          "legacyFiles": {}
+        },
         "1.2.2": {
           "name": "com.liltoon.pcss-extension",
           "displayName": "lilToon PCSS Extension - All-in-One Edition",

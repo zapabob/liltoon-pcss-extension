@@ -5,6 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.3] - 2025-01-28
+
+### 🔧 Fixed
+- **Git Repository Configuration**: Fixed remote repository setup and push errors
+- **GitHub Pages Integration**: Resolved "Repository not found" errors during deployment
+- **VPM Repository Stability**: Enhanced repository URL configuration and access reliability
+- **Remote Branch Synchronization**: Fixed diverged branch issues between main and github-pages
+- **Distribution Package Integrity**: Improved SHA256 hash verification and package validation
+
+### ✨ Improved
+- **Repository Management**: Unified git remote configuration with proper origin setup
+- **Deployment Reliability**: Enhanced GitHub Pages deployment process with error handling
+- **Version Control**: Improved branch management and synchronization procedures
+- **Package Distribution**: Streamlined VPM package creation and distribution workflow
+- **Error Recovery**: Added comprehensive error handling for git operations
+
+### 🎯 Technical Details
+- Fixed git remote configuration: `origin` → `https://github.com/zapabob/liltoon-pcss-extension.git`
+- Resolved GitHub Pages deployment issues with proper repository targeting
+- Enhanced VPM repository index.json with v1.2.3 package information
+- Updated SHA256 hash: `30F736A069925A938A903A6C6B40B2C56549309FE258277E12C158DBC7F88001`
+- Improved git workflow with proper branch management and push procedures
+
+### 🛠️ Developer Notes
+- Package size: 63.24 KB (maintained optimal size)
+- All git errors resolved with proper remote repository configuration
+- GitHub Pages deployment now fully functional with enhanced error handling
+- VCC compatibility maintained and improved with stable repository access
+- Enhanced version control workflow for future releases
+
 ## [1.2.2] - 2025-06-22
 
 ### 🔧 Fixed
