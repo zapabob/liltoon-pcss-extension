@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
-namespace lilToon.PCSS
+namespace lilToon.PCSS.Editor
 {
     /// <summary>
     /// VRChat最適化設定エディター
@@ -104,19 +104,19 @@ namespace lilToon.PCSS
             
             EditorGUI.indentLevel++;
             
-            currentProfile.vrcUltraQuality = (PCSSUtilities.PCSSQuality)EditorGUILayout.EnumPopup(
+            currentProfile.vrcUltraQuality = (lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality)EditorGUILayout.EnumPopup(
                 "VRC Ultra → PCSS", currentProfile.vrcUltraQuality);
             
-            currentProfile.vrcHighQuality = (PCSSUtilities.PCSSQuality)EditorGUILayout.EnumPopup(
+            currentProfile.vrcHighQuality = (lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality)EditorGUILayout.EnumPopup(
                 "VRC High → PCSS", currentProfile.vrcHighQuality);
             
-            currentProfile.vrcMediumQuality = (PCSSUtilities.PCSSQuality)EditorGUILayout.EnumPopup(
+            currentProfile.vrcMediumQuality = (lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality)EditorGUILayout.EnumPopup(
                 "VRC Medium → PCSS", currentProfile.vrcMediumQuality);
             
-            currentProfile.vrcLowQuality = (PCSSUtilities.PCSSQuality)EditorGUILayout.EnumPopup(
+            currentProfile.vrcLowQuality = (lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality)EditorGUILayout.EnumPopup(
                 "VRC Low → PCSS", currentProfile.vrcLowQuality);
             
-            currentProfile.vrcMobileQuality = (PCSSUtilities.PCSSQuality)EditorGUILayout.EnumPopup(
+            currentProfile.vrcMobileQuality = (lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality)EditorGUILayout.EnumPopup(
                 "VRC Mobile → PCSS", currentProfile.vrcMobileQuality);
             
             EditorGUI.indentLevel--;
@@ -183,7 +183,7 @@ namespace lilToon.PCSS
             {
                 EditorGUI.indentLevel++;
                 
-                var optimizer = FindObjectOfType<VRChatPerformanceOptimizer>();
+                var optimizer = FindObjectOfType<lilToon.PCSS.Runtime.VRChatPerformanceOptimizer>();
                 if (optimizer != null)
                 {
                     var stats = optimizer.GetPerformanceStats();
@@ -204,7 +204,7 @@ namespace lilToon.PCSS
                     if (GUILayout.Button("VRChatPerformanceOptimizerを追加"))
                     {
                         var go = new GameObject("VRChat Performance Optimizer");
-                        go.AddComponent<VRChatPerformanceOptimizer>();
+                        go.AddComponent<lilToon.PCSS.Runtime.VRChatPerformanceOptimizer>();
                         Selection.activeGameObject = go;
                     }
                 }
@@ -259,11 +259,11 @@ namespace lilToon.PCSS
         
         private void LoadDefaultProfile()
         {
-            currentProfile.vrcUltraQuality = PCSSUtilities.PCSSQuality.Ultra;
-            currentProfile.vrcHighQuality = PCSSUtilities.PCSSQuality.High;
-            currentProfile.vrcMediumQuality = PCSSUtilities.PCSSQuality.Medium;
-            currentProfile.vrcLowQuality = PCSSUtilities.PCSSQuality.Low;
-            currentProfile.vrcMobileQuality = PCSSUtilities.PCSSQuality.Low;
+            currentProfile.vrcUltraQuality = lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality.Ultra;
+            currentProfile.vrcHighQuality = lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality.High;
+            currentProfile.vrcMediumQuality = lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality.Medium;
+            currentProfile.vrcLowQuality = lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality.Low;
+            currentProfile.vrcMobileQuality = lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality.Low;
             
             currentProfile.enableAutoOptimization = true;
             currentProfile.targetFramerate = 90f;
@@ -281,11 +281,11 @@ namespace lilToon.PCSS
             LoadDefaultProfile();
             
             // Quest用設定
-            currentProfile.vrcUltraQuality = PCSSUtilities.PCSSQuality.Medium;
-            currentProfile.vrcHighQuality = PCSSUtilities.PCSSQuality.Medium;
-            currentProfile.vrcMediumQuality = PCSSUtilities.PCSSQuality.Low;
-            currentProfile.vrcLowQuality = PCSSUtilities.PCSSQuality.Low;
-            currentProfile.vrcMobileQuality = PCSSUtilities.PCSSQuality.Low;
+            currentProfile.vrcUltraQuality = lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality.Medium;
+            currentProfile.vrcHighQuality = lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality.Medium;
+            currentProfile.vrcMediumQuality = lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality.Low;
+            currentProfile.vrcLowQuality = lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality.Low;
+            currentProfile.vrcMobileQuality = lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality.Low;
             
             currentProfile.targetFramerate = 72f;
             currentProfile.lowFramerateThreshold = 36f;
@@ -336,7 +336,7 @@ namespace lilToon.PCSS
         private void ApplySettings()
         {
             // シーン内のVRChatPerformanceOptimizerを更新
-            var optimizers = FindObjectsOfType<VRChatPerformanceOptimizer>();
+            var optimizers = FindObjectsOfType<lilToon.PCSS.Runtime.VRChatPerformanceOptimizer>();
             
             foreach (var optimizer in optimizers)
             {
@@ -344,7 +344,7 @@ namespace lilToon.PCSS
             }
             
             // シーン内のVRCLightVolumesIntegrationを更新
-            var lightVolumeIntegrations = FindObjectsOfType<VRCLightVolumesIntegration>();
+            var lightVolumeIntegrations = FindObjectsOfType<lilToon.PCSS.VRCLightVolumesIntegration>();
             
             foreach (var integration in lightVolumeIntegrations)
             {
@@ -358,7 +358,7 @@ namespace lilToon.PCSS
             Debug.Log("VRChat最適化設定を適用しました");
         }
         
-        private void ApplyProfileToOptimizer(VRChatPerformanceOptimizer optimizer)
+        private void ApplyProfileToOptimizer(lilToon.PCSS.Runtime.VRChatPerformanceOptimizer optimizer)
         {
             var serializedObject = new SerializedObject(optimizer);
             
@@ -376,7 +376,7 @@ namespace lilToon.PCSS
             serializedObject.ApplyModifiedProperties();
         }
         
-        private void ApplyProfileToLightVolumeIntegration(VRCLightVolumesIntegration integration)
+        private void ApplyProfileToLightVolumeIntegration(lilToon.PCSS.VRCLightVolumesIntegration integration)
         {
             var serializedObject = new SerializedObject(integration);
             
@@ -417,7 +417,7 @@ namespace lilToon.PCSS
             {
                 foreach (var material in renderer.materials)
                 {
-                    if (PCSSUtilities.IsPCSSMaterial(material))
+                    if (lilToon.PCSS.Runtime.PCSSUtilities.IsPCSSMaterial(material))
                     {
                         pcssMaterials.Add(material);
                     }
@@ -445,13 +445,13 @@ namespace lilToon.PCSS
             var issues = new List<string>();
             
             // VRChatPerformanceOptimizerの存在確認
-            if (FindObjectOfType<VRChatPerformanceOptimizer>() == null)
+            if (FindObjectOfType<lilToon.PCSS.Runtime.VRChatPerformanceOptimizer>() == null)
             {
                 issues.Add("VRChatPerformanceOptimizerが見つかりません");
             }
             
             // VRCLightVolumesIntegrationの存在確認
-            if (FindObjectOfType<VRCLightVolumesIntegration>() == null)
+            if (FindObjectOfType<lilToon.PCSS.VRCLightVolumesIntegration>() == null)
             {
                 issues.Add("VRCLightVolumesIntegrationが見つかりません");
             }
@@ -532,11 +532,11 @@ namespace lilToon.PCSS
     public class VRChatOptimizationProfile : ScriptableObject
     {
         [Header("VRChat Quality Mapping")]
-        public PCSSUtilities.PCSSQuality vrcUltraQuality = PCSSUtilities.PCSSQuality.Ultra;
-        public PCSSUtilities.PCSSQuality vrcHighQuality = PCSSUtilities.PCSSQuality.High;
-        public PCSSUtilities.PCSSQuality vrcMediumQuality = PCSSUtilities.PCSSQuality.Medium;
-        public PCSSUtilities.PCSSQuality vrcLowQuality = PCSSUtilities.PCSSQuality.Low;
-        public PCSSUtilities.PCSSQuality vrcMobileQuality = PCSSUtilities.PCSSQuality.Low;
+        public lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality vrcUltraQuality = lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality.Ultra;
+        public lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality vrcHighQuality = lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality.High;
+        public lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality vrcMediumQuality = lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality.Medium;
+        public lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality vrcLowQuality = lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality.Low;
+        public lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality vrcMobileQuality = lilToon.PCSS.Runtime.PCSSUtilities.PCSSQuality.Low;
         
         [Header("Performance Settings")]
         public bool enableAutoOptimization = true;
