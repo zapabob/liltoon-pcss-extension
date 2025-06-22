@@ -1,15 +1,7 @@
-// 条件付きコンパイルシンボルの定義（ファイル先頭に配置）
-#if UNITY_EDITOR && MODULAR_AVATAR_AVAILABLE
-    #define LIL_PCSS_MODULAR_AVATAR_ENABLED
-#endif
-
 using UnityEngine;
 using System.Collections.Generic;
 
-// 条件付きusing文
-#if LIL_PCSS_MODULAR_AVATAR_ENABLED
-using nadena.dev.modular_avatar.core;
-#endif
+// ModularAvatar依存関係を削除し、リフレクションベースの実装に変更
 
 #if VRCHAT_SDK_AVAILABLE
 using VRC.SDKBase;
@@ -262,22 +254,24 @@ namespace lilToon.PCSS.Runtime
                 ApplyPresetToMaterial(material, preset, customParams);
             }
 
-#if LIL_PCSS_MODULAR_AVATAR_ENABLED
-            // ModularAvatarコンポーネントが存在する場合、情報を記録（エラー耐性付き）
+            // ModularAvatarコンポーネントが存在する場合、情報を記録（リフレクション使用）
             try
             {
-                var maInfo = avatar.GetComponent<ModularAvatarInformation>();
-                if (maInfo != null)
+                var modularAvatarType = System.Type.GetType("nadena.dev.modular_avatar.core.ModularAvatarInformation, ModularAvatar.Core");
+                if (modularAvatarType != null)
                 {
-                    // プリセット情報をコンポーネント名に記録
-                    maInfo.name = $"PCSS_{preset}_Applied";
+                    var maInfo = avatar.GetComponent(modularAvatarType);
+                    if (maInfo != null)
+                    {
+                        // プリセット情報をコンポーネント名に記録
+                        maInfo.name = $"PCSS_{preset}_Applied";
+                    }
                 }
             }
             catch (System.Exception ex)
             {
                 Debug.LogWarning($"[PCSSUtilities] Failed to update ModularAvatar info: {ex.Message}");
             }
-#endif
 
             return pcssMaterials.Count;
         }
@@ -291,54 +285,59 @@ namespace lilToon.PCSS.Runtime
         }
 
         /// <summary>
-        /// ModularAvatarコンポーネントが存在するかチェック（エラー耐性付き）
+        /// ModularAvatarコンポーネントが存在するかチェック（リフレクション使用）
         /// </summary>
         public static bool HasModularAvatar(GameObject gameObject)
         {
             if (gameObject == null) return false;
 
-#if LIL_PCSS_MODULAR_AVATAR_ENABLED
             try
             {
-                return gameObject.GetComponent<ModularAvatarInformation>() != null;
+                // リフレクションを使用してModularAvatarの存在をチェック
+                var modularAvatarType = System.Type.GetType("nadena.dev.modular_avatar.core.ModularAvatarInformation, ModularAvatar.Core");
+                if (modularAvatarType != null)
+                {
+                    var component = gameObject.GetComponent(modularAvatarType);
+                    return component != null;
+                }
+                return false;
             }
             catch (System.Exception ex)
             {
                 Debug.LogWarning($"[PCSSUtilities] ModularAvatar check failed: {ex.Message}");
                 return false;
             }
-#else
-            return false;
-#endif
         }
 
         /// <summary>
-        /// ModularAvatarを使用してPCSSコンポーネントを追加（エラー耐性付き）
+        /// ModularAvatarを使用してPCSSコンポーネントを追加（リフレクション使用）
         /// </summary>
         public static UnityEngine.Component AddPCSSModularAvatarComponent(GameObject avatar, PCSSPreset preset)
         {
             if (avatar == null) return null;
 
-#if LIL_PCSS_MODULAR_AVATAR_ENABLED
             try
             {
-                var maInfo = avatar.GetComponent<ModularAvatarInformation>();
-                if (maInfo == null)
+                // リフレクションを使用してModularAvatarコンポーネントを追加
+                var modularAvatarType = System.Type.GetType("nadena.dev.modular_avatar.core.ModularAvatarInformation, ModularAvatar.Core");
+                if (modularAvatarType != null)
                 {
-                    maInfo = avatar.AddComponent<ModularAvatarInformation>();
+                    var maInfo = avatar.GetComponent(modularAvatarType);
+                    if (maInfo == null)
+                    {
+                        maInfo = avatar.AddComponent(modularAvatarType);
+                    }
+                    
+                    maInfo.name = $"lilToon_PCSS_{preset}_Component";
+                    return maInfo;
                 }
-                
-                maInfo.name = $"lilToon_PCSS_{preset}_Component";
-                return maInfo;
+                return null;
             }
             catch (System.Exception ex)
             {
                 Debug.LogWarning($"[PCSSUtilities] Failed to add ModularAvatar component: {ex.Message}");
                 return null;
             }
-#else
-            return null;
-#endif
         }
 
         /// <summary>

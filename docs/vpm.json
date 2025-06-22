@@ -41,7 +41,7 @@
             "com.vrchat.base": ">=3.5.0"
           },
           "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.4.9/com.liltoon.pcss-extension-1.4.9-final.zip",
-          "zipSHA256": "667E3CC7FAC2238737162316E4F6C7784C621DBFD1D611BC61A559C60F4D0DAA",
+          "zipSHA256": "3EA39E84B63D882B907BEB3AD330DB2BCDF1E20062131B6071C83EB6E7D8E903",
           "samples": [
             {
               "displayName": "🎯 Avatar Setup Examples",
