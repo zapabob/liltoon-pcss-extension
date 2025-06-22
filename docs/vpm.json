@@ -20,6 +20,95 @@
   "packages": {
     "com.liltoon.pcss-extension": {
       "versions": {
+        "1.4.9": {
+          "name": "com.liltoon.pcss-extension",
+          "displayName": "lilToon PCSS Extension",
+          "version": "1.4.9",
+          "description": "Revolutionary Unity Menu implementation with complete shader error resolution. Features Unity Menu Avatar Selector, 4 preset systems, automatic avatar detection, one-click setup (90% time reduction), full Built-in RP & URP compatibility, Unity 2022.3 LTS support, and comprehensive VRChat optimization.",
+          "unity": "2022.3",
+          "unityRelease": "22f1",
+          "keywords": [
+            "shader",
+            "toon",
+            "avatar",
+            "pcss",
+            "shadows",
+            "vrchat",
+            "lilToon",
+            "poiyomi",
+            "expression",
+            "lightvolumes",
+            "vrc-light-volumes",
+            "bakery",
+            "lighting",
+            "modular-avatar",
+            "vrchat-sdk3",
+            "performance",
+            "optimization",
+            "unity-menu",
+            "avatar-selector",
+            "preset-system",
+            "auto-detection",
+            "one-click-setup",
+            "shader-fix",
+            "error-resolution",
+            "built-in-rp",
+            "urp-compatibility",
+            "unity-2022-3-lts",
+            "professional",
+            "commercial",
+            "advanced"
+          ],
+          "author": {
+            "name": "lilToon PCSS Extension Team",
+            "email": "r.minegishi1987@gmail.com",
+            "url": "https://github.com/zapabob"
+          },
+          "dependencies": {
+            "com.unity.render-pipelines.universal": "12.1.12"
+          },
+          "vpmDependencies": {
+            "com.vrchat.avatars": ">=3.7.0",
+            "com.vrchat.base": ">=3.7.0"
+          },
+          "recommendedDependencies": {
+            "jp.lilxyzw.liltoon": ">=1.8.0",
+            "nadena.dev.modular-avatar": ">=1.10.0"
+          },
+          "legacyFolders": {
+            "Assets\\lilToon PCSS Extension": ""
+          },
+          "legacyFiles": {
+            "Assets\\lilToon PCSS Extension.meta": ""
+          },
+          "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.4.9/com.liltoon.pcss-extension-1.4.9.zip",
+          "zipSHA256": "552576E5E14597A990B35B81DA52CA2D9F7D928B14684D93860633B3B8386430",
+          "repo": "https://github.com/zapabob/liltoon-pcss-extension",
+          "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
+          "documentationUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/README.md",
+          "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE",
+          "commercial": {
+            "license": "Commercial",
+            "usage": "Commercial Use Allowed",
+            "redistribution": "Allowed",
+            "modification": "Full Rights",
+            "support": "Priority Support 24/7",
+            "features": [
+              "Unity Menu Avatar Selector",
+              "Complete Shader Error Resolution",
+              "4 Preset Systems",
+              "Automatic Avatar Detection",
+              "One-Click Setup (90% Time Reduction)",
+              "Built-in RP & URP Full Compatibility",
+              "Unity 2022.3 LTS Support",
+              "Performance Optimization",
+              "Real-time Ray Tracing",
+              "Analytics Dashboard",
+              "Commercial Licensing",
+              "Priority Support"
+            ]
+          }
+        },
         "1.4.7": {
           "name": "com.liltoon.pcss-extension",
           "displayName": "lilToon PCSS Extension",
