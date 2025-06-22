@@ -1,0 +1,28 @@
+{
+  "name": "com.liltoon.pcss-extension",
+  "version": "1.4.5",
+  "displayName": "lilToon PCSS Extension - Ultimate Commercial Edition",
+  "description": "Unity 2022.3 LTS URP Compatibility Fix - Ultimate Commercial PCSS solution",
+  "unity": "2022.3",
+  "unityRelease": "22f1",
+  "dependencies": {
+    "com.unity.render-pipelines.universal": "12.1.12"
+  },
+  "package": {
+    "filename": "com.liltoon.pcss-extension-ultimate-1.4.5.zip",
+    "size": 98920,
+    "sha256": "6A393018DABF5DAECCA16280C4B73DF804861B49541B449EF75FD37EA8AF6938",
+    "url": "https://zapabob.github.io/liltoon-pcss-extension/Release/com.liltoon.pcss-extension-ultimate-1.4.5.zip"
+  },
+  "compatibility": {
+    "unity_version": "2022.3.22f1+",
+    "urp_version": "12.1.12",
+    "platform": [
+      "PC",
+      "Quest"
+    ],
+    "vrchat_sdk": "3.7.0+"
+  },
+  "creation_date": "2025-06-22",
+  "creation_purpose": "Unity 2022.3 LTS URP Compatibility Fix"
+}

@@ -314,6 +314,99 @@
               "Enhanced URP Compatibility"
             ]
           }
+        },
+        "1.4.5": {
+          "name": "com.liltoon.pcss-extension",
+          "displayName": "lilToon PCSS Extension - Ultimate Commercial Edition",
+          "version": "1.4.5",
+          "description": "Unity 2022.3 LTS URP Compatibility Fix - Ultimate Commercial PCSS solution with enhanced URP 12.1.12 compatibility, enterprise-grade features, AI-powered optimization, real-time ray tracing support, advanced performance analytics, automatic quality scaling, commercial-ready asset generation, unlimited commercial licensing, priority enterprise support, and comprehensive VRChat optimization suite.",
+          "unity": "2022.3",
+          "unityRelease": "22f1",
+          "keywords": [
+            "shader",
+            "toon",
+            "avatar",
+            "pcss",
+            "shadows",
+            "vrchat",
+            "liltoon",
+            "poiyomi",
+            "expression",
+            "lightvolumes",
+            "vrc-light-volumes",
+            "bakery",
+            "lighting",
+            "modular-avatar",
+            "vrchat-sdk3",
+            "performance",
+            "optimization",
+            "all-in-one",
+            "booth",
+            "professional",
+            "commercial",
+            "premium",
+            "advanced",
+            "lightmapping",
+            "quality",
+            "production-ready",
+            "ultimate",
+            "enterprise",
+            "ai-powered",
+            "ray-tracing",
+            "analytics",
+            "auto-scaling",
+            "unlimited-license",
+            "priority-support",
+            "urp-compatibility",
+            "unity-2022-lts"
+          ],
+          "author": {
+            "name": "lilToon PCSS Extension Team",
+            "email": "r.minegishi1987@gmail.com",
+            "url": "https://github.com/zapabob"
+          },
+          "dependencies": {
+            "com.unity.render-pipelines.universal": "12.1.12"
+          },
+          "vpmDependencies": {
+            "com.vrchat.avatars": ">=3.7.0",
+            "com.vrchat.base": ">=3.7.0",
+            "nadena.dev.modular-avatar": ">=1.10.0"
+          },
+          "recommendedDependencies": {
+            "jp.lilxyzw.liltoon": ">=1.8.0"
+          },
+          "legacyFolders": {
+            "Assets\\lilToon PCSS Extension": ""
+          },
+          "legacyFiles": {
+            "Assets\\lilToon PCSS Extension.meta": ""
+          },
+          "url": "https://zapabob.github.io/liltoon-pcss-extension/Release/com.liltoon.pcss-extension-ultimate-1.4.5.zip",
+          "zipSHA256": "6A393018DABF5DAECCA16280C4B73DF804861B49541B449EF75FD37EA8AF6938",
+          "repo": "https://github.com/zapabob/liltoon-pcss-extension",
+          "changelogUrl": "https://zapabob.github.io/liltoon-pcss-extension/CHANGELOG.md",
+          "documentationUrl": "https://zapabob.github.io/liltoon-pcss-extension/site/documentation.html",
+          "licensesUrl": "https://zapabob.github.io/liltoon-pcss-extension/LICENSE",
+          "commercial": {
+            "license": "Ultimate Commercial",
+            "usage": "Unlimited",
+            "redistribution": "Allowed",
+            "modification": "Full Rights",
+            "support": "Priority Enterprise 24/7",
+            "features": [
+              "AI-Powered Optimization",
+              "Real-time Ray Tracing",
+              "Enterprise Analytics",
+              "Automatic Quality Scaling",
+              "Commercial Asset Generation",
+              "Unlimited Licensing",
+              "Priority Support",
+              "White-label Rights",
+              "Enhanced URP 12.1.12 Compatibility",
+              "Unity 2022.3 LTS Optimized"
+            ]
+          }
         }
       }
     }
