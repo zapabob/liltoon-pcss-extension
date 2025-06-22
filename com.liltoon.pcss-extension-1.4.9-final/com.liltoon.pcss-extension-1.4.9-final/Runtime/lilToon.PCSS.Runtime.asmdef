@@ -1,18 +1,13 @@
 {
-    "name": "lilToon.PCSS.Editor",
-    "rootNamespace": "lilToon.PCSS.Editor",
+    "name": "lilToon.PCSS.Runtime",
+    "rootNamespace": "lilToon.PCSS.Runtime",
     "references": [
-        "lilToon.PCSS.Runtime",
         "Unity.TextMeshPro",
-        "Unity.EditorCoroutines.Editor",
         "Unity.RenderPipelines.Universal.Runtime",
-        "Unity.RenderPipelines.Core.Runtime",
-        "Unity.RenderPipelines.Universal.Editor",
-        "Unity.RenderPipelines.Core.Editor"
+        "Unity.RenderPipelines.Core.Runtime"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

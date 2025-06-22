@@ -4,6 +4,7 @@
     "references": [
         "lilToon.PCSS.Runtime",
         "Unity.TextMeshPro",
+        "Unity.EditorCoroutines.Editor",
         "Unity.RenderPipelines.Universal.Runtime",
         "Unity.RenderPipelines.Core.Runtime",
         "Unity.RenderPipelines.Universal.Editor",
