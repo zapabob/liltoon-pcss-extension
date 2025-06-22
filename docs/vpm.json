@@ -81,8 +81,8 @@
           "legacyFiles": {
             "Assets\\lilToon PCSS Extension.meta": ""
           },
-          "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.4.9/com.liltoon.pcss-extension-1.4.9.zip",
-          "zipSHA256": "8746AE21835D821B3B1D91EC6D9089BF53161BBD4A79EBB91A089CF98DA6977E",
+          "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.4.9/com.liltoon.pcss-extension-1.4.9-clean.zip",
+          "zipSHA256": "783D7023419A5E8DD6597A251924A0FE1C874D31D8AFDBD826D9F3C5C0EF3A6F",
           "repo": "https://github.com/zapabob/liltoon-pcss-extension",
           "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
           "documentationUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/README.md",
