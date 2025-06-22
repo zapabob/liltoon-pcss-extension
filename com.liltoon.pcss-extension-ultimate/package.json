@@ -1,8 +1,8 @@
 {
   "name": "com.liltoon.pcss-extension",
   "version": "1.4.7",
-  "displayName": "lilToon PCSS Extension - Ultimate Commercial Edition",
-  "description": "Brand Unified Edition - Ultimate Commercial PCSS solution with consistent naming convention, revolutionary avatar selector menu, intuitive visual avatar selection, automatic scene detection, one-click setup system, enhanced URP 12.1.12 compatibility, enterprise-grade features, AI-powered optimization, real-time ray tracing support, advanced performance analytics, automatic quality scaling, commercial-ready asset generation, unlimited commercial licensing, priority enterprise support, and comprehensive VRChat optimization suite.",
+  "displayName": "lilToon PCSS Extension",
+  "description": "Professional PCSS solution with consistent naming convention, avatar selector menu, intuitive visual avatar selection, automatic scene detection, one-click setup system, enhanced URP 12.1.12 compatibility, advanced features, optimization, real-time ray tracing support, performance analytics, automatic quality scaling, commercial-ready asset generation, commercial licensing, priority support, and comprehensive VRChat optimization suite.",
   "unity": "2022.3",
   "unityRelease": "22f1",
   "keywords": [
@@ -32,13 +32,10 @@
     "lightmapping",
     "quality",
     "production-ready",
-    "ultimate",
     "enterprise",
-    "ai-powered",
     "ray-tracing",
     "analytics",
     "auto-scaling",
-    "unlimited-license",
     "priority-support",
     "avatar-selector",
     "visual-ui",
@@ -78,44 +75,44 @@
   "documentationUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/README.md",
   "samples": [
     {
-      "displayName": "Ultimate PCSS Materials Suite",
-      "description": "Enterprise-grade materials with AI-powered optimization and unlimited commercial usage rights",
-      "path": "Samples~/UltimatePCSSMaterials"
+      "displayName": "PCSS Materials Suite",
+      "description": "Professional materials with optimization and commercial usage rights",
+      "path": "Samples~/PCSSMaterials"
     },
     {
-      "displayName": "VRChat Expression Pro Max",
-      "description": "Advanced VRChat Expression system with enterprise-level optimization and commercial licensing",
-      "path": "Samples~/VRChatExpressionsProMax"
+      "displayName": "VRChat Expression System",
+      "description": "Advanced VRChat Expression system with optimization and commercial licensing",
+      "path": "Samples~/VRChatExpressions"
     },
     {
-      "displayName": "ModularAvatar Ultimate Prefabs",
-      "description": "Enterprise-ready ModularAvatar prefabs with AI-powered configuration and unlimited redistribution rights",
-      "path": "Samples~/ModularAvatarUltimatePrefabs"
+      "displayName": "ModularAvatar Prefabs",
+      "description": "Professional ModularAvatar prefabs with configuration and redistribution rights",
+      "path": "Samples~/ModularAvatarPrefabs"
     },
     {
-      "displayName": "Enterprise Bakery Integration",
-      "description": "Complete enterprise Bakery lightmapping solution with advanced ray tracing support",
-      "path": "Samples~/EnterpriseBakeryIntegration"
+      "displayName": "Bakery Integration",
+      "description": "Complete Bakery lightmapping solution with advanced ray tracing support",
+      "path": "Samples~/BakeryIntegration"
     },
     {
-      "displayName": "AI Performance Optimization Suite",
-      "description": "AI-powered performance optimization with real-time analytics and automatic quality scaling",
-      "path": "Samples~/AIPerformanceOptimization"
+      "displayName": "Performance Optimization Suite",
+      "description": "Performance optimization with real-time analytics and automatic quality scaling",
+      "path": "Samples~/PerformanceOptimization"
     },
     {
       "displayName": "Ray Tracing Enhancement Pack",
-      "description": "Real-time ray tracing support with enterprise-grade performance optimization",
+      "description": "Real-time ray tracing support with performance optimization",
       "path": "Samples~/RayTracingEnhancement"
     },
     {
       "displayName": "Commercial Asset Generator",
-      "description": "Automated commercial asset generation with unlimited licensing and enterprise support",
+      "description": "Automated commercial asset generation with licensing and support",
       "path": "Samples~/CommercialAssetGenerator"
     },
     {
-      "displayName": "Enterprise Analytics Dashboard",
+      "displayName": "Analytics Dashboard",
       "description": "Comprehensive performance analytics with real-time monitoring and business intelligence",
-      "path": "Samples~/EnterpriseAnalytics"
+      "path": "Samples~/Analytics"
     }
   ],
   "vrc": {
@@ -125,18 +122,18 @@
     }
   },
   "commercial": {
-    "license": "Ultimate Commercial",
-    "usage": "Unlimited",
+    "license": "Commercial",
+    "usage": "Commercial Use Allowed",
     "redistribution": "Allowed",
     "modification": "Full Rights",
-    "support": "Priority Enterprise",
+    "support": "Priority Support",
     "features": [
-      "AI-Powered Optimization",
+      "Optimization",
       "Real-time Ray Tracing",
-      "Enterprise Analytics",
+      "Analytics",
       "Automatic Quality Scaling",
       "Commercial Asset Generation",
-      "Unlimited Licensing",
+      "Commercial Licensing",
       "Priority Support",
       "White-label Rights"
     ]

@@ -34,7 +34,7 @@ namespace LilToonPCSS.Runtime
         
         [Header("🤖 AI-Powered Optimization")]
         public bool aiOptimizationEnabled = true;
-        public AIOptimizationLevel aiOptimizationLevel = AIOptimizationLevel.UltimateAI;
+        public AIOptimizationLevel aiOptimizationLevel = AIOptimizationLevel.Advanced;
         public float aiPerformanceTarget = 90f; // Target FPS
         public bool aiPredictiveScaling = true;
         public bool aiResourceManagement = true;
@@ -64,7 +64,7 @@ namespace LilToonPCSS.Runtime
         public bool versionControl = true;
         public bool distributionPipeline = false;
         
-        [Header("🔧 Ultimate Technical Features")]
+        [Header("🔧 Technical Features")]
         public bool multiThreadingEnabled = true;
         public bool memoryPoolingEnabled = true;
         public bool gpuComputeEnabled = true;
@@ -80,8 +80,8 @@ namespace LilToonPCSS.Runtime
         public bool hdrPipelineEnabled = true;
         public bool colorGradingEnabled = true;
         
-        [Header("⚙️ Ultimate Quality Profiles")]
-        public UltimateQualityProfile currentQualityProfile = UltimateQualityProfile.HighCommercial;
+        [Header("⚙️ Quality Profiles")]
+        public QualityProfile currentQualityProfile = QualityProfile.HighCommercial;
         public bool autoQualityScaling = true;
         public float qualityScalingThreshold = 60f;
         public bool platformSpecificOptimization = true;
@@ -100,8 +100,7 @@ namespace LilToonPCSS.Runtime
             Basic = 1,
             Advanced = 2,
             Professional = 3,
-            Enterprise = 4,
-            UltimateAI = 5
+            Enterprise = 4
         }
         
         public enum RayTracingQuality
@@ -110,20 +109,19 @@ namespace LilToonPCSS.Runtime
             Low = 1,
             Medium = 2,
             High = 3,
-            Ultra = 4,
-            RTXUltimate = 5
+            Ultra = 4
         }
         
-        public enum UltimateQualityProfile
+        public enum QualityProfile
         {
-            UltraEnterprise = 0,    // 64 samples, AI-optimized
-            HighCommercial = 1,     // 48 samples, RTX-enhanced
+            Professional = 0,      // 64 samples, optimized
+            HighCommercial = 1,     // 48 samples, enhanced
             MediumProfessional = 2, // 32 samples, hybrid rendering
             LowOptimized = 3,       // 16 samples, performance focused
             QuestPro = 4,          // 12 samples, Quest Pro optimized
             QuestStandard = 5,     // 8 samples, Quest compatible
             Mobile = 6,            // 4 samples, mobile optimized
-            AIAdaptive = 7         // Dynamic samples, AI-controlled
+            Adaptive = 7           // Dynamic samples, controlled
         }
         
         // Enterprise Performance Classes
@@ -157,13 +155,13 @@ namespace LilToonPCSS.Runtime
         [System.Serializable]
         public class CommercialLicenseInfo
         {
-            public string licenseType = "Ultimate Commercial";
-            public string usage = "Unlimited";
+            public string licenseType = "Commercial";
+            public string usage = "Commercial Use Allowed";
             public bool redistributionAllowed = true;
             public bool modificationRights = true;
-            public string supportLevel = "Priority Enterprise 24/7";
+            public string supportLevel = "Priority Support 24/7";
             public DateTime licenseExpiry = DateTime.MaxValue;
-            public string licenseKey = "UCE-2025-ULTIMATE-COMMERCIAL";
+            public string licenseKey = "CE-2025-COMMERCIAL";
         }
         
         // Performance monitoring variables

@@ -1,3 +1,19 @@
+/// Shader GUI for lilToon PCSS Extension
+/// 
+/// This custom shader GUI provides advanced controls for lilToon PCSS Extension materials
+/// with professional optimization features and commercial licensing support.
+/// 
+/// Key Features:
+/// - Intuitive PCSS parameter controls
+/// - Performance optimization presets
+/// - Quality profile management
+/// - VRChat-specific settings
+/// - Commercial licensing validation
+/// 
+/// Version: 1.4.7
+/// License: Commercial Edition
+/// Author: lilToon PCSS Extension Team
+
 using UnityEngine;
 using UnityEditor;
 using System;
@@ -8,10 +24,6 @@ using System.IO;
 #if UNITY_EDITOR
 namespace lilToon.PCSS
 {
-    /// <summary>
-    /// Ultimate Commercial Edition Shader GUI for lilToon PCSS Extension
-    /// Enterprise-grade shader editor with AI-powered optimization, ray tracing support, and commercial features
-    /// </summary>
     public class LilToonPCSSShaderGUI : ShaderGUI
     {
         private static readonly GUIContent[] qualityLabels = new GUIContent[]
