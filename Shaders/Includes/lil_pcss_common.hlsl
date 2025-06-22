@@ -86,20 +86,88 @@
 #endif
 
 //----------------------------------------------------------------------------------------------------------------------
-// Texture Samplers - Pipeline Specific
+// Texture Samplers - Pipeline Specific with Complete Conflict Prevention
 //----------------------------------------------------------------------------------------------------------------------
 #ifdef LIL_PCSS_URP_AVAILABLE
-    // URP用のテクスチャ宣言
-    TEXTURE2D(_MainLightShadowmapTexture);
-    SAMPLER(sampler_MainLightShadowmapTexture);
-    TEXTURE2D(_CameraDepthTexture);
-    SAMPLER(sampler_CameraDepthTexture);
+    // URP用のテクスチャ宣言 - 条件付きで重複を完全防止
+    #if !defined(_MainLightShadowmapTexture) && !defined(LIL_PCSS_SHADOWMAP_DECLARED)
+        #define LIL_PCSS_SHADOWMAP_DECLARED
+        TEXTURE2D(_MainLightShadowmapTexture);
+        SAMPLER(sampler_MainLightShadowmapTexture);
+    #endif
+    #if !defined(_CameraDepthTexture) && !defined(LIL_PCSS_DEPTH_DECLARED)
+        #define LIL_PCSS_DEPTH_DECLARED
+        TEXTURE2D(_CameraDepthTexture);
+        SAMPLER(sampler_CameraDepthTexture);
+    #endif
 #else
-    // Built-in Render Pipeline用のテクスチャ宣言
-    sampler2D _ShadowMapTexture;
-    sampler2D _MainLightShadowmapTexture;
-    sampler2D_float _CameraDepthTexture;
+    // Built-in Render Pipeline用のテクスチャ宣言 - 完全な重複防止
+    #if !defined(_ShadowMapTexture) && !defined(LIL_PCSS_BUILTIN_SHADOWMAP_DECLARED)
+        #define LIL_PCSS_BUILTIN_SHADOWMAP_DECLARED
+        #define _ShadowMapTexture _LIL_PCSS_ShadowMapTexture
+        sampler2D _LIL_PCSS_ShadowMapTexture;
+    #endif
+    #if !defined(_MainLightShadowmapTexture) && !defined(LIL_PCSS_MAIN_SHADOWMAP_DECLARED)
+        #define LIL_PCSS_MAIN_SHADOWMAP_DECLARED
+        #define _MainLightShadowmapTexture _LIL_PCSS_MainLightShadowmapTexture
+        sampler2D _LIL_PCSS_MainLightShadowmapTexture;
+    #endif
+    #if !defined(_CameraDepthTexture) && !defined(LIL_PCSS_BUILTIN_DEPTH_DECLARED)
+        #define LIL_PCSS_BUILTIN_DEPTH_DECLARED
+        sampler2D_float _CameraDepthTexture;
+    #endif
 #endif
+
+//----------------------------------------------------------------------------------------------------------------------
+// PCSS Properties - 全変数を一箇所で定義（重複完全防止）
+//----------------------------------------------------------------------------------------------------------------------
+#ifndef LIL_PCSS_PROPERTIES_DEFINED
+#define LIL_PCSS_PROPERTIES_DEFINED
+
+// Shader Compatibility Detection
+#ifndef LIL_PCSS_SHADER_COMPATIBILITY_DEFINED
+#define LIL_PCSS_SHADER_COMPATIBILITY_DEFINED
+
+// lilToon Detection
+#if defined(LIL_LILTOON_SHADER_INCLUDED) || defined(SHADER_STAGE_VERTEX) || defined(_LILTOON_INCLUDED)
+    #define LIL_PCSS_LILTOON_AVAILABLE
+#endif
+
+// Poiyomi Detection  
+#if defined(POI_MAIN) || defined(POIYOMI_TOON) || defined(_POIYOMI_INCLUDED)
+    #define LIL_PCSS_POIYOMI_AVAILABLE
+#endif
+
+// Graceful Degradation for Missing Shaders
+#if !defined(LIL_PCSS_LILTOON_AVAILABLE) && !defined(LIL_PCSS_POIYOMI_AVAILABLE)
+    #define LIL_PCSS_STANDALONE_MODE
+#endif
+
+#endif // LIL_PCSS_SHADER_COMPATIBILITY_DEFINED
+
+CBUFFER_START(lilPCSSProperties)
+    // 基本PCSS設定 - 全シェーダーで共通使用
+    float _PCSSEnabled;
+    float _PCSSFilterRadius;
+    float _PCSSLightSize;
+    float _PCSSBias;
+    float _PCSSIntensity;
+    float _PCSSQuality;
+    float _PCSSBlockerSearchRadius;
+    float _PCSSSampleCount;
+    
+    // ライト設定
+    float4 _PCSSLightDirection;
+    float4x4 _PCSSLightMatrix;
+    
+    // プリセット設定
+    float _PCSSPresetMode; // 0=リアル, 1=アニメ, 2=映画風, 3=カスタム
+    float _PCSSRealtimePreset;
+    float _PCSSAnimePreset;
+    float _PCSSCinematicPreset;
+CBUFFER_END
+
+#endif // LIL_PCSS_PROPERTIES_DEFINED
 
 //----------------------------------------------------------------------------------------------------------------------
 // Custom Utility Macros (Avoid Conflicts)

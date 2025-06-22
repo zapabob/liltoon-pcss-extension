@@ -2,64 +2,60 @@ Shader "lilToon/PCSS Extension"
 {
     Properties
     {
-        // lilToon互換性のための基本プロパティ
-        [lilHDR] [MainColor] _Color                 ("sColor", Color) = (1,1,1,1)
-        [MainTexture]   _MainTex                    ("Texture", 2D) = "white" {}
+        // Base Properties
+        _MainTex ("Main Texture", 2D) = "white" {}
+        _Color ("Color", Color) = (1,1,1,1)
+        _Cutoff ("Alpha Cutoff", Range(0.0, 1.0)) = 0.5
         
-        // PCSS専用プロパティ群
-        [lilEnum]                                   _StencilRef ("Stencil Reference", Int) = 51
-        [lilEnum]                                   _StencilReadMask ("Stencil ReadMask", Int) = 255
-        [lilEnum]                                   _StencilWriteMask ("Stencil WriteMask", Int) = 255
-        [lilEnum]                                   _StencilComp ("Stencil Compare", Int) = 3
-        [lilEnum]                                   _StencilPass ("Stencil Pass", Int) = 0
-        [lilEnum]                                   _StencilFail ("Stencil Fail", Int) = 0
-        [lilEnum]                                   _StencilZFail ("Stencil ZFail", Int) = 0
+        // lilToon互換性のためのプロパティ
+        [lilToonToggle] _UseShadow ("Use Shadow", Float) = 1
+        _ShadowColorTex ("Shadow Color", 2D) = "black" {}
+        _ShadowBorder ("Shadow Border", Range(0, 1)) = 0.5
+        _ShadowBlur ("Shadow Blur", Range(0, 1)) = 0.1
         
-        // PCSS機能制御
-        [lilToggleLeft] _UsePCSS                    ("Use PCSS", Int) = 0
-        [lilEnum]       _PCSSQuality                ("PCSS Quality|Low|Medium|High|Ultra", Int) = 1
-        _PCSSBlockerSearchRadius                    ("PCSS Blocker Search Radius", Range(0.001, 0.1)) = 0.01
-        _PCSSFilterRadius                           ("PCSS Filter Radius", Range(0.001, 0.1)) = 0.01
-        _PCSSSampleCount                            ("PCSS Sample Count", Range(4, 64)) = 16
-        _PCSSLightSize                              ("PCSS Light Size", Range(0.1, 10.0)) = 1.0
-        _PCSSBias                                   ("PCSS Bias", Range(0.0, 0.1)) = 0.005
+        // PCSS Properties
+        [lilToonToggle] _UsePCSS ("Use PCSS", Float) = 1
+        [Enum(Realistic,0,Anime,1,Cinematic,2,Custom,3)] _PCSSPresetMode ("PCSS Preset", Float) = 1
+        _PCSSFilterRadius ("PCSS Filter Radius", Range(0.001, 0.1)) = 0.01
+        _PCSSLightSize ("PCSS Light Size", Range(0.01, 0.5)) = 0.1
+        _PCSSBias ("PCSS Bias", Range(0.0001, 0.01)) = 0.001
+        _PCSSIntensity ("PCSS Intensity", Range(0.0, 2.0)) = 1.0
+        [Enum(Low,0,Medium,1,High,2,Ultra,3)] _PCSSQuality ("PCSS Quality", Float) = 1
         
-        // VRC Light Volumes統合
-        [Header(VRC Light Volumes Integration)]
-        [lilToggleLeft] _UseVRCLightVolumes         ("Use VRC Light Volumes", Int) = 1
-        _VRCLightVolumeIntensity                    ("Light Volume Intensity", Range(0.0, 2.0)) = 1.0
-        _VRCLightVolumeTint                         ("Light Volume Tint", Color) = (1,1,1,1)
-        _VRCLightVolumeDistanceFactor               ("Distance Factor", Range(0.0, 1.0)) = 1.0
+        // VRC Light Volumes
+        [lilToonToggle] _UseVRCLightVolumes ("Use VRC Light Volumes", Float) = 0
+        _VRCLightVolumeIntensity ("VRC Light Volume Intensity", Range(0.0, 2.0)) = 1.0
+        _VRCLightVolumeTint ("VRC Light Volume Tint", Color) = (1,1,1,1)
+        _VRCLightVolumeDistanceFactor ("VRC Light Volume Distance Factor", Range(0.0, 1.0)) = 0.1
         
-        // 通常のliltoonシャドウプロパティ
-        [lilToggleLeft] _UseShadow                  ("sShadow", Int) = 0
-        _ShadowBorder                               ("sBorder", Range(0, 1)) = 0.5
-        _ShadowBlur                                 ("sBlur", Range(0, 1)) = 0.1
-        [NoScaleOffset] _ShadowColorTex             ("Shadow Color", 2D) = "black" {}
+        // Rendering Properties
+        [Enum(UnityEngine.Rendering.CullMode)] _Cull ("Cull Mode", Float) = 2
+        [Enum(Off,0,On,1)] _ZWrite ("ZWrite", Float) = 1
+        [Enum(UnityEngine.Rendering.CompareFunction)] _ZTest ("ZTest", Float) = 4
+        [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend ("Src Blend", Float) = 1
+        [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend ("Dst Blend", Float) = 0
         
-        // その他の必要なプロパティ
-        _Cutoff                                     ("sCutoff", Range(-0.001,1.001)) = 0.5
-        [Enum(UnityEngine.Rendering.CullMode)]      _Cull ("Cull Mode", Float) = 2
-        [Enum(UnityEngine.Rendering.BlendMode)]     _SrcBlend ("Src Blend", Float) = 1
-        [Enum(UnityEngine.Rendering.BlendMode)]     _DstBlend ("Dst Blend", Float) = 0
-        [Enum(UnityEngine.Rendering.CompareFunction)] _ZTest ("Z Test", Float) = 4
-        [Toggle] _ZWrite ("Z Write", Float) = 1
+        // Stencil Properties
+        _StencilRef ("Stencil Reference", Range(0, 255)) = 0
+        _StencilReadMask ("Stencil Read Mask", Range(0, 255)) = 255
+        _StencilWriteMask ("Stencil Write Mask", Range(0, 255)) = 255
+        [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp ("Stencil Compare", Float) = 8
+        [Enum(UnityEngine.Rendering.StencilOp)] _StencilPass ("Stencil Pass", Float) = 0
+        [Enum(UnityEngine.Rendering.StencilOp)] _StencilFail ("Stencil Fail", Float) = 0
+        [Enum(UnityEngine.Rendering.StencilOp)] _StencilZFail ("Stencil ZFail", Float) = 0
     }
-    
-    CustomEditor "lilToon.PCSS.LilToonPCSSShaderGUI"
-
-    HLSLINCLUDE
-        #define LIL_RENDER 0
-        #include "UnityCG.cginc"
-        #include "AutoLight.cginc"
-    ENDHLSL
 
     SubShader
     {
-        Tags {"RenderType"="Opaque" "Queue"="Geometry"}
+        Tags 
+        { 
+            "RenderType"="Opaque" 
+            "Queue"="Geometry"
+            "LightMode"="ForwardBase"
+        }
         LOD 200
 
-        // Stencil設定
+        // Stencil settings
         Stencil
         {
             Ref [_StencilRef]
@@ -98,27 +94,25 @@ Shader "lilToon/PCSS Extension"
             #pragma multi_compile _ VRC_LIGHT_VOLUMES_ENABLED
             #pragma multi_compile _ VRC_LIGHT_VOLUMES_MOBILE
 
+            // lilToon互換性のためのインクルード順序を調整
             #include "UnityCG.cginc"
             #include "AutoLight.cginc"
             #include "Lighting.cginc"
 
-            // PCSSとVRC Light Volumesのインクルードファイル
+            // PCSS関連のインクルードファイル - 順序重要
+            #define LIL_LILTOON_SHADER_INCLUDED  // lilToonシェーダーとの競合を防ぐ
             #include "Includes/lil_pcss_common.hlsl"
             #include "Includes/lil_pcss_shadows.hlsl"
 
-            // プロパティの宣言
+            // プロパティの宣言 - lilToon互換性を考慮
             sampler2D _MainTex;
             float4 _MainTex_ST;
             fixed4 _Color;
             sampler2D _ShadowColorTex;
             
-            // PCSS関連の変数
+            // PCSS関連の変数はlil_pcss_common.hlslで定義済み
+            // lilToon固有の変数のみここで定義
             float _UsePCSS;
-            float _PCSSBlockerSearchRadius;
-            float _PCSSFilterRadius;
-            int _PCSSSampleCount;
-            float _PCSSLightSize;
-            float _PCSSBias;
             
             // VRC Light Volumes関連の変数
             float _UseVRCLightVolumes;
@@ -168,8 +162,6 @@ Shader "lilToon/PCSS Extension"
                 return o;
             }
 
-            // PCSS関連の関数群を削除し、インクルードファイルに委譲
-
             fixed4 frag (v2f i) : SV_Target
             {
                 fixed4 col = tex2D(_MainTex, i.uv) * _Color;
@@ -177,13 +169,19 @@ Shader "lilToon/PCSS Extension"
                 float shadow = 1.0;
 
                 #if defined(_USEPCSS_ON)
+                    // PCSSを使用
                     #ifdef LIL_PCSS_MOBILE_PLATFORM
                         shadow = PCSSMobile(i._LightCoord, i.pos.z);
                     #else
                         shadow = PCSS(i._LightCoord, i.pos.z);
                     #endif
                 #elif defined(_USESHADOW_ON)
+                    // 標準のシャドウを使用
                     shadow = SHADOW_ATTENUATION(i);
+                    
+                    // lilToon風のシャドウ処理
+                    shadow = saturate(shadow + _ShadowBorder);
+                    shadow = smoothstep(0.0, _ShadowBlur, shadow);
                 #endif
                 
                 // VRC Light Volumesからのライティングを適用
@@ -192,7 +190,7 @@ Shader "lilToon/PCSS Extension"
                     col.rgb *= lightVolumeColor;
                 #endif
 
-                // 影を適用
+                // 影を適用 - lilToon風
                 col.rgb *= lerp(tex2D(_ShadowColorTex, i.uv).rgb, float3(1,1,1), shadow);
                 
                 UNITY_APPLY_FOG(i.fogCoord, col);
@@ -201,7 +199,7 @@ Shader "lilToon/PCSS Extension"
             ENDHLSL
         }
         
-        // Shadow caster pass
+        // Shadow caster pass - lilToon互換
         Pass
         {
             Name "ShadowCaster"
@@ -261,6 +259,7 @@ Shader "lilToon/PCSS Extension"
         }
     }
     
-    // Fallback
-    FallBack "Transparent/Cutout/VertexLit"
+    // lilToon互換のFallback
+    FallBack "Standard"
+    CustomEditor "lilToon.PCSS.Editor.LilToonPCSSShaderGUI"
 } 

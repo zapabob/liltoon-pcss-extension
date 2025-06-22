@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using VRC.SDKBase;
 using VRC.SDK3.Avatars.Components;
 #endif
+
+// ModularAvatar依存関係の完全な条件付き対応
 #if UNITY_EDITOR && MODULAR_AVATAR_AVAILABLE
-using nadena.dev.modular_avatar.core;
+    using nadena.dev.modular_avatar.core;
 #endif
 
 namespace lilToon.PCSS.Runtime
@@ -26,6 +28,45 @@ namespace lilToon.PCSS.Runtime
         };
 
         /// <summary>
+        /// 利用可能なシェーダータイプ
+        /// </summary>
+        public enum ShaderType
+        {
+            Unknown = 0,
+            LilToon = 1,
+            Poiyomi = 2,
+            Both = 3
+        }
+
+        /// <summary>
+        /// 現在利用可能なシェーダータイプを検出
+        /// </summary>
+        public static ShaderType DetectAvailableShaders()
+        {
+            bool hasLilToon = false;
+            bool hasPoiyomi = false;
+
+            // lilToon検出
+            var lilToonShader = Shader.Find("lilToon");
+            var lilToonPCSSShader = Shader.Find("lilToon/PCSS Extension");
+            hasLilToon = (lilToonShader != null || lilToonPCSSShader != null);
+
+            // Poiyomi検出
+            var poiyomiShader = Shader.Find("Poiyomi/Toon");
+            var poiyomiPCSSShader = Shader.Find("Poiyomi/Toon/PCSS Extension");
+            hasPoiyomi = (poiyomiShader != null || poiyomiPCSSShader != null);
+
+            if (hasLilToon && hasPoiyomi)
+                return ShaderType.Both;
+            else if (hasLilToon)
+                return ShaderType.LilToon;
+            else if (hasPoiyomi)
+                return ShaderType.Poiyomi;
+            else
+                return ShaderType.Unknown;
+        }
+
+        /// <summary>
         /// プリセット定義
         /// </summary>
         public enum PCSSPreset
@@ -34,6 +75,17 @@ namespace lilToon.PCSS.Runtime
             Anime = 1,        // アニメ風
             Cinematic = 2,    // 映画風
             Custom = 3        // カスタム
+        }
+
+        /// <summary>
+        /// PCSS品質設定
+        /// </summary>
+        public enum PCSSQuality
+        {
+            Low = 0,          // 低品質 (モバイル向け)
+            Medium = 1,       // 中品質 (標準)
+            High = 2,         // 高品質 (PC向け)
+            Ultra = 3         // 最高品質 (ハイエンドPC向け)
         }
 
         /// <summary>
@@ -55,21 +107,83 @@ namespace lilToon.PCSS.Runtime
         }
 
         /// <summary>
-        /// マテリアルがPCSS対応かどうかをチェック
+        /// 品質設定パラメータを取得
+        /// </summary>
+        public static Vector3 GetQualityParameters(PCSSQuality quality)
+        {
+            switch (quality)
+            {
+                case PCSSQuality.Low:
+                    return new Vector3(8, 4, 0.5f);    // SampleCount, BlockerSamples, FilterScale
+                case PCSSQuality.Medium:
+                    return new Vector3(16, 8, 1.0f);   // SampleCount, BlockerSamples, FilterScale
+                case PCSSQuality.High:
+                    return new Vector3(32, 16, 1.5f);  // SampleCount, BlockerSamples, FilterScale
+                case PCSSQuality.Ultra:
+                    return new Vector3(64, 32, 2.0f);  // SampleCount, BlockerSamples, FilterScale
+                default:
+                    return new Vector3(16, 8, 1.0f);   // Default to Medium
+            }
+        }
+
+        /// <summary>
+        /// マテリアルがPCSS対応かどうかをチェック（エラー耐性付き）
         /// </summary>
         public static bool IsPCSSCompatible(Material material)
         {
             if (material == null || material.shader == null) return false;
 
-            string shaderName = material.shader.name;
-            foreach (string supportedShader in SupportedShaders)
+            try
             {
-                if (shaderName.Contains(supportedShader.Replace("/", "").Replace(" ", "")))
+                string shaderName = material.shader.name;
+                
+                // 利用可能なシェーダータイプを検出
+                ShaderType availableShaders = DetectAvailableShaders();
+                
+                // シェーダータイプに応じた柔軟な判定
+                foreach (string supportedShader in SupportedShaders)
                 {
-                    return true;
+                    if (shaderName.Contains(supportedShader.Replace("/", "").Replace(" ", "")))
+                    {
+                        // シェーダーが実際に利用可能かチェック
+                        if (IsShaderTypeAvailable(shaderName, availableShaders))
+                        {
+                            return true;
+                        }
+                    }
                 }
+                
+                return false;
             }
-            return false;
+            catch (System.Exception ex)
+            {
+                // エラーが発生した場合はfalseを返してログ出力
+                Debug.LogWarning($"[PCSSUtilities] Error checking PCSS compatibility: {ex.Message}");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 指定されたシェーダーが利用可能なタイプに含まれるかチェック
+        /// </summary>
+        private static bool IsShaderTypeAvailable(string shaderName, ShaderType availableShaders)
+        {
+            bool isLilToon = shaderName.Contains("lilToon") || shaderName.Contains("lil");
+            bool isPoiyomi = shaderName.Contains("Poiyomi") || shaderName.Contains("poi");
+
+            switch (availableShaders)
+            {
+                case ShaderType.LilToon:
+                    return isLilToon;
+                case ShaderType.Poiyomi:
+                    return isPoiyomi;
+                case ShaderType.Both:
+                    return isLilToon || isPoiyomi;
+                case ShaderType.Unknown:
+                default:
+                    // 不明な場合は寛容に判定（スタンドアロンモード）
+                    return true;
+            }
         }
 
         /// <summary>
@@ -163,20 +277,24 @@ namespace lilToon.PCSS.Runtime
             return gameObject.GetComponent<VRC.SDK3.Avatars.Components.VRCAvatarDescriptor>() != null;
         }
 
-#if UNITY_EDITOR && MODULAR_AVATAR_AVAILABLE
         /// <summary>
         /// ModularAvatarコンポーネントが存在するかチェック
         /// </summary>
         public static bool HasModularAvatar(GameObject gameObject)
         {
+#if UNITY_EDITOR && MODULAR_AVATAR_AVAILABLE
             return gameObject.GetComponent<ModularAvatarInformation>() != null;
+#else
+            return false;
+#endif
         }
 
         /// <summary>
         /// ModularAvatarを使用してPCSSコンポーネントを追加
         /// </summary>
-        public static ModularAvatarInformation AddPCSSModularAvatarComponent(GameObject avatar, PCSSPreset preset)
+        public static UnityEngine.Component AddPCSSModularAvatarComponent(GameObject avatar, PCSSPreset preset)
         {
+#if UNITY_EDITOR && MODULAR_AVATAR_AVAILABLE
             var maInfo = avatar.GetComponent<ModularAvatarInformation>();
             if (maInfo == null)
             {
@@ -185,8 +303,10 @@ namespace lilToon.PCSS.Runtime
             
             maInfo.name = $"lilToon_PCSS_{preset}_Component";
             return maInfo;
-        }
+#else
+            return null;
 #endif
+        }
 
         /// <summary>
         /// パフォーマンス統計を取得

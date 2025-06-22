@@ -195,9 +195,44 @@ namespace lilToon.PCSS.Editor
             {
                 EditorGUILayout.BeginVertical(EditorStyles.helpBox);
                 
+                // シェーダー可用性チェック
+                var availableShaders = lilToon.PCSS.Runtime.PCSSUtilities.DetectAvailableShaders();
+                EditorGUILayout.LabelField("シェーダー可用性:", EditorStyles.miniBoldLabel);
+                
+                switch (availableShaders)
+                {
+                    case lilToon.PCSS.Runtime.PCSSUtilities.ShaderType.Both:
+                        EditorGUILayout.LabelField("✅ lilToon & Poiyomi 両方利用可能", EditorStyles.helpBox);
+                        break;
+                    case lilToon.PCSS.Runtime.PCSSUtilities.ShaderType.LilToon:
+                        EditorGUILayout.LabelField("✅ lilToonのみ利用可能", EditorStyles.helpBox);
+                        EditorGUILayout.HelpBox("Poiyomiシェーダーが見つかりません。lilToonマテリアルのみ処理されます。", MessageType.Warning);
+                        break;
+                    case lilToon.PCSS.Runtime.PCSSUtilities.ShaderType.Poiyomi:
+                        EditorGUILayout.LabelField("✅ Poiyomiのみ利用可能", EditorStyles.helpBox);
+                        EditorGUILayout.HelpBox("lilToonシェーダーが見つかりません。Poiyomiマテリアルのみ処理されます。", MessageType.Warning);
+                        break;
+                    case lilToon.PCSS.Runtime.PCSSUtilities.ShaderType.Unknown:
+                        EditorGUILayout.LabelField("⚠️ 対応シェーダーが見つかりません", EditorStyles.helpBox);
+                        EditorGUILayout.HelpBox("lilToon または Poiyomi シェーダーをインポートしてください。", MessageType.Error);
+                        break;
+                }
+                
+                EditorGUILayout.Space(5);
                 EditorGUILayout.LabelField("適用対象:", EditorStyles.miniBoldLabel);
-                EditorGUILayout.Toggle("✅ lilToonマテリアル", true);
-                EditorGUILayout.Toggle("✅ Poiyomiマテリアル", true);
+                
+                bool lilToonAvailable = (availableShaders == lilToon.PCSS.Runtime.PCSSUtilities.ShaderType.LilToon || 
+                                       availableShaders == lilToon.PCSS.Runtime.PCSSUtilities.ShaderType.Both);
+                bool poiyomiAvailable = (availableShaders == lilToon.PCSS.Runtime.PCSSUtilities.ShaderType.Poiyomi || 
+                                       availableShaders == lilToon.PCSS.Runtime.PCSSUtilities.ShaderType.Both);
+                
+                EditorGUI.BeginDisabledGroup(!lilToonAvailable);
+                EditorGUILayout.Toggle(lilToonAvailable ? "✅ lilToonマテリアル" : "❌ lilToonマテリアル", lilToonAvailable);
+                EditorGUI.EndDisabledGroup();
+                
+                EditorGUI.BeginDisabledGroup(!poiyomiAvailable);
+                EditorGUILayout.Toggle(poiyomiAvailable ? "✅ Poiyomiマテリアル" : "❌ Poiyomiマテリアル", poiyomiAvailable);
+                EditorGUI.EndDisabledGroup();
                 
                 EditorGUILayout.Space(5);
                 EditorGUILayout.LabelField("追加機能:", EditorStyles.miniBoldLabel);

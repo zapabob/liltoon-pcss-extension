@@ -1,12 +1,13 @@
 {
     "name": "lilToon.PCSS.Editor",
-    "rootNamespace": "lilToon.PCSS",
+    "rootNamespace": "lilToon.PCSS.Editor",
     "references": [
         "lilToon.PCSS.Runtime",
-        "Unity.RenderPipelines.Core",
-        "Unity.RenderPipelines.Universal",
-        "VRC.SDK3.Avatars",
-        "VRC.SDKBase"
+        "Unity.TextMeshPro",
+        "Unity.RenderPipelines.Universal.Runtime",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.RenderPipelines.Universal.Editor",
+        "Unity.RenderPipelines.Core.Editor"
     ],
     "includePlatforms": [
         "Editor"
@@ -19,11 +20,6 @@
     "defineConstraints": [],
     "versionDefines": [
         {
-            "name": "com.unity.render-pipelines.universal",
-            "expression": "7.1.8",
-            "define": "URP_AVAILABLE"
-        },
-        {
             "name": "com.vrchat.avatars",
             "expression": "",
             "define": "VRCHAT_SDK_AVAILABLE"
@@ -32,6 +28,16 @@
             "name": "nadena.dev.modular-avatar",
             "expression": "",
             "define": "MODULAR_AVATAR_AVAILABLE"
+        },
+        {
+            "name": "com.unity.render-pipelines.universal",
+            "expression": "",
+            "define": "UNITY_PIPELINE_URP"
+        },
+        {
+            "name": "com.unity.render-pipelines.high-definition",
+            "expression": "",
+            "define": "UNITY_PIPELINE_HDRP"
         }
     ],
     "noEngineReferences": false

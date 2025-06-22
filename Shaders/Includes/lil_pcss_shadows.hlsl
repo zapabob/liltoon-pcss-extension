@@ -19,26 +19,9 @@
 #define PCSS_BIAS_SCALE 0.001
 
 //----------------------------------------------------------------------------------------------------------------------
-// PCSS Properties
+// PCSS Properties - 重複を完全に防ぐため、変数宣言をlil_pcss_common.hlslに集約
+// このファイルでは変数宣言は行わず、関数のみを定義
 //----------------------------------------------------------------------------------------------------------------------
-CBUFFER_START(lilPCSSProperties)
-    float _PCSSEnabled;
-    float _PCSSFilterRadius;
-    float _PCSSLightSize;
-    float _PCSSBias;
-    float _PCSSIntensity;
-    float _PCSSQuality;
-    float _PCSSBlockerSearchRadius;
-    float _PCSSSampleCount;
-    float4 _PCSSLightDirection;
-    float4x4 _PCSSLightMatrix;
-    
-    // プリセット設定
-    float _PCSSPresetMode; // 0=リアル, 1=アニメ, 2=映画風, 3=カスタム
-    float _PCSSRealtimePreset;
-    float _PCSSAnimePreset;
-    float _PCSSCinematicPreset;
-CBUFFER_END
 
 //----------------------------------------------------------------------------------------------------------------------
 // Sampling Patterns
@@ -94,8 +77,14 @@ float SampleShadowMap(float2 uv, float compareValue)
             return step(compareValue, shadowSample);
         #endif
     #else
-        // Built-in Render Pipeline用のサンプリング
-        float shadowSample = LIL_SAMPLE_TEXTURE2D(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture, uv).r;
+        // Built-in Render Pipeline用のサンプリング - 重複を防ぐため条件付き
+        #ifdef _LIL_PCSS_ShadowMapTexture
+            float shadowSample = LIL_SAMPLE_TEXTURE2D(_LIL_PCSS_ShadowMapTexture, sampler, uv).r;
+        #elif defined(_MainLightShadowmapTexture)
+            float shadowSample = LIL_SAMPLE_TEXTURE2D(_MainLightShadowmapTexture, sampler, uv).r;
+        #else
+            float shadowSample = LIL_SAMPLE_TEXTURE2D(_LIL_PCSS_MainLightShadowmapTexture, sampler, uv).r;
+        #endif
         return step(compareValue, shadowSample);
     #endif
 }
@@ -117,7 +106,14 @@ float FindBlockerDistance(float2 shadowCoord, float receiverDepth, float searchR
         #ifdef LIL_PCSS_URP_AVAILABLE
             float shadowDepth = LIL_SAMPLE_TEXTURE2D(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture, sampleCoord).r;
         #else
-            float shadowDepth = LIL_SAMPLE_TEXTURE2D(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture, sampleCoord).r;
+            // Built-in Render Pipeline用のサンプリング - 重複を防ぐため条件付き
+            #ifdef _LIL_PCSS_ShadowMapTexture
+                float shadowDepth = LIL_SAMPLE_TEXTURE2D(_LIL_PCSS_ShadowMapTexture, sampler, sampleCoord).r;
+            #elif defined(_MainLightShadowmapTexture)
+                float shadowDepth = LIL_SAMPLE_TEXTURE2D(_MainLightShadowmapTexture, sampler, sampleCoord).r;
+            #else
+                float shadowDepth = LIL_SAMPLE_TEXTURE2D(_LIL_PCSS_MainLightShadowmapTexture, sampler, sampleCoord).r;
+            #endif
         #endif
         
         if (shadowDepth < receiverDepth)

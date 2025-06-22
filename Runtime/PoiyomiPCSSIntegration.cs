@@ -1,7 +1,15 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 using System.Collections.Generic;
-
-namespace lilToon.PCSS
+using System.Linq;
+#if VRCHAT_SDK_AVAILABLE
+using VRC.SDKBase;
+using VRC.SDK3.Avatars.Components;
+#endif
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+namespace lilToon.PCSS.Runtime
 {
     [System.Serializable]
     public class PoiyomiPCSSSettings

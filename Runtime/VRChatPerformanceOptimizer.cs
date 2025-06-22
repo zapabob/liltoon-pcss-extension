@@ -4,8 +4,10 @@ using UnityEngine.Rendering;
 using VRC.SDKBase;
 using VRC.SDK3.Avatars.Components;
 #endif
+
+// ModularAvatar依存関係の完全な条件付き対応
 #if UNITY_EDITOR && MODULAR_AVATAR_AVAILABLE
-using nadena.dev.modular_avatar.core;
+    using nadena.dev.modular_avatar.core;
 #endif
 using System.Collections;
 using System.Collections.Generic;
