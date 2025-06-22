@@ -33,11 +33,13 @@
     },
     "dependencies": {
         "com.unity.render-pipelines.universal": "12.1.12",
-        "jp.lilxyzw.liltoon": "1.7.0"
+        "jp.lilxyzw.liltoon": "1.7.0",
+        "com.unity.editor-coroutines": "1.0.0"
     },
     "vpmDependencies": {
         "com.vrchat.avatars": ">=3.5.0",
-        "com.vrchat.base": ">=3.5.0"
+        "com.vrchat.base": ">=3.5.0",
+        "nadena.dev.modular-avatar": "1.10.0"
     },
     "legacyFolders": {
         "Assets\\lilToon PCSS Extension": ""
