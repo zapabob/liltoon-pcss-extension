@@ -92,49 +92,16 @@ def create_final_clean_package():
         package_json_path = package_dir / "package.json"
         if package_json_path.exists():
             try:
+                # 元のpackage.jsonを読み込む
                 with open(package_json_path, 'r', encoding='utf-8') as f:
                     package_data = json.load(f)
                 
-                # バージョン情報を更新
+                # バージョン情報のみを更新
                 package_data["version"] = version
-                package_data["displayName"] = "lilToon PCSS Extension"
-                package_data["description"] = "🎯 Revolutionary Unity Menu Avatar Selector & Complete Shader Fix Edition. Professional PCSS extension with 90% setup time reduction, complete error resolution, and professional-grade shadows for VRChat avatars."
                 
-                # 依存関係を更新
-                package_data["dependencies"] = {
-                    "com.unity.render-pipelines.universal": "12.1.0",
-                    "com.unity.textmeshpro": "3.0.6"
-                }
-                
-                # VRChat依存関係を追加
-                package_data["vpmDependencies"] = {
-                    "com.vrchat.avatars": "3.5.0"
-                }
-                
-                # キーワードを更新
-                package_data["keywords"] = [
-                    "vrchat", "avatar", "shader", "pcss", "shadow", "liltoon", 
-                    "poiyomi", "unity-menu", "avatar-selector", "optimization",
-                    "performance", "professional", "commercial"
-                ]
-                
-                # 作者情報を更新
-                package_data["author"] = {
-                    "name": "lilToon PCSS Extension Team",
-                    "email": "support@liltoon-pcss.com",
-                    "url": "https://github.com/zapabob/liltoon-pcss-extension"
-                }
-                
-                # ライセンス情報
-                package_data["license"] = "MIT"
-                
-                # Unity要件
-                package_data["unity"] = "2022.3"
-                package_data["unityRelease"] = "22f1"
-                
-                # 保存
+                # 更新した内容を保存
                 with open(package_json_path, 'w', encoding='utf-8') as f:
-                    json.dump(package_data, f, indent=2, ensure_ascii=False)
+                    json.dump(package_data, f, indent=4, ensure_ascii=False)
                 
                 print("✅ Updated package.json with final configuration")
                 
