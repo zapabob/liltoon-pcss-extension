@@ -6,6 +6,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [1.4.7] - 2025-06-22 - Brand Unified Edition
+
+### 🎯 Brand Naming Unification
+- **統一名称**: 全ファイルで「lilToon PCSS Extension」に統一
+  - キーワード: `liltoon` → `lilToon` に修正
+  - メニューパス: `lilToon/PCSS Extension` → `lilToon PCSS Extension` に統一
+  - VPMリポジトリ: 全バージョンのキーワード統一
+  - パッケージ情報: 一貫したブランディング適用
+
+### 📝 Documentation & Branding
+- **メニュー統一**: 3つのアクセス方法で一貫した表記
+  - `Window/lilToon PCSS Extension/🎯 Avatar Selector`
+  - `lilToon PCSS Extension/🎯 Avatar Selector`
+  - `GameObject/lilToon PCSS Extension/🎯 アバター選択メニュー`
+
+### 🔧 Technical Improvements
+- **Package Consistency**: v1.4.7バージョン更新
+- **Keyword Optimization**: 検索性向上のための統一表記
+- **Brand Recognition**: ユーザー認知度向上のための一貫性確保
+
+---
+
 ## [1.4.6] - 2025-06-22 - Revolutionary Avatar Selector Menu
 
 ### 🎯 Revolutionary UI/UX Enhancement
@@ -25,7 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🎮 Multi-Access Integration
 - **統合メニューシステム**: 3つのアクセス方法を提供
   - `Window/lilToon PCSS Extension/🎯 Avatar Selector`
-  - `lilToon/PCSS Extension/🎯 Avatar Selector`
+  - `lilToon PCSS Extension/🎯 Avatar Selector`
   - `GameObject/lilToon PCSS Extension/🎯 アバター選択メニュー`
 
 ### ⚡ Performance & Workflow Optimization

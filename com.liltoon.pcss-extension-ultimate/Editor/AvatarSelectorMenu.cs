@@ -84,7 +84,7 @@ namespace lilToon.PCSS.Editor
             window.Show();
         }
         
-        [MenuItem("lilToon/PCSS Extension/🎯 Avatar Selector", false, 1)]
+        [MenuItem("lilToon PCSS Extension/🎯 Avatar Selector", false, 1)]
         public static void ShowWindowFromMenu()
         {
             ShowWindow();

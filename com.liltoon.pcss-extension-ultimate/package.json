@@ -1,8 +1,8 @@
 {
   "name": "com.liltoon.pcss-extension",
-  "version": "1.4.6",
+  "version": "1.4.7",
   "displayName": "lilToon PCSS Extension - Ultimate Commercial Edition",
-  "description": "Revolutionary Avatar Selector Menu - Ultimate Commercial PCSS solution with intuitive visual avatar selection, automatic scene detection, one-click setup system, enhanced URP 12.1.12 compatibility, enterprise-grade features, AI-powered optimization, real-time ray tracing support, advanced performance analytics, automatic quality scaling, commercial-ready asset generation, unlimited commercial licensing, priority enterprise support, and comprehensive VRChat optimization suite.",
+  "description": "Brand Unified Edition - Ultimate Commercial PCSS solution with consistent naming convention, revolutionary avatar selector menu, intuitive visual avatar selection, automatic scene detection, one-click setup system, enhanced URP 12.1.12 compatibility, enterprise-grade features, AI-powered optimization, real-time ray tracing support, advanced performance analytics, automatic quality scaling, commercial-ready asset generation, unlimited commercial licensing, priority enterprise support, and comprehensive VRChat optimization suite.",
   "unity": "2022.3",
   "unityRelease": "22f1",
   "keywords": [
@@ -12,7 +12,7 @@
     "pcss",
     "shadows",
     "vrchat",
-    "liltoon",
+    "lilToon",
     "poiyomi",
     "expression",
     "lightvolumes",
