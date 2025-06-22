@@ -1,20 +1,20 @@
-Shader "Poiyomi/Toon/PCSS Extension"
+Shader "lilToon/PCSS Extension"
 {
     Properties
     {
         // Base Properties
         _MainTex ("Main Texture", 2D) = "white" {}
         _Color ("Color", Color) = (1,1,1,1)
-        _AlphaMask ("Alpha Mask", 2D) = "white" {}
         _Cutoff ("Alpha Cutoff", Range(0.0, 1.0)) = 0.5
         
-        // Poiyomi互換性のためのプロパティ
-        [ToggleUI] _EnableShadows ("Enable Shadows", Float) = 1
-        _ShadowStrength ("Shadow Strength", Range(0.0, 1.0)) = 1.0
-        _ShadowOffset ("Shadow Offset", Range(-1.0, 1.0)) = 0.0
+        // lilToon互換性のためのプロパティ
+        [lilToonToggle] _UseShadow ("Use Shadow", Float) = 1
+        _ShadowColorTex ("Shadow Color", 2D) = "black" {}
+        _ShadowBorder ("Shadow Border", Range(0, 1)) = 0.5
+        _ShadowBlur ("Shadow Blur", Range(0, 1)) = 0.1
         
         // PCSS Properties
-        [ToggleUI] _PCSSEnabled ("Enable PCSS", Float) = 1
+        [lilToonToggle] _UsePCSS ("Use PCSS", Float) = 1
         [Enum(Realistic,0,Anime,1,Cinematic,2,Custom,3)] _PCSSPresetMode ("PCSS Preset", Float) = 1
         _PCSSFilterRadius ("PCSS Filter Radius", Range(0.001, 0.1)) = 0.01
         _PCSSLightSize ("PCSS Light Size", Range(0.01, 0.5)) = 0.1
@@ -23,9 +23,10 @@ Shader "Poiyomi/Toon/PCSS Extension"
         [Enum(Low,0,Medium,1,High,2,Ultra,3)] _PCSSQuality ("PCSS Quality", Float) = 1
         
         // VRC Light Volumes
-        [ToggleUI] _UseVRCLightVolumes ("Use VRC Light Volumes", Float) = 0
+        [lilToonToggle] _UseVRCLightVolumes ("Use VRC Light Volumes", Float) = 0
         _VRCLightVolumeIntensity ("VRC Light Volume Intensity", Range(0.0, 2.0)) = 1.0
         _VRCLightVolumeTint ("VRC Light Volume Tint", Color) = (1,1,1,1)
+        _VRCLightVolumeDistanceFactor ("VRC Light Volume Distance Factor", Range(0.0, 1.0)) = 0.1
         
         // Rendering Properties
         [Enum(UnityEngine.Rendering.CullMode)] _Cull ("Cull Mode", Float) = 2
@@ -85,46 +86,48 @@ Shader "Poiyomi/Toon/PCSS Extension"
             #pragma multi_compile_instancing
 
             // PCSS機能を有効にするシェーダーキーワード
-            #pragma shader_feature PCSS_ENABLED
+            #pragma shader_feature _USEPCSS_ON
+            #pragma shader_feature _USESHADOW_ON
             #pragma shader_feature _USEVRCLIGHT_VOLUMES_ON
-            #pragma shader_feature _VRCHAT_EXPRESSION
             
             // VRC Light Volumes統合キーワード
             #pragma multi_compile _ VRC_LIGHT_VOLUMES_ENABLED
             #pragma multi_compile _ VRC_LIGHT_VOLUMES_MOBILE
 
-            // Poiyomi互換性のためのインクルード順序
+            // lilToon互換性のためのインクルード順序を調整
             #include "UnityCG.cginc"
             #include "AutoLight.cginc"
             #include "Lighting.cginc"
 
-            // PCSS関連のインクルードファイル - 重複を防ぐためのマクロ定義
-            #define LIL_POIYOMI_SHADER_INCLUDED  // Poiyomiシェーダーとの競合を防ぐ
+            // PCSS関連のインクルードファイル - 順序重要
+            #define LIL_LILTOON_SHADER_INCLUDED  // lilToonシェーダーとの競合を防ぐ
             #include "Includes/lil_pcss_common.hlsl"
             #include "Includes/lil_pcss_shadows.hlsl"
-            
-            // Textures - 重複を避けるため条件付き宣言
+
+            // プロパティの宣言 - lilToon互換性を考慮
             sampler2D _MainTex;
             float4 _MainTex_ST;
-            sampler2D _AlphaMask;
-            float4 _AlphaMask_ST;
-            
-            // Main Properties
             fixed4 _Color;
-            float _Cutoff;
+            sampler2D _ShadowColorTex;
             
-            // PCSS Properties - lil_pcss_common.hlslで定義済み
-            // Poiyomi固有の変数のみここで定義
+            // PCSS関連の変数はlil_pcss_common.hlslで定義済み
+            // lilToon固有の変数のみここで定義
+            float _UsePCSS;
             
             // VRC Light Volumes関連の変数
             float _UseVRCLightVolumes;
             float _VRCLightVolumeIntensity;
             float4 _VRCLightVolumeTint;
+            float _VRCLightVolumeDistanceFactor;
+            sampler3D _VRCLightVolumeTexture;
+            float4 _VRCLightVolumeParams;
+            float4x4 _VRCLightVolumeWorldToLocal;
             
-            // Poiyomi Shadow Properties
-            float _EnableShadows;
-            float _ShadowStrength;
-            float _ShadowOffset;
+            // シャドウ関連
+            float _UseShadow;
+            float _ShadowBorder;
+            float _ShadowBlur;
+            float _Cutoff;
 
             struct appdata
             {
@@ -142,7 +145,6 @@ Shader "Poiyomi/Toon/PCSS Extension"
                 float3 worldNormal : TEXCOORD2;
                 SHADOW_COORDS(3)
                 UNITY_FOG_COORDS(4)
-                float4 _LightCoord : TEXCOORD5;  // PCSS用のライト座標
                 UNITY_VERTEX_OUTPUT_STEREO
             };
 
@@ -157,56 +159,39 @@ Shader "Poiyomi/Toon/PCSS Extension"
                 o.worldNormal = UnityObjectToWorldNormal(v.normal);
                 UNITY_TRANSFER_SHADOW(o, v.uv);
                 UNITY_TRANSFER_FOG(o, o.pos);
-                
-                // PCSS用のライト座標を計算（Poiyomi互換 - Built-in RP対応）
-                #if defined(SHADOWS_SCREEN)
-                    // スクリーンスペースシャドウ用
-                    o._LightCoord = ComputeScreenPos(o.pos);
-                #elif defined(SHADOWS_DEPTH) || defined(SHADOWS_CUBE)
-                    // 深度シャドウ用 - ワールド座標を使用
-                    o._LightCoord = float4(o.worldPos, 1.0);
-                #else
-                    // フォールバック: ワールド座標をそのまま使用
-                    o._LightCoord = float4(o.worldPos, 1.0);
-                #endif
-                
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
                 fixed4 col = tex2D(_MainTex, i.uv) * _Color;
-                fixed4 alphaMask = tex2D(_AlphaMask, i.uv);
-                
-                // Alpha test
-                clip(col.a * alphaMask.a - _Cutoff);
                 
                 float shadow = 1.0;
 
-                #if defined(PCSS_ENABLED)
+                #if defined(_USEPCSS_ON)
                     // PCSSを使用
                     #ifdef LIL_PCSS_MOBILE_PLATFORM
                         shadow = PCSSMobile(i._LightCoord, i.pos.z);
                     #else
                         shadow = PCSS(i._LightCoord, i.pos.z);
                     #endif
-                #elif defined(_ENABLESHADOWS_ON)
+                #elif defined(_USESHADOW_ON)
                     // 標準のシャドウを使用
                     shadow = SHADOW_ATTENUATION(i);
                     
-                    // Poiyomi風のシャドウ処理
-                    shadow = lerp(1.0, shadow, _ShadowStrength);
-                    shadow = saturate(shadow + _ShadowOffset);
+                    // lilToon風のシャドウ処理
+                    shadow = saturate(shadow + _ShadowBorder);
+                    shadow = smoothstep(0.0, _ShadowBlur, shadow);
                 #endif
                 
                 // VRC Light Volumesからのライティングを適用
                 #if defined(VRC_LIGHT_VOLUMES_ENABLED) && defined(_USEVRCLIGHT_VOLUMES_ON)
                     float3 lightVolumeColor = SampleVRCLightVolumes(i.worldPos);
-                    col.rgb *= lightVolumeColor * _VRCLightVolumeIntensity;
+                    col.rgb *= lightVolumeColor;
                 #endif
 
-                // 影を適用 - Poiyomi風
-                col.rgb *= shadow;
+                // 影を適用 - lilToon風
+                col.rgb *= lerp(tex2D(_ShadowColorTex, i.uv).rgb, float3(1,1,1), shadow);
                 
                 UNITY_APPLY_FOG(i.fogCoord, col);
                 return col;
@@ -214,7 +199,7 @@ Shader "Poiyomi/Toon/PCSS Extension"
             ENDHLSL
         }
         
-        // Shadow caster pass - Poiyomi互換
+        // Shadow caster pass - lilToon互換
         Pass
         {
             Name "ShadowCaster"
@@ -233,7 +218,6 @@ Shader "Poiyomi/Toon/PCSS Extension"
             
             sampler2D _MainTex;
             float4 _MainTex_ST;
-            sampler2D _AlphaMask;
             fixed4 _Color;
             float _Cutoff;
             
@@ -267,8 +251,7 @@ Shader "Poiyomi/Toon/PCSS Extension"
             fixed4 frag(v2f i) : SV_Target
             {
                 fixed4 col = tex2D(_MainTex, i.uv) * _Color;
-                fixed4 alphaMask = tex2D(_AlphaMask, i.uv);
-                clip(col.a * alphaMask.a - _Cutoff);
+                clip(col.a - _Cutoff);
                 
                 SHADOW_CASTER_FRAGMENT(i)
             }
@@ -276,7 +259,7 @@ Shader "Poiyomi/Toon/PCSS Extension"
         }
     }
     
-    // Poiyomi互換のFallback
+    // lilToon互換のFallback
     FallBack "Standard"
-    CustomEditor "lilToon.PCSS.Editor.PoiyomiPCSSShaderGUI"
+    CustomEditor "lilToon.PCSS.Editor.LilToonPCSSShaderGUI"
 } 

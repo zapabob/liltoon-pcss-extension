@@ -1,3 +1,8 @@
+// 条件付きコンパイルシンボルの定義（ファイル先頭に配置）
+#if UNITY_EDITOR && MODULAR_AVATAR_AVAILABLE
+    #define LIL_PCSS_MODULAR_AVATAR_ENABLED
+#endif
+
 using UnityEngine;
 using UnityEngine.Rendering;
 using System.Collections;
@@ -5,10 +10,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-// 条件付きコンパイルシンボルの定義
-#if UNITY_EDITOR && MODULAR_AVATAR_AVAILABLE
-    #define LIL_PCSS_MODULAR_AVATAR_ENABLED
-    using nadena.dev.modular_avatar.core;
+// 条件付きusing文
+#if LIL_PCSS_MODULAR_AVATAR_ENABLED
+using nadena.dev.modular_avatar.core;
 #endif
 
 #if VRCHAT_SDK_AVAILABLE

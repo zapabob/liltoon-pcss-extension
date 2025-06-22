@@ -158,8 +158,17 @@ Shader "Poiyomi/Toon/PCSS Extension"
                 UNITY_TRANSFER_SHADOW(o, v.uv);
                 UNITY_TRANSFER_FOG(o, o.pos);
                 
-                // PCSS用のライト座標を計算
-                o._LightCoord = mul(unity_WorldToLight, float4(o.worldPos, 1.0));
+                // PCSS用のライト座標を計算（Poiyomi互換 - Built-in RP対応）
+                #if defined(SHADOWS_SCREEN)
+                    // スクリーンスペースシャドウ用
+                    o._LightCoord = ComputeScreenPos(o.pos);
+                #elif defined(SHADOWS_DEPTH) || defined(SHADOWS_CUBE)
+                    // 深度シャドウ用 - ワールド座標を使用
+                    o._LightCoord = float4(o.worldPos, 1.0);
+                #else
+                    // フォールバック: ワールド座標をそのまま使用
+                    o._LightCoord = float4(o.worldPos, 1.0);
+                #endif
                 
                 return o;
             }
