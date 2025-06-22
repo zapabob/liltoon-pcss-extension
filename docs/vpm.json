@@ -40,8 +40,8 @@
             "com.vrchat.avatars": ">=3.5.0",
             "com.vrchat.base": ">=3.5.0"
           },
-          "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.4.9/com.liltoon.pcss-extension-1.4.9-clean.zip",
-          "zipSHA256": "9C249602D84D9988286818DD02FA42BA9135DCF4F2CA1CF2C52BB0F2069CCC2D",
+          "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.4.9/com.liltoon.pcss-extension-1.4.9-final.zip",
+          "zipSHA256": "9DB857B3A6FBFDEF43A7C3AADBF2F531606DE21E212E2CFC2BA245E9D479509B",
           "samples": [
             {
               "displayName": "🎯 Avatar Setup Examples",
