@@ -468,15 +468,14 @@ namespace lilToon.PCSS.Runtime
             public int presetMode;
         }
 
-        // デバッグ用GUI表示
+        // デバッグ用GUI表示（エディタ専用）
+        #if UNITY_EDITOR
         void OnGUI()
         {
-            if (!Application.isEditor) return;
-
             GUILayout.BeginArea(new Rect(10, 10, 300, 200));
             GUILayout.BeginVertical("box");
             
-            GUILayout.Label("🎯 PCSS Performance Monitor", EditorStyles.boldLabel);
+            GUILayout.Label("🎯 PCSS Performance Monitor", GUI.skin.label);
             GUILayout.Label($"Profile: {currentProfile}");
             GUILayout.Label($"FPS: {currentFrameRate:F1} (Target: {targetFrameRate})");
             GUILayout.Label($"Avatars: {currentAvatarCount}");
@@ -491,5 +490,6 @@ namespace lilToon.PCSS.Runtime
             GUILayout.EndVertical();
             GUILayout.EndArea();
         }
+        #endif
     }
 } 

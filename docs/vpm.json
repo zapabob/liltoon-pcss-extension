@@ -1,8 +1,12 @@
 {
-  "name": "lilToon PCSS Extension VPM Repository",
-  "id": "com.liltoon.pcss-extension.vpm",
+  "name": "zapabob VPM Repository",
+  "description": "VPM Repository for lilToon PCSS Extension and VRChat utilities",
+  "author": {
+    "name": "zapabob",
+    "email": "zapabob@example.com",
+    "url": "https://github.com/zapabob"
+  },
   "url": "https://zapabob.github.io/liltoon-pcss-extension/vpm.json",
-  "author": "lilToon PCSS Extension Team",
   "packages": {
     "com.liltoon.pcss-extension": {
       "versions": {
@@ -10,55 +14,35 @@
           "name": "com.liltoon.pcss-extension",
           "displayName": "lilToon PCSS Extension",
           "version": "1.4.9",
+          "description": "Revolutionary Unity Menu Avatar Selector & Complete Shader Error Resolution Edition - Professional PCSS (Percentage-Closer Soft Shadows) extension for lilToon and Poiyomi shaders with advanced VRChat optimization, 90% setup time reduction, and comprehensive error handling.",
           "unity": "2022.3",
           "unityRelease": "22f1",
-          "description": "🎯 Revolutionary Unity Menu Avatar Selector & Complete Shader Fix Edition. Professional PCSS extension with 90% setup time reduction, complete error resolution, and professional-grade shadows for VRChat avatars.",
+          "dependencies": {
+            "com.unity.render-pipelines.universal": "14.0.9"
+          },
           "keywords": [
-            "vrchat", "avatar", "shader", "pcss", "shadow", "liltoon", 
-            "poiyomi", "unity", "menu", "optimization", "performance",
-            "selector", "preset", "professional", "error-fix"
+            "lilToon",
+            "PCSS",
+            "VRChat",
+            "Avatar",
+            "Shader",
+            "Shadows",
+            "Unity Menu",
+            "Performance",
+            "Optimization",
+            "Professional"
           ],
           "author": {
-            "name": "lilToon PCSS Extension Team",
-            "email": "r.minegishi1987@gmail.com",
-            "url": "https://zapabob.github.io/liltoon-pcss-extension/"
-          },
-          "license": "MIT",
-          "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE",
-          "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
-          "documentationUrl": "https://zapabob.github.io/liltoon-pcss-extension/",
-          "homepage": "https://zapabob.github.io/liltoon-pcss-extension/",
-          "repository": {
-            "type": "git",
-            "url": "https://github.com/zapabob/liltoon-pcss-extension.git"
-          },
-          "dependencies": {
-            "com.unity.render-pipelines.universal": "12.1.12",
-            "jp.lilxyzw.liltoon": "1.7.0"
-          },
-          "vpmDependencies": {
-            "com.vrchat.avatars": ">=3.5.0",
-            "com.vrchat.base": ">=3.5.0"
+            "name": "zapabob",
+            "email": "zapabob@example.com",
+            "url": "https://github.com/zapabob"
           },
           "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.4.9/com.liltoon.pcss-extension-1.4.9-final.zip",
-          "zipSHA256": "3EA39E84B63D882B907BEB3AD330DB2BCDF1E20062131B6071C83EB6E7D8E903",
-          "samples": [
-            {
-              "displayName": "🎯 Avatar Setup Examples",
-              "description": "アバターセットアップのサンプルシーン",
-              "path": "Samples~/AvatarSetup"
-            },
-            {
-              "displayName": "🎨 Material Presets",
-              "description": "PCSS対応マテリアルプリセット集",
-              "path": "Samples~/MaterialPresets"
-            },
-            {
-              "displayName": "⚡ Performance Optimization",
-              "description": "パフォーマンス最適化サンプル",
-              "path": "Samples~/PerformanceOptimization"
-            }
-          ]
+          "zipSHA256": "08C2711A4AE99E4F4E0C58EF19AF138AE385CD66F6ABE39E8D866CACB922E565",
+          "repo": "https://github.com/zapabob/liltoon-pcss-extension",
+          "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
+          "documentationUrl": "https://github.com/zapabob/liltoon-pcss-extension#readme",
+          "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE"
         },
         "1.4.7": {
           "name": "com.liltoon.pcss-extension",
