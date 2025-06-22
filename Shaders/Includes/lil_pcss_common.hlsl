@@ -102,17 +102,17 @@
     #endif
 #else
     // Built-in Render Pipeline用のテクスチャ宣言 - 完全な重複防止
-    #if !defined(_ShadowMapTexture) && !defined(LIL_PCSS_BUILTIN_SHADOWMAP_DECLARED)
+    #if !defined(_ShadowMapTexture) && !defined(LIL_PCSS_BUILTIN_SHADOWMAP_DECLARED) && !defined(LILTOON_SHADER_INCLUDED)
         #define LIL_PCSS_BUILTIN_SHADOWMAP_DECLARED
-        #define _ShadowMapTexture _LIL_PCSS_ShadowMapTexture
         sampler2D _LIL_PCSS_ShadowMapTexture;
+        #define _ShadowMapTexture _LIL_PCSS_ShadowMapTexture
     #endif
-    #if !defined(_MainLightShadowmapTexture) && !defined(LIL_PCSS_MAIN_SHADOWMAP_DECLARED)
+    #if !defined(_MainLightShadowmapTexture) && !defined(LIL_PCSS_MAIN_SHADOWMAP_DECLARED) && !defined(LILTOON_SHADER_INCLUDED)
         #define LIL_PCSS_MAIN_SHADOWMAP_DECLARED
-        #define _MainLightShadowmapTexture _LIL_PCSS_MainLightShadowmapTexture
         sampler2D _LIL_PCSS_MainLightShadowmapTexture;
+        #define _MainLightShadowmapTexture _LIL_PCSS_MainLightShadowmapTexture
     #endif
-    #if !defined(_CameraDepthTexture) && !defined(LIL_PCSS_BUILTIN_DEPTH_DECLARED)
+    #if !defined(_CameraDepthTexture) && !defined(LIL_PCSS_BUILTIN_DEPTH_DECLARED) && !defined(LILTOON_SHADER_INCLUDED)
         #define LIL_PCSS_BUILTIN_DEPTH_DECLARED
         sampler2D_float _CameraDepthTexture;
     #endif
@@ -129,12 +129,12 @@
 #define LIL_PCSS_SHADER_COMPATIBILITY_DEFINED
 
 // lilToon Detection
-#if defined(LIL_LILTOON_SHADER_INCLUDED) || defined(SHADER_STAGE_VERTEX) || defined(_LILTOON_INCLUDED)
+#if defined(LIL_LILTOON_SHADER_INCLUDED) || defined(SHADER_STAGE_VERTEX) || defined(_LILTOON_INCLUDED) || defined(LILTOON_SHADER_INCLUDED)
     #define LIL_PCSS_LILTOON_AVAILABLE
 #endif
 
 // Poiyomi Detection  
-#if defined(POI_MAIN) || defined(POIYOMI_TOON) || defined(_POIYOMI_INCLUDED)
+#if defined(POI_MAIN) || defined(POIYOMI_TOON) || defined(_POIYOMI_INCLUDED) || defined(LIL_POIYOMI_SHADER_INCLUDED)
     #define LIL_PCSS_POIYOMI_AVAILABLE
 #endif
 
@@ -145,6 +145,10 @@
 
 #endif // LIL_PCSS_SHADER_COMPATIBILITY_DEFINED
 
+// PCSS変数の定義 - 重複を完全に防ぐ
+#if !defined(LIL_PCSS_VARIABLES_DECLARED)
+#define LIL_PCSS_VARIABLES_DECLARED
+
 CBUFFER_START(lilPCSSProperties)
     // 基本PCSS設定 - 全シェーダーで共通使用
     float _PCSSEnabled;
@@ -153,8 +157,17 @@ CBUFFER_START(lilPCSSProperties)
     float _PCSSBias;
     float _PCSSIntensity;
     float _PCSSQuality;
-    float _PCSSBlockerSearchRadius;
-    float _PCSSSampleCount;
+    
+    // 重複エラー修正: 各変数に固有の接頭辞を追加
+    #if !defined(_PCSSBlockerSearchRadius) && !defined(LIL_PCSS_BLOCKER_SEARCH_RADIUS_DEFINED)
+        #define LIL_PCSS_BLOCKER_SEARCH_RADIUS_DEFINED
+        float _PCSSBlockerSearchRadius;
+    #endif
+    
+    #if !defined(_PCSSSampleCount) && !defined(LIL_PCSS_SAMPLE_COUNT_DEFINED)
+        #define LIL_PCSS_SAMPLE_COUNT_DEFINED
+        float _PCSSSampleCount;
+    #endif
     
     // ライト設定
     float4 _PCSSLightDirection;
@@ -166,6 +179,8 @@ CBUFFER_START(lilPCSSProperties)
     float _PCSSAnimePreset;
     float _PCSSCinematicPreset;
 CBUFFER_END
+
+#endif // LIL_PCSS_VARIABLES_DECLARED
 
 #endif // LIL_PCSS_PROPERTIES_DEFINED
 

@@ -5,9 +5,13 @@ using VRC.SDKBase;
 using VRC.SDK3.Avatars.Components;
 #endif
 
-// ModularAvatar依存関係の完全な条件付き対応
-#if UNITY_EDITOR && MODULAR_AVATAR_AVAILABLE
-    using nadena.dev.modular_avatar.core;
+// ModularAvatar依存関係の完全な条件付き対応 - エラー耐性を向上
+#if UNITY_EDITOR
+    // ModularAvatarが利用可能かどうかを実行時に判定
+    #if MODULAR_AVATAR_AVAILABLE
+        using nadena.dev.modular_avatar.core;
+        #define LIL_PCSS_MODULAR_AVATAR_ENABLED
+    #endif
 #endif
 using System.Collections;
 using System.Collections.Generic;

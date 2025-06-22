@@ -5,9 +5,13 @@ using VRC.SDKBase;
 using VRC.SDK3.Avatars.Components;
 #endif
 
-// ModularAvatar依存関係の完全な条件付き対応
-#if UNITY_EDITOR && MODULAR_AVATAR_AVAILABLE
-    using nadena.dev.modular_avatar.core;
+// ModularAvatar依存関係の完全な条件付き対応 - エラー耐性を向上
+#if UNITY_EDITOR
+    // ModularAvatarが利用可能かどうかを実行時に判定
+    #if MODULAR_AVATAR_AVAILABLE
+        using nadena.dev.modular_avatar.core;
+        #define LIL_PCSS_MODULAR_AVATAR_ENABLED
+    #endif
 #endif
 
 namespace lilToon.PCSS.Runtime
@@ -256,13 +260,20 @@ namespace lilToon.PCSS.Runtime
                 ApplyPresetToMaterial(material, preset, customParams);
             }
 
-#if UNITY_EDITOR && MODULAR_AVATAR_AVAILABLE
-            // ModularAvatarコンポーネントが存在する場合、情報を記録
-            var maInfo = avatar.GetComponent<ModularAvatarInformation>();
-            if (maInfo != null)
+#if LIL_PCSS_MODULAR_AVATAR_ENABLED
+            // ModularAvatarコンポーネントが存在する場合、情報を記録（エラー耐性付き）
+            try
             {
-                // プリセット情報をコンポーネント名に記録
-                maInfo.name = $"PCSS_{preset}_Applied";
+                var maInfo = avatar.GetComponent<ModularAvatarInformation>();
+                if (maInfo != null)
+                {
+                    // プリセット情報をコンポーネント名に記録
+                    maInfo.name = $"PCSS_{preset}_Applied";
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogWarning($"[PCSSUtilities] Failed to update ModularAvatar info: {ex.Message}");
             }
 #endif
 
@@ -278,31 +289,51 @@ namespace lilToon.PCSS.Runtime
         }
 
         /// <summary>
-        /// ModularAvatarコンポーネントが存在するかチェック
+        /// ModularAvatarコンポーネントが存在するかチェック（エラー耐性付き）
         /// </summary>
         public static bool HasModularAvatar(GameObject gameObject)
         {
-#if UNITY_EDITOR && MODULAR_AVATAR_AVAILABLE
-            return gameObject.GetComponent<ModularAvatarInformation>() != null;
+            if (gameObject == null) return false;
+
+#if LIL_PCSS_MODULAR_AVATAR_ENABLED
+            try
+            {
+                return gameObject.GetComponent<ModularAvatarInformation>() != null;
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogWarning($"[PCSSUtilities] ModularAvatar check failed: {ex.Message}");
+                return false;
+            }
 #else
             return false;
 #endif
         }
 
         /// <summary>
-        /// ModularAvatarを使用してPCSSコンポーネントを追加
+        /// ModularAvatarを使用してPCSSコンポーネントを追加（エラー耐性付き）
         /// </summary>
         public static UnityEngine.Component AddPCSSModularAvatarComponent(GameObject avatar, PCSSPreset preset)
         {
-#if UNITY_EDITOR && MODULAR_AVATAR_AVAILABLE
-            var maInfo = avatar.GetComponent<ModularAvatarInformation>();
-            if (maInfo == null)
+            if (avatar == null) return null;
+
+#if LIL_PCSS_MODULAR_AVATAR_ENABLED
+            try
             {
-                maInfo = avatar.AddComponent<ModularAvatarInformation>();
+                var maInfo = avatar.GetComponent<ModularAvatarInformation>();
+                if (maInfo == null)
+                {
+                    maInfo = avatar.AddComponent<ModularAvatarInformation>();
+                }
+                
+                maInfo.name = $"lilToon_PCSS_{preset}_Component";
+                return maInfo;
             }
-            
-            maInfo.name = $"lilToon_PCSS_{preset}_Component";
-            return maInfo;
+            catch (System.Exception ex)
+            {
+                Debug.LogWarning($"[PCSSUtilities] Failed to add ModularAvatar component: {ex.Message}");
+                return null;
+            }
 #else
             return null;
 #endif
