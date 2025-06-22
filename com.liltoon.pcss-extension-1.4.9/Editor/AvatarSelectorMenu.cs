@@ -2,10 +2,11 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
-#if UNITY_EDITOR && MODULAR_AVATAR_AVAILABLE
-using nadena.dev.modular_avatar.core;
-#endif
+// #if MODULAR_AVATAR_AVAILABLE
+// using nadena.dev.modular_avatar.core;
+// #endif
 
 namespace lilToon.PCSS.Editor
 {
@@ -122,13 +123,13 @@ namespace lilToon.PCSS.Editor
                         EditorGUILayout.LabelField("✅ VRC", GUILayout.Width(40));
                     }
 
-#if UNITY_EDITOR && MODULAR_AVATAR_AVAILABLE
-                    var modularAvatar = avatar.GetComponent<ModularAvatarInformation>();
-                    if (modularAvatar != null)
-                    {
-                        EditorGUILayout.LabelField("🔧 MA", GUILayout.Width(40));
-                    }
-#endif
+                    // #if MODULAR_AVATAR_AVAILABLE
+                    // var modularAvatar = avatar.GetComponent<ModularAvatarInformation>();
+                    // if (modularAvatar != null)
+                    // {
+                    //     EditorGUILayout.LabelField("🔧 MA", GUILayout.Width(40));
+                    // }
+                    // #endif
 
                     EditorGUILayout.EndHorizontal();
                 }
@@ -289,17 +290,17 @@ namespace lilToon.PCSS.Editor
             var avatarDescriptors = FindObjectsOfType<VRC.SDK3.Avatars.Components.VRCAvatarDescriptor>();
             detectedAvatars.AddRange(avatarDescriptors.Select(desc => desc.gameObject));
 
-#if UNITY_EDITOR && MODULAR_AVATAR_AVAILABLE
-            // ModularAvatarInformationを持つGameObjectも検索
-            var modularAvatars = FindObjectsOfType<ModularAvatarInformation>();
-            foreach (var ma in modularAvatars)
-            {
-                if (!detectedAvatars.Contains(ma.gameObject))
-                {
-                    detectedAvatars.Add(ma.gameObject);
-                }
-            }
-#endif
+            // #if MODULAR_AVATAR_AVAILABLE
+            // // ModularAvatarInformationを持つGameObjectも検索
+            // var modularAvatars = FindObjectsOfType<ModularAvatarInformation>();
+            // foreach (var ma in modularAvatars)
+            // {
+            //     if (!detectedAvatars.Contains(ma.gameObject))
+            //     {
+            //         detectedAvatars.Add(ma.gameObject);
+            //     }
+            // }
+            // #endif
 
             // 重複を除去してソート
             detectedAvatars = detectedAvatars.Distinct().OrderBy(go => go.name).ToList();
@@ -352,17 +353,17 @@ namespace lilToon.PCSS.Editor
                 }
             }
 
-#if UNITY_EDITOR && MODULAR_AVATAR_AVAILABLE
-            // ModularAvatarコンポーネントにもプリセット情報を記録
-            var maInfo = selectedAvatar.GetComponent<ModularAvatarInformation>();
-            if (maInfo == null)
-            {
-                maInfo = selectedAvatar.AddComponent<ModularAvatarInformation>();
-            }
+            // #if MODULAR_AVATAR_AVAILABLE
+            // // ModularAvatarコンポーネントにもプリセット情報を記録
+            // var maInfo = selectedAvatar.GetComponent<ModularAvatarInformation>();
+            // if (maInfo == null)
+            // {
+            //     maInfo = selectedAvatar.AddComponent<ModularAvatarInformation>();
+            // }
             
-            // カスタムプロパティとしてプリセット情報を保存
-            maInfo.name = $"PCSS_{presetName}_Applied";
-#endif
+            // // カスタムプロパティとしてプリセット情報を保存
+            // maInfo.name = $"PCSS_{presetName}_Applied";
+            // #endif
 
             EditorUtility.SetDirty(selectedAvatar);
             

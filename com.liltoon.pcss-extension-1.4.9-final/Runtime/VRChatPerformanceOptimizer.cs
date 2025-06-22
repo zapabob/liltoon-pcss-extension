@@ -56,6 +56,12 @@ namespace lilToon.PCSS.Runtime
             public float optimizationLevel;
             public string qualityProfile;
             public bool isQuestMode;
+            public float CurrentFPS;
+            public int AvatarCount;
+            public bool IsQuest;
+            public bool IsVRMode;
+            public string VRCQuality;
+            public string CurrentPCSSQuality;
         }
 
         private OptimizationStats stats = new OptimizationStats();
@@ -432,7 +438,14 @@ namespace lilToon.PCSS.Runtime
         /// </summary>
         public OptimizationStats GetStats()
         {
-            stats.optimizationLevel = ((int)QualityProfile.Quest - (int)currentProfile) / (float)(int)QualityProfile.Quest;
+            // VRChatの品質設定を取得するロジック（リフレクションまたはAPI経由）
+            // この例ではダミーデータを返します
+            stats.VRCQuality = "Medium"; 
+            stats.CurrentFPS = currentFrameRate;
+            stats.AvatarCount = currentAvatarCount;
+            stats.IsQuest = enableQuestOptimization;
+            stats.IsVRMode = DetectVREnvironment();
+            stats.CurrentPCSSQuality = currentProfile.ToString();
             return stats;
         }
 

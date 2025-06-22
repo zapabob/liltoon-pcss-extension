@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using lilToon.PCSS.Runtime;
 
-namespace lilToon.PCSS
+namespace lilToon.PCSS.Editor
 {
     /// <summary>
     /// VRChat最適化設定エディター
@@ -186,7 +187,7 @@ namespace lilToon.PCSS
                 var optimizer = FindObjectOfType<VRChatPerformanceOptimizer>();
                 if (optimizer != null)
                 {
-                    var stats = optimizer.GetPerformanceStats();
+                    var stats = optimizer.GetStats();
                     
                     EditorGUILayout.LabelField($"現在のFPS: {stats.CurrentFPS:F1}");
                     EditorGUILayout.LabelField($"アバター数: {stats.AvatarCount}");
@@ -208,6 +209,22 @@ namespace lilToon.PCSS
                         Selection.activeGameObject = go;
                     }
                 }
+                
+                EditorGUILayout.Space();
+                
+                int pcssMaterialCount = 0;
+                if (optimizer != null)
+                {
+                    var materials = PCSSUtilities.FindPCSSMaterials(optimizer.gameObject);
+                    foreach(var mat in materials)
+                    {
+                        if (PCSSUtilities.IsPCSSCompatible(mat))
+                        {
+                            pcssMaterialCount++;
+                        }
+                    }
+                }
+                EditorGUILayout.LabelField("PCSSマテリアル数:", pcssMaterialCount.ToString());
                 
                 EditorGUI.indentLevel--;
             }

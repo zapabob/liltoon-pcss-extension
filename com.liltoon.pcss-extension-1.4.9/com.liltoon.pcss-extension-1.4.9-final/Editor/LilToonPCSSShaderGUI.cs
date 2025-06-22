@@ -20,12 +20,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
-using Unity.EditorCoroutines.Editor;
-using UnityEngine.Profiling;
-using lilToon.PCSS.Runtime;
 
 #if UNITY_EDITOR
-namespace lilToon.PCSS.Editor
+namespace lilToon.PCSS
 {
     public class LilToonPCSSShaderGUI : ShaderGUI
     {
@@ -239,9 +236,8 @@ namespace lilToon.PCSS.Editor
 
             // 適用対象シェーダー
             EditorGUILayout.LabelField("適用対象シェーダー", EditorStyles.boldLabel);
-            var material = (Material)materialEditor.target;
-            var shaderType = (PCSSUtilities.ShaderType)EditorGUILayout.EnumPopup("Shader Type", (PCSSUtilities.ShaderType)material.GetFloat("_ShaderType"));
-            material.SetFloat("_ShaderType", (float)shaderType);
+            var shaderType = (ShaderType)EditorGUILayout.EnumPopup("Shader Type", (ShaderType)materialEditor.target.GetFloat("_ShaderType"));
+            materialEditor.target.SetFloat("_ShaderType", (float)shaderType);
 
             EditorGUILayout.Space();
 
@@ -347,7 +343,7 @@ namespace lilToon.PCSS.Editor
                 var aiOptMode = FindProperty("_AIOptimizationEnabled");
                 if (aiOptMode != null)
                 {
-                    aiOptMode.floatValue = (float)(AIOptimizationMode)EditorGUILayout.EnumPopup("AI Optimization Mode",
+                    aiOptMode.floatValue = (float)EditorGUILayout.EnumPopup("AI Optimization Mode", 
                         (AIOptimizationMode)aiOptMode.floatValue);
                 }
 
@@ -359,7 +355,7 @@ namespace lilToon.PCSS.Editor
                     var aiTarget = FindProperty("_AIPerformanceTarget");
                     if (aiTarget != null)
                     {
-                        aiTarget.floatValue = (float)(EnterprisePerformanceTarget)EditorGUILayout.EnumPopup("Performance Target",
+                        aiTarget.floatValue = (float)EditorGUILayout.EnumPopup("Performance Target", 
                             (EnterprisePerformanceTarget)aiTarget.floatValue);
                     }
 
@@ -400,7 +396,7 @@ namespace lilToon.PCSS.Editor
                 var rtQuality = FindProperty("_RayTracingQuality");
                 if (rtQuality != null)
                 {
-                    rtQuality.floatValue = (float)(RayTracingQuality)EditorGUILayout.EnumPopup("Ray Tracing Quality",
+                    rtQuality.floatValue = (float)EditorGUILayout.EnumPopup("Ray Tracing Quality", 
                         (RayTracingQuality)rtQuality.floatValue);
                 }
 

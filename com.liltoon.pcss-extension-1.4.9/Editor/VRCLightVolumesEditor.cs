@@ -2,13 +2,13 @@ using UnityEngine;
 using UnityEditor;
 using System.Linq;
 
-namespace lilToon.PCSS
+namespace lilToon.PCSS.Editor
 {
     /// <summary>
     /// VRC Light Volumes統合エディタ
     /// </summary>
     [CustomEditor(typeof(VRCLightVolumesIntegration))]
-    public class VRCLightVolumesEditor : Editor
+    public class VRCLightVolumesEditor : UnityEditor.Editor
     {
         private VRCLightVolumesIntegration integration;
         private bool showAdvancedSettings = false;

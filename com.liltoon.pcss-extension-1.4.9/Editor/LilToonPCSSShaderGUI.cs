@@ -20,9 +20,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using Unity.EditorCoroutines.Editor;
+using UnityEngine.Profiling;
+using lilToon.PCSS.Runtime;
 
 #if UNITY_EDITOR
-namespace lilToon.PCSS
+namespace lilToon.PCSS.Editor
 {
     public class LilToonPCSSShaderGUI : ShaderGUI
     {
@@ -56,8 +59,8 @@ namespace lilToon.PCSS
         private MaterialProperty _ShadowBlur;
         private MaterialProperty _ShadowColorTex;
         
-        private static readonly Dictionary<string, bool> foldouts = new Dictionary<string, bool>();
-        private static readonly Dictionary<string, PCSSProfile> profiles = new Dictionary<string, PCSSProfile>();
+        // private static readonly Dictionary<string, bool> foldouts = new Dictionary<string, bool>();
+        // private static readonly Dictionary<string, PCSSProfile> profiles = new Dictionary<string, PCSSProfile>();
         
         // Ultimate Commercial Edition Properties
         private static readonly Dictionary<string, string> ultimateCommercialProperties = new Dictionary<string, string>
@@ -233,6 +236,25 @@ namespace lilToon.PCSS
 
             // Ultimate Optimization Tools
             DrawUltimateOptimizationTools();
+
+            // 適用対象シェーダー
+            EditorGUILayout.LabelField("適用対象シェーダー", EditorStyles.boldLabel);
+            var material = (Material)materialEditor.target;
+            var shaderType = (PCSSUtilities.ShaderType)EditorGUILayout.EnumPopup("Shader Type", (PCSSUtilities.ShaderType)material.GetFloat("_ShaderType"));
+            material.SetFloat("_ShaderType", (float)shaderType);
+
+            EditorGUILayout.Space();
+
+            // パフォーマンス統計
+            EditorGUILayout.LabelField("パフォーマンス統計", EditorStyles.boldLabel);
+            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+            long totalMemory = Profiler.GetTotalAllocatedMemoryLong();
+            long monoMemory = Profiler.GetMonoUsedSizeLong();
+            EditorGUILayout.LabelField("合計メモリ", $"{totalMemory / 1024 / 1024} MB");
+            EditorGUILayout.LabelField("Mono ヒープ", $"{monoMemory / 1024 / 1024} MB");
+            EditorGUILayout.EndVertical();
+
+            EditorGUILayout.Space();
         }
         
         private void FindProperties(MaterialProperty[] properties)
@@ -325,7 +347,7 @@ namespace lilToon.PCSS
                 var aiOptMode = FindProperty("_AIOptimizationEnabled");
                 if (aiOptMode != null)
                 {
-                    aiOptMode.floatValue = (float)EditorGUILayout.EnumPopup("AI Optimization Mode", 
+                    aiOptMode.floatValue = (float)(AIOptimizationMode)EditorGUILayout.EnumPopup("AI Optimization Mode", 
                         (AIOptimizationMode)aiOptMode.floatValue);
                 }
 
@@ -337,7 +359,7 @@ namespace lilToon.PCSS
                     var aiTarget = FindProperty("_AIPerformanceTarget");
                     if (aiTarget != null)
                     {
-                        aiTarget.floatValue = (float)EditorGUILayout.EnumPopup("Performance Target", 
+                        aiTarget.floatValue = (float)(EnterprisePerformanceTarget)EditorGUILayout.EnumPopup("Performance Target", 
                             (EnterprisePerformanceTarget)aiTarget.floatValue);
                     }
 
@@ -378,7 +400,7 @@ namespace lilToon.PCSS
                 var rtQuality = FindProperty("_RayTracingQuality");
                 if (rtQuality != null)
                 {
-                    rtQuality.floatValue = (float)EditorGUILayout.EnumPopup("Ray Tracing Quality", 
+                    rtQuality.floatValue = (float)(RayTracingQuality)EditorGUILayout.EnumPopup("Ray Tracing Quality", 
                         (RayTracingQuality)rtQuality.floatValue);
                 }
 
@@ -670,7 +692,7 @@ namespace lilToon.PCSS
                 lastFrameTime = currentTime;
                 
                 // Update memory usage
-                memoryUsage = UnityEngine.Profiling.Profiler.GetTotalAllocatedMemory(false) / (1024f * 1024f);
+                memoryUsage = UnityEngine.Profiling.Profiler.GetTotalAllocatedMemoryLong() / (1024f * 1024f);
             }
         }
         

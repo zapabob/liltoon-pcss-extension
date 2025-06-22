@@ -37,8 +37,8 @@
             "email": "zapabob@example.com",
             "url": "https://github.com/zapabob"
           },
-          "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.4.9/com.liltoon.pcss-extension-1.4.9-final.zip",
-          "zipSHA256": "08C2711A4AE99E4F4E0C58EF19AF138AE385CD66F6ABE39E8D866CACB922E565",
+          "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.4.9/com.liltoon.pcss-extension-1.4.9-clean.zip",
+          "zipSHA256": "9DCBBB2C9FD817920CC56DAD2503B2260750D14D6904BC47CFB89403884D9B0A",
           "repo": "https://github.com/zapabob/liltoon-pcss-extension",
           "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
           "documentationUrl": "https://github.com/zapabob/liltoon-pcss-extension#readme",
