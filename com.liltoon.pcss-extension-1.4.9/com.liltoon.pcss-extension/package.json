@@ -1,0 +1,76 @@
+{
+    "name": "com.liltoon.pcss-extension",
+    "version": "1.4.9",
+    "displayName": "lilToon PCSS Extension",
+    "description": "Revolutionary Unity Menu implementation with complete shader error resolution. Features Unity Menu Avatar Selector, 4 preset systems, automatic avatar detection, one-click setup (90% time reduction), full Built-in RP & URP compatibility, Unity 2022.3 LTS support, and comprehensive VRChat optimization.",
+    "unity": "2022.3",
+    "unityRelease": "22f1",
+    "keywords": [
+        "shader",
+        "toon",
+        "avatar",
+        "pcss",
+        "shadows",
+        "vrchat",
+        "lilToon",
+        "poiyomi",
+        "unity-menu",
+        "avatar-selector",
+        "preset-system",
+        "auto-detection",
+        "one-click-setup",
+        "shader-fix",
+        "error-resolution",
+        "built-in-rp",
+        "urp-compatibility",
+        "unity-2022-3-lts"
+    ],
+    "homepage": "https://zapabob.github.io/liltoon-pcss-extension/",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/zapabob/liltoon-pcss-extension.git"
+    },
+    "license": "MIT",
+    "author": {
+        "name": "lilToon PCSS Extension Team",
+        "email": "r.minegishi1987@gmail.com",
+        "url": "https://zapabob.github.io/liltoon-pcss-extension/"
+    },
+    "dependencies": {
+        "com.unity.render-pipelines.universal": "12.1.12"
+    },
+    "vpmDependencies": {
+        "com.vrchat.avatars": ">=3.7.0",
+        "com.vrchat.base": ">=3.7.0"
+    },
+    "recommendedDependencies": {
+        "jp.lilxyzw.liltoon": ">=1.8.0",
+        "nadena.dev.modular-avatar": ">=1.10.0"
+    },
+    "legacyFolders": {
+        "Assets\\lilToon PCSS Extension": ""
+    },
+    "legacyFiles": {
+        "Assets\\lilToon PCSS Extension.meta": ""
+    },
+    "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE",
+    "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
+    "documentationUrl": "https://zapabob.github.io/liltoon-pcss-extension/",
+    "samples": [
+        {
+            "displayName": "🎯 Unity Menu Avatar Selector",
+            "description": "Unity Menu Avatar Selector with 4 preset systems",
+            "path": "Samples~/AvatarSelector"
+        },
+        {
+            "displayName": "🛠️ Complete Shader Fix Examples",
+            "description": "Complete shader error resolution examples",
+            "path": "Samples~/ShaderFix"
+        },
+        {
+            "displayName": "⚡ Performance Optimization",
+            "description": "90% setup time reduction optimization samples",
+            "path": "Samples~/PerformanceOptimization"
+        }
+    ]
+}
