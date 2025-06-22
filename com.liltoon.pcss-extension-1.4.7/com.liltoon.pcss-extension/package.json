@@ -1,0 +1,141 @@
+{
+  "name": "com.liltoon.pcss-extension",
+  "version": "1.4.7",
+  "displayName": "lilToon PCSS Extension",
+  "description": "Professional PCSS solution with consistent naming convention, avatar selector menu, intuitive visual avatar selection, automatic scene detection, one-click setup system, enhanced URP 12.1.12 compatibility, advanced features, optimization, real-time ray tracing support, performance analytics, automatic quality scaling, commercial-ready asset generation, commercial licensing, priority support, and comprehensive VRChat optimization suite.",
+  "unity": "2022.3",
+  "unityRelease": "22f1",
+  "keywords": [
+    "shader",
+    "toon",
+    "avatar",
+    "pcss",
+    "shadows",
+    "vrchat",
+    "lilToon",
+    "poiyomi",
+    "expression",
+    "lightvolumes",
+    "vrc-light-volumes",
+    "bakery",
+    "lighting",
+    "modular-avatar",
+    "vrchat-sdk3",
+    "performance",
+    "optimization",
+    "all-in-one",
+    "booth",
+    "professional",
+    "commercial",
+    "premium",
+    "advanced",
+    "lightmapping",
+    "quality",
+    "production-ready",
+    "enterprise",
+    "ray-tracing",
+    "analytics",
+    "auto-scaling",
+    "priority-support",
+    "avatar-selector",
+    "visual-ui",
+    "one-click-setup",
+    "auto-detection",
+    "intuitive-workflow"
+  ],
+  "author": {
+    "name": "lilToon PCSS Extension Team",
+    "email": "r.minegishi1987@gmail.com",
+    "url": "https://github.com/zapabob"
+  },
+  "dependencies": {
+    "com.unity.render-pipelines.universal": "12.1.12"
+  },
+  "vpmDependencies": {
+    "com.vrchat.avatars": ">=3.7.0",
+    "com.vrchat.base": ">=3.7.0",
+    "nadena.dev.modular-avatar": ">=1.10.0"
+  },
+  "recommendedDependencies": {
+    "jp.lilxyzw.liltoon": ">=1.8.0"
+  },
+  "legacyFolders": {
+    "Assets\\lilToon PCSS Extension": ""
+  },
+  "legacyFiles": {
+    "Assets\\lilToon PCSS Extension.meta": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zapabob/liltoon-pcss-extension.git"
+  },
+  "license": "MIT",
+  "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE",
+  "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
+  "documentationUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/README.md",
+  "samples": [
+    {
+      "displayName": "PCSS Materials Suite",
+      "description": "Professional materials with optimization and commercial usage rights",
+      "path": "Samples~/PCSSMaterials"
+    },
+    {
+      "displayName": "VRChat Expression System",
+      "description": "Advanced VRChat Expression system with optimization and commercial licensing",
+      "path": "Samples~/VRChatExpressions"
+    },
+    {
+      "displayName": "ModularAvatar Prefabs",
+      "description": "Professional ModularAvatar prefabs with configuration and redistribution rights",
+      "path": "Samples~/ModularAvatarPrefabs"
+    },
+    {
+      "displayName": "Bakery Integration",
+      "description": "Complete Bakery lightmapping solution with advanced ray tracing support",
+      "path": "Samples~/BakeryIntegration"
+    },
+    {
+      "displayName": "Performance Optimization Suite",
+      "description": "Performance optimization with real-time analytics and automatic quality scaling",
+      "path": "Samples~/PerformanceOptimization"
+    },
+    {
+      "displayName": "Ray Tracing Enhancement Pack",
+      "description": "Real-time ray tracing support with performance optimization",
+      "path": "Samples~/RayTracingEnhancement"
+    },
+    {
+      "displayName": "Commercial Asset Generator",
+      "description": "Automated commercial asset generation with licensing and support",
+      "path": "Samples~/CommercialAssetGenerator"
+    },
+    {
+      "displayName": "Analytics Dashboard",
+      "description": "Comprehensive performance analytics with real-time monitoring and business intelligence",
+      "path": "Samples~/Analytics"
+    }
+  ],
+  "vrc": {
+    "dependencies": {
+      "com.vrchat.avatars": ">=3.7.0",
+      "com.vrchat.base": ">=3.7.0"
+    }
+  },
+  "commercial": {
+    "license": "Commercial",
+    "usage": "Commercial Use Allowed",
+    "redistribution": "Allowed",
+    "modification": "Full Rights",
+    "support": "Priority Support",
+    "features": [
+      "Optimization",
+      "Real-time Ray Tracing",
+      "Analytics",
+      "Automatic Quality Scaling",
+      "Commercial Asset Generation",
+      "Commercial Licensing",
+      "Priority Support",
+      "White-label Rights"
+    ]
+  }
+}

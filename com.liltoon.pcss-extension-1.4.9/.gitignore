@@ -1,0 +1,76 @@
+# Jekyll
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# Ruby
+Gemfile.lock
+.bundle/
+vendor/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# VCC (VRChat Creator Companion) Development Files
+VCC_Setup_Guide.md
+vcc-add-repo.html
+Editor/VCCSetupWizard.cs
+Editor/LilToonPCSSExtensionInitializer.cs
+
+# BOOTH Distribution Files
+Editor/BOOTHPackageExporter.cs
+
+# Test and Development Files
+test-*.txt
+test-*.html
+test-report-*.html
+temp_*/
+temp-*/
+
+# Distribution and Release Files
+Release/
+scripts/
+docs/Release/
+*.zip
+
+# VPM Development Files
+VPMManifest.json
+index.json
+docs/index.json
+
+# Documentation Development Files
+*_Guide.md
+PCSS_*.md
+liltoon_pcss_readme.md
+
+# GitHub Pages Development Files
+.nojekyll
+CNAME
+Gemfile
+_config.yml
+docs/_config.yml*
+docs/Gemfile*
+docs/site/ 

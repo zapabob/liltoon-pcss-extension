@@ -1,0 +1,84 @@
+{
+  "name": "com.liltoon.pcss-extension",
+  "version": "1.4.8",
+  "displayName": "lilToon PCSS Extension",
+  "description": "🌟 lilToon用 PCSS (Percentage-Closer Soft Shadows) 拡張 - VRChat最適化済み\n\n✨ 特徴:\n• 📱 Unity 2022.3 LTS & URP 完全対応\n• 🎮 VRChat SDK3 ネイティブ統合\n• 🚀 Quest対応 & モバイル最適化\n• 🎯 ワンクリック簡単セットアップ\n• 🎨 lilToon & Poiyomi 両対応\n• 💡 VRC Light Volumes 統合\n• ⚡ 高性能 PCSS アルゴリズム\n• 🛠️ プロフェッショナル品質\n\n🔧 Unity Package Manager でインストール:\nhttps://github.com/zapabob/liltoon-pcss-extension.git?path=com.liltoon.pcss-extension-1.4.8#v1.4.8",
+  "unity": "2022.3",
+  "unityRelease": "22f1",
+  "keywords": [
+    "lilToon",
+    "PCSS",
+    "Shadow",
+    "VRChat",
+    "Shader",
+    "Extension",
+    "Unity",
+    "URP",
+    "Quest",
+    "Mobile",
+    "Performance",
+    "Professional"
+  ],
+  "author": {
+    "name": "lilToon PCSS Extension Team",
+    "email": "support@liltoon-pcss.dev",
+    "url": "https://zapabob.github.io/liltoon-pcss-extension/"
+  },
+  "type": "tool",
+  "hideInEditor": false,
+  "dependencies": {
+    "com.unity.render-pipelines.universal": "12.1.12",
+    "jp.lilxyzw.liltoon": "1.7.0"
+  },
+  "vpmDependencies": {
+    "com.vrchat.avatars": ">=3.5.0",
+    "com.vrchat.base": ">=3.5.0"
+  },
+  "legacyFolders": {
+    "Assets\\lilToon PCSS Extension": ""
+  },
+  "gitDependencies": {},
+  "samples": [
+    {
+      "displayName": "🎯 Avatar Setup Examples",
+      "description": "アバターセットアップのサンプルシーン",
+      "path": "Samples~/AvatarSetup"
+    },
+    {
+      "displayName": "🎨 Material Presets",
+      "description": "PCSS対応マテリアルプリセット集",
+      "path": "Samples~/MaterialPresets"
+    },
+    {
+      "displayName": "⚡ Performance Optimization",
+      "description": "パフォーマンス最適化サンプル",
+      "path": "Samples~/PerformanceOptimization"
+    }
+  ],
+  "vrc": {
+    "dependencies": {
+      "com.vrchat.avatars": ">=3.7.0",
+      "com.vrchat.base": ">=3.7.0"
+    }
+  },
+  "commercial": {
+    "license": "Commercial",
+    "usage": "Commercial Use Allowed",
+    "redistribution": "Allowed",
+    "modification": "Full Rights",
+    "support": "Priority Support",
+    "features": [
+      "Optimization",
+      "Real-time Ray Tracing",
+      "Analytics",
+      "Automatic Quality Scaling",
+      "Commercial Asset Generation",
+      "Commercial Licensing",
+      "Priority Support",
+      "White-label Rights"
+    ]
+  },
+  "documentationUrl": "https://zapabob.github.io/liltoon-pcss-extension/",
+  "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
+  "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE"
+}
