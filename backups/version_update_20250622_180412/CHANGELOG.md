@@ -5,28 +5,6 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-
-## [1.4.4] - 2025-06-22 - Automated Version Update
-
-### 🔄 Automated Updates
-- Version Update: Automated version increment to v1.4.4
-- Package Generation: Automated package creation and SHA256 calculation
-- VPM Repository: Automated VPM repository synchronization
-- Git Management: Automated tag creation and repository synchronization
-
-### 📦 Package Information
-- Package Size: Optimized for performance
-- Dependencies: Latest compatible versions
-- Compatibility: Enhanced cross-version stability
-- Quality Assurance: 100% automated testing completion
-
-### 🛡️ Quality Improvements
-- Automated Testing: Comprehensive test suite execution
-- Dependency Validation: Automated dependency conflict resolution
-- Performance Optimization: Automated performance tuning
-- Error Prevention: Enhanced error detection and prevention
-
-
 ## [1.4.3] - 2025-06-22 - Final Packaging & URP Compatibility Enhancement
 
 ### 🎯 Final Release Packaging
