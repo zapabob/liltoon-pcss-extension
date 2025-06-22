@@ -30,6 +30,20 @@ namespace lilToon.PCSS.Editor
             ExecuteCompetitorCompatibleSetup(selectedObject);
         }
         
+        /// <summary>
+        /// 指定されたGameObjectに対して競合製品互換セットアップを実行（外部呼び出し用）
+        /// </summary>
+        public static void QuickSetupCompetitorCompatible(GameObject target)
+        {
+            if (target == null)
+            {
+                ShowSelectionDialog();
+                return;
+            }
+            
+            ExecuteCompetitorCompatibleSetup(target);
+        }
+        
         [MenuItem(MENU_ROOT + "🎭 明暗トゥーン影セットアップ", false, MENU_PRIORITY_BASE + 1)]
         public static void QuickSetupToonShadows()
         {
@@ -43,6 +57,20 @@ namespace lilToon.PCSS.Editor
             ExecuteToonShadowSetup(selectedObject);
         }
         
+        /// <summary>
+        /// 指定されたGameObjectに対してトゥーン影セットアップを実行（外部呼び出し用）
+        /// </summary>
+        public static void QuickSetupToonShadows(GameObject target)
+        {
+            if (target == null)
+            {
+                ShowSelectionDialog();
+                return;
+            }
+            
+            ExecuteToonShadowSetup(target);
+        }
+        
         [MenuItem(MENU_ROOT + "📸 リアル影セットアップ", false, MENU_PRIORITY_BASE + 2)]
         public static void QuickSetupRealisticShadows()
         {
@@ -54,6 +82,26 @@ namespace lilToon.PCSS.Editor
             }
             
             ExecuteRealisticShadowSetup(selectedObject);
+        }
+        
+        /// <summary>
+        /// 指定されたGameObjectに対してリアル影セットアップを実行（外部呼び出し用）
+        /// </summary>
+        public static void QuickSetupRealisticShadows(GameObject target)
+        {
+            if (target == null)
+            {
+                ShowSelectionDialog();
+                return;
+            }
+            
+            ExecuteRealisticShadowSetup(target);
+        }
+        
+        [MenuItem(MENU_ROOT + "🎯 アバター選択メニュー", false, MENU_PRIORITY_BASE + 5)]
+        public static void OpenAvatarSelector()
+        {
+            AvatarSelectorMenu.ShowWindow();
         }
         
         [MenuItem(MENU_ROOT + "⚙️ カスタムセットアップウィザード", false, MENU_PRIORITY_BASE + 10)]
