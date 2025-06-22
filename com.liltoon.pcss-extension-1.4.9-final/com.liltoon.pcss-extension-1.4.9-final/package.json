@@ -1,0 +1,67 @@
+{
+  "name": "com.liltoon.pcss-extension",
+  "version": "1.4.9",
+  "displayName": "lilToon PCSS Extension",
+  "description": "🎯 Revolutionary Unity Menu Avatar Selector & Complete Shader Fix Edition. Professional PCSS extension with 90% setup time reduction, complete error resolution, and professional-grade shadows for VRChat avatars.",
+  "unity": "2022.3",
+  "unityRelease": "22f1",
+  "keywords": [
+    "vrchat",
+    "avatar",
+    "shader",
+    "pcss",
+    "shadow",
+    "liltoon",
+    "poiyomi",
+    "unity-menu",
+    "avatar-selector",
+    "optimization",
+    "performance",
+    "professional",
+    "commercial"
+  ],
+  "homepage": "https://zapabob.github.io/liltoon-pcss-extension/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zapabob/liltoon-pcss-extension.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "lilToon PCSS Extension Team",
+    "email": "support@liltoon-pcss.com",
+    "url": "https://github.com/zapabob/liltoon-pcss-extension"
+  },
+  "dependencies": {
+    "com.unity.render-pipelines.universal": "12.1.0",
+    "com.unity.textmeshpro": "3.0.6"
+  },
+  "vpmDependencies": {
+    "com.vrchat.avatars": "3.5.0"
+  },
+  "legacyFolders": {
+    "Assets\\lilToon PCSS Extension": ""
+  },
+  "legacyFiles": {
+    "Assets\\lilToon PCSS Extension.meta": ""
+  },
+  "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE",
+  "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
+  "documentationUrl": "https://zapabob.github.io/liltoon-pcss-extension/",
+  "samples": [
+    {
+      "displayName": "🎯 Avatar Setup Examples",
+      "description": "アバターセットアップのサンプルシーン",
+      "path": "Samples~/AvatarSetup"
+    },
+    {
+      "displayName": "🎨 Material Presets",
+      "description": "PCSS対応マテリアルプリセット集",
+      "path": "Samples~/MaterialPresets"
+    },
+    {
+      "displayName": "⚡ Performance Optimization",
+      "description": "パフォーマンス最適化サンプル",
+      "path": "Samples~/PerformanceOptimization"
+    }
+  ]
+}
