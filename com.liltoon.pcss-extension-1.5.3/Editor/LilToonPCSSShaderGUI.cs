@@ -7,7 +7,7 @@ using lilToon;
 namespace lilToon.PCSS
 {
     // liltoon本体のShaderGUIを継承することで、互換性を確保しマテリアル消失を防ぐ
-    public class LilToonPCSSShaderGUI : lilToon.lilToonShaderGUI
+    public class LilToonPCSSShaderGUI : LilToonShaderGUI
     {
         // PCSS用のプロパティを保持
         private MaterialProperty _PCSS_ON;
