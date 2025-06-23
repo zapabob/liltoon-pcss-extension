@@ -6,7 +6,7 @@
     "email": "zapabob@example.com",
     "url": "https://github.com/zapabob"
   },
-  "url": "https://zapabob.github.io/liltoon-pcss-extension/vpm.json",
+  "url": "https://zapabob.github.io/liltoon-pcss-extension/index.json",
   "packages": {
     "com.liltoon.pcss-extension": {
       "versions": {
