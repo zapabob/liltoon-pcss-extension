@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [1.5.0] - 2025-06-23
+
+### Added
+- Added a new Unity menu `Tools > lilToon PCSS Extension` to apply PCSS effects to selected avatars or the entire world with a single click.
+
 ## [1.4.9] - 2025-06-22
 
 ### 🎯 Major Features Added
