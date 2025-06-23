@@ -22,6 +22,11 @@ Shader "lilToon/PCSS Extension"
         _PCSSIntensity ("PCSS Intensity", Range(0.0, 2.0)) = 1.0
         [Enum(Low,0,Medium,1,High,2,Ultra,3)] _PCSSQuality ("PCSS Quality", Float) = 1
         
+        // Shadow Enhancement
+        [lilToonToggle] _UseShadowClamp ("Use Shadow Clamp (Anime Style)", Float) = 0
+        _ShadowClamp ("Shadow Clamp", Range(0, 1)) = 0.5
+        _Translucency ("Translucency", Range(0, 1)) = 0.5
+        
         // VRC Light Volumes
         [lilToonToggle] _UseVRCLightVolumes ("Use VRC Light Volumes", Float) = 0
         _VRCLightVolumeIntensity ("VRC Light Volume Intensity", Range(0.0, 2.0)) = 1.0
@@ -89,6 +94,7 @@ Shader "lilToon/PCSS Extension"
             #pragma shader_feature _USEPCSS_ON
             #pragma shader_feature _USESHADOW_ON
             #pragma shader_feature _USEVRCLIGHT_VOLUMES_ON
+            #pragma shader_feature _USESHADOWCLAMP_ON
             
             // VRC Light Volumes統合キーワード
             #pragma multi_compile _ VRC_LIGHT_VOLUMES_ENABLED
@@ -128,6 +134,9 @@ Shader "lilToon/PCSS Extension"
             float _ShadowBorder;
             float _ShadowBlur;
             float _Cutoff;
+            float _UseShadowClamp;
+            float _ShadowClamp;
+            float _Translucency;
 
             struct appdata
             {
@@ -183,12 +192,19 @@ Shader "lilToon/PCSS Extension"
                     shadow = saturate(shadow + _ShadowBorder);
                     shadow = smoothstep(0.0, _ShadowBlur, shadow);
                 #endif
+
+                #if defined(_USESHADOWCLAMP_ON)
+                    shadow = step(_ShadowClamp, shadow);
+                #endif
                 
                 // VRC Light Volumesからのライティングを適用
                 #if defined(VRC_LIGHT_VOLUMES_ENABLED) && defined(_USEVRCLIGHT_VOLUMES_ON)
                     float3 lightVolumeColor = SampleVRCLightVolumes(i.worldPos);
                     col.rgb *= lightVolumeColor;
                 #endif
+
+                // 半透明度を影に適用
+                shadow = lerp(1.0 - _Translucency, 1.0, shadow);
 
                 // 影を適用 - lilToon風
                 col.rgb *= lerp(tex2D(_ShadowColorTex, i.uv).rgb, float3(1,1,1), shadow);
