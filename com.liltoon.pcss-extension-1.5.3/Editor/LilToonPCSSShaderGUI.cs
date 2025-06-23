@@ -20,6 +20,18 @@ namespace lilToon.PCSS
             // まずliltoon本体のGUIを描画
             base.OnGUI(materialEditor, properties);
 
+            // --- ここから追加 ---
+            Material material = materialEditor.target as Material;
+            if (material != null)
+            {
+                if (material.HasProperty("_MainTex") && material.GetTexture("_MainTex") == null)
+                    material.SetTexture("_MainTex", Texture2D.whiteTexture);
+                if (material.HasProperty("_Color") && material.GetColor("_Color") == default)
+                    material.SetColor("_Color", Color.white);
+                // 他にも必要なプロパティを同様に
+            }
+            // --- ここまで追加 ---
+
             // PCSS拡張機能のUIを描画
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("PCSS Extension Settings", EditorStyles.boldLabel);
