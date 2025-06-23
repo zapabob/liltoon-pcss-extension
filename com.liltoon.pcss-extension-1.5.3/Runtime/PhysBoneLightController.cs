@@ -13,7 +13,9 @@ namespace lilToon.PCSS
     /// PhysBoneと連動してライトの方向を制御するシステム。
     /// 先行製品の機能を参考にしつつ、より高度な統合機能を提供します。
     /// </summary>
+#if UNITY_EDITOR
     [AddComponentMenu("lilToon PCSS/PhysBone Light Controller")]
+#endif
     public class PhysBoneLightController : MonoBehaviour
     {
         [Header("🎯 PhysBone連動ライト制御")]
@@ -105,7 +107,7 @@ namespace lilToon.PCSS
         private Vector3 CalculateTargetDirection()
         {
 #if VRC_SDK_VRCSDK3
-            var player = VRCPlayerApi.GetLocalPlayer();
+            var player = VRC.SDKBase.Networking.LocalPlayer;
             if (player == null) return transform.forward;
 
             VRCPlayerApi.TrackingDataType trackingType;
@@ -115,7 +117,7 @@ namespace lilToon.PCSS
                     trackingType = VRCPlayerApi.TrackingDataType.RightHand;
                     break;
                 case ControlMode.BodyTracking:
-                    trackingType = VRCPlayerApi.TrackingDataType.Hip;
+                    trackingType = VRCPlayerApi.TrackingDataType.Head;
                     break;
                 case ControlMode.HeadTracking:
                 default:
@@ -140,7 +142,7 @@ namespace lilToon.PCSS
             if (!enableDistanceAttenuation) return;
             
 #if VRC_SDK_VRCSDK3
-            var player = VRCPlayerApi.GetLocalPlayer();
+            var player = VRC.SDKBase.Networking.LocalPlayer;
             if (player == null) return;
             
             var headData = player.GetTrackingData(VRCPlayerApi.TrackingDataType.Head);
@@ -159,6 +161,7 @@ namespace lilToon.PCSS
 #endif
         }
 
+#if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
             if (lightTransform != null)
@@ -170,5 +173,6 @@ namespace lilToon.PCSS
                 Gizmos.DrawRay(lightTransform.position, lightTransform.forward * 1.0f);
             }
         }
+#endif
     }
 } 

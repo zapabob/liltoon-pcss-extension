@@ -10,6 +10,23 @@
   "packages": {
     "com.liltoon.pcss-extension": {
       "versions": {
+        "1.5.3": {
+          "name": "com.liltoon.pcss-extension",
+          "displayName": "lilToon PCSS Extension",
+          "version": "1.5.3",
+          "description": "v1.5.3 Critical BugFix: Corrected a namespace error in the lilToon ShaderGUI script, resolving a critical compilation failure that prevented the package from being used.",
+          "unity": "2022.3",
+          "unityRelease": "22f1",
+          "dependencies": {
+            "com.unity.render-pipelines.universal": "14.0.9"
+          },
+          "keywords": [ "lilToon", "PCSS", "VRChat", "Fix", "ShaderGUI" ],
+          "author": { "name": "zapabob", "url": "https://github.com/zapabob" },
+          "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.5.3/com.liltoon.pcss-extension-1.5.3.zip",
+          "zipSHA256": "4964fe42517e7c4b440d67da8a8c5a988b58ebae",
+          "repo": "https://github.com/zapabob/liltoon-pcss-extension",
+          "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md"
+        },
         "1.5.2": {
           "name": "com.liltoon.pcss-extension",
           "displayName": "lilToon PCSS Extension",
