@@ -57,7 +57,7 @@ namespace lilToon.PCSS
         private MaterialProperty _ShadowColorTex;
         
         private static readonly Dictionary<string, bool> foldouts = new Dictionary<string, bool>();
-        private static readonly Dictionary<string, PCSSProfile> profiles = new Dictionary<string, PCSSProfile>();
+        private static readonly Dictionary<string, lilToon.PCSS.Runtime.PCSSUtilities.PCSSPreset> profiles = new Dictionary<string, lilToon.PCSS.Runtime.PCSSUtilities.PCSSPreset>();
         
         // Ultimate Commercial Edition Properties
         private static readonly Dictionary<string, string> ultimateCommercialProperties = new Dictionary<string, string>
