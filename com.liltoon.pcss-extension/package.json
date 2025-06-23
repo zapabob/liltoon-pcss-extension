@@ -1,6 +1,6 @@
 ﻿{
     "name": "com.liltoon.pcss-extension",
-    "version": "1.5.0",
+    "version": "1.5.1",
     "displayName": "lilToon PCSS Extension",
     "description": "🎯 Professional PCSS (Percentage-Closer Soft Shadows) extension for lilToon and Poiyomi shaders with Avatar Selector Menu. Features Unity 2022.3 LTS compatibility, URP 14.0.10 support, built-in preset system (Realistic/Anime/Cinematic), and one-click avatar setup with ModularAvatar integration.",
     "unity": "2022.3",

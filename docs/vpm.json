@@ -10,6 +10,39 @@
   "packages": {
     "com.liltoon.pcss-extension": {
       "versions": {
+        "1.5.1": {
+          "name": "com.liltoon.pcss-extension",
+          "displayName": "lilToon PCSS Extension",
+          "version": "1.5.1",
+          "description": "v1.5.1 Repository Restructuring & BugFix: リポジトリ構造をVPM標準に完全に準拠させ、根深いコンパイルエラーの原因となっていたファイル競合を解消しました。これにより、VCCでの安定したインストールと動作が保証されます。",
+          "unity": "2022.3",
+          "unityRelease": "22f1",
+          "dependencies": {
+            "com.unity.render-pipelines.universal": "14.0.9"
+          },
+          "keywords": [
+            "lilToon",
+            "PCSS",
+            "VRChat",
+            "Avatar",
+            "Shader",
+            "Shadows",
+            "PhysBone",
+            "Fix",
+            "VPM"
+          ],
+          "author": {
+            "name": "zapabob",
+            "email": "zapabob@example.com",
+            "url": "https://github.com/zapabob"
+          },
+          "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.5.1/com.liltoon.pcss-extension-1.5.1.zip",
+          "zipSHA256": "C49C90CCF11C5A4EB8FCCE5D96EEE0BC398057A1FDDF050F3C9FF230894E217A",
+          "repo": "https://github.com/zapabob/liltoon-pcss-extension",
+          "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
+          "documentationUrl": "https://github.com/zapabob/liltoon-pcss-extension#readme",
+          "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE"
+        },
         "1.5.0": {
           "name": "com.liltoon.pcss-extension",
           "displayName": "lilToon PCSS Extension",
