@@ -25,14 +25,10 @@ namespace lilToon.PCSS
         [SerializeField] public Light externalLight;
 
         [Header("🎮 先行製品互換設定")]
-        #pragma warning disable 0414
         [SerializeField] private bool competitorCompatibilityMode = true;
-        #pragma warning restore 0414
         [SerializeField] private ControlMode controlMode = ControlMode.HeadTracking;
         [SerializeField, Range(0f, 1f)] private float lightFollowStrength = 1.0f;
-        #pragma warning disable 0414
         [SerializeField] private bool enableAutoDetection = true;
-        #pragma warning restore 0414
 
         [Header("⚡ 高度な制御")]
         [SerializeField] private bool enableDistanceAttenuation = true;
@@ -109,7 +105,7 @@ namespace lilToon.PCSS
         private Vector3 CalculateTargetDirection()
         {
 #if VRC_SDK_VRCSDK3
-            var player = Networking.LocalPlayer;
+            var player = VRCPlayerApi.GetLocalPlayer();
             if (player == null) return transform.forward;
 
             VRCPlayerApi.TrackingDataType trackingType;
@@ -144,7 +140,7 @@ namespace lilToon.PCSS
             if (!enableDistanceAttenuation) return;
             
 #if VRC_SDK_VRCSDK3
-            var player = Networking.LocalPlayer;
+            var player = VRCPlayerApi.GetLocalPlayer();
             if (player == null) return;
             
             var headData = player.GetTrackingData(VRCPlayerApi.TrackingDataType.Head);
