@@ -105,7 +105,7 @@ namespace lilToon.PCSS
         private Vector3 CalculateTargetDirection()
         {
 #if VRC_SDK_VRCSDK3
-            var player = VRCPlayerApi.GetLocalPlayer();
+            var player = VRC.SDKBase.Networking.LocalPlayer;
             if (player == null) return transform.forward;
 
             VRCPlayerApi.TrackingDataType trackingType;
@@ -115,7 +115,7 @@ namespace lilToon.PCSS
                     trackingType = VRCPlayerApi.TrackingDataType.RightHand;
                     break;
                 case ControlMode.BodyTracking:
-                    trackingType = VRCPlayerApi.TrackingDataType.Hip;
+                    trackingType = VRCPlayerApi.TrackingDataType.Chest;
                     break;
                 case ControlMode.HeadTracking:
                 default:
@@ -140,7 +140,7 @@ namespace lilToon.PCSS
             if (!enableDistanceAttenuation) return;
             
 #if VRC_SDK_VRCSDK3
-            var player = VRCPlayerApi.GetLocalPlayer();
+            var player = VRC.SDKBase.Networking.LocalPlayer;
             if (player == null) return;
             
             var headData = player.GetTrackingData(VRCPlayerApi.TrackingDataType.Head);
@@ -159,6 +159,7 @@ namespace lilToon.PCSS
 #endif
         }
 
+#if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
             if (lightTransform != null)
@@ -170,5 +171,6 @@ namespace lilToon.PCSS
                 Gizmos.DrawRay(lightTransform.position, lightTransform.forward * 1.0f);
             }
         }
+#endif
     }
 } 
