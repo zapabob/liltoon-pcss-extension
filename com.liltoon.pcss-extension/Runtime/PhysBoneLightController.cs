@@ -13,7 +13,9 @@ namespace lilToon.PCSS
     /// PhysBoneと連動してライトの方向を制御するシステム。
     /// 先行製品の機能を参考にしつつ、より高度な統合機能を提供します。
     /// </summary>
+#if UNITY_EDITOR
     [AddComponentMenu("lilToon PCSS/PhysBone Light Controller")]
+#endif
     public class PhysBoneLightController : MonoBehaviour
     {
         [Header("🎯 PhysBone連動ライト制御")]
@@ -115,7 +117,7 @@ namespace lilToon.PCSS
                     trackingType = VRCPlayerApi.TrackingDataType.RightHand;
                     break;
                 case ControlMode.BodyTracking:
-                    trackingType = VRCPlayerApi.TrackingDataType.Chest;
+                    trackingType = VRCPlayerApi.TrackingDataType.Head;
                     break;
                 case ControlMode.HeadTracking:
                 default:
