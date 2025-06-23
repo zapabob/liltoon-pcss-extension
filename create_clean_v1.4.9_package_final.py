@@ -16,6 +16,7 @@ import json
 import hashlib
 from pathlib import Path
 import tempfile
+import argparse
 
 def calculate_sha256(file_path):
     """ファイルのSHA256ハッシュを計算"""
@@ -25,13 +26,12 @@ def calculate_sha256(file_path):
             sha256_hash.update(byte_block)
     return sha256_hash.hexdigest().upper()
 
-def create_final_clean_package():
+def create_final_clean_package(version):
     """最終クリーンパッケージを作成（完全なエラー解決版）"""
     
     # 基本設定
     package_name = "com.liltoon.pcss-extension"
-    version = "1.4.9"
-    final_package_name = f"{package_name}-{version}-final"
+    final_package_name = f"{package_name}-{version}"
     
     # 作業ディレクトリの設定
     current_dir = Path.cwd()
@@ -164,8 +164,12 @@ def create_final_clean_package():
             shutil.rmtree(temp_dir)
 
 if __name__ == "__main__":
-    success = create_final_clean_package()
+    parser = argparse.ArgumentParser(description="Create a clean package for lilToon PCSS Extension.")
+    parser.add_argument('--version', type=str, default='1.4.9', help='The version of the package to create.')
+    args = parser.parse_args()
+
+    success = create_final_clean_package(args.version)
     if success:
-        print("\n🚀 Final package creation completed successfully!")
+        print(f"\n🚀 Final package creation for v{args.version} completed successfully!")
     else:
-        print("\n❌ Package creation failed!") 
+        print(f"\n❌ Package creation for v{args.version} failed!") 

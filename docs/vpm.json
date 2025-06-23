@@ -10,6 +10,40 @@
   "packages": {
     "com.liltoon.pcss-extension": {
       "versions": {
+        "1.5.0": {
+          "name": "com.liltoon.pcss-extension",
+          "displayName": "lilToon PCSS Extension",
+          "version": "1.5.0",
+          "description": "v1.5.0: 外部ライトのPhysBone追従機能を実装。シーンに配置されたライトをアバターの動きに合わせて制御可能になり、より柔軟なライティング表現を実現。コードレビューに基づき堅牢性を向上させました。",
+          "unity": "2022.3",
+          "unityRelease": "22f1",
+          "dependencies": {
+            "com.unity.render-pipelines.universal": "14.0.9"
+          },
+          "keywords": [
+            "lilToon",
+            "PCSS",
+            "VRChat",
+            "Avatar",
+            "Shader",
+            "Shadows",
+            "PhysBone",
+            "External Light",
+            "Performance",
+            "Optimization"
+          ],
+          "author": {
+            "name": "zapabob",
+            "email": "zapabob@example.com",
+            "url": "https://github.com/zapabob"
+          },
+          "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.5.0/com.liltoon.pcss-extension-1.5.0.zip",
+          "zipSHA256": "AA056B7EB4C66F08C2EADAABBCBA3B9D1FE7A8320540EDCB0699C30D1E68B4C2",
+          "repo": "https://github.com/zapabob/liltoon-pcss-extension",
+          "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
+          "documentationUrl": "https://github.com/zapabob/liltoon-pcss-extension#readme",
+          "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE"
+        },
         "1.4.9": {
           "name": "com.liltoon.pcss-extension",
           "displayName": "lilToon PCSS Extension",
