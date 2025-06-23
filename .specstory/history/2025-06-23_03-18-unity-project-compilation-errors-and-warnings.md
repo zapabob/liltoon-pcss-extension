@@ -5010,17 +5010,339 @@ _**Assistant**_
 
 ---
 
+報告ありがとうございます。エラーメッセージを確認しました。
+
+`Failed to load repository data from .../vpm.json`
+`The URL is invalid or does not contain a valid repository listing.`
+
+このエラーは、VRChat Creator Companion (VCC) が、指定されたURLにあるリポジトリ情報ファイル (`vpm.json`) を正しく読み込めない場合に発生します。
+
+原因は、私がリポジトリ情報ファイルを `vpm.json` という名前で作成してしまったことにある可能性が非常に高いです。VCCの仕様では、リポジトリのルートURLを指定した際に、`index.json` という名前のファイルを読み込むのが標準的な動作です。以前の動作していたバージョンでも `index.json` が使われていました。
+
+この問題を解決するため、以下の手順で修正します。
+
+1.  `docs/vpm.json` を `docs/index.json` に名称変更します。
+2.  案内のため `README.md` に記載したURLも、正しい `index.json` を指すように修正します。
+
+まずは、ファイル名を変更します。
+
+---
+
+```bash
+Move-Item -Path docs/vpm.json -Destination docs/index.json
+```
+
+```
+Move-Item : Cannot create a file when that file already exists.
+発生場所 行:1 文字:1
++ Move-Item -Path docs/vpm.json -Destination docs/index.json
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : WriteError: (C:\Users\downl\...ー\docs\vpm.json:FileInfo) [Move-Item], IOExce 
+   ption
+    + FullyQualifiedErrorId : MoveFileInfoItemIOError,Microsoft.PowerShell.Commands.MoveItemCommand
+
+
+```
+
+---
+
+おっと、`docs/index.json` が既に存在していたためにエラーが発生しました。リポジトリの整理中に見落としがあったようです。
+
+この場合、古い `index.json` は不要ですので、一度削除してから、新しい `vpm.json` を `index.json` にリネームするのが安全です。
+
+まず、既存の `docs/index.json` を削除します。
+
+---
+
+```bash
+Remove-Item -Path docs/index.json
+```
+
+```
+PS C:\Users\downl\Desktop\新しいフォルダー> Remove-Item -Path docs/index.json
+
+```
+
+---
+
+既存の `index.json` を削除しました。
+これで安全にファイル名を変更できます。改めて `docs/vpm.json` を `docs/index.json` に名前を変更します。
+
+---
+
+```bash
+Move-Item -Path docs/vpm.json -Destination docs/index.json
+```
+
+```
+PS C:\Users\downl\Desktop\新しいフォルダー> Move-Item -Path docs/vpm.json -Destination docs/index.json
+
+```
+
+---
+
+ファイル名の変更が完了しました。
+
+次に、`README.md` に記載されているVCCへの追加URLが、古い `vpm.json` を指したままになっているため、これを新しい `index.json` を指すように修正します。ユーザーが混乱しないよう、正しい情報を提供することが重要です。
+
+---
+
+```diff
+  3.  **以下のURLをコピー＆ペーストして追加します。**
+      ```
+-     https://zapabob.github.io/liltoon-pcss-extension/vpm.json
++     https://zapabob.github.io/liltoon-pcss-extension/index.json
+      ```
+  4.  **プロジェクト管理画面に戻り、「lilToon PCSS Extension」を選択してインストールします。**
+```
+
+---
+
+`README.md` の修正が完了しました。
+
+これで、VCCがリポジトリを正しく認識するために必要なファイル名の修正と、ドキュメントの更新が完了しました。
+
+この修正をGitにコミットし、サーバーに反映させます。
+
+---
+
+```bash
+git add . ; git commit -m "fix(vpm): VCCリポジトリの読み込みエラーを解決するためvpm.jsonをindex.jsonにリネーム"
+```
+
+```
+PS C:\Users\downl\Desktop\新しいフォルダー>
+                                            git add . ; git commit -m "fix(vpm): VCCリポジトリの読み込みエラ
+ーを解決するためvpm.jsonをindex.jsonにリネーム"                                                             warning: in th
+e working copy of 'docs/index.json', LF will be replaced by CRLF the next time Git touches it
+[main 9948e7e] fix(vpm): VCCリポジトリの読み込みエラーを解決するためvpm.jsonをindex.jsonにリネーム
+ 4 files changed, 815 insertions(+), 229 deletions(-)
+ delete mode 100644 docs/vpm.json
+
+```
+
+---
+
+修正のコミットが完了しました。
+
+これで、GitHub Pagesに最新の変更が反映され、VCCから正しくリポジトリを読み込めるようになったはずです。
+
+お手数ですが、再度VCCでリポジトリの追加をお試しいただけますでしょうか。URLは `README.md` に記載の通り、`https://zapabob.github.io/liltoon-pcss-extension/index.json` です。
+
+---
+
+_**User**_
+
+Failed to load repository data from https://zapabob.github.io/liltoon-pcss-extension/index.json. The URL is invalid or does not contain a valid repository listing.
+Check out the documentation for more information.
+
+---
+
+_**Assistant**_
+
 
 
 ---
 
+また同じエラーが発生しているとのこと、承知いたしました。ご不便をおかけして申し訳ありません。
+
+`index.json` へのリネームとURLの修正後も同じエラーが続くということは、問題の根本はファイル名だけではなかったようです。
+
+考えられる原因は以下の通りです。
+
+1.  **GitHub Pagesのデプロイ遅延:** コミットした変更が、GitHubのサーバーにまだ完全に反映されていない可能性があります。通常は数分で反映されますが、稀に遅れることがあります。
+2.  **GitHub Pagesのルート設定:** VCCがリポジトリを正しく認識するためには、リポジトリのルートに `index.html` ファイルが存在することが推奨されています。現在の `docs` フォルダに `index.html` が存在しない場合、GitHub Pagesサイト自体が不完全と見なされ、`index.json` のような個別ファイルへのアクセスも不安定になることがあります。
+3.  **`index.json` の内容の問題:** ファイルの中身のJSON形式が、VRChatの仕様に準拠していない可能性も考えられます。
+
+[GitHubのコミュニティディスカッション](https://github.com/orgs/community/discussions/23092)でも、GitHub Pagesでファイルが見つからない問題について、`index.html` の存在が重要であると指摘されています。
+
+まずは、GitHub Pagesの公開フォルダである `docs` ディレクトリの現在のファイル構成を確認し、`index.html` が存在するかを調べます。
+
+---
+
+```bash
+ls docs
+```
+
+```
+PS C:\Users\downl\Desktop\新しいフォルダー>
+
+
+
+
+
+
+                                            ls docs
+
+
+    ディレクトリ: C:\Users\downl\Desktop\新しいフォルダー\docs
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        2025/06/22      3:42                site
+-a----        2025/06/22      1:42            338 .gitignore
+-a----        2025/06/22      6:12           3276 .htaccess
+-a----        2025/06/22      1:42              1 .nojekyll
+-a----        2025/06/22      1:42              1 CNAME
+-a----        2025/06/22      1:42            779 Gemfile
+-a----        2025/06/22     21:49          27215 index.html
+-a----        2025/06/23     13:41           8914 index.json
+-a----        2025/06/22     21:47          21718 json-info.html
+-a----        2025/06/22     21:48          21751 json-viewer.html
+-a----        2025/06/22      1:42           6059 README.md
+-a----        2025/06/22      3:58            251 robots.txt
+-a----        2025/06/22      6:22           2923 vcc-debug.json
+-a----        2025/06/22      2:43           1635 _config.yml.disabled
+-a----        2025/06/22      6:22           3064 _headers
+
+
+
+```
+
+---
+
+ファイルリストを確認したところ、`docs` フォルダ内には `index.html` が存在していますね。となると、`index.html` がないことが直接の原因ではなさそうです。
+
+そうなると、次に疑わしいのは **`index.json` ファイル自体の内容**です。リポジトリ構造の変更に伴い、パッケージのURL情報などが古くなっている可能性があります。
+
+VCCは `index.json` 内の `url` フィールドを元に `.zip` パッケージをダウンロードしに来ます。このURLが間違っていると、リポジトリの読み込みに失敗します。
+
+現在の `index.json` の内容を確認し、URLやバージョン情報が、先ほど作成した `v1.5.1` のパッケージと一致しているかを確認します。
+
+---
+
+Read file: docs/index.json
+
+---
+
+`index.json` を確認しました。重大な問題を発見しました。
+
+ファイルの先頭にある、リポジトリ全体を定義する `url` フィールドが、古い `vpm.json` を指したままになっています。
+
+```json
+{
+  "name": "zapabob VPM Repository",
+  "description": "VPM Repository for lilToon PCSS Extension and VRChat utilities",
+  "author": {
+    "name": "zapabob",
+    "email": "zapabob@example.com",
+    "url": "https://github.com/zapabob"
+  },
+  "url": "https://zapabob.github.io/liltoon-pcss-extension/vpm.json", // <-- 問題の箇所
+  "packages": {
+...
+```
+
+VCCはこのURLをリポジトリの正規の場所として参照しようとしますが、`vpm.json` はもう存在しないため、404エラーとなり、結果としてリポジトリ全体の読み込みに失敗します。
+
+このURLを、正しい `index.json` を指すように修正します。これが今回のエラーの根本原因である可能性が極めて高いです。
+
+---
+
+```diff
+      "url": "https://github.com/zapabob"
+    },
+-   "url": "https://zapabob.github.io/liltoon-pcss-extension/vpm.json",
++   "url": "https://zapabob.github.io/liltoon-pcss-extension/index.json",
+    "packages": {
+      "com.liltoon.pcss-extension": {
+```
+
+---
+
+`index.json` のURL修正が完了しました。
+
+この修正をGitにコミットして、サーバーに反映させます。今度こそ、VCCがリポジトリを正しく読み込めるようになるはずです。
+
+---
+
+```bash
+git add docs/index.json ; git commit -m "fix(vpm): index.json内のリポジトリURLを修正"
+```
+
+```
+のリポジトリURLを修正"                                                                                      warning:
+in the working copy of 'docs/index.json', LF will be replaced by CRLF the next time Git touches it
+[main d63f5c8] fix(vpm): index.json内のリポジトリURLを修正
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+```
+
+---
+
+修正のコミットが完了しました。
+
+根本的な原因と思われる箇所を修正しましたので、これでVCCからリポジトリが正常に読み込めるようになったはずです。
+
+大変お手数をおかけして申し訳ありませんが、再度VCCでリポジトリの追加（`https://zapabob.github.io/liltoon-pcss-extension/index.json`）をお試しいただけますでしょうか。
+
+---
+
+_**User**_
+
+Assets\com.liltoon.pcss-extension-1.5.1\Runtime\PhysBoneLightController.cs(108,39): error CS0117: 'VRCPlayerApi' does not contain a definition for 'GetLocalPlayer'
+
+Assets\com.liltoon.pcss-extension-1.5.1\Runtime\PhysBoneLightController.cs(118,66): error CS0117: 'VRCPlayerApi.TrackingDataType' does not contain a definition for 'Hip'
+
+Assets\com.liltoon.pcss-extension-1.5.1\Runtime\PhysBoneLightController.cs(143,39): error CS0117: 'VRCPlayerApi' does not contain a definition for 'GetLocalPlayer'
+
+Assets\com.liltoon.pcss-extension-1.5.1\Runtime\PhysBoneLightController.cs(31,39): warning CS0414: The field 'PhysBoneLightController.enableAutoDetection' is assigned but its value is never used
+
+Assets\com.liltoon.pcss-extension-1.5.1\Runtime\PhysBoneLightController.cs(28,39): warning CS0414: The field 'PhysBoneLightController.competitorCompatibilityMode' is assigned but its value is never used
+
+Failed to find entry-points:
+Mono.Cecil.AssemblyResolutionException: Failed to resolve assembly: 'lilToon.PCSS.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null' ---> System.Exception: Failed to resolve assembly 'lilToon.PCSS.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null' in directories: C:\Program Files\Unity\Hub\Editor\2022.3.22f1\Editor\Data\MonoBleedingEdge\lib\mono\unityjit-win32
+C:\Program Files\Unity\Hub\Editor\2022.3.22f1\Editor\Data\MonoBleedingEdge\lib\mono\unityjit-win32\Facades
+C:\Users\downl\AppData\Local\VRChatCreatorCompanion\VRChatProjects\New Project2\Packages\com.vrchat.core.vpm-resolver\Editor\Dependencies
+C:\Users\downl\AppData\Local\VRChatCreatorCompanion\VRChatProjects\New Project2\Packages\com.vrchat.base\Runtime\VRCSDK\Dependencies\librsync
+C:\Users\downl\AppData\Local\VRChatCreatorCompanion\VRChatProjects\New Project2\Packages\com.vrchat.base\Integrations\VRChat Example Central\Editor
+C:\Users\downl\AppData\Local\VRChatCreatorCompanion\VRChatProjects\New Project2\Packages\com.vrchat.base\Runtime\VRCSDK\Plugins\Harmony
+C:\Program Files\Unity\Hub\Editor\2022.3.22f1\Editor\Data\PlaybackEngines\WebGLSupport
+C:\Users\downl\AppData\Local\VRChatCreatorCompanion\VRChatProjects\New Project2\Packages\com.vrchat.base\Editor\VRCSDK\Plugins
+C:\Users\downl\AppData\Local\VRChatCreatorCompanion\VRChatProjects\New Project2\Library\PackageCache\com.unity.ide.rider@3.0.26\Rider\Editor
+C:\Users\downl\AppData\Local\VRChatCreatorCompanion\VRChatProjects\New Project2\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime
+C:\Program Files\Unity\Hub\Editor\2022.3.22f1\Editor\Data\PlaybackEngines\VisionOSPlayer
+C:\Users\downl\AppData\Local\VRChatCreatorCompanion\VRChatProjects\New Project2\Packages\com.vrchat.base\Runtime\VRCSDK\Plugins
+C:\Program Files\Unity\Hub\Editor\2022.3.22f1\Editor\Data\PlaybackEngines\MetroSupport
+C:\Users\downl\AppData\Local\VRChatCreatorCompanion\VRChatProjects\New Project2\Packages\com.vrchat.base\Runtime\VRCSDK\Dependencies\Managed
+C:\Program Files\Unity\Hub\Editor\2022.3.22f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport
+C:\Users\downl\AppData\Local\VRChatCreatorCompanion\VRChatProjects\New Project2\Packages\com.vrchat.avatars\Runtime\VRCSDK\Plugins
+C:\Users\downl\AppData\Local\VRChatCreatorCompanion\VRChatProjects\New Project2\Library\PackageCache\com.unity.burst@1.8.12
+C:\Users\downl\AppData\Local\VRChatCreatorCompanion\VRChatProjects\New Project2\Library\PackageCache\com.unity.burst@1.8.12\Unity.Burst.CodeGen
+C:\Program Files\Unity\Hub\Editor\2022.3.22f1\Editor\Data\PlaybackEngines\LinuxStandaloneSupport
+C:\Program Files\Unity\Hub\Editor\2022.3.22f1\Editor\Data\PlaybackEngines\MacStandaloneSupport
+C:\Users\downl\AppData\Local\VRChatCreatorCompanion\VRChatProjects\New Project2\Library\PackageCache\com.unity.nuget.mono-cecil@1.11.4
+C:\Program Files\Unity\Hub\Editor\2022.3.22f1\Editor\Data\PlaybackEngines\iOSSupport
+C:\Users\downl\AppData\Local\VRChatCreatorCompanion\VRChatProjects\New Project2\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\AOT
+C:\Program Files\Unity\Hub\Editor\2022.3.22f1\Editor\Data\Managed
+C:\Users\downl\AppData\Local\VRChatCreatorCompanion\VRChatProjects\New Project2\Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom
+C:\Program Files\Unity\Hub\Editor\2022.3.22f1\Editor\Data\PlaybackEngines\AppleTVSupport
+C:\Users\downl\AppData\Local\VRChatCreatorCompanion\VRChatProjects\New Project2\Library\PackageCache\com.unity.collections@2.1.4\Unity.Collections.LowLevel.ILSupport
+C:\Program Files\Unity\Hub\Editor\2022.3.22f1\Editor\Data\PlaybackEngines\AndroidPlayer
+C:\Program Files\Unity\Hub\Editor\2022.3.22f1\Editor\Data\Managed\UnityEngine
+C:\Users\downl\AppData\Local\VRChatCreatorCompanion\VRChatProjects\New Project2\Library\ScriptAssemblies ---> Mono.Cecil.AssemblyResolutionException: Failed to resolve assembly: 'lilToon.PCSS.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'
+  at Mono.Cecil.BaseAssemblyResolver.Resolve (Mono.Cecil.AssemblyNameReference name, Mono.Cecil.ReaderParameters parameters) [0x00105] in <853812ae52c341daaef3c62ecdb86b32>:0 
+  at zzzUnity.Burst.CodeGen.AssemblyResolver.Resolve (Mono.Cecil.AssemblyNameReference name) [0x00013] in <f26dfc19a37a442ea317a7ab78395fa6>:0 
+   --- End of inner exception stack trace ---
+  at zzzUnity.Burst.CodeGen.AssemblyResolver.Resolve (Mono.Cecil.AssemblyNameReference name) [0x00060] in <f26dfc19a37a442ea317a7ab78395fa6>:0 
+  at Burst.Compiler.IL.AssemblyLoader.Resolve (Mono.Cecil.AssemblyNameReference name) [0x0007e] in <f26dfc19a37a442ea317a7ab78395fa6>:0 
+  at Burst.Compiler.IL.Server.EntryPointMethodFinder.FindEntryPoints (System.String[] rootAssemblyNames, Burst.Compiler.IL.Hashing.CacheRuntime.HashCacheAssemblyStore assemblyStore, Burst.Compiler.IL.AssemblyLoader assemblyLoader, Burst.Compiler.IL.NativeCompilerOptions options, Burst.Compiler.IL.Server.ProfileDelegate profileCallback, System.Boolean includeRootAssemblyReferences, System.Boolean splitTargets) [0x00055] in <f26dfc19a37a442ea317a7ab78395fa6>:0 
+  at Burst.Compiler.IL.Server.CompilerServer+<>c__DisplayClass18_1.<FindMethods>b__0 (Burst.Compiler.IL.Server.Caching.CacheManager cacheManager) [0x0005e] in <f26dfc19a37a442ea317a7ab78395fa6>:0 
+  at Burst.Compiler.IL.Server.CompilerServer+<>c__DisplayClass26_0`1[TResult].<RunTask>b__0 () [0x00145] in <f26dfc19a37a442ea317a7ab78395fa6>:0 
+  at Burst.Compiler.IL.Server.CompilerServer.RunTask[TResult] (Burst.Compiler.IL.Server.TargetKey target, System.String taskName, System.String[] assemblyFolders, System.Threading.CancellationToken cancellationToken, System.Func`2[T,TResult] function) [0x00131] in <f26dfc19a37a442ea317a7ab78395fa6>:0 
+  at Burst.Compiler.IL.Server.CompilerServer.FindMethods (Burst.Compiler.IL.Server.CompilerServerOptions options, Burst.Compiler.IL.Aot.AotCompilerOptions aotOptions, Burst.Compiler.IL.Server.TargetKey target, Burst.Compiler.IL.Server.Caching.CacheManager cacheManager, Burst.Compiler.IL.CompilerStatistics stats, System.Threading.CancellationToken cancellationToken) [0x00299] in <f26dfc19a37a442ea317a7ab78395fa6>:0 
+  at Burst.Compiler.IL.Server.CompilerServer+<>c__DisplayClass26_0`1[TResult].<RunTask>b__0 () [0x00145] in <f26dfc19a37a442ea317a7ab78395fa6>:0 
+  at Burst.Compiler.IL.Server.CompilerServer.RunTask[TResult] (Burst.Compiler.IL.Server.TargetKey target, System.String taskName, System.String[] assemblyFolders, System.Threading.CancellationToken cancellationToken, System.Func`2[T,TResult] function) [0x00131] in <f26dfc19a37a442ea317a7ab78395fa6>:0 
+  at Burst.Compiler.IL.Server.CompilerServer.Compile (Burst.Compiler.IL.Server.CompilerServerOptions options, Burst.Compiler.IL.Server.CompilationMessageStreamer streamer, System.Threading.CancellationToken cancellationToken) [0x001af] in <f26dfc19a37a442ea317a7ab78395fa6>:0 
+
+While compiling job:
+
 
 
 ---
 
-
-
----
+_**Assistant**_
 
 
 

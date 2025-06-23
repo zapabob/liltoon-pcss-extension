@@ -1,0 +1,19 @@
+{
+    "name": "lilToon.PCSS.Editor",
+    "rootNamespace": "lilToon.PCSS.Editor",
+    "references": [
+        "lilToon.PCSS.Runtime",
+        "lilToon.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+} 

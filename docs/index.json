@@ -10,6 +10,28 @@
   "packages": {
     "com.liltoon.pcss-extension": {
       "versions": {
+        "1.5.2": {
+          "name": "com.liltoon.pcss-extension",
+          "displayName": "lilToon PCSS Extension",
+          "version": "1.5.2",
+          "description": "v1.5.2 Critical BugFix: VRChat SDK APIの変更に追従し、コンパイルエラーの根本原因を修正しました。Editor専用コードをRuntimeから分離し、アセンブリ解決例外も解消。",
+          "unity": "2022.3",
+          "unityRelease": "22f1",
+          "dependencies": {
+            "com.unity.render-pipelines.universal": "14.0.9"
+          },
+          "keywords": [
+            "lilToon", "PCSS", "VRChat", "Fix"
+          ],
+          "author": {
+            "name": "zapabob",
+            "url": "https://github.com/zapabob"
+          },
+          "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.5.2/com.liltoon.pcss-extension-1.5.2.zip",
+          "zipSHA256": "E25002638A94A8809EA56393BFC329AC4BB9EB76C62A0461DDE1259B1AB21716",
+          "repo": "https://github.com/zapabob/liltoon-pcss-extension",
+          "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md"
+        },
         "1.5.1": {
           "name": "com.liltoon.pcss-extension",
           "displayName": "lilToon PCSS Extension",
