@@ -1,25 +1,116 @@
 {
-  "name": "lilToon PCSS Extension Repository",
-  "id": "com.liltoon.pcss-extension.vpm-repository",
-  "url": "https://zapabob.github.io/liltoon-pcss-extension/index.json",
-  "version": "0.2.0",
+  "name": "zapabob VPM Repository",
+  "description": "VPM Repository for lilToon PCSS Extension and VRChat utilities",
   "author": {
-    "name": "lilToon PCSS Extension Team",
-    "email": "r.minegishi1987@gmail.com",
-    "url": "https://github.com/zapabob/liltoon-pcss-extension"
+    "name": "zapabob",
+    "email": "zapabob@example.com",
+    "url": "https://github.com/zapabob"
   },
-  "description": "Official VPM Repository for lilToon PCSS Extension. Professional PCSS solution with optimization, real-time ray tracing, advanced analytics, commercial licensing, and comprehensive VRChat optimization.",
-  "infoLink": {
-    "url": "https://zapabob.github.io/liltoon-pcss-extension",
-    "text": "Visit Repository"
-  },
-  "banner": {
-    "url": "https://zapabob.github.io/liltoon-pcss-extension/assets/banner.png",
-    "text": "lilToon PCSS Extension"
-  },
+  "url": "https://zapabob.github.io/liltoon-pcss-extension/vpm.json",
   "packages": {
     "com.liltoon.pcss-extension": {
       "versions": {
+        "1.5.1": {
+          "name": "com.liltoon.pcss-extension",
+          "displayName": "lilToon PCSS Extension",
+          "version": "1.5.1",
+          "description": "v1.5.1 Repository Restructuring & BugFix: リポジトリ構造をVPM標準に完全に準拠させ、根深いコンパイルエラーの原因となっていたファイル競合を解消しました。これにより、VCCでの安定したインストールと動作が保証されます。",
+          "unity": "2022.3",
+          "unityRelease": "22f1",
+          "dependencies": {
+            "com.unity.render-pipelines.universal": "14.0.9"
+          },
+          "keywords": [
+            "lilToon",
+            "PCSS",
+            "VRChat",
+            "Avatar",
+            "Shader",
+            "Shadows",
+            "PhysBone",
+            "Fix",
+            "VPM"
+          ],
+          "author": {
+            "name": "zapabob",
+            "email": "zapabob@example.com",
+            "url": "https://github.com/zapabob"
+          },
+          "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.5.1/com.liltoon.pcss-extension-1.5.1.zip",
+          "zipSHA256": "C49C90CCF11C5A4EB8FCCE5D96EEE0BC398057A1FDDF050F3C9FF230894E217A",
+          "repo": "https://github.com/zapabob/liltoon-pcss-extension",
+          "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
+          "documentationUrl": "https://github.com/zapabob/liltoon-pcss-extension#readme",
+          "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE"
+        },
+        "1.5.0": {
+          "name": "com.liltoon.pcss-extension",
+          "displayName": "lilToon PCSS Extension",
+          "version": "1.5.0",
+          "description": "v1.5.0 BugFix: 外部ライトのPhysBone追従機能を実装し、Unity 2022でのコンパイルエラー（VRChat SDK API変更、Burst CompilerのAssembly Resolution問題）を修正しました。",
+          "unity": "2022.3",
+          "unityRelease": "22f1",
+          "dependencies": {
+            "com.unity.render-pipelines.universal": "14.0.9"
+          },
+          "keywords": [
+            "lilToon",
+            "PCSS",
+            "VRChat",
+            "Avatar",
+            "Shader",
+            "Shadows",
+            "PhysBone",
+            "External Light",
+            "Performance",
+            "Optimization"
+          ],
+          "author": {
+            "name": "zapabob",
+            "email": "zapabob@example.com",
+            "url": "https://github.com/zapabob"
+          },
+          "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.5.0/com.liltoon.pcss-extension-1.5.0.zip",
+          "zipSHA256": "8E1D7357159E24B473062DAEEDCD1DBE884BB8CDF8E9FE3348503CF87B3B1F72",
+          "repo": "https://github.com/zapabob/liltoon-pcss-extension",
+          "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
+          "documentationUrl": "https://github.com/zapabob/liltoon-pcss-extension#readme",
+          "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE"
+        },
+        "1.4.9": {
+          "name": "com.liltoon.pcss-extension",
+          "displayName": "lilToon PCSS Extension",
+          "version": "1.4.9",
+          "description": "Revolutionary Unity Menu Avatar Selector & Complete Shader Error Resolution Edition - Professional PCSS (Percentage-Closer Soft Shadows) extension for lilToon and Poiyomi shaders with advanced VRChat optimization, 90% setup time reduction, and comprehensive error handling.",
+          "unity": "2022.3",
+          "unityRelease": "22f1",
+          "dependencies": {
+            "com.unity.render-pipelines.universal": "14.0.9"
+          },
+          "keywords": [
+            "lilToon",
+            "PCSS",
+            "VRChat",
+            "Avatar",
+            "Shader",
+            "Shadows",
+            "Unity Menu",
+            "Performance",
+            "Optimization",
+            "Professional"
+          ],
+          "author": {
+            "name": "zapabob",
+            "email": "zapabob@example.com",
+            "url": "https://github.com/zapabob"
+          },
+          "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.4.9/com.liltoon.pcss-extension-1.4.9-clean.zip",
+          "zipSHA256": "EB30BC9F0163EAF1113DF9A2B5279EE79F062E8EBE10B541728E4BDE6710E93C",
+          "repo": "https://github.com/zapabob/liltoon-pcss-extension",
+          "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
+          "documentationUrl": "https://github.com/zapabob/liltoon-pcss-extension#readme",
+          "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE"
+        },
         "1.4.7": {
           "name": "com.liltoon.pcss-extension",
           "displayName": "lilToon PCSS Extension",
@@ -34,7 +125,7 @@
             "pcss",
             "shadows",
             "vrchat",
-            "liltoon",
+            "lilToon",
             "poiyomi",
             "expression",
             "lightvolumes",
@@ -116,4 +207,4 @@
       }
     }
   }
-} 
+}

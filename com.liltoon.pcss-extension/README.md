@@ -33,7 +33,7 @@ VCCを使えば、数クリックで安全かつ簡単に導入できます。
 2.  **「Community Repositories」のリストにある「Add Repository」ボタンを押します。**
 3.  **以下のURLをコピー＆ペーストして追加します。**
     ```
-    https://zapabob.github.io/liltoon-pcss-extension/vpm.json
+    https://zapabob.github.io/liltoon-pcss-extension/index.json
     ```
 4.  **プロジェクト管理画面に戻り、「lilToon PCSS Extension」を選択してインストールします。**
 
