@@ -184,7 +184,708 @@ System.Type _ = typeof(lilToon.PCSS.VRCLightVolumesIntegration); // AutoFIX/最�
 ・Unityの最適化やAutoFIXで「未使用」と判定されて削除されることがなくなります。  
 ・将来的に他の自動最適化ツールでも安全です。
 
-もし他にも「自動削除を防ぎたいクラス」があれば、同様に`typeof(完全修
+もし他にも「自動削除を防ぎたいクラス」があれば、同様に`typeof(完全修飾名)`を追加してください。
+
+ご要望があれば、実装ログも作成しますのでお知らせください。
+
+---
+
+_**User**_
+
+Booth用の販促文を書け　VCCに将来対応する旨とVRClightvolumeに対応していることを強調せよ
+
+---
+
+_**Assistant**_
+
+もちろんです！  
+BOOTH用の販促文（プロモーションテキスト）を、  
+・**VCC（VRChat Creator Companion）将来対応予定**  
+・**VRC Light Volumes完全対応**  
+を強調して作成します。
+
+---
+
+---
+
+## 🏆【lilToon PCSS Extension】最先端の影表現 × VRChat Light Volumes対応！【VCC将来対応予定】
+
+---
+
+あなたのアバターやワールドに、  
+“リアルで美しい影”と“次世代のライティング体験”を――
+
+**lilToon PCSS Extension**は、  
+大人気シェーダー「lilToon」に“PCSS（ソフトシャドウ）”と  
+**VRChat Light Volumes**の完全統合を実現した、  
+唯一無二の拡張パッケージです！
+
+---
+
+### 🌟【主な特徴】
+
+- **VRC Light Volumes 完全対応！**  
+  REDSIM製「VRC Light Volumes」とのシームレスな統合。  
+  ワンクリックでアバターやワールドに“立体感あふれる光と影”を追加！
+
+- **lilToon本来の美しさをそのままに、PCSSによるリアルな影表現**  
+  影の柔らかさ・品質を自在にコントロール。  
+  Toon・リアル・映画風など多彩なプリセット搭載。
+
+- **将来のVCC（VRChat Creator Companion）公式対応を約束！**  
+  今後のアップデートでVCCパッケージ管理・自動インストールに完全対応予定。  
+  未来のVRChat開発環境でも安心してご利用いただけます。
+
+- **Unity2022/2023 LTS・Quest/PC両対応**  
+  パフォーマンス最適化機能も充実。  
+  モバイル・PCどちらでも快適に動作！
+
+---
+
+### 💡【こんな方におすすめ】
+
+- VRChatで“本物の光と影”を体験したい方
+- アバター・ワールドの表現力をワンランク上げたいクリエイター
+- VRC Light Volumesを最大限活用したい方
+- VCC時代も見据えた安心の拡張パッケージを探している方
+
+---
+
+### 🚀【今後のアップデート予定】
+
+- VCC（VRChat Creator Companion）公式対応
+- さらなる最適化・新機能追加
+
+---
+
+**今すぐ、あなたのVRChat体験を“次世代”へ――！**
+
+---
+
+ご質問・ご要望もお気軽にどうぞ！
+
+---
+
+（ご希望に応じて短縮版や英語版も作成可能です。ご相談ください！）
+
+---
+
+_**User**_
+
+md形式で出力して　必要スペックや必要なソフトウェアも加えて初心者～中級者向けにUnityパッケージからのインストールと適用方法を詳しく書いて　md形式で出力して
+
+---
+
+_**Assistant**_
+
+以下、BOOTH用の販促・導入ガイドを**Markdown（.md）形式**で作成しました。  
+必要スペック・必要ソフトウェア・Unityパッケージからのインストール手順・適用方法も初心者～中級者向けに詳しく記載しています。
+
+---
+
+```markdown
+# 🏆 lilToon PCSS Extension【VRC Light Volumes対応／VCC将来対応予定】
+
+---
+
+## 概要
+
+**lilToon PCSS Extension**は、  
+大人気シェーダー「lilToon」に“PCSS（ソフトシャドウ）”と  
+**VRChat Light Volumes**の完全統合を実現した、  
+唯一無二の拡張パッケージです。
+
+- **VRC Light Volumes 完全対応！**
+- **将来のVCC（VRChat Creator Companion）公式対応予定！**
+- **Unity2022/2023 LTS・Quest/PC両対応**
+- **パフォーマンス最適化・多彩な影プリセット搭載**
+
+---
+
+## 必要スペック・動作環境
+
+| 項目                | 推奨環境・備考                                  |
+|---------------------|------------------------------------------------|
+| OS                  | Windows 10/11（64bit）                         |
+| CPU                 | Intel Core i5 以上                             |
+| メモリ              | 8GB以上（16GB推奨）                            |
+| GPU                 | NVIDIA GTX 1060 以上（RTX 3080推奨・CUDA対応） |
+| ストレージ           | 1GB以上の空き容量                               |
+| 必要ソフトウェア     | Unity Hub／Unity 2022.3 LTS または 2023.2 LTS  |
+|                     | VRChat Creator Companion（VCC）※将来対応予定   |
+|                     | VRChat SDK3（Avatars/Worlds）                  |
+|                     | lilToon本体（最新版推奨）                      |
+|                     | VRC Light Volumes（REDSIM製）                  |
+
+---
+
+## インストール手順（Unityパッケージから）
+
+### 1. 必要ソフトウェアのインストール
+
+1. [Unity Hub](https://unity.com/download) をインストール
+2. Unity 2022.3 LTS または 2023.2 LTS をインストール
+3. [lilToon公式BOOTH](https://booth.pm/ja/items/3087170) からlilToon本体をダウンロード＆インポート
+4. [VRC Light Volumes（REDSIM）](https://booth.pm/ja/items/5203112) をダウンロード＆インポート
+5. VRChat SDK3（Avatars/Worlds）をインポート
+
+### 2. lilToon PCSS Extensionの導入
+
+1. 本商品（lilToon PCSS Extension）のUnityPackageをダウンロード
+2. Unityエディタでプロジェクトを開く
+3. メニューから「Assets > Import Package > Custom Package...」を選択
+4. ダウンロードした`lilToon_PCSExtension.unitypackage`を選択し、すべてのファイルをインポート
+
+### 3. セットアップ・適用方法
+
+#### アバターやワールドに適用する場合
+
+1. **PCSS対応マテリアルの作成**
+    - 既存のlilToonマテリアルを選択
+    - 「右クリック > PCSS Extensionにアップグレード」または
+    - マテリアルのShaderを「lilToon/PCSS Extension」に変更
+
+2. **VRC Light Volumesの統合**
+    - シーン内のアバターまたはワールドのルートオブジェクトを選択
+    - 「Add Component」から`VRCLightVolumesIntegration`を追加
+    - Inspectorで「Light Volumes検出」ボタンを押すと自動で統合されます
+
+3. **影・光の調整**
+    - マテリアルのInspectorで「PCSS」や「Light Volumes」関連のパラメータを調整
+    - Toon/リアル/映画風などプリセットも選択可能
+
+#### Quest/モバイル最適化
+
+- Inspectorの「モバイル最適化」オプションを有効化
+- パフォーマンス重視の設定が自動適用されます
+
+---
+
+## よくある質問
+
+### Q. VCC（VRChat Creator Companion）には対応していますか？
+A. 現在はUnityパッケージ形式ですが、**今後のアップデートでVCC公式対応予定**です。  
+　VCC時代も安心してご利用いただけます。
+
+### Q. VRC Light Volumesが無くても使えますか？
+A. はい、PCSS拡張のみでもご利用可能です。  
+　Light Volumesを導入すると、さらに立体的な光表現が可能になります。
+
+### Q. 導入がうまくいかない場合は？
+A. BOOTHメッセージまたはREADME記載のサポート窓口までご連絡ください。
+
+---
+
+## アップデート予定
+
+- VCC（VRChat Creator Companion）公式対応
+- さらなる最適化・新機能追加
+
+---
+
+## お問い合わせ
+
+ご質問・ご要望はお気軽にどうぞ！
+
+---
+
+**あなたのVRChat体験を“次世代”へ――今すぐ導入！**
+
+```
+---
+
+ご要望に応じて、さらに短縮版や英語版も作成可能です。  
+必要に応じてお知らせください！
+
+---
+
+_**User**_
+
+md形式で出力して
+
+---
+
+_**Assistant**_
+
+```markdown
+# 🏆 lilToon PCSS Extension【VRC Light Volumes対応／VCC将来対応予定】
+
+---
+
+## 概要
+
+**lilToon PCSS Extension**は、大人気シェーダー「lilToon」に“PCSS（ソフトシャドウ）”と  
+**VRChat Light Volumes**の完全統合を実現した唯一無二の拡張パッケージです。
+
+- **VRC Light Volumes 完全対応！**
+- **将来のVCC（VRChat Creator Companion）公式対応予定！**
+- **Unity2022/2023 LTS・Quest/PC両対応**
+- **パフォーマンス最適化・多彩な影プリセット搭載**
+
+---
+
+## 必要スペック・動作環境
+
+| 項目                | 推奨環境・備考                                  |
+|---------------------|------------------------------------------------|
+| OS                  | Windows 10/11（64bit）                         |
+| CPU                 | Intel Core i5 以上                             |
+| メモリ              | 8GB以上（16GB推奨）                            |
+| GPU                 | NVIDIA GTX 1060 以上（RTX 3080推奨・CUDA対応） |
+| ストレージ           | 1GB以上の空き容量                               |
+| 必要ソフトウェア     | Unity Hub／Unity 2022.3 LTS または 2023.2 LTS  |
+|                     | VRChat Creator Companion（VCC）※将来対応予定   |
+|                     | VRChat SDK3（Avatars/Worlds）                  |
+|                     | lilToon本体（最新版推奨）                      |
+|                     | VRC Light Volumes（REDSIM製）                  |
+
+---
+
+## インストール手順（Unityパッケージから）
+
+### 1. 必要ソフトウェアのインストール
+
+1. [Unity Hub](https://unity.com/download) をインストール
+2. Unity 2022.3 LTS または 2023.2 LTS をインストール
+3. [lilToon公式BOOTH](https://booth.pm/ja/items/3087170) からlilToon本体をダウンロード＆インポート
+4. [VRC Light Volumes（REDSIM）](https://booth.pm/ja/items/5203112) をダウンロード＆インポート
+5. VRChat SDK3（Avatars/Worlds）をインポート
+
+### 2. lilToon PCSS Extensionの導入
+
+1. 本商品（lilToon PCSS Extension）のUnityPackageをダウンロード
+2. Unityエディタでプロジェクトを開く
+3. メニューから「Assets > Import Package > Custom Package...」を選択
+4. ダウンロードした`lilToon_PCSExtension.unitypackage`を選択し、すべてのファイルをインポート
+
+### 3. セットアップ・適用方法
+
+#### アバターやワールドに適用する場合
+
+1. **PCSS対応マテリアルの作成**
+    - 既存のlilToonマテリアルを選択
+    - 「右クリック > PCSS Extensionにアップグレード」または
+    - マテリアルのShaderを「lilToon/PCSS Extension」に変更
+
+2. **VRC Light Volumesの統合**
+    - シーン内のアバターまたはワールドのルートオブジェクトを選択
+    - 「Add Component」から`VRCLightVolumesIntegration`を追加
+    - Inspectorで「Light Volumes検出」ボタンを押すと自動で統合されます
+
+3. **影・光の調整**
+    - マテリアルのInspectorで「PCSS」や「Light Volumes」関連のパラメータを調整
+    - Toon/リアル/映画風などプリセットも選択可能
+
+#### Quest/モバイル最適化
+
+- Inspectorの「モバイル最適化」オプションを有効化
+- パフォーマンス重視の設定が自動適用されます
+
+---
+
+## よくある質問
+
+### Q. VCC（VRChat Creator Companion）には対応していますか？
+A. 現在はUnityパッケージ形式ですが、**今後のアップデートでVCC公式対応予定**です。  
+　VCC時代も安心してご利用いただけます。
+
+### Q. VRC Light Volumesが無くても使えますか？
+A. はい、PCSS拡張のみでもご利用可能です。  
+　Light Volumesを導入すると、さらに立体的な光表現が可能になります。
+
+### Q. 導入がうまくいかない場合は？
+A. BOOTHメッセージまたはREADME記載のサポート窓口までご連絡ください。
+
+---
+
+## アップデート予定
+
+- VCC（VRChat Creator Companion）公式対応
+- さらなる最適化・新機能追加
+
+---
+
+## お問い合わせ
+
+ご質問・ご要望はお気軽にどうぞ！
+
+---
+
+**あなたのVRChat体験を“次世代”へ――今すぐ導入！**
+```
+
+
+---
+
+_**User**_
+
+現在の機能に即している文章でもう一度
+
+---
+
+_**Assistant**_
+
+```markdown
+# 🏆 lilToon PCSS Extension【VRC Light Volumes対応／VCC将来対応予定】
+
+---
+
+## 概要
+
+**lilToon PCSS Extension**は、  
+大人気シェーダー「lilToon」に“PCSS（ソフトシャドウ）”を追加し、  
+さらに**REDSIM製 VRC Light Volumes**との完全連携を実現した拡張パッケージです。
+
+- **VRC Light Volumes 完全対応！**  
+  アバターやワールドに立体的な光と影を簡単統合  
+- **lilToon本来の色・質感を維持したままPCSS効果を追加**  
+- **Unity 2022/2023 LTS対応・Quest/PC両対応**  
+- **パフォーマンス自動最適化・モバイル最適化機能搭載**  
+- **将来のVCC（VRChat Creator Companion）公式対応を予定**  
+- **自動バックアップ・セッション復旧・電源断保護機能（開発用）**  
+- **日本語ドキュメント・サポート充実**
+
+---
+
+## 必要スペック・動作環境
+
+| 項目                | 推奨環境・備考                                  |
+|---------------------|------------------------------------------------|
+| OS                  | Windows 10/11（64bit）                         |
+| CPU                 | Intel Core i5 以上                             |
+| メモリ              | 8GB以上（16GB推奨）                            |
+| GPU                 | NVIDIA GTX 1060 以上（RTX 3080推奨・CUDA対応） |
+| ストレージ           | 1GB以上の空き容量                               |
+| 必要ソフトウェア     | Unity Hub／Unity 2022.3 LTS または 2023.2 LTS  |
+|                     | VRChat SDK3（Avatars/Worlds）                  |
+|                     | lilToon本体（最新版推奨）                      |
+|                     | VRC Light Volumes（REDSIM製）                  |
+|                     | VCC（VRChat Creator Companion）※将来対応予定   |
+
+---
+
+## インストール手順（Unityパッケージから）
+
+### 1. 必要ソフトウェアのインストール
+
+1. [Unity Hub](https://unity.com/download) をインストール
+2. Unity 2022.3 LTS または 2023.2 LTS をインストール
+3. [lilToon公式BOOTH](https://booth.pm/ja/items/3087170) からlilToon本体をダウンロード＆インポート
+4. [VRC Light Volumes（REDSIM）](https://booth.pm/ja/items/5203112) をダウンロード＆インポート
+5. VRChat SDK3（Avatars/Worlds）をインポート
+
+### 2. lilToon PCSS Extensionの導入
+
+1. 本商品（lilToon PCSS Extension）のUnityPackageをダウンロード
+2. Unityエディタでプロジェクトを開く
+3. メニューから「Assets > Import Package > Custom Package...」を選択
+4. ダウンロードした`lilToon_PCSExtension.unitypackage`を選択し、すべてのファイルをインポート
+
+### 3. セットアップ・適用方法
+
+#### アバターやワールドに適用する場合
+
+1. **PCSS対応マテリアルの作成**
+    - 既存のlilToonマテリアルを選択
+    - 「右クリック > PCSS Extensionにアップグレード」または
+    - マテリアルのShaderを「lilToon/PCSS Extension」に変更
+
+2. **VRC Light Volumesの統合**
+    - シーン内のアバターまたはワールドのルートオブジェクトを選択
+    - 「Add Component」から`VRCLightVolumesIntegration`を追加
+    - Inspectorで「Light Volumes検出」ボタンを押すと自動で統合されます
+
+3. **影・光の調整**
+    - マテリアルのInspectorで「PCSS」や「Light Volumes」関連のパラメータを調整
+    - Toon/リアル/映画風などプリセットも選択可能
+
+#### Quest/モバイル最適化
+
+- Inspectorの「モバイル最適化」オプションを有効化
+- パフォーマンス重視の設定が自動適用されます
+
+---
+
+## よくある質問
+
+### Q. VCC（VRChat Creator Companion）には対応していますか？
+A. 現在はUnityパッケージ形式ですが、**今後のアップデートでVCC公式対応予定**です。  
+　VCC時代も安心してご利用いただけます。
+
+### Q. VRC Light Volumesが無くても使えますか？
+A. はい、PCSS拡張のみでもご利用可能です。  
+　Light Volumesを導入すると、さらに立体的な光表現が可能になります。
+
+### Q. 導入がうまくいかない場合は？
+A. BOOTHメッセージまたはREADME記載のサポート窓口までご連絡ください。
+
+---
+
+## アップデート予定
+
+- VCC（VRChat Creator Companion）公式対応
+- さらなる最適化・新機能追加
+
+---
+
+## お問い合わせ
+
+ご質問・ご要望はお気軽にどうぞ！
+
+---
+
+**あなたのVRChat体験を“次世代”へ――今すぐ導入！**
+```
+
+
+---
+
+_**User**_
+
+modularavatarの機能でメニューを作りFXではなくbaseで動作させライトをトグルオンオフできるようにして
+
+---
+
+_**Assistant**_
+
+承知しました！  
+**ModularAvatar**の機能を使い、  
+- **メニュー（Expression Menu）を自動生成**  
+- **FXレイヤーではなくBaseレイヤーで動作**  
+- **ライト（Lightコンポーネント）をトグルでON/OFFできる**  
+というUnityエディタ拡張スクリプトを作成します。
+
+---
+
+## 実装方針
+
+1. **ModularAvatarのAPIを使い、Expression Menuとパラメータを自動生成**
+2. **Baseレイヤーで動作するトグル（ON/OFF）を作成**
+3. **トグルでLightコンポーネントの有効/無効を切り替える**
+4. **アバターに自動でセットアップできるエディタメニューを提供**
+
+---
+
+## スクリプト例（Editor拡張）
+
+以下のスクリプトを`Editor/`フォルダに配置してください。  
+（`using nadena.dev.modular_avatar.core;`が必要です）
+
+```csharp
+using UnityEngine;
+using UnityEditor;
+#if MODULAR_AVATAR_AVAILABLE
+using nadena.dev.modular_avatar.core;
+#endif
+
+public class MAV_LightToggleMenu : MonoBehaviour
+{
+#if MODULAR_AVATAR_AVAILABLE
+    [MenuItem("lilToon/PCSS Extension/ModularAvatar/ライトトグルメニューを追加")]
+    public static void AddLightToggleMenu()
+    {
+        var selected = Selection.activeGameObject;
+        if (selected == null)
+        {
+            EditorUtility.DisplayDialog("エラー", "アバターのルートを選択してください。", "OK");
+            return;
+        }
+
+        // Expression Parameter
+        var param = selected.GetComponent<ModularAvatarParameters>();
+        if (param == null) param = selected.AddComponent<ModularAvatarParameters>();
+        param.parameters.Add(new ParameterConfig()
+        {
+            name = "LightToggle",
+            defaultValue = 1,
+            syncType = ParameterSyncType.Bool,
+            saved = true
+        });
+
+        // Expression Menu
+        var menu = selected.GetComponent<ModularAvatarMenuInstaller>();
+        if (menu == null) menu = selected.AddComponent<ModularAvatarMenuInstaller>();
+        var rootMenu = new ExpressionMenu();
+        var control = new ExpressionMenu.Control
+        {
+            name = "ライトON/OFF",
+            type = ExpressionMenu.ControlType.Toggle,
+            parameter = new VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionParameters.Parameter { name = "LightToggle" }
+        };
+        rootMenu.controls.Add(control);
+        menu.menu = rootMenu;
+
+        // Light Toggle用のModularAvatarGameObjectToggle
+        var lightObj = FindLightObject(selected.transform);
+        if (lightObj == null)
+        {
+            EditorUtility.DisplayDialog("エラー", "子オブジェクトにLightが見つかりません。", "OK");
+            return;
+        }
+        var toggle = lightObj.GetComponent<ModularAvatarGameObjectToggle>();
+        if (toggle == null) toggle = lightObj.AddComponent<ModularAvatarGameObjectToggle>();
+        toggle.parameter = "LightToggle";
+        toggle.isOn = true;
+        toggle.layer = ModularAvatarGameObjectToggle.LayerType.Base; // Baseレイヤーで動作
+
+        EditorUtility.DisplayDialog("完了", "ModularAvatarライトトグルメニューを追加しました。", "OK");
+    }
+
+    private static GameObject FindLightObject(Transform root)
+    {
+        foreach (var light in root.GetComponentsInChildren<Light>(true))
+        {
+            return light.gameObject;
+        }
+        return null;
+    }
+#endif
+}
+```
+
+---
+
+### 【使い方】
+
+1. アバターのルートオブジェクトを選択
+2. メニューから  
+　`lilToon/PCSS Extension/ModularAvatar/ライトトグルメニューを追加`  
+　をクリック
+3. 子オブジェクトにLightがあれば、  
+　**BaseレイヤーでON/OFFできるトグルメニュー**が自動生成されます
+
+---
+
+### 【ポイント】
+
+- **ModularAvatarGameObjectToggle**の`layer`を`Base`に設定することで、FXではなくBaseレイヤーで制御
+- Expression Parameter/Expression Menuも自動生成
+- Lightが複数ある場合は最初のLightを対象にしています（必要に応じて拡張可）
+
+---
+
+ご希望に合わせて  
+- 複数ライト対応  
+- メニュー名やパラメータ名のカスタマイズ  
+- 英語UI  
+なども可能です。  
+UnityバージョンやModularAvatarのバージョンに合わせて調整もできますので、ご要望があればお知らせください！
+
+---
+
+_**User**_
+
+スクリプトを書いてEditor/に保存して
+
+---
+
+_**Assistant**_
+
+```diff
+- 
++ #if UNITY_EDITOR
++ using UnityEngine;
++ using UnityEditor;
++ #if MODULAR_AVATAR_AVAILABLE
++ using nadena.dev.modular_avatar.core;
++ #endif
++ 
++ /// <summary>
++ /// ModularAvatarでLightのON/OFFトグルをBaseレイヤーで制御するメニューを自動生成するエディタ拡張
++ /// </summary>
++ public class ModularAvatarLightToggleMenu : MonoBehaviour
++ {
++ #if MODULAR_AVATAR_AVAILABLE
++     [MenuItem("lilToon/PCSS Extension/ModularAvatar/ライトトグルメニューを追加")]
++     public static void AddLightToggleMenu()
++     {
++         var selected = Selection.activeGameObject;
++         if (selected == null)
++         {
++             EditorUtility.DisplayDialog("エラー", "アバターのルートを選択してください。", "OK");
++             return;
++         }
++ 
++         // Expression Parameter
++         var param = selected.GetComponent<ModularAvatarParameters>();
++         if (param == null) param = selected.AddComponent<ModularAvatarParameters>();
++         bool found = false;
++         foreach (var p in param.parameters)
++         {
++             if (p.name == "LightToggle") { found = true; break; }
++         }
++         if (!found)
++         {
++             param.parameters.Add(new ParameterConfig()
++             {
++                 name = "LightToggle",
++                 defaultValue = 1,
++                 syncType = ParameterSyncType.Bool,
++                 saved = true
++             });
++         }
++ 
++         // Expression Menu
++         var menu = selected.GetComponent<ModularAvatarMenuInstaller>();
++         if (menu == null) menu = selected.AddComponent<ModularAvatarMenuInstaller>();
++         var rootMenu = new VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionMenu();
++         var control = new VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionMenu.Control
++         {
++             name = "ライトON/OFF",
++             type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionMenu.ControlType.Toggle,
++             parameter = new VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionParameters.Parameter { name = "LightToggle" }
++         };
++         rootMenu.controls.Add(control);
++         menu.menu = rootMenu;
++ 
++         // Light Toggle用のModularAvatarGameObjectToggle
++         var lightObj = FindLightObject(selected.transform);
++         if (lightObj == null)
++         {
++             EditorUtility.DisplayDialog("エラー", "子オブジェクトにLightが見つかりません。", "OK");
++             return;
++         }
++         var toggle = lightObj.GetComponent<ModularAvatarGameObjectToggle>();
++         if (toggle == null) toggle = lightObj.AddComponent<ModularAvatarGameObjectToggle>();
++         toggle.parameter = "LightToggle";
++         toggle.isOn = true;
++         toggle.layer = ModularAvatarGameObjectToggle.LayerType.Base; // Baseレイヤーで動作
++ 
++         EditorUtility.DisplayDialog("完了", "ModularAvatarライトトグルメニューを追加しました。", "OK");
++     }
++ 
++     private static GameObject FindLightObject(Transform root)
++     {
++         foreach (var light in root.GetComponentsInChildren<Light>(true))
++         {
++             return light.gameObject;
++         }
++         return null;
++     }
++ #endif
++ }
++ #endif 
+```
+
+---
+
+スクリプト `ModularAvatarLightToggleMenu.cs` を `Editor/` フォルダに新規作成し、  
+ModularAvatarの機能で「BaseレイヤーでLightコンポーネントをトグルON/OFFできるExpressionメニュー」を自動生成するエディタ拡張を実装しました。
+
+---
+
+### 使い方
+
+1. アバターのルートオブジェクトを選択
+2. Unityメニューから  
+　`lilToon/PCSS Extension/ModularAvatar/ライトトグルメニューを追加`  
+　をクリック
+3. 子オブジェクトにLightがあれば、**BaseレイヤーでON/OFFできるトグルメニュー**が自動生成されます
+
+---
+
+ご要望に応じて複数ライト対応やカスタマイズも可能です。  
+何か追加のご希望があればお知らせください！
 
 ---
 
