@@ -6,6 +6,7 @@
 - AutoFIX Prefab対応: Prefabインスタンスのマテリアル自動修復時、スクリプト（MonoBehaviour等）が無効化される現象を防止
 - マテリアル自動修復強化: missingやlilToon系シェーダーも自動で復旧・補完
 - シーン/プロジェクト全体のマテリアルを一括修復可能
+- ModularAvatar 1.12.5最適化: MAMaterialSwap/MAPlatformFilter自動追加、プリセット適用のModularAvatar流対応、Quest/PC分岐例もサポート
 
 ## [1.5.4] - 2025-06-23
 

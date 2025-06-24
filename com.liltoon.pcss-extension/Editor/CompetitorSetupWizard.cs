@@ -5,6 +5,7 @@ using VRC.SDK3.Avatars.Components;
 #endif
 using System.Collections.Generic;
 using System.Linq;
+using nadena.dev.modular_avatar.core;
 
 namespace lilToon.PCSS.Editor
 {
@@ -295,11 +296,54 @@ namespace lilToon.PCSS.Editor
                 return;
             }
 
+            var renderers = target.GetComponentsInChildren<Renderer>(true);
+            foreach (var renderer in renderers)
+            {
+                // ModularAvatarが導入されていればMA Material Swap/Platform Filterを自動追加
+                #if MODULAR_AVATAR_AVAILABLE
+                var swap = renderer.gameObject.GetComponent<MAMaterialSwap>();
+                if (swap == null) swap = renderer.gameObject.AddComponent<MAMaterialSwap>();
+                swap.Renderer = renderer;
+                swap.Materials = new List<Material>(renderer.sharedMaterials);
+                // プリセットごとにマテリアルプロパティを調整
+                foreach (var mat in swap.Materials)
+                {
+                    mat.EnableKeyword("_USEPCSS_ON");
+                    mat.EnableKeyword("_USESHADOW_ON");
+                    switch (preset)
+                    {
+                        case Preset.Toon:
+                            mat.SetFloat("_UseShadowClamp", 1);
+                            mat.SetFloat("_ShadowClamp", 0.75f);
+                            mat.SetFloat("_Translucency", 0.1f);
+                            mat.SetFloat("_ShadowBlur", 0.05f);
+                            break;
+                        case Preset.Realistic:
+                            mat.SetFloat("_UseShadowClamp", 0);
+                            mat.SetFloat("_Translucency", 0.3f);
+                            mat.SetFloat("_ShadowBlur", 0.2f);
+                            break;
+                        case Preset.Dark:
+                            mat.SetFloat("_UseShadowClamp", 1);
+                            mat.SetFloat("_ShadowClamp", 0.4f);
+                            mat.SetFloat("_Translucency", 0.6f);
+                            mat.SetFloat("_ShadowBlur", 0.3f);
+                            break;
+                    }
+                    mat.SetFloat("_UseShadowColorMask", useShadowMask ? 1 : 0);
+                }
+                // Quest/PC分岐が必要ならMAPlatformFilterも追加例
+                // var filter = renderer.gameObject.GetComponent<MAPlatformFilter>();
+                // if (filter == null) filter = renderer.gameObject.AddComponent<MAPlatformFilter>();
+                // filter.Platform = MAPlatformFilter.PlatformType.Quest;
+                #endif
+            }
+
+            // 既存の手動マテリアル切り替えも残す（ModularAvatar未導入時用）
             foreach (var mat in materials)
             {
                 mat.EnableKeyword("_USEPCSS_ON");
                 mat.EnableKeyword("_USESHADOW_ON");
-
                 switch (preset)
                 {
                     case Preset.Toon:
@@ -320,15 +364,7 @@ namespace lilToon.PCSS.Editor
                         mat.SetFloat("_ShadowBlur", 0.3f);
                         break;
                 }
-
-                if (useShadowMask)
-                {
-                    mat.SetFloat("_UseShadowColorMask", 1);
-                }
-                else
-                {
-                    mat.SetFloat("_UseShadowColorMask", 0);
-                }
+                mat.SetFloat("_UseShadowColorMask", useShadowMask ? 1 : 0);
             }
             Debug.Log($"[CompetitorSetupWizard] {materials.Count}個のマテリアルに設定を適用しました。");
         }

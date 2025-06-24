@@ -27,7 +27,7 @@
           "vpmDependencies": {
             "com.vrchat.avatars": ">=3.5.0",
             "com.vrchat.base": ">=3.5.0",
-            "nadena.dev.modular-avatar": "1.10.0"
+            "nadena.dev.modular-avatar": "1.12.5"
           },
           "keywords": [
             "shader",

@@ -54,4 +54,11 @@
 - **v1.5.3**: パフォーマンス最適化・競合互換ウィザード追加
 - **v1.5.0**: VRChat/ModularAvatar連携・PhysBone制御・PCSSプリセット拡張
 - **v1.4.x**: URP対応・VRC Light Volumes連携・競合シェーダー互換
-- **v1.2.x**: 初期リリース 
+- **v1.2.x**: 初期リリース
+
+## v1.5.5の新機能・最適化
+
+- ModularAvatar 1.12.5完全対応
+- MAMaterialSwap/MAPlatformFilter自動追加によるプリセット適用のModularAvatar流最適化
+- Quest/PC分岐例もサポート（MAPlatformFilterで自動切り替え可能）
+- 既存の手動マテリアル切り替えも残し、ModularAvatar未導入環境でも従来通り動作 

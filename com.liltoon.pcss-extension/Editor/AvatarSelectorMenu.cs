@@ -3,6 +3,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using nadena.dev.modular_avatar.core;
 
 // #if MODULAR_AVATAR_AVAILABLE
 // using nadena.dev.modular_avatar.core;
@@ -340,11 +341,30 @@ namespace lilToon.PCSS.Editor
 
             foreach (var renderer in renderers)
             {
+                // ModularAvatarが導入されていればMA Material Swap/Platform Filterを自動追加
+                #if MODULAR_AVATAR_AVAILABLE
+                var swap = renderer.gameObject.GetComponent<MAMaterialSwap>();
+                if (swap == null) swap = renderer.gameObject.AddComponent<MAMaterialSwap>();
+                swap.Renderer = renderer;
+                swap.Materials = new List<Material>(renderer.sharedMaterials);
+                foreach (var mat in swap.Materials)
+                {
+                    if (mat == null) continue;
+                    if (IsPCSSCompatibleShader(mat.shader))
+                    {
+                        ApplyPresetToMaterial(mat, presetParams, selectedPreset);
+                        appliedCount++;
+                    }
+                }
+                // Quest/PC分岐が必要ならMAPlatformFilterも追加例
+                // var filter = renderer.gameObject.GetComponent<MAPlatformFilter>();
+                // if (filter == null) filter = renderer.gameObject.AddComponent<MAPlatformFilter>();
+                // filter.Platform = MAPlatformFilter.PlatformType.Quest;
+                #endif
+                // 既存の手動マテリアル切り替えも残す（ModularAvatar未導入時用）
                 foreach (var material in renderer.sharedMaterials)
                 {
                     if (material == null) continue;
-
-                    // lilToonまたはPoiyomi PCSS対応シェーダーかチェック
                     if (IsPCSSCompatibleShader(material.shader))
                     {
                         ApplyPresetToMaterial(material, presetParams, selectedPreset);
@@ -353,20 +373,7 @@ namespace lilToon.PCSS.Editor
                 }
             }
 
-            // #if MODULAR_AVATAR_AVAILABLE
-            // // ModularAvatarコンポーネントにもプリセット情報を記録
-            // var maInfo = selectedAvatar.GetComponent<ModularAvatarInformation>();
-            // if (maInfo == null)
-            // {
-            //     maInfo = selectedAvatar.AddComponent<ModularAvatarInformation>();
-            // }
-            
-            // // カスタムプロパティとしてプリセット情報を保存
-            // maInfo.name = $"PCSS_{presetName}_Applied";
-            // #endif
-
             EditorUtility.SetDirty(selectedAvatar);
-            
             EditorUtility.DisplayDialog("適用完了", 
                 $"✅ プリセット '{presetName}' を適用しました\n" +
                 $"📊 適用されたマテリアル: {appliedCount}個", "OK");
