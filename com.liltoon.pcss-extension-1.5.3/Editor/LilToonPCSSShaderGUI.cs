@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using lilToon;
 
-namespace lilToon.PCSS
+namespace lilToon.PCSS_editor
 {
     // liltoon本体のShaderGUIを継承することで、互換性を確保しマテリアル消失を防ぐ
     public class LilToonPCSSShaderGUI : LilToonShaderGUI

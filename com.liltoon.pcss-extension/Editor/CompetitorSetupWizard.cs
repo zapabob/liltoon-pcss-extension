@@ -1,4 +1,4 @@
-using UnityEngine;
+ using UnityEngine;
 using UnityEditor;
 #if VRC_SDK_VRCSDK3
 using VRC.SDK3.Avatars.Components;
@@ -31,6 +31,113 @@ namespace lilToon.PCSS.Editor
         private bool useExternalLight = false;
         private Light externalLightObject;
 
+    public class PhysBoneLightController : MonoBehaviour
+    {
+        [Header("Light Settings")]
+        public Light externalLight;
+        
+        [Header("PhysBone Integration")]
+        public bool autoDetectPhysBones = true;
+        public float lightIntensity = 1.0f;
+        public Color lightColor = Color.white;
+        
+        private List<Component> physBoneComponents;
+        private bool isInitialized = false;
+
+        public void Initialize()
+        {
+            if (isInitialized)
+            {
+                Debug.LogWarning("PhysBoneLightController is already initialized.");
+                return;
+            }
+
+            try
+            {
+                // PhysBoneコンポーネントの自動検出
+                if (autoDetectPhysBones)
+                {
+                    DetectPhysBoneComponents();
+                }
+
+                // 外部ライトの設定
+                SetupExternalLight();
+
+                // 初期化完了フラグを設定
+                isInitialized = true;
+                
+                Debug.Log("PhysBoneLightController initialized successfully.");
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"Failed to initialize PhysBoneLightController: {e.Message}");
+            }
+        }
+
+        private void DetectPhysBoneComponents()
+        {
+            physBoneComponents = new List<Component>();
+            
+            // VRCPhysBoneコンポーネントを検索
+            var physBones = GetComponentsInChildren<Component>()
+                .Where(comp => comp.GetType().Name.Contains("PhysBone"))
+                .ToList();
+                
+            physBoneComponents.AddRange(physBones);
+            
+            Debug.Log($"Detected {physBoneComponents.Count} PhysBone components.");
+        }
+
+        private void SetupExternalLight()
+        {
+            if (externalLight == null)
+            {
+                Debug.LogWarning("No external light assigned. Creating default light.");
+                CreateDefaultLight();
+                return;
+            }
+
+            // ライトの基本設定を適用
+            externalLight.intensity = lightIntensity;
+            externalLight.color = lightColor;
+            externalLight.enabled = true;
+            
+            Debug.Log("External light configured successfully.");
+        }
+
+        private void CreateDefaultLight()
+        {
+            GameObject lightObject = new GameObject("PhysBoneLight_Default");
+            externalLight = lightObject.AddComponent<Light>();
+            externalLight.type = LightType.Directional;
+            externalLight.intensity = lightIntensity;
+            externalLight.color = lightColor;
+            externalLight.shadows = LightShadows.Soft;
+            
+            // アバターの子オブジェクトとして配置
+            lightObject.transform.SetParent(transform);
+            lightObject.transform.localPosition = Vector3.up * 2f;
+            lightObject.transform.localRotation = Quaternion.Euler(45f, 0f, 0f);
+        }
+
+        public void ResetToDefaults()
+        {
+            isInitialized = false;
+            physBoneComponents?.Clear();
+            
+            if (externalLight != null)
+            {
+                externalLight.intensity = 1.0f;
+                externalLight.color = Color.white;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            // クリーンアップ処理
+            physBoneComponents?.Clear();
+        }
+    }
         [MenuItem("Tools/lilToon PCSS/競合互換セットアップウィザード")]
         public static void ShowWindow()
         {
@@ -143,7 +250,6 @@ namespace lilToon.PCSS.Editor
                 controller = lightTransform.GetComponent<PhysBoneLightController>();
                 if (controller == null) controller = lightTransform.gameObject.AddComponent<PhysBoneLightController>();
                 controller.externalLight = null; // 外部ライトモードでないことを明示
-                controller.lightTransform = lightTransform; // 自身のTransformを明示的に設定
             }
             
             pcssLight.type = LightType.Directional;
@@ -245,6 +351,39 @@ namespace lilToon.PCSS.Editor
                 }
             }
             return materials;
+        }
+    }
+
+    public class DirectionalLightParticleCreator
+    {
+        [MenuItem("Tools/Create Directional Light Particle")]
+        public static void CreateDirectionalLightParticle()
+        {
+            GameObject go = new GameObject("DirectionalGlow");
+            var ps = go.AddComponent<ParticleSystem>();
+            var main = ps.main;
+            main.duration = 1f;
+            main.loop = true;
+            main.startLifetime = 0.5f;
+            main.startSpeed = 8f;
+            main.startSize = 0.3f;
+            main.startColor = Color.yellow;
+
+            var emission = ps.emission;
+            emission.rateOverTime = 100f;
+
+            var shape = ps.shape;
+            shape.shapeType = ParticleSystemShapeType.Cone;
+            shape.angle = 15f;
+            shape.radius = 0.05f;
+
+            var renderer = go.GetComponent<ParticleSystemRenderer>();
+            renderer.renderMode = ParticleSystemRenderMode.Stretch;
+            renderer.lengthScale = 3f;
+            // ここでEmissiveなパーティクル用マテリアルを割り当てる
+            // renderer.material = (Material)AssetDatabase.LoadAssetAtPath("Assets/YourEmissiveMaterial.mat", typeof(Material));
+
+            Debug.Log("Directional light-like particle created!");
         }
     }
 } 

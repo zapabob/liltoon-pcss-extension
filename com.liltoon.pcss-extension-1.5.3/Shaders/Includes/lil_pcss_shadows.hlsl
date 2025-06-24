@@ -1,10 +1,7 @@
 #include "lil_pcss_common.hlsl"
 
-#if defined(VRC_LIGHT_VOLUMES) || defined(VRC_LIGHT_VOLUMES_ENABLED)
-    #if __has_include("Packages/com.vrchat.base/Runtime/Shader/VRChat_Shadow.cginc")
-        #include "Packages/com.vrchat.base/Runtime/Shader/VRChat_Shadow.cginc"
-    #endif
-#endif
+// VRC Light Volumes用の追加シェーダー（存在しない場合はコメントアウト推奨）
+// #include "Packages/com.vrchat.base/Runtime/Shader/VRChat_Shadow.cginc"
 
 //----------------------------------------------------------------------------------------------------------------------
 // PCSS Configuration

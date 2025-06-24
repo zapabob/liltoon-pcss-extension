@@ -1,4 +1,4 @@
-using UnityEngine;
+ using UnityEngine;
 using UnityEditor;
 using System.IO;
 using System.Collections.Generic;
@@ -26,6 +26,8 @@ namespace lilToon.PCSS
             CheckAndSetupExtension();
             RegisterShaderVariants();
             SetupMenuIntegration();
+            // --- ダミー参照: VRCLightVolumesIntegrationの自動削除防止 ---
+            System.Type _ = typeof(lilToon.PCSS.VRCLightVolumesIntegration); // AutoFIX/最適化による削除防止
         }
         
         /// <summary>

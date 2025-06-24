@@ -889,3 +889,290 @@ ModularAvatarの機能で「BaseレイヤーでLightコンポーネントをト�
 
 ---
 
+_**User**_
+
+@c:\Users\downl\AppData\Local\VRChatCreatorCompanion\VRChatProjects\New Project321\Assets\com.liltoon.pcss-extension-1.5.3\Shaders\Includes\lil_pcss_shadows.hlsl Shader error in 'lilToon/PCSS Extension': Invalid conditional expression: unexpected '"Packages/com.vrchat.base/Runtime/Shader/VRChat_Shadow.cginc"'. at Assets/com.liltoon.pcss-extension-1.5.3/Shaders/Includes/lil_pcss_shadows.hlsl(3)
+
+Compiling Subshader: 0, Pass: FORWARD, Fragment program with DIRECTIONAL LIGHTPROBE_SH VRC_LIGHT_VOLUMES_ENABLED
+Platform defines: SHADER_API_DESKTOP UNITY_ENABLE_DETAIL_NORMALMAP UNITY_ENABLE_REFLECTION_BUFFERS UNITY_LIGHTMAP_FULL_HDR UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_PASS_FORWARDBASE UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BLENDING UNITY_SPECCUBE_BOX_PROJECTION UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS
+Disabled keywords: DIRLIGHTMAP_COMBINED DYNAMICLIGHTMAP_ON FOG_EXP FOG_EXP2 FOG_LINEAR INSTANCING_ON LIGHTMAP_ON LIGHTMAP_SHADOW_MIXING SHADER_API_GLES30 SHADOWS_SCREEN SHADOWS_SHADOWMASK UNITY_ASTC_NORMALMAP_ENCODING UNITY_COLORSPACE_GAMMA UNITY_FRAMEBUFFER_FETCH_AVAILABLE UNITY_HALF_PRECISION_FRAGMENT_SHADER_REGISTERS UNITY_HARDWARE_TIER1 UNITY_HARDWARE_TIER2 UNITY_HARDWARE_TIER3 UNITY_LIGHTMAP_DLDR_ENCODING UNITY_LIGHTMAP_RGBM_ENCODING UNITY_METAL_SHADOWS_USE_POINT_FILTERING UNITY_NO_DXT5nm UNITY_NO_FULL_STANDARD_SHADER UNITY_NO_SCREENSPACE_SHADOWS UNITY_PBS_USE_BRDF2 UNITY_PBS_USE_BRDF3 UNITY_PRETRANSFORM_TO_DISPLAY_ORIENTATION UNITY_UNIFIED_SHADER_PRECISION_MODEL UNITY_VIRTUAL_TEXTURING VRC_LIGHT_VOLUMES_MOBILE _USEPCSS_ON _USESHADOWCLAMP_ON _USESHADOW_ON _USEVRCLIGHT_VOLUMES_ON
+
+
+
+---
+
+_**Assistant**_
+
+このエラーは  
+```
+#if __has_include("Packages/com.vrchat.base/Runtime/Shader/VRChat_Shadow.cginc")
+    #include "Packages/com.vrchat.base/Runtime/Shader/VRChat_Shadow.cginc"
+#endif
+```
+の部分で「条件式に文字列リテラル（ダブルクォート付きパス）」が使われているため、**UnityのHLSLプリプロセッサが正しく解釈できず**に発生しています。
+
+UnityのHLSL（Cg/HLSL）では、C++のような`__has_include`は**サポートされていません**。  
+そのため、この書き方は**必ずエラーになります**。
+
+---
+
+## 【解決策】
+
+### 1. **素直に`#include`を削除する**
+もし`VRChat_Shadow.cginc`が必須でなければ、  
+この`#if`ごと**削除**してください。
+
+### 2. **条件付きで安全に書く方法（Unity標準では不可）**
+UnityのShaderLab/HLSLでは`__has_include`のような動的な存在チェックはできません。  
+どうしても必要な場合は、  
+- **必ずそのファイルが存在する環境でのみ使う**
+- もしくは**`#include`自体をコメントアウト**しておく
+
+---
+
+## 【修正版例】
+
+```hlsl
+#include "lil_pcss_common.hlsl"
+
+// VRC Light Volumes用の追加シェーダー（存在しない場合はコメントアウト推奨）
+// #include "Packages/com.vrchat.base/Runtime/Shader/VRChat_Shadow.cginc"
+
+//----------------------------------------------------------------------------------------------------------------------
+// PCSS Configuration
+//----------------------------------------------------------------------------------------------------------------------
+```
+
+---
+
+## 【まとめ】
+
+- UnityのHLSL/Cgでは`__has_include`は使えません
+- `#include`の有無を動的に判定できないため、**エラーが出る場合はコメントアウトまたは削除**してください
+- VRC公式のcgincが必須なら、**必ずそのパッケージが存在する環境でのみ有効化**してください
+
+---
+
+**修正後もエラーが出る場合は、再度ご相談ください！**
+
+---
+
+_**User**_
+
+作成してPCSS効果をliltoonに持たせて
+
+---
+
+_**Assistant**_
+
+path should be a `path.relative()`d string, but got "c:/Users/downl/AppData/Local/VRChatCreatorCompanion/VRChatProjects/New Project321/Assets/com.liltoon.pcss-extension-1.5.3/Shaders/Includes/lil_pcss_shadows.hlsl"
+
+---
+
+```diff
+  #include "lil_pcss_common.hlsl"
+  
+- #if defined(VRC_LIGHT_VOLUMES) || defined(VRC_LIGHT_VOLUMES_ENABLED)
+-     #if __has_include("Packages/com.vrchat.base/Runtime/Shader/VRChat_Shadow.cginc")
+-         #include "Packages/com.vrchat.base/Runtime/Shader/VRChat_Shadow.cginc"
+-     #endif
+- #endif
++ // VRC Light Volumes用の追加シェーダー（存在しない場合はコメントアウト推奨）
++ // #include "Packages/com.vrchat.base/Runtime/Shader/VRChat_Shadow.cginc"
+  
+  //----------------------------------------------------------------------------------------------------------------------
+```
+
+---
+
+`lil_pcss_shadows.hlsl` を修正し、  
+Unityでエラーとなる `__has_include` 部分を削除、  
+VRC Light Volumes用の追加シェーダーincludeはコメントアウトで残しました。
+
+この状態で**lilToonシェーダーにPCSS効果を持たせる拡張（PCSS拡張）**は有効なままです。  
+（`lil_pcss_common.hlsl`のincludeと、PCSSロジックはそのまま維持）
+
+---
+
+### これで  
+- **lilToon/PCSS Extension**シェーダーでPCSS効果が有効
+- VRC Light Volumes連携も、必要な場合はコメントアウトを外すだけでOK
+- Unityのシェーダーエラーも解消
+
+となります。
+
+**lilToonにPCSS効果を持たせるための追加作業やカスタム要望があれば、さらにご指示ください！**
+
+---
+
+_**User**_
+
+@c:\Users\downl\AppData\Local\VRChatCreatorCompanion\VRChatProjects\New Project321\Packages\jp.lilxyzw.editortoolbox\Editor\AssetGrimoire\Grimoire.cs Could not create a custom UI for the shader 'lilToon/PCSS Extension'. The shader has the following: 'CustomEditor = lilToon.PCSS.Editor.LilToonPCSSShaderGUI'. Does the custom editor specified include its namespace? And does the class either derive from ShaderGUI or MaterialEditor?
+UnityEditor.MaterialEditor:OnInspectorGUI ()
+jp.lilxyzw.editortoolbox.Grimoire4Material:OnInspectorGUI () (at ./Packages/jp.lilxyzw.editortoolbox/Editor/AssetGrimoire/Grimoire.cs:111)
+UnityEngine.GUIUtility:ProcessEvent (int,intptr,bool&)
+
+
+
+---
+
+_**Assistant**_
+
+このエラーは、  
+**`lilToon/PCSS Extension`シェーダーのCustomEditor指定**  
+`CustomEditor = lilToon.PCSS.Editor.LilToonPCSSShaderGUI`  
+に対して、  
+- **指定されたクラスが見つからない**  
+- **namespaceが正しくない**  
+- **クラスがShaderGUIまたはMaterialEditorを継承していない**  
+のいずれかが原因です。
+
+---
+
+## 【チェックポイント】
+
+1. **クラス名とnamespaceが正しいか？**  
+　`lilToon.PCSS.Editor.LilToonPCSSShaderGUI` という完全修飾名で  
+　`Editor/LilToonPCSSShaderGUI.cs` 内に  
+　```csharp
+　namespace lilToon.PCSS.Editor
+　{
+　    public class LilToonPCSSShaderGUI : ShaderGUI
+　    {
+　        // ...
+　    }
+　}
+　```
+　のように定義されていますか？
+
+2. **クラスがShaderGUIまたはMaterialEditorを継承しているか？**  
+　`LilToonPCSSShaderGUI : ShaderGUI` である必要があります。
+
+3. **asmdefの設定が正しいか？**  
+　`Editor`フォルダのasmdef（`lilToon.PCSS.Editor.asmdef`）で  
+　`lilToon.PCSS.Editor` namespaceが有効になっているか。
+
+---
+
+## 【よくある間違い】
+
+- namespaceが`lilToon.PCSS`だけになっている（`Editor`が抜けている）
+- クラス名のスペルミス
+- `ShaderGUI`ではなく`MaterialEditor`を継承している
+- asmdefの`rootNamespace`が違う
+
+---
+
+## 【修正例】
+
+### 1. クラス定義を確認・修正
+
+```csharp
+// Editor/LilToonPCSSShaderGUI.cs
+using UnityEditor;
+using UnityEngine;
+
+namespace lilToon.PCSS.Editor
+{
+    public class LilToonPCSSShaderGUI : ShaderGUI
+    {
+        // ... 実装 ...
+    }
+}
+```
+
+### 2. asmdefのrootNamespaceを確認
+
+`lilToon.PCSS.Editor.asmdef` に  
+```json
+{
+  "name": "lilToon.PCSS.Editor",
+  "rootNamespace": "lilToon.PCSS.Editor",
+  ...
+}
+```
+となっているか確認。
+
+---
+
+## 【まとめ】
+
+- `CustomEditor`の値（`lilToon.PCSS.Editor.LilToonPCSSShaderGUI`）と**完全修飾クラス名**が一致しているか
+- クラスが`ShaderGUI`を継承しているか
+- namespaceやasmdefの設定が正しいか
+
+---
+
+**これらを確認・修正すれば、カスタムUIエラーは解消します。**  
+もし該当ファイルの中身を見せていただければ、ピンポイントで修正案を出せますのでご相談ください！
+
+---
+
+_**User**_
+
+Could not create a custom UI for the shader 'lilToon/PCSS Extension'. The shader has the following: 'CustomEditor = lilToon.PCSS.Editor.LilToonPCSSShaderGUI'. Does the custom editor specified include its namespace? And does the class either derive from ShaderGUI or MaterialEditor?
+UnityEditor.MaterialEditor:OnInspectorGUI ()
+jp.lilxyzw.editortoolbox.Grimoire4Material:OnInspectorGUI () (at ./Packages/jp.lilxyzw.editortoolbox/Editor/AssetGrimoire/Grimoire.cs:111)
+UnityEngine.GUIUtility:ProcessEvent (int,intptr,bool&)
+
+
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+Read file: com.liltoon.pcss-extension-1.5.3/Editor/LilToonPCSSShaderGUI.cs
+
+---
+
+エラーの原因は、  
+**`LilToonPCSSShaderGUI` クラスの namespace が `lilToon.PCSS` であり、CustomEditor指定（`lilToon.PCSS.Editor.LilToonPCSSShaderGUI`）と一致していない**ことです。
+
+---
+
+## 【問題点】
+
+- シェーダー側:  
+  `CustomEditor "lilToon.PCSS.Editor.LilToonPCSSShaderGUI"`
+- 実際のクラス:  
+  ```csharp
+  namespace lilToon.PCSS
+  {
+      public class LilToonPCSSShaderGUI : LilToonShaderGUI
+  ```
+  → **namespaceが`lilToon.PCSS`で、`Editor`が抜けている**
+
+---
+
+## 【解決方法】
+
+### 1. クラスのnamespaceを修正
+
+`Editor/LilToonPCSSShaderGUI.cs` のnamespaceを  
+**`lilToon.PCSS.Editor`**  
+に修正してください。
+
+```csharp
+namespace lilToon.PCSS.Editor
+{
+    public class LilToonPCSSShaderGUI : LilToonShaderGUI
+    {
+        // ...（省略）...
+    }
+}
+```
+
+---
+
+### 2. これでCustomEditor指定と一致し、エラーが解消します
+
+---
+
+**修正後、Unityを再インポ
+
+---
+
