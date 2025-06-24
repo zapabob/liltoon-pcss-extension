@@ -14,13 +14,13 @@ Shader "lilToon/PCSS Extension"
         // --- PCSS拡張プロパティ ---
         [lilToonToggle] _UsePCSS ("Use PCSS", Float) = 1
         [Enum(Realistic,0,Anime,1,Cinematic,2,Custom,3)] _PCSSPresetMode ("PCSS Preset", Float) = 1
-        _PCSSFilterRadius ("PCSS Filter Radius", Range(0.001, 0.1)) = 0.01
-        _PCSSLightSize ("PCSS Light Size", Range(0.01, 0.5)) = 0.1
+        _LocalPCSSFilterRadius ("PCSS Filter Radius", Range(0.001, 0.1)) = 0.01
+        _LocalPCSSLightSize ("PCSS Light Size", Range(0.01, 0.5)) = 0.1
         _PCSSBias ("PCSS Bias", Range(0.0001, 0.01)) = 0.001
         _PCSSIntensity ("PCSS Intensity", Range(0.0, 2.0)) = 1.0
         [Enum(Low,0,Medium,1,High,2,Ultra,3)] _PCSSQuality ("PCSS Quality", Float) = 1
         _PCSS_ON ("Enable PCSS", Float) = 0
-        _PCSSSamples ("PCSS Samples", Range(1, 64)) = 16
+        _LocalPCSSSamples ("PCSS Samples", Range(1, 64)) = 16
         // --- その他（省略可） ---
         [lilToonToggle] _UseShadowClamp ("Use Shadow Clamp (Anime Style)", Float) = 0
         _ShadowClamp ("Shadow Clamp", Range(0, 1)) = 0.5
@@ -77,15 +77,16 @@ Shader "lilToon/PCSS Extension"
             Blend [_SrcBlend] [_DstBlend]
 
             HLSLPROGRAM
+            #pragma target 3.0
             #pragma vertex vert
             #pragma fragment frag
             #pragma multi_compile_fwdbase
             #pragma multi_compile_fog
             #pragma multi_compile_instancing
-            #pragma shader_feature _USEPCSS
-            #pragma shader_feature _USESHADOW_ON
-            #pragma shader_feature _USEVRCLIGHT_VOLUMES_ON
-            #pragma shader_feature _USESHADOWCLAMP_ON
+            #pragma shader_feature_local _USEPCSS_ON
+            #pragma shader_feature_local _USESHADOW_ON
+            #pragma shader_feature_local _USEVRCLIGHT_VOLUMES_ON
+            #pragma shader_feature_local _USESHADOWCLAMP_ON
             #pragma multi_compile _ VRC_LIGHT_VOLUMES_ENABLED
             #pragma multi_compile _ VRC_LIGHT_VOLUMES_MOBILE
 
@@ -94,6 +95,16 @@ Shader "lilToon/PCSS Extension"
             #include "AutoLight.cginc"
             #include "Lighting.cginc"
             #define LIL_LILTOON_SHADER_INCLUDED
+            
+            // テクスチャ存在確認用の定義
+            #if defined(_MainTex)
+                #define _MAINTEX
+            #endif
+            
+            #if defined(_ShadowColorTex)
+                #define _SHADOWCOLORTEX
+            #endif
+            
             #include "Includes/lil_pcss_common.hlsl"
             #include "Includes/lil_pcss_shadows.hlsl"
 
@@ -117,9 +128,40 @@ Shader "lilToon/PCSS Extension"
             float _UseShadowClamp;
             float _ShadowClamp;
             float _Translucency;
-            float _PCSSFilterRadius;
-            float _PCSSLightSize;
-            float _PCSSSamples;
+            // PCSS変数の重複を避けるためにローカル変数として定義
+            float _LocalPCSSFilterRadius;
+            float _LocalPCSSLightSize;
+            float _LocalPCSSSamples;
+
+            // VRCライトボリューム用関数
+            #if defined(VRC_LIGHT_VOLUMES_ENABLED)
+            float3 SampleVRCLightVolumes(float3 worldPos)
+            {
+                #if defined(VRC_LIGHT_VOLUMES_MOBILE)
+                    // モバイル向け簡易版
+                    float3 localPos = mul(_VRCLightVolumeWorldToLocal, float4(worldPos, 1.0)).xyz;
+                    float3 volumeUV = localPos * 0.5 + 0.5;
+                    float3 lightColor = tex3D(_VRCLightVolumeTexture, volumeUV).rgb;
+                    return lightColor * _VRCLightVolumeTint.rgb * _VRCLightVolumeIntensity;
+                #else
+                    // フル機能版
+                    float3 localPos = mul(_VRCLightVolumeWorldToLocal, float4(worldPos, 1.0)).xyz;
+                    float3 volumeUV = localPos * 0.5 + 0.5;
+                    // ボリュームの範囲外なら影響なし
+                    if (volumeUV.x < 0.0 || volumeUV.x > 1.0 || volumeUV.y < 0.0 || volumeUV.y > 1.0 || volumeUV.z < 0.0 || volumeUV.z > 1.0)
+                        return float3(1.0, 1.0, 1.0);
+                    float3 lightColor = tex3D(_VRCLightVolumeTexture, volumeUV).rgb;
+                    // 距離による減衰
+                    float distFactor = 1.0 - saturate(length(localPos) * _VRCLightVolumeDistanceFactor);
+                    return lerp(float3(1.0, 1.0, 1.0), lightColor * _VRCLightVolumeTint.rgb, _VRCLightVolumeIntensity * distFactor);
+                #endif
+            }
+            #else
+            float3 SampleVRCLightVolumes(float3 worldPos)
+            {
+                return float3(1.0, 1.0, 1.0);
+            }
+            #endif
 
             struct appdata
             {
@@ -158,25 +200,49 @@ Shader "lilToon/PCSS Extension"
             {
                 // --- ピンク化防止: nullチェックとデフォルト値 ---
                 fixed4 col = fixed4(1,1,1,1);
-                if (_MainTex) col = tex2D(_MainTex, i.uv) * _Color;
-                else col = _Color;
+                
+                // テクスチャのnullチェックを改善
+                #if defined(_MAINTEX)
+                    col = tex2D(_MainTex, i.uv) * _Color;
+                #else
+                    col = _Color;
+                #endif
+                
                 float shadow = 1.0;
-                #if defined(_USEPCSS)
-                    shadow = PCSS(i._LightCoord, i.pos.z, _PCSSFilterRadius, _PCSSLightSize, _PCSSSamples);
+                #if defined(_USEPCSS_ON)
+                    // PCSSを使用 - 標準のシャドウ座標を使用
+                    #ifdef LIL_PCSS_MOBILE_PLATFORM
+                        // モバイル向け簡易版
+                        shadow = SHADOW_ATTENUATION(i);
+                        shadow = PCSSMobile(shadow, i.pos.z);
+                    #else
+                        // フル機能版
+                        shadow = SHADOW_ATTENUATION(i);
+                        shadow = PCSS(shadow, i.pos.z, _LocalPCSSFilterRadius, _LocalPCSSLightSize, _LocalPCSSSamples);
+                    #endif
                 #elif defined(_USESHADOW_ON)
                     shadow = SHADOW_ATTENUATION(i);
                     shadow = saturate(shadow + _ShadowBorder);
                     shadow = smoothstep(0.0, _ShadowBlur, shadow);
                 #endif
+                
                 #if defined(_USESHADOWCLAMP_ON)
                     shadow = step(_ShadowClamp, shadow);
                 #endif
+                
                 #if defined(VRC_LIGHT_VOLUMES_ENABLED) && defined(_USEVRCLIGHT_VOLUMES_ON)
                     float3 lightVolumeColor = SampleVRCLightVolumes(i.worldPos);
                     col.rgb *= lightVolumeColor;
                 #endif
+                
                 shadow = lerp(1.0 - _Translucency, 1.0, shadow);
-                col.rgb *= lerp(tex2D(_ShadowColorTex, i.uv).rgb, float3(1,1,1), shadow);
+                
+                #if defined(_SHADOWCOLORTEX)
+                    col.rgb *= lerp(tex2D(_ShadowColorTex, i.uv).rgb, float3(1,1,1), shadow);
+                #else
+                    col.rgb *= lerp(float3(0.5, 0.5, 0.5), float3(1,1,1), shadow);
+                #endif
+                
                 UNITY_APPLY_FOG(i.fogCoord, col);
                 return col;
             }
@@ -188,16 +254,22 @@ Shader "lilToon/PCSS Extension"
             Tags {"LightMode" = "ShadowCaster"}
             ZWrite On
             ZTest LEqual
+            Cull [_Cull]
+            
             HLSLPROGRAM
+            #pragma target 3.0
             #pragma vertex vert
             #pragma fragment frag
             #pragma multi_compile_shadowcaster
             #pragma multi_compile_instancing
+            
             #include "UnityCG.cginc"
+            
             sampler2D _MainTex;
             float4 _MainTex_ST;
             fixed4 _Color;
             float _Cutoff;
+            
             struct appdata
             {
                 float4 vertex : POSITION;
@@ -205,12 +277,14 @@ Shader "lilToon/PCSS Extension"
                 float3 normal : NORMAL;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
+            
             struct v2f
             {
                 V2F_SHADOW_CASTER;
                 float2 uv : TEXCOORD1;
                 UNITY_VERTEX_OUTPUT_STEREO
             };
+            
             v2f vert(appdata v)
             {
                 v2f o;
@@ -220,6 +294,7 @@ Shader "lilToon/PCSS Extension"
                 TRANSFER_SHADOW_CASTER_NORMALOFFSET(o)
                 return o;
             }
+            
             fixed4 frag(v2f i) : SV_Target
             {
                 fixed4 col = tex2D(_MainTex, i.uv) * _Color;
