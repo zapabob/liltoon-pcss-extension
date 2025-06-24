@@ -28,6 +28,7 @@
 - **VRChat SDK3 Optimization**: Performance-tuned for VRChat environments
 - **Quest Platform Support**: Optimized rendering pipeline
 - **One-Click VCC Installation**: Seamless setup experience
+- **Unity公式Editorコルーチン対応**: Editor拡張の非同期処理が安定・高速
 
 ### 🚀 Key Highlights
 
@@ -68,6 +69,7 @@
 - **VRChat SDK**: 3.7.0 or later
 - **ModularAvatar**: 1.10.0 or later
 - **Poiyomi Pro**: 8.0 or later
+- **Editor Coroutines**: com.unity.editor-coroutines 1.0.0（Unity公式Editorコルーチン対応）
 
 ## 📚 Documentation
 
