@@ -184,7 +184,7 @@ namespace lilToon.PCSS.Editor
         /// <summary>
         /// マテリアルに必要なプロパティが存在することを確認
         /// </summary>
-        private static void EnsureRequiredProperties(Material material)
+        public static void EnsureRequiredProperties(Material material)
         {
             // 基本プロパティの確保
             if (material.HasProperty("_MainTex") && material.GetTexture("_MainTex") == null)
@@ -213,7 +213,7 @@ namespace lilToon.PCSS.Editor
         /// <summary>
         /// シェーダーキーワードを設定
         /// </summary>
-        private static void SetupShaderKeywords(Material material)
+        public static void SetupShaderKeywords(Material material)
         {
             // PCSSキーワード
             SetKeyword(material, "_USEPCSS_ON", material.HasProperty("_UsePCSS") && material.GetFloat("_UsePCSS") > 0.5f);
@@ -361,51 +361,85 @@ namespace lilToon.PCSS.Editor
             // シーン内のすべてのマテリアルを修復
             var renderers = GameObject.FindObjectsOfType<Renderer>();
             List<Material> fixedMaterials = new List<Material>();
-            
+            Shader pcssShader = Shader.Find(PCSS_EXTENSION_SHADER_NAME);
+
             foreach (var renderer in renderers)
             {
                 foreach (var material in renderer.sharedMaterials)
                 {
-                    if (material != null && material.shader != null && 
-                        material.shader.name == PCSS_EXTENSION_SHADER_NAME)
+                    if (material == null) continue;
+                    bool needsFix = false;
+                    if (material.shader == null)
                     {
+                        needsFix = true;
+                    }
+                    else if (material.shader.name != PCSS_EXTENSION_SHADER_NAME)
+                    {
+                        if (material.shader.name.Contains("lilToon"))
+                            needsFix = true;
+                    }
+                    else if (material.shader.name == PCSS_EXTENSION_SHADER_NAME)
+                    {
+                        needsFix = true;
+                    }
+                    if (needsFix && pcssShader != null)
+                    {
+                        material.shader = pcssShader;
+                        EnsureRequiredProperties(material);
+                        SetupShaderKeywords(material);
                         if (!fixedMaterials.Contains(material))
-                        {
-                            EnsureRequiredProperties(material);
-                            SetupShaderKeywords(material);
                             fixedMaterials.Add(material);
+                        EditorUtility.SetDirty(material);
+                        // --- Prefabインスタンス対応 ---
+                        var go = renderer.gameObject;
+                        if (PrefabUtility.IsPartOfPrefabInstance(go))
+                        {
+                            PrefabUtility.RecordPrefabInstancePropertyModifications(renderer);
                         }
                     }
                 }
             }
-            
+
             // プロジェクト内のマテリアルも修復
             string[] materialGuids = AssetDatabase.FindAssets("t:Material");
             foreach (string guid in materialGuids)
             {
                 string path = AssetDatabase.GUIDToAssetPath(guid);
                 Material material = AssetDatabase.LoadAssetAtPath<Material>(path);
-                
-                if (material != null && material.shader != null && 
-                    material.shader.name == PCSS_EXTENSION_SHADER_NAME)
+                if (material == null) continue;
+                bool needsFix = false;
+                if (material.shader == null)
                 {
+                    needsFix = true;
+                }
+                else if (material.shader.name != PCSS_EXTENSION_SHADER_NAME)
+                {
+                    if (material.shader.name.Contains("lilToon"))
+                        needsFix = true;
+                }
+                else if (material.shader.name == PCSS_EXTENSION_SHADER_NAME)
+                {
+                    needsFix = true;
+                }
+                if (needsFix && pcssShader != null)
+                {
+                    material.shader = pcssShader;
+                    EnsureRequiredProperties(material);
+                    SetupShaderKeywords(material);
                     if (!fixedMaterials.Contains(material))
-                    {
-                        EnsureRequiredProperties(material);
-                        SetupShaderKeywords(material);
                         fixedMaterials.Add(material);
-                        EditorUtility.SetDirty(material);
+                    EditorUtility.SetDirty(material);
+                    // --- Prefabインスタンス対応 ---
+                    var go = renderer.gameObject;
+                    if (PrefabUtility.IsPartOfPrefabInstance(go))
+                    {
+                        PrefabUtility.RecordPrefabInstancePropertyModifications(renderer);
                     }
                 }
             }
-            
+
             AssetDatabase.SaveAssets();
-            
-            EditorUtility.DisplayDialog(
-                "マテリアル修復完了",
-                $"{fixedMaterials.Count}個のPCSSマテリアルが修復されました。",
-                "OK"
-            );
+            EditorUtility.DisplayDialog("PCSS Extension マテリアル修復", $"{fixedMaterials.Count}個のマテリアルを自動修復しました。\n(シェーダーmissingやプロパティ欠損も自動復旧)", "OK");
         }
     }
 }

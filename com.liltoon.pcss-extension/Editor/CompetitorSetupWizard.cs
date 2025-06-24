@@ -337,16 +337,44 @@ namespace lilToon.PCSS.Editor
         {
             var renderers = target.GetComponentsInChildren<Renderer>(true);
             var materials = new List<Material>();
+            Shader pcssShader = Shader.Find("lilToon/PCSS Extension");
             foreach (var renderer in renderers)
             {
                 foreach (var mat in renderer.sharedMaterials)
                 {
-                    if (mat != null && mat.shader.name == "lilToon/PCSS Extension")
+                    if (mat == null) continue;
+                    bool needsFix = false;
+                    if (mat.shader == null)
                     {
-                        if (!materials.Contains(mat))
+                        needsFix = true;
+                    }
+                    else if (mat.shader.name != "lilToon/PCSS Extension")
+                    {
+                        if (mat.shader.name.Contains("lilToon"))
+                            needsFix = true;
+                    }
+                    else if (mat.shader.name == "lilToon/PCSS Extension")
+                    {
+                        // 既に正しい場合もリストアップ
+                        needsFix = true;
+                    }
+                    if (needsFix && pcssShader != null)
+                    {
+                        mat.shader = pcssShader;
+                        // 必要なプロパティ・キーワードを補完
+                        lilToon.PCSS.Editor.LilToonPCSSExtensionInitializer.EnsureRequiredProperties(mat);
+                        lilToon.PCSS.Editor.LilToonPCSSExtensionInitializer.SetupShaderKeywords(mat);
+                        EditorUtility.SetDirty(mat);
+                        // --- Prefabインスタンス対応 ---
+                        var go = renderer.gameObject;
+                        if (UnityEditor.PrefabUtility.IsPartOfPrefabInstance(go))
                         {
-                            materials.Add(mat);
+                            UnityEditor.PrefabUtility.RecordPrefabInstancePropertyModifications(renderer);
                         }
+                    }
+                    if (!materials.Contains(mat))
+                    {
+                        materials.Add(mat);
                     }
                 }
             }
