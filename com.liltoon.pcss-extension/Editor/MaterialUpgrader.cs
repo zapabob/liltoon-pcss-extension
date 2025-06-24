@@ -1,22 +1,22 @@
- using UnityEditor;
+using UnityEditor;
 using UnityEngine;
 using System.Linq;
 
 namespace lilToon.PCSS.Editor
 {
-    public class LilToonPCSSMaterialUpgrader
+    public class LilToonPCSSMaterialUpgrader2
     {
         private const string LILTOON_SHADER_NAME = "lilToon";
         private const string PCSS_EXTENSION_SHADER_NAME = "lilToon/PCSS Extension";
 
-        [MenuItem("Assets/lilToon/Upgrade Selected Materials to PCSS Extension", true)]
-        private static bool ValidateUpgradeMaterials()
+        [MenuItem("Assets/lilToon/Upgrade Selected Materials to PCSS Extension v2", true)]
+        private static bool ValidateUpgradeMaterialsV2()
         {
             return Selection.GetFiltered<Material>(SelectionMode.Assets).Any(m => m.shader.name.Contains(LILTOON_SHADER_NAME) && m.shader.name != PCSS_EXTENSION_SHADER_NAME);
         }
 
-        [MenuItem("Assets/lilToon/Upgrade Selected Materials to PCSS Extension")]
-        private static void UpgradeMaterials()
+        [MenuItem("Assets/lilToon/Upgrade Selected Materials to PCSS Extension v2")]
+        private static void UpgradeMaterialsV2()
         {
             Shader pcssShader = Shader.Find(PCSS_EXTENSION_SHADER_NAME);
             if (pcssShader == null)

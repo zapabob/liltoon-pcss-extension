@@ -178,8 +178,56 @@ namespace lilToon.PCSS.Editor
         
         private void DrawPerformanceStats()
         {
-            // 統計機能は不要のため無効化
-            EditorGUILayout.HelpBox("パフォーマンス統計機能は無効化されています。", MessageType.Info);
+            showPerformanceStats = EditorGUILayout.Foldout(showPerformanceStats, "📊 パフォーマンス統計");
+            
+            if (showPerformanceStats)
+            {
+                EditorGUI.indentLevel++;
+                
+                var optimizer = FindObjectOfType<VRChatPerformanceOptimizer>();
+                if (optimizer != null)
+                {
+                    var stats = optimizer.GetStats();
+                    
+                    EditorGUILayout.LabelField($"現在のFPS: {stats.CurrentFPS:F1}");
+                    EditorGUILayout.LabelField($"アバター数: {stats.AvatarCount}");
+                    EditorGUILayout.LabelField($"Quest環境: {(stats.IsQuest ? "Yes" : "No")}");
+                    EditorGUILayout.LabelField($"VRモード: {(stats.IsVRMode ? "Yes" : "No")}");
+                    EditorGUILayout.LabelField($"VRC品質: {stats.VRCQuality}");
+                    EditorGUILayout.LabelField($"PCSS品質: {stats.CurrentPCSSQuality}");
+                }
+                else
+                {
+                    EditorGUILayout.HelpBox(
+                        "パフォーマンス統計を表示するには、シーンにVRChatPerformanceOptimizerを追加してください。",
+                        MessageType.Info);
+                    
+                    if (GUILayout.Button("VRChatPerformanceOptimizerを追加"))
+                    {
+                        var go = new GameObject("VRChat Performance Optimizer");
+                        go.AddComponent<VRChatPerformanceOptimizer>();
+                        Selection.activeGameObject = go;
+                    }
+                }
+                
+                EditorGUILayout.Space();
+                
+                int pcssMaterialCount = 0;
+                if (optimizer != null)
+                {
+                    var materials = PCSSUtilities.FindPCSSMaterials(optimizer.gameObject);
+                    foreach(var mat in materials)
+                    {
+                        if (PCSSUtilities.IsPCSSCompatible(mat))
+                        {
+                            pcssMaterialCount++;
+                        }
+                    }
+                }
+                EditorGUILayout.LabelField("PCSSマテリアル数:", pcssMaterialCount.ToString());
+                
+                EditorGUI.indentLevel--;
+            }
         }
         
         private void DrawActionButtons()

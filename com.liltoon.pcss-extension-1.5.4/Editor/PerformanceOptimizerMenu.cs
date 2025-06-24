@@ -14,14 +14,7 @@ using UnityEditor;
 
 namespace lilToon.PCSS.Editor
 {
-    public class PhysBoneLightController : MonoBehaviour
-    {
-        public Light targetLight;
-        public Transform lightOrigin;
-        public VRCPhysBone targetPhysBone;
-    }
-
-    public class PerformanceOptimizerMenu : EditorWindow
+    public static class PerformanceOptimizerMenu
     {
         private const string MenuPath = "Tools/lilToon PCSS Extension/Setup Performance Tuner";
         private const string PhysBoneMenuPath = "Tools/lilToon PCSS Extension/Setup PhysBone Light Controller";
@@ -38,7 +31,7 @@ namespace lilToon.PCSS.Editor
                 Selection.activeObject = existingOptimizer.gameObject;
                 return;
             }
-            
+
             // 新しいGameObjectを作成し、コンポーネントをアタッチ
             GameObject optimizerObject = new GameObject(GameObjectName);
             optimizerObject.AddComponent<VRChatPerformanceOptimizer>();
@@ -53,7 +46,7 @@ namespace lilToon.PCSS.Editor
         }
 
         [MenuItem(PhysBoneMenuPath)]
-        public static void SetupPhysBoneLightController()
+        private static void SetupPhysBoneLightController()
         {
             GameObject selectedObject = Selection.activeGameObject;
             if (selectedObject == null)

@@ -1,249 +1,86 @@
 {
-  "name": "zapabob VPM Repository",
-  "description": "VPM Repository for lilToon PCSS Extension and VRChat utilities",
-  "author": {
-    "name": "zapabob",
-    "email": "zapabob@example.com",
-    "url": "https://github.com/zapabob"
-  },
+  "name": "lilToon PCSS Extension",
+  "author": "lilToon PCSS Extension Team",
   "url": "https://zapabob.github.io/liltoon-pcss-extension/index.json",
-  "packages": {
-    "com.liltoon.pcss-extension": {
-      "versions": {
-        "1.5.3": {
-          "name": "com.liltoon.pcss-extension",
-          "displayName": "lilToon PCSS Extension",
-          "version": "1.5.3",
-          "description": "v1.5.3 Critical BugFix: Corrected a namespace error in the lilToon ShaderGUI script, resolving a critical compilation failure that prevented the package from being used.",
-          "unity": "2022.3",
-          "unityRelease": "22f1",
-          "dependencies": {
-            "com.unity.render-pipelines.universal": "14.0.9"
-          },
-          "keywords": [ "lilToon", "PCSS", "VRChat", "Fix", "ShaderGUI" ],
-          "author": { "name": "zapabob", "url": "https://github.com/zapabob" },
-          "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.5.3/com.liltoon.pcss-extension-1.5.3.zip",
-          "zipSHA256": "4964fe42517e7c4b440d67da8a8c5a988b58ebae",
-          "repo": "https://github.com/zapabob/liltoon-pcss-extension",
-          "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md"
+  "id": "com.liltoon.pcss-extension",
+  "description": "Professional PCSS shadows for VRChat avatars with lilToon and Poiyomi",
+  "infoLink": {
+    "url": "https://zapabob.github.io/liltoon-pcss-extension/",
+    "text": "Documentation"
+  },
+  "packages": [
+    {
+      "name": "com.liltoon.pcss-extension",
+      "displayName": "lilToon PCSS Extension",
+      "description": "🎯 Professional PCSS (Percentage-Closer Soft Shadows) extension for lilToon and Poiyomi shaders with Avatar Selector Menu. Features Unity 2022.3 LTS compatibility, URP 14.0.10 support, built-in preset system (Realistic/Anime/Cinematic), one-click avatar setup with ModularAvatar integration, and Base layer red face light implementation.",
+      "version": "1.5.4",
+      "unity": "2022.3",
+      "unityRelease": "22f1",
+      "dependencies": {
+        "com.unity.render-pipelines.universal": "12.1.12",
+        "jp.lilxyzw.liltoon": "1.7.0",
+        "com.unity.editor-coroutines": "1.0.0"
+      },
+      "vpmDependencies": {
+        "com.vrchat.avatars": ">=3.5.0",
+        "com.vrchat.base": ">=3.5.0",
+        "nadena.dev.modular-avatar": "1.10.0"
+      },
+      "keywords": [
+        "shader",
+        "toon",
+        "avatar",
+        "pcss",
+        "shadows",
+        "vrchat",
+        "lilToon",
+        "poiyomi",
+        "unity",
+        "urp",
+        "preset",
+        "menu",
+        "selector",
+        "redface",
+        "baseLayer"
+      ],
+      "author": {
+        "name": "lilToon PCSS Extension Team",
+        "email": "r.minegishi1987@gmail.com",
+        "url": "https://zapabob.github.io/liltoon-pcss-extension/"
+      },
+      "legacyFolders": {
+        "Assets\\lilToon PCSS Extension": ""
+      },
+      "legacyFiles": {
+        "Assets\\lilToon PCSS Extension.meta": ""
+      },
+      "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.5.4/com.liltoon.pcss-extension-1.5.4.zip",
+      "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
+      "documentationUrl": "https://zapabob.github.io/liltoon-pcss-extension/",
+      "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE",
+      "hideInEditor": false,
+      "samples": [
+        {
+          "displayName": "🎯 Avatar Setup Examples",
+          "description": "アバターセットアップのサンプルシーン",
+          "path": "Samples~/AvatarSetup"
         },
-        "1.5.2": {
-          "name": "com.liltoon.pcss-extension",
-          "displayName": "lilToon PCSS Extension",
-          "version": "1.5.2",
-          "description": "v1.5.2 Critical BugFix: VRChat SDK APIの変更に追従し、コンパイルエラーの根本原因を修正しました。Editor専用コードをRuntimeから分離し、アセンブリ解決例外も解消。",
-          "unity": "2022.3",
-          "unityRelease": "22f1",
-          "dependencies": {
-            "com.unity.render-pipelines.universal": "14.0.9"
-          },
-          "keywords": [
-            "lilToon", "PCSS", "VRChat", "Fix"
-          ],
-          "author": {
-            "name": "zapabob",
-            "url": "https://github.com/zapabob"
-          },
-          "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.5.2/com.liltoon.pcss-extension-1.5.2.zip",
-          "zipSHA256": "D517D366BAF81258C50837C3425996D4F6168C7EBAEFBECD76DAFC63B7AEBA64",
-          "repo": "https://github.com/zapabob/liltoon-pcss-extension",
-          "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md"
+        {
+          "displayName": "🎨 Material Presets",
+          "description": "PCSS対応マテリアルプリセット集",
+          "path": "Samples~/MaterialPresets"
         },
-        "1.5.1": {
-          "name": "com.liltoon.pcss-extension",
-          "displayName": "lilToon PCSS Extension",
-          "version": "1.5.1",
-          "description": "v1.5.1 Repository Restructuring & BugFix: リポジトリ構造をVPM標準に完全に準拠させ、根深いコンパイルエラーの原因となっていたファイル競合を解消しました。これにより、VCCでの安定したインストールと動作が保証されます。",
-          "unity": "2022.3",
-          "unityRelease": "22f1",
-          "dependencies": {
-            "com.unity.render-pipelines.universal": "14.0.9"
-          },
-          "keywords": [
-            "lilToon",
-            "PCSS",
-            "VRChat",
-            "Avatar",
-            "Shader",
-            "Shadows",
-            "PhysBone",
-            "Fix",
-            "VPM"
-          ],
-          "author": {
-            "name": "zapabob",
-            "email": "zapabob@example.com",
-            "url": "https://github.com/zapabob"
-          },
-          "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.5.1/com.liltoon.pcss-extension-1.5.1.zip",
-          "zipSHA256": "C49C90CCF11C5A4EB8FCCE5D96EEE0BC398057A1FDDF050F3C9FF230894E217A",
-          "repo": "https://github.com/zapabob/liltoon-pcss-extension",
-          "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
-          "documentationUrl": "https://github.com/zapabob/liltoon-pcss-extension#readme",
-          "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE"
+        {
+          "displayName": "⚡ Performance Optimization",
+          "description": "パフォーマンス最適化サンプル",
+          "path": "Samples~/PerformanceOptimization"
         },
-        "1.5.0": {
-          "name": "com.liltoon.pcss-extension",
-          "displayName": "lilToon PCSS Extension",
-          "version": "1.5.0",
-          "description": "v1.5.0 BugFix: 外部ライトのPhysBone追従機能を実装し、Unity 2022でのコンパイルエラー（VRChat SDK API変更、Burst CompilerのAssembly Resolution問題）を修正しました。",
-          "unity": "2022.3",
-          "unityRelease": "22f1",
-          "dependencies": {
-            "com.unity.render-pipelines.universal": "14.0.9"
-          },
-          "keywords": [
-            "lilToon",
-            "PCSS",
-            "VRChat",
-            "Avatar",
-            "Shader",
-            "Shadows",
-            "PhysBone",
-            "External Light",
-            "Performance",
-            "Optimization"
-          ],
-          "author": {
-            "name": "zapabob",
-            "email": "zapabob@example.com",
-            "url": "https://github.com/zapabob"
-          },
-          "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.5.0/com.liltoon.pcss-extension-1.5.0.zip",
-          "zipSHA256": "8E1D7357159E24B473062DAEEDCD1DBE884BB8CDF8E9FE3348503CF87B3B1F72",
-          "repo": "https://github.com/zapabob/liltoon-pcss-extension",
-          "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
-          "documentationUrl": "https://github.com/zapabob/liltoon-pcss-extension#readme",
-          "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE"
-        },
-        "1.4.9": {
-          "name": "com.liltoon.pcss-extension",
-          "displayName": "lilToon PCSS Extension",
-          "version": "1.4.9",
-          "description": "Revolutionary Unity Menu Avatar Selector & Complete Shader Error Resolution Edition - Professional PCSS (Percentage-Closer Soft Shadows) extension for lilToon and Poiyomi shaders with advanced VRChat optimization, 90% setup time reduction, and comprehensive error handling.",
-          "unity": "2022.3",
-          "unityRelease": "22f1",
-          "dependencies": {
-            "com.unity.render-pipelines.universal": "14.0.9"
-          },
-          "keywords": [
-            "lilToon",
-            "PCSS",
-            "VRChat",
-            "Avatar",
-            "Shader",
-            "Shadows",
-            "Unity Menu",
-            "Performance",
-            "Optimization",
-            "Professional"
-          ],
-          "author": {
-            "name": "zapabob",
-            "email": "zapabob@example.com",
-            "url": "https://github.com/zapabob"
-          },
-          "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.4.9/com.liltoon.pcss-extension-1.4.9-clean.zip",
-          "zipSHA256": "EB30BC9F0163EAF1113DF9A2B5279EE79F062E8EBE10B541728E4BDE6710E93C",
-          "repo": "https://github.com/zapabob/liltoon-pcss-extension",
-          "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
-          "documentationUrl": "https://github.com/zapabob/liltoon-pcss-extension#readme",
-          "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE"
-        },
-        "1.4.7": {
-          "name": "com.liltoon.pcss-extension",
-          "displayName": "lilToon PCSS Extension",
-          "version": "1.4.7",
-          "description": "Professional PCSS solution with consistent naming convention, avatar selector menu, intuitive visual avatar selection, automatic scene detection, one-click setup system, enhanced URP 12.1.12 compatibility, advanced features, optimization, real-time ray tracing support, performance analytics, automatic quality scaling, commercial-ready asset generation, commercial licensing, priority support, and comprehensive VRChat optimization suite.",
-          "unity": "2022.3",
-          "unityRelease": "22f1",
-          "keywords": [
-            "shader",
-            "toon",
-            "avatar",
-            "pcss",
-            "shadows",
-            "vrchat",
-            "lilToon",
-            "poiyomi",
-            "expression",
-            "lightvolumes",
-            "vrc-light-volumes",
-            "bakery",
-            "lighting",
-            "modular-avatar",
-            "vrchat-sdk3",
-            "performance",
-            "optimization",
-            "all-in-one",
-            "booth",
-            "professional",
-            "commercial",
-            "premium",
-            "advanced",
-            "lightmapping",
-            "quality",
-            "production-ready",
-            "enterprise",
-            "ray-tracing",
-            "analytics",
-            "auto-scaling",
-            "priority-support",
-            "avatar-selector",
-            "visual-ui",
-            "one-click-setup",
-            "auto-detection",
-            "intuitive-workflow"
-          ],
-          "author": {
-            "name": "lilToon PCSS Extension Team",
-            "email": "r.minegishi1987@gmail.com",
-            "url": "https://github.com/zapabob"
-          },
-          "dependencies": {
-            "com.unity.render-pipelines.universal": "12.1.12"
-          },
-          "vpmDependencies": {
-            "com.vrchat.avatars": ">=3.7.0",
-            "com.vrchat.base": ">=3.7.0",
-            "nadena.dev.modular-avatar": ">=1.10.0"
-          },
-          "recommendedDependencies": {
-            "jp.lilxyzw.liltoon": ">=1.8.0"
-          },
-          "legacyFolders": {
-            "Assets\\lilToon PCSS Extension": ""
-          },
-          "legacyFiles": {
-            "Assets\\lilToon PCSS Extension.meta": ""
-          },
-          "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.4.7/com.liltoon.pcss-extension-1.4.7.zip",
-          "zipSHA256": "5D6A4C66041BCDACD36F8C6874231B5256FA5070BF986CF141F174D691451D49",
-          "repo": "https://github.com/zapabob/liltoon-pcss-extension",
-          "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
-          "documentationUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/README.md",
-          "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE",
-          "commercial": {
-            "license": "Commercial",
-            "usage": "Commercial Use Allowed",
-            "redistribution": "Allowed",
-            "modification": "Full Rights",
-            "support": "Priority Support 24/7",
-            "features": [
-              "Optimization",
-              "Real-time Ray Tracing",
-              "Analytics",
-              "Automatic Quality Scaling",
-              "Commercial Asset Generation",
-              "Commercial Licensing",
-              "Priority Support",
-              "White-label Rights",
-              "Avatar Selector Menu",
-              "Enhanced URP Compatibility"
-            ]
-          }
+        {
+          "displayName": "🔴 Red Face Light",
+          "description": "表情が赤くなるライト機能サンプル (Baseレイヤー)",
+          "path": "Samples~/RedFaceLight"
         }
-      }
+      ]
     }
-  }
+  ]
 }

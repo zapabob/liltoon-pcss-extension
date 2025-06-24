@@ -353,4 +353,37 @@ namespace lilToon.PCSS.Editor
             return materials;
         }
     }
+
+    public class DirectionalLightParticleCreator
+    {
+        [MenuItem("Tools/Create Directional Light Particle")]
+        public static void CreateDirectionalLightParticle()
+        {
+            GameObject go = new GameObject("DirectionalGlow");
+            var ps = go.AddComponent<ParticleSystem>();
+            var main = ps.main;
+            main.duration = 1f;
+            main.loop = true;
+            main.startLifetime = 0.5f;
+            main.startSpeed = 8f;
+            main.startSize = 0.3f;
+            main.startColor = Color.yellow;
+
+            var emission = ps.emission;
+            emission.rateOverTime = 100f;
+
+            var shape = ps.shape;
+            shape.shapeType = ParticleSystemShapeType.Cone;
+            shape.angle = 15f;
+            shape.radius = 0.05f;
+
+            var renderer = go.GetComponent<ParticleSystemRenderer>();
+            renderer.renderMode = ParticleSystemRenderMode.Stretch;
+            renderer.lengthScale = 3f;
+            // ここでEmissiveなパーティクル用マテリアルを割り当てる
+            // renderer.material = (Material)AssetDatabase.LoadAssetAtPath("Assets/YourEmissiveMaterial.mat", typeof(Material));
+
+            Debug.Log("Directional light-like particle created!");
+        }
+    }
 } 

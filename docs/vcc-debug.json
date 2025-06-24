@@ -84,5 +84,109 @@
     "cdn": "GitHub Pages",
     "ssl": "Enabled",
     "accessibility": "Global"
+  },
+  "vcc_info": {
+    "version": "1.5.4",
+    "repository_url": "https://zapabob.github.io/liltoon-pcss-extension/index.json",
+    "last_updated": "2025-06-24",
+    "packages": [
+      "com.liltoon.pcss-extension"
+    ]
+  },
+  "unity_info": {
+    "compatible_unity_versions": [
+      "2022.3.22f1",
+      "2022.3.23f1",
+      "2022.3.24f1"
+    ],
+    "compatible_urp_versions": [
+      "12.1.12",
+      "14.0.10"
+    ]
+  },
+  "vrchat_info": {
+    "compatible_sdk_versions": [
+      "3.5.0",
+      "3.5.1"
+    ],
+    "modular_avatar_version": "1.10.0"
+  },
+  "package_info": {
+    "name": "com.liltoon.pcss-extension",
+    "version": "1.5.4",
+    "display_name": "lilToon PCSS Extension",
+    "description": "Professional PCSS shadows for VRChat avatars with lilToon and Poiyomi",
+    "unity": "2022.3",
+    "unity_release": "22f1",
+    "author": {
+      "name": "lilToon PCSS Extension Team",
+      "email": "r.minegishi1987@gmail.com",
+      "url": "https://zapabob.github.io/liltoon-pcss-extension/"
+    },
+    "dependencies": {
+      "com.unity.render-pipelines.universal": "12.1.12",
+      "jp.lilxyzw.liltoon": "1.7.0",
+      "com.unity.editor-coroutines": "1.0.0"
+    },
+    "vpm_dependencies": {
+      "com.vrchat.avatars": ">=3.5.0",
+      "com.vrchat.base": ">=3.5.0",
+      "nadena.dev.modular-avatar": "1.10.0"
+    }
+  },
+  "features": {
+    "avatar_selector": true,
+    "preset_system": true,
+    "performance_optimization": true,
+    "modular_avatar_integration": true,
+    "urp_support": true,
+    "vrc_light_volumes": true,
+    "poiyomi_support": true,
+    "red_face_light_base_layer": true
+  },
+  "presets": [
+    {
+      "name": "Realistic",
+      "filter_radius": 0.005,
+      "light_size": 0.05,
+      "bias": 0.0005,
+      "intensity": 1.0
+    },
+    {
+      "name": "Anime",
+      "filter_radius": 0.015,
+      "light_size": 0.1,
+      "bias": 0.001,
+      "intensity": 0.8
+    },
+    {
+      "name": "Cinematic",
+      "filter_radius": 0.025,
+      "light_size": 0.2,
+      "bias": 0.002,
+      "intensity": 1.2
+    }
+  ],
+  "red_face_light": {
+    "base_layer": true,
+    "intensity_levels": [
+      {
+        "name": "弱",
+        "value": 0.3,
+        "color": [1.0, 0.2, 0.2]
+      },
+      {
+        "name": "中",
+        "value": 0.6,
+        "color": [1.0, 0.2, 0.2]
+      },
+      {
+        "name": "強",
+        "value": 1.0,
+        "color": [1.0, 0.2, 0.2]
+      }
+    ],
+    "position": [0, 0, 0.1],
+    "range": 0.5
   }
 } 

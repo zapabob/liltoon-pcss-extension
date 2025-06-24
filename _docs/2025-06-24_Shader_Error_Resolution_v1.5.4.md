@@ -1,76 +1,68 @@
-﻿# シェーダーエラー解決 v1.5.4 実装ログ
+﻿# 2025-06-24 lilToon PCSS Extension v1.5.4 マテリアルロスト問題解決実装ログ
 
-## 概要
+## 問題の概要
 
-lilToon PCSS Extension v1.5.4のシェーダーエラーを修正しました。主な問題は以下の2点でした：
+lilToon PCSS Extensionシェーダーを使用する際に、以下の問題が発生していました：
 
-1. HLSLINCLUDE/HLSLPROGRAM と ENDHLSL タグの不一致
-2. シェーダーコード内の構文エラー（79行目付近）
+1. マテリアルをlilToonからPCSS Extensionに変更する際にプロパティ値が失われる
+2. シェーダーキーワードが正しく設定されず、PCSS効果が適用されない場合がある
+3. マテリアルのプロパティが不足している場合にピンク色になる
 
-## 発生していた問題
+## 実装した解決策
 
-シェーダーファイル内で以下のエラーが発生していました：
+### 1. シェーダーファイルの修正
 
-```
-Shader error in '': HLSLINCLUDE/HLSLPROGRAM and ENDHLSL tags mismatch
-Shader error in '': Parse error: syntax error, unexpected TVAL_ID, expecting TOK_SETTEXTURE or '}' at line 79
-```
+- `lilToon_PCSS_Extension.shader`を修正
+  - プロパティ名をlilToonと一致させるように修正
+  - `[lilToonToggle]`を`[lilToggle]`に変更して互換性向上
+  - `HLSLPROGRAM/ENDHLSL`を`CGPROGRAM/ENDCG`に変更してシェーダーエラー解消
+  - テクスチャ存在確認用の定義方法を改善（`#ifndef`を使用）
+  - シェーダーキーワードの定義方法を改善（`#pragma shader_feature_local _`形式に変更）
+  - PCSSの品質設定に応じてサンプル数を動的に調整する機能を追加
 
-原因を調査したところ、シェーダーコードが重複していることが判明しました。これにより、シェーダーの構造が壊れ、コンパイルエラーが発生していました。
+### 2. マテリアルアップグレーダーの強化
 
-## 解決方法
+- `MaterialUpgrader.cs`を拡張
+  - プロパティのマッピング定義を追加して、lilToonからPCSS Extensionへの変換時にプロパティ値を保持
+  - テクスチャプロパティとカラープロパティの特別な処理を追加
+  - シェーダー変更前にプロパティ値を保存し、変更後に復元する処理を実装
+  - デフォルト値の設定とシェーダーキーワードの適切な設定を追加
 
-1. 問題のあるシェーダーファイル `lilToon_PCSS_Extension.shader` を一旦削除
-2. 以下の修正を含む新しいシェーダーファイルを作成：
-   - 重複したコード部分の削除
-   - `#pragma shader_feature` を `#pragma shader_feature_local` に変更（最適化）
-   - テクスチャの存在確認用の定義を追加（ピンク化防止）
-   - ターゲットを明示的に `#pragma target 3.0` に設定
+### 3. シェーダーGUIクラスの改良
 
-## 主な変更点
+- `LilToonPCSSShaderGUI.cs`を修正
+  - 名前空間を`lilToon.PCSS.Editor`に統一
+  - 継承元を`LilToonShaderGUI`から`lilToonShaderGUI`に変更（大文字小文字の違いを修正）
+  - すべてのPCSS拡張プロパティを正しく定義
+  - プロパティのnullチェックを追加して安全性を向上
+  - プリセットモードに応じた自動設定機能を追加
 
-1. シェーダー機能フラグを _local に変更（シェーダーバリアント数削減）
-```hlsl
-#pragma shader_feature_local _USEPCSS_ON
-#pragma shader_feature_local _USESHADOW_ON
-#pragma shader_feature_local _USEVRCLIGHT_VOLUMES_ON
-#pragma shader_feature_local _USESHADOWCLAMP_ON
-```
+### 4. 初期化処理の強化
 
-2. テクスチャ存在確認用の定義を追加
-```hlsl
-// テクスチャ存在確認用の定義
-#if defined(_MainTex)
-    #define _MAINTEX
-#endif
+- `LilToonPCSSExtensionInitializer.cs`を拡張
+  - マテリアル変更時のコールバックを追加
+  - マテリアルに必要なプロパティが存在することを確認する機能を追加
+  - シェーダーキーワードを適切に設定する機能を追加
+  - 「Fix Materials」メニュー項目を追加して、既存のマテリアルを一括修復できるようにした
 
-#if defined(_ShadowColorTex)
-    #define _SHADOWCOLORTEX
-#endif
-```
+## 効果
 
-3. フラグメントシェーダーでのnullチェックを改善
-```hlsl
-// テクスチャのnullチェックを改善
-#if defined(_MAINTEX)
-    col = tex2D(_MainTex, i.uv) * _Color;
-#else
-    col = _Color;
-#endif
-```
-
-## 結果
-
-シェーダーのコンパイルエラーが解消され、正常に動作するようになりました。また、シェーダーバリアント数の削減により、コンパイル時間とメモリ使用量が改善されました。
+1. lilToonからPCSS Extensionへの変換時にマテリアルのプロパティ値が保持されるようになった
+2. シェーダーキーワードが正しく設定され、PCSS効果が常に適用されるようになった
+3. マテリアルのプロパティが不足している場合も自動的に補完され、ピンク色になることがなくなった
+4. プリセットモードによる簡単な設定が可能になり、ユーザビリティが向上した
 
 ## 今後の課題
 
-1. シェーダーコードの最適化をさらに進める
-2. モバイル向けの軽量バージョンの改善
-3. Unity 2022.3 LTS以降との互換性確保
+1. より多くのlilToonプロパティとの互換性を向上させる
+2. マテリアルのバリエーション（透明、カットアウト、アウトライン等）に対応する
+3. パフォーマンス最適化のさらなる改善
 
-## 参考資料
+## 技術的詳細
 
-- Unity シェーダーコンパイラーのエラーメッセージ
-- lilToonシェーダーのドキュメント
-- Unity Graphics Programming ガイド
+- シェーダーキーワード: `_USEPCSS_ON`, `_USESHADOW_ON`, `_USESHADOWCLAMP_ON`, `_USEVRCLIGHT_VOLUMES_ON`
+- プリセットモード: Realistic(0), Anime(1), Cinematic(2), Custom(3)
+- PCSSクオリティ: Low(0), Medium(1), High(2), Ultra(3)
+- 名前空間: `lilToon.PCSS.Editor`
+
+以上の修正により、lilToonとの互換性を維持しつつ、PCSS効果を付与する際のマテリアルロスト問題を解決しました。

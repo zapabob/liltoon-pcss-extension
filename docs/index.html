@@ -252,7 +252,6 @@
 
         .copy-button:hover {
             background: #ee5a24;
-            transform: scale(1.05);
         }
 
         .status-check {
@@ -394,6 +393,51 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
+        .changelog {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .changelog h3 {
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        .changelog ul {
+            margin-left: 20px;
+        }
+
+        .changelog li {
+            margin-bottom: 8px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .badge-new {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .badge-fix {
+            background: var(--warning-color);
+            color: black;
+        }
+
+        .badge-update {
+            background: var(--accent-color);
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -409,7 +453,7 @@
         <div class="glass-card">
             <div class="header">
                 <div class="logo">🌟 lilToon PCSS Extension</div>
-                <div class="version-badge">v1.4.7 最新版</div>
+                <div class="version-badge"><v1 class="1.5.4"></v1> 最新版</div>
                 <div class="subtitle">プロフェッショナルPCSS統合ソリューション</div>
             </div>
 
@@ -497,6 +541,54 @@
                     <div class="feature-title">商用ライセンス</div>
                     <div class="feature-description">商用利用可能なライセンスでプロフェッショナル制作に対応</div>
                 </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>📝 Latest Changes</h2>
+            <div class="changelog">
+                <h3>v1.5.4 - 2025-06-24</h3>
+                <ul>
+                    <li><span class="badge badge-new">NEW</span> 表情が赤くなるライト機能のBaseレイヤー実装</li>
+                    <li><span class="badge badge-new">NEW</span> ModularAvatarとの連携機能を強化</li>
+                    <li><span class="badge badge-new">NEW</span> 自動的に頭部にライトを生成する機能</li>
+                    <li><span class="badge badge-new">NEW</span> ライトの強度調整機能（3段階：弱・中・強）</li>
+                    <li><span class="badge badge-new">NEW</span> 「🔴 Red Face Light」サンプルの追加</li>
+                    <li><span class="badge badge-update">UPDATE</span> GitHub Pagesの整備と最新情報の更新</li>
+                </ul>
+            </div>
+            <div class="changelog">
+                <h3>v1.5.0 - 2025-06-23</h3>
+                <ul>
+                    <li><span class="badge badge-new">NEW</span> Added a new Unity menu to apply PCSS effects to selected avatars or the entire world with a single click.</li>
+                </ul>
+            </div>
+            <div class="changelog">
+                <h3>v1.4.9 - 2025-06-22</h3>
+                <ul>
+                    <li><span class="badge badge-new">NEW</span> Unity Menu Avatar Selector with automatic avatar detection</li>
+                    <li><span class="badge badge-fix">FIX</span> URP 14.0.10 compatibility issues and macro redefinition errors</li>
+                    <li><span class="badge badge-new">NEW</span> Built-in preset system (Realistic, Anime, Cinematic)</li>
+                    <li><span class="badge badge-update">UPDATE</span> Enhanced ModularAvatar integration</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="glass-card json-viewer-section">
+            <h2>📊 Repository Information</h2>
+            <div class="json-tabs">
+                <button class="json-tab active" onclick="showTab('vpm')">VPM Repository</button>
+                <button class="json-tab" onclick="showTab('packages')">Packages</button>
+                <button class="json-tab" onclick="showTab('debug')">Debug Info</button>
+            </div>
+            <div id="vpm" class="json-content active">
+                <pre class="json-formatted" id="vpm-json">Loading...</pre>
+            </div>
+            <div id="packages" class="json-content">
+                <pre class="json-formatted" id="packages-json">Loading...</pre>
+            </div>
+            <div id="debug" class="json-content">
+                <pre class="json-formatted" id="debug-json">Loading...</pre>
             </div>
         </div>
 

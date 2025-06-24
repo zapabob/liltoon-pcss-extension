@@ -1,10 +1,10 @@
- using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using System.IO;
 using System.Collections.Generic;
 
 #if UNITY_EDITOR
-namespace lilToon.PCSS
+namespace lilToon.PCSS.Editor
 {
     /// <summary>
     /// lilToon PCSS Extension初期化クラス
@@ -15,6 +15,7 @@ namespace lilToon.PCSS
     {
         private const string PCSS_EXTENSION_DEFINE = "LILTOON_PCSS_EXTENSION";
         private const string LILTOON_DEFINE = "LILTOON";
+        private const string PCSS_EXTENSION_SHADER_NAME = "lilToon/PCSS Extension";
         
         static LilToonPCSSExtensionInitializer()
         {
@@ -26,6 +27,7 @@ namespace lilToon.PCSS
             CheckAndSetupExtension();
             RegisterShaderVariants();
             SetupMenuIntegration();
+            SetupMaterialChangeCallback();
             // --- ダミー参照: VRCLightVolumesIntegrationの自動削除防止 ---
             System.Type _ = typeof(lilToon.PCSS.VRCLightVolumesIntegration); // AutoFIX/最適化による削除防止
         }
@@ -102,14 +104,18 @@ namespace lilToon.PCSS
             var collection = new ShaderVariantCollection();
             
             // PCSSシェーダーのバリアントを追加
-            var pcssShader = Shader.Find("lilToon/PCSS Extension");
+            var pcssShader = Shader.Find(PCSS_EXTENSION_SHADER_NAME);
             if (pcssShader != null)
             {
                 // 主要なキーワード組み合わせを追加
                 string[] keywords = {
                     "_USEPCSS_ON",
                     "_USESHADOW_ON",
-                    "_USEPCSS_ON _USESHADOW_ON"
+                    "_USEPCSS_ON _USESHADOW_ON",
+                    "_USESHADOWCLAMP_ON",
+                    "_USEVRCLIGHT_VOLUMES_ON",
+                    "_USEPCSS_ON _USESHADOW_ON _USESHADOWCLAMP_ON",
+                    "_USEPCSS_ON _USESHADOW_ON _USEVRCLIGHT_VOLUMES_ON"
                 };
                 
                 foreach (string keyword in keywords)
@@ -141,6 +147,96 @@ namespace lilToon.PCSS
         {
             // lilToonのメニューシステムと統合
             EditorApplication.hierarchyWindowItemOnGUI += OnHierarchyGUI;
+        }
+        
+        /// <summary>
+        /// マテリアル変更コールバックの設定
+        /// </summary>
+        private static void SetupMaterialChangeCallback()
+        {
+            // マテリアルのシェーダー変更時のコールバックを登録
+            // Unity 2019以降ではMaterial.onBeforePropertyChangeが存在しないため、
+            // Editorのコールバックを使用
+            Undo.postprocessModifications += OnPostprocessModifications;
+        }
+        
+        /// <summary>
+        /// マテリアルプロパティ変更時のコールバック
+        /// </summary>
+        private static UndoPropertyModification[] OnPostprocessModifications(UndoPropertyModification[] modifications)
+        {
+            foreach (var mod in modifications)
+            {
+                if (mod.currentValue != null && mod.currentValue.target is Material material)
+                {
+                    // シェーダープロパティの変更を検出
+                    if (material.shader != null && material.shader.name == PCSS_EXTENSION_SHADER_NAME)
+                    {
+                        // シェーダーが変更された場合、必要なプロパティを設定
+                        EnsureRequiredProperties(material);
+                        SetupShaderKeywords(material);
+                    }
+                }
+            }
+            return modifications;
+        }
+        
+        /// <summary>
+        /// マテリアルに必要なプロパティが存在することを確認
+        /// </summary>
+        private static void EnsureRequiredProperties(Material material)
+        {
+            // 基本プロパティの確保
+            if (material.HasProperty("_MainTex") && material.GetTexture("_MainTex") == null)
+                material.SetTexture("_MainTex", Texture2D.whiteTexture);
+            
+            if (material.HasProperty("_Color") && material.GetColor("_Color") == default)
+                material.SetColor("_Color", Color.white);
+            
+            // シャドウ関連プロパティの確保
+            if (material.HasProperty("_ShadowColorTex") && material.GetTexture("_ShadowColorTex") == null)
+                material.SetTexture("_ShadowColorTex", Texture2D.blackTexture);
+            
+            // PCSS関連のデフォルト値設定
+            if (material.HasProperty("_UsePCSS") && !material.HasProperty("_PCSSPresetMode"))
+            {
+                material.SetFloat("_PCSSPresetMode", 1.0f); // Animeプリセット
+                material.SetFloat("_LocalPCSSFilterRadius", 0.01f);
+                material.SetFloat("_LocalPCSSLightSize", 0.1f);
+                material.SetFloat("_PCSSBias", 0.001f);
+                material.SetFloat("_PCSSIntensity", 1.0f);
+                material.SetFloat("_PCSSQuality", 1.0f); // Medium
+                material.SetFloat("_LocalPCSSSamples", 16.0f);
+            }
+        }
+        
+        /// <summary>
+        /// シェーダーキーワードを設定
+        /// </summary>
+        private static void SetupShaderKeywords(Material material)
+        {
+            // PCSSキーワード
+            SetKeyword(material, "_USEPCSS_ON", material.HasProperty("_UsePCSS") && material.GetFloat("_UsePCSS") > 0.5f);
+            
+            // シャドウキーワード
+            SetKeyword(material, "_USESHADOW_ON", material.HasProperty("_UseShadow") && material.GetFloat("_UseShadow") > 0.5f);
+            
+            // シャドウクランプキーワード
+            SetKeyword(material, "_USESHADOWCLAMP_ON", material.HasProperty("_UseShadowClamp") && material.GetFloat("_UseShadowClamp") > 0.5f);
+            
+            // VRCライトボリュームキーワード
+            SetKeyword(material, "_USEVRCLIGHT_VOLUMES_ON", material.HasProperty("_UseVRCLightVolumes") && material.GetFloat("_UseVRCLightVolumes") > 0.5f);
+        }
+        
+        /// <summary>
+        /// シェーダーキーワードを設定するヘルパーメソッド
+        /// </summary>
+        private static void SetKeyword(Material material, string keyword, bool state)
+        {
+            if (state)
+                material.EnableKeyword(keyword);
+            else
+                material.DisableKeyword(keyword);
         }
         
         /// <summary>
@@ -217,7 +313,7 @@ namespace lilToon.PCSS
         {
             EditorUtility.DisplayDialog(
                 "lilToon PCSS Extension",
-                "lilToon PCSS Extension v1.0.0\n\n" +
+                "lilToon PCSS Extension v1.5.4\n\n" +
                 "このプラグインはlilToonにPCSS（Percentage-Closer Soft Shadows）機能を追加します。\n\n" +
                 "詳細な使用方法については、READMEファイルをご確認ください。",
                 "OK"
@@ -239,7 +335,7 @@ namespace lilToon.PCSS
         public static void CheckInstallation()
         {
             bool hasLilToon = IsLilToonInstalled();
-            bool hasPCSSShader = Shader.Find("lilToon/PCSS Extension") != null;
+            bool hasPCSSShader = Shader.Find(PCSS_EXTENSION_SHADER_NAME) != null;
             
             string message = "インストール状況:\n\n";
             message += $"lilToon: {(hasLilToon ? "✓ インストール済み" : "✗ 未インストール")}\n";
@@ -251,10 +347,65 @@ namespace lilToon.PCSS
             }
             else
             {
-                message += "\n⚠ インストールに問題があります。";
+                message += "\n✗ インストールに問題があります。";
+                if (!hasLilToon) message += "\n- lilToonをインストールしてください。";
+                if (!hasPCSSShader) message += "\n- PCSS Extensionシェーダーが見つかりません。";
             }
             
-            EditorUtility.DisplayDialog("インストール確認", message, "OK");
+            EditorUtility.DisplayDialog("PCSS Extension インストール状況", message, "OK");
+        }
+        
+        [MenuItem("lilToon/PCSS Extension/Fix Materials", false, 2003)]
+        public static void FixMaterials()
+        {
+            // シーン内のすべてのマテリアルを修復
+            var renderers = GameObject.FindObjectsOfType<Renderer>();
+            List<Material> fixedMaterials = new List<Material>();
+            
+            foreach (var renderer in renderers)
+            {
+                foreach (var material in renderer.sharedMaterials)
+                {
+                    if (material != null && material.shader != null && 
+                        material.shader.name == PCSS_EXTENSION_SHADER_NAME)
+                    {
+                        if (!fixedMaterials.Contains(material))
+                        {
+                            EnsureRequiredProperties(material);
+                            SetupShaderKeywords(material);
+                            fixedMaterials.Add(material);
+                        }
+                    }
+                }
+            }
+            
+            // プロジェクト内のマテリアルも修復
+            string[] materialGuids = AssetDatabase.FindAssets("t:Material");
+            foreach (string guid in materialGuids)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+                Material material = AssetDatabase.LoadAssetAtPath<Material>(path);
+                
+                if (material != null && material.shader != null && 
+                    material.shader.name == PCSS_EXTENSION_SHADER_NAME)
+                {
+                    if (!fixedMaterials.Contains(material))
+                    {
+                        EnsureRequiredProperties(material);
+                        SetupShaderKeywords(material);
+                        fixedMaterials.Add(material);
+                        EditorUtility.SetDirty(material);
+                    }
+                }
+            }
+            
+            AssetDatabase.SaveAssets();
+            
+            EditorUtility.DisplayDialog(
+                "マテリアル修復完了",
+                $"{fixedMaterials.Count}個のPCSSマテリアルが修復されました。",
+                "OK"
+            );
         }
     }
 }
