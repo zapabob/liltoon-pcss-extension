@@ -3,7 +3,8 @@
     "rootNamespace": "lilToon.PCSS.Editor",
     "references": [
         "lilToon.PCSS.Runtime",
-        "lilToon.Editor"
+        "lilToon.Editor",
+        "VRC.SDKBase.Editor"
     ],
     "includePlatforms": [
         "Editor"
