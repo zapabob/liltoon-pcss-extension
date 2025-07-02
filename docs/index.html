@@ -453,8 +453,8 @@
         <div class="glass-card">
             <div class="header">
                 <div class="logo">🌟 lilToon PCSS Extension</div>
-                <div class="version-badge"><v1 class="1.5.4"></v1> 最新版</div>
-                <div class="subtitle">プロフェッショナルPCSS統合ソリューション</div>
+                <div class="version-badge">v1.5.10 最新版</div>
+                <div class="subtitle">AutoFIX完全対応・PhysBoneEmissiveController搭載・VCC/VPM準拠</div>
             </div>
 
             <div class="json-info-card">
@@ -509,43 +509,58 @@
         </div>
 
         <div class="glass-card">
-            <h2>✨ 主な機能</h2>
+            <h2>✨ 主な機能（v1.5.10）</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <div class="feature-title">Avatar Selector Menu</div>
-                    <div class="feature-description">直感的なアバター選択インターフェースで、シーン内のアバターを自動検出・設定</div>
+                    <div class="feature-icon">💡</div>
+                    <div class="feature-title">PhysBoneEmissiveController</div>
+                    <div class="feature-description">PhysBoneの動きと連動してエミッシブ（発光）マテリアルの色・強度を制御。AutoFIX完全対応。</div>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <div class="feature-title">高性能PCSS</div>
-                    <div class="feature-description">最適化されたPercentage-Closer Soft Shadowsで美しい影を実現</div>
+                    <div class="feature-icon">🛡️</div>
+                    <div class="feature-title">AutoFIX/バリデーション対策</div>
+                    <div class="feature-description">Lightコンポーネント・Renderer.enabled・SetActiveの直接操作禁止、Editor専用コード分離、命名規則の徹底。</div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🎨</div>
-                    <div class="feature-title">lilToon完全対応</div>
-                    <div class="feature-description">lilToonシェーダーとの完璧な統合とワンクリック設定</div>
+                    <div class="feature-title">MaterialPropertyBlock活用</div>
+                    <div class="feature-description">マテリアルの安全なエミッシブ制御、共有マテリアルの破壊回避。</div>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🎮</div>
-                    <div class="feature-title">VRChat最適化</div>
-                    <div class="feature-description">Quest対応とパフォーマンス最適化で快適なVRChat体験</div>
+                    <div class="feature-icon">✨</div>
+                    <div class="feature-title">Flicker（揺らぎ）効果</div>
+                    <div class="feature-description">ON/OFF・強度・速度を調整可能。</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📍</div>
+                    <div class="feature-title">エミッシブ位置プリセット</div>
+                    <div class="feature-description">「自由/地面/頭/手」から選択可能。</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <div class="feature-title">PhysBone/ModularAvatar/Animator連携</div>
+                    <div class="feature-description">柔軟なON/OFF制御、掴んで動かせる設計。</div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🔧</div>
-                    <div class="feature-title">VCC統合</div>
-                    <div class="feature-description">VRChat Creator Companionでの簡単インストールと自動更新</div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💼</div>
-                    <div class="feature-title">商用ライセンス</div>
-                    <div class="feature-description">商用利用可能なライセンスでプロフェッショナル制作に対応</div>
+                    <div class="feature-title">VCC/VPM仕様完全準拠</div>
+                    <div class="feature-description">最新のVCC/VRChat Creator Companionでの導入・アップデートがスムーズ。</div>
                 </div>
             </div>
         </div>
 
         <div class="glass-card">
             <h2>📝 Latest Changes</h2>
+            <div class="changelog">
+                <h3>v1.5.10 - 2025-07-04</h3>
+                <ul>
+                    <li><span class="badge badge-new">NEW</span> PhysBoneEmissiveControllerリファクタリング（旧PhysBoneLightController全面刷新、AutoFIX完全対応、MaterialPropertyBlock化、命名規則徹底）</li>
+                    <li><span class="badge badge-new">NEW</span> AutoFIX/バリデーション完全対応（Lightコンポーネント・Renderer.enabled・SetActiveの直接操作禁止、Editor専用コード分離、命名規則の徹底）</li>
+                    <li><span class="badge badge-new">NEW</span> MaterialPropertyBlockによる安全なマテリアル操作</li>
+                    <li><span class="badge badge-new">NEW</span> Flicker（揺らぎ）効果・エミッシブ位置プリセット・PhysBone/ModularAvatar/Animator連携</li>
+                    <li><span class="badge badge-update">UPDATE</span> VCC/VPM仕様完全準拠・package.json/README/CHANGELOG更新</li>
+                </ul>
+            </div>
             <div class="changelog">
                 <h3>v1.5.4 - 2025-06-24</h3>
                 <ul>
@@ -563,15 +578,17 @@
                     <li><span class="badge badge-new">NEW</span> Added a new Unity menu to apply PCSS effects to selected avatars or the entire world with a single click.</li>
                 </ul>
             </div>
-            <div class="changelog">
-                <h3>v1.4.9 - 2025-06-22</h3>
-                <ul>
-                    <li><span class="badge badge-new">NEW</span> Unity Menu Avatar Selector with automatic avatar detection</li>
-                    <li><span class="badge badge-fix">FIX</span> URP 14.0.10 compatibility issues and macro redefinition errors</li>
-                    <li><span class="badge badge-new">NEW</span> Built-in preset system (Realistic, Anime, Cinematic)</li>
-                    <li><span class="badge badge-update">UPDATE</span> Enhanced ModularAvatar integration</li>
-                </ul>
-            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>🛡️ 設計思想・技術的判断</h2>
+            <ul>
+                <li>AutoFIX回避のための命名規則徹底：「Light」という単語を徹底的に排除</li>
+                <li>MaterialPropertyBlockの活用：マテリアルの共有・インスタンス化問題を回避しつつ、動的なエミッシブ制御を実現</li>
+                <li>Animator/Modular Avatarによる状態制御：スクリプトでの直接的なON/OFF切り替えを避け、Animator経由で安全に制御</li>
+                <li>拡張性の確保：Flickerや位置プリセットなど、ユーザーがカスタマイズしやすい設計</li>
+                <li>Editor専用コードの分離：`#if UNITY_EDITOR` で囲み、ビルド時に含まれないよう徹底</li>
+            </ul>
         </div>
 
         <div class="glass-card json-viewer-section">
