@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.9] - 2025-07-03
+### Changed
+- PhysBoneLightControllerをPhysBoneEmissiveControllerへリファクタリング
+- クラス名・ファイル名・AddComponentMenu・コメントを一括修正
+- 命名規約・Unityバリデーション・VRChat AutoFIX完全対応
+- エミッシブ制御用途に特化した設計へ
+
 ## [1.5.7] - 2025-06-24
 
 ### Added / Changed

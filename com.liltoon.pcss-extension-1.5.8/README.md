@@ -1,4 +1,10 @@
-# lilToon PCSS Extension v1.5.8
+# lilToon PCSS Extension v1.5.9
+
+## 2025-07-03: PhysBoneEmissiveControllerリファクタリング
+- 旧PhysBoneLightControllerをPhysBoneEmissiveControllerへリファクタリング
+- クラス名・ファイル名・AddComponentMenu・コメントを一括修正
+- 命名規約・Unityバリデーション・VRChat AutoFIX完全対応
+- エミッシブ制御用途に特化した設計へ
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Unity Version](https://img.shields.io/badge/Unity-2022.3%20LTS-blue.svg)](https://unity3d.com/get-unity/download)
@@ -41,7 +47,7 @@ A professional PCSS (Percentage-Closer Soft Shadows) extension for lilToon and P
 ### Unity Package Manager (Git URL)
 1. Unityの `Window > Package Manager` を開く
 2. `+` →「Add package from git URL...」で下記を入力
-   https://github.com/zapabob/liltoon-pcss-extension.git?path=com.liltoon.pcss-extension
+   https://github.com/zapabob/liltoon-pcss-extension.git
 
 ### Booth版（手動インストール）
 1. Boothでzipをダウンロードし、解凍して`com.liltoon.pcss-extension`フォルダごとPackagesディレクトリにコピー
