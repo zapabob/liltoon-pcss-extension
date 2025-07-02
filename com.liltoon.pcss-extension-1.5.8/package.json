@@ -2,7 +2,7 @@
   "name": "com.liltoon.pcss-extension",
   "displayName": "lilToon PCSS Extension",
   "description": "🎯 Professional PCSS (Percentage-Closer Soft Shadows) extension for lilToon and Poiyomi shaders with Avatar Selector Menu. Features Unity 2022.3 LTS compatibility, URP 14.0.10 support, built-in preset system (Realistic/Anime/Cinematic), one-click avatar setup with ModularAvatar integration, Base layer red face light implementation, official support for Unity Editor Coroutines (com.unity.editor-coroutines), automatic material remapping on FBX/model import, and new: MissingMaterialAutoFixer Editor extension & FBX/Prefab auto-remap for missing materials. 新: PhysBoneEmissiveController設計思想・AutoFIX完全対応・命名規則徹底・MaterialPropertyBlock活用・ModularAvatar/PhysBone連携リファクタリング。",
-  "version": "1.5.10",
+  "version": "1.5.11",
   "unity": "2022.3",
   "unityRelease": "22f1",
   "dependencies": {
@@ -38,5 +38,9 @@
     "package": "com.unity.editor-coroutines",
     "version": "1.0.0",
     "description": "Unity公式のEditorコルーチンに完全対応。エディタ拡張の非同期処理が安定・高速に動作します。"
-  }
+  },
+  "changelog": [
+    "[1.5.9] GUIDベースのマテリアルバックアップ・リストア機能を実装。パス変更やリネームにも強くなり、復元の信頼性が大幅向上。",
+    "[1.5.8] ...（既存の履歴）"
+  ]
 }

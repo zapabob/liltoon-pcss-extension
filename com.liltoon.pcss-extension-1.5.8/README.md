@@ -1,5 +1,10 @@
 # lilToon PCSS Extension v1.5.9
 
+## v1.5.9 新機能
+- マテリアルのバックアップ・リストアがGUIDベースになり、パス変更やリネーム後も正確に復元可能。
+- バックアップはJSON形式で保存され、復元時はGUID一致でマテリアルを特定。
+- テクスチャもGUIDで管理し、参照切れを大幅に防止。
+
 ## 2025-07-03: PhysBoneEmissiveControllerリファクタリング
 - 旧PhysBoneLightControllerをPhysBoneEmissiveControllerへリファクタリング
 - クラス名・ファイル名・AddComponentMenu・コメントを一括修正
@@ -20,6 +25,9 @@ A professional PCSS (Percentage-Closer Soft Shadows) extension for lilToon and P
 ## 主な修正点
 - PhysBoneLightController: 先行製品互換性・安定性向上、外部ライト指定・自動検出の堅牢化、距離減衰・スムージング制御の最適化、エラー時の自動無効化・デバッグ強化
 - Unity 2022.3 LTS/VRChat SDK 最新版での動作検証・最適化
+
+## 更新履歴
+- 1.5.9: GUIDベースのマテリアルバックアップ・リストア機能を実装。パス変更やリネームにも強くなり、復元の信頼性が大幅向上。
 
 ---
 
