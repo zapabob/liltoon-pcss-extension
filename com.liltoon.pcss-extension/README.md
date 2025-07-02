@@ -1,4 +1,4 @@
-# lilToon PCSS Extension v1.5.4
+# lilToon PCSS Extension v1.5.7
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Unity Version](https://img.shields.io/badge/Unity-2022.3%20LTS-blue.svg)](https://unity3d.com/get-unity/download)
@@ -22,6 +22,8 @@ A professional PCSS (Percentage-Closer Soft Shadows) extension for lilToon and P
 - 🛡️ ModularAvatar連携・エラー耐性強化 / ModularAvatar integration & error resilience
 - ⚡ URP 14.0.10/Unity 2022.3 LTS完全対応 / Full URP 14.0.10 & Unity 2022.3 LTS support
 - 📝 サンプル・日本語UI・ドキュメント / Samples, Japanese UI, documentation
+- 🧩 **MissingMaterialAutoFixer（Editor拡張）: シーン内のMissingマテリアル検出＆自動修復ウィンドウ**
+- 🔄 **FBX/Prefabインポート時の自動リマップ: Missingスロットを自動でlilToonマテリアルに補完**
 
 ---
 
@@ -47,6 +49,8 @@ A professional PCSS (Percentage-Closer Soft Shadows) extension for lilToon and P
 1. Unityメニュー `Window > lilToon PCSS Extension > Avatar Selector` を選択
 2. シーン内のアバターが自動リストアップ
 3. プリセットを選択し「適用 (Apply)」をクリック
+4. **MissingMaterialAutoFixer**: `Tools > lilToon PCSS > Missing Material AutoFixer` からシーン内のMissingマテリアルを検出・自動修復可能
+5. **FBX/Prefab自動リマップ**: FBXやPrefabインポート時にMissingスロットが自動でlilToonマテリアルに補完されます（手動操作不要）
 
 ---
 

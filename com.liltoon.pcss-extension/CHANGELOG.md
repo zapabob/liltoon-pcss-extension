@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.7] - 2025-06-24
+
+### Added / Changed
+- MissingMaterialAutoFixer（Editor拡張）を追加: シーン内のMissingマテリアル検出＆自動修復ウィンドウ
+- FBX/Prefabインポート時の自動リマップ機能を追加（AssetPostprocessorによるMissingスロット自動補完）
+- package.jsonのバージョンを1.5.7に更新
+
 ## [1.5.5] - 2025-06-24
 
 ### Added / Changed
