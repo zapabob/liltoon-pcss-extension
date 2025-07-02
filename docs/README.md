@@ -29,6 +29,8 @@
 - **Quest Platform Support**: Optimized rendering pipeline
 - **One-Click VCC Installation**: Seamless setup experience
 - **Unity公式Editorコルーチン対応**: Editor拡張の非同期処理が安定・高速
+- **NEW: MissingMaterialAutoFixer（Editor拡張）**: シーン内のMissingマテリアル検出＆自動修復ウィンドウ
+- **NEW: FBX/Prefabインポート時の自動リマップ**: Missingスロットを自動でlilToonマテリアルに補完
 
 ### 🚀 Key Highlights
 
@@ -39,6 +41,8 @@
 | **ModularAvatar** | Non-destructive avatar modification | ✅ Compatible |
 | **Expression Menus** | Automatic VRChat control generation | ✅ Automated |
 | **Performance Optimization** | Dynamic VRChat settings adjustment | ✅ Optimized |
+| **MissingMaterialAutoFixer** | Missingマテリアルの検出・自動修復 | ✅ NEW in 1.5.7 |
+| **FBX/Prefab Auto Remap** | FBX/Prefabインポート時の自動補完 | ✅ NEW in 1.5.7 |
 
 ## 📦 Installation Methods
 
@@ -108,13 +112,11 @@
 - **Performance optimization** vs trial-and-error tuning
 - **Ongoing updates** vs outdated implementations
 
-## 🎊 What's New in v1.2.0
+## 🎊 What's New in v1.5.7
 
-- ✅ **lilToon v1.10.3 Compatibility**: Full support for the latest version
-- ✅ **VRC Light Volumes**: Next-generation lighting integration
-- ✅ **Enhanced Performance**: Quest-specific optimizations
-- ✅ **Improved UX**: One-click VCC installation
-- ✅ **Extended Documentation**: Comprehensive guides and tutorials
+- ✅ **MissingMaterialAutoFixer（Editor拡張）**: シーン内のMissingマテリアル検出＆自動修復ウィンドウを追加
+- ✅ **FBX/Prefabインポート時の自動リマップ**: Missingスロットを自動でlilToonマテリアルに補完
+- ✅ **package.json/README/CHANGELOG更新**: 最新バージョン情報を反映
 
 ---
 
