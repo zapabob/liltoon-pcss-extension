@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.5.10] - 2025-07-04
+### Changed
+- PhysBoneEmissiveController設計思想・AutoFIX完全対応・命名規則徹底・MaterialPropertyBlock活用・ModularAvatar/PhysBone連携リファクタリング
+- 実装ログに基づく厳密なリファクタリング
+
 ## [1.5.9] - 2025-07-03
 ### Changed
 - PhysBoneLightControllerをPhysBoneEmissiveControllerへリファクタリング
