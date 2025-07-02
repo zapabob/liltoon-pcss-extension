@@ -33,3 +33,9 @@
 ### Fixed
 - PhysBoneLightController: 先行製品互換性・安定性向上、外部ライト指定・自動検出の堅牢化、距離減衰・スムージング制御の最適化、エラー時の自動無効化・デバッグ強化
 - Unity 2022.3 LTS/VRChat SDK 最新版での動作検証・最適化 
+
+## [1.5.9] - 2025-07-03
+### Changed
+- PhysBoneエミッシブ球体セットアップ機能を全面リファクタリング（Light依存排除・Emission制御型に刷新）
+- CompetitorSetupWizard.csもEmission制御型に統一
+- AutoFIX完全対応・外部依存ゼロ 

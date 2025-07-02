@@ -187,104 +187,87 @@ namespace lilToon.PCSS.Editor
 
         private void ApplySettings()
         {
-            #if VRC_SDK_VRCSDK3
+#if VRC_SDK_VRCSDK3
             if (avatar == null)
             {
                 EditorUtility.DisplayDialog("エラー", "対象のアバターが選択されていません。", "OK");
                 return;
             }
             GameObject targetObject = avatar.gameObject;
-            #else
+#else
             if (avatarObject == null)
             {
                 EditorUtility.DisplayDialog("エラー", "対象のオブジェクトが選択されていません。", "OK");
                 return;
             }
             GameObject targetObject = avatarObject;
-            #endif
+#endif
 
-            PhysBoneLightController controller;
-            Light pcssLight;
-
-            if (useExternalLight)
+            // エミッシブ球体生成・再利用
+            Transform sphereTransform = targetObject.transform.Find("PCSS_Emissive");
+            GameObject sphereObj;
+            if (sphereTransform != null)
             {
-                if (externalLightObject == null)
-                {
-                    EditorUtility.DisplayDialog("エラー", "外部ライトが設定されていません。", "OK");
-                    return;
-                }
-                pcssLight = externalLightObject;
-
-                // コントローラー用のオブジェクトをアバター直下に作成
-                Transform existingController = targetObject.transform.Find("PCSS_Controller");
-                GameObject controllerObj;
-                if(existingController != null)
-                {
-                    controllerObj = existingController.gameObject;
-                }
-                else
-                {
-                    controllerObj = new GameObject("PCSS_Controller");
-                    controllerObj.transform.SetParent(targetObject.transform, false);
-                }
-                
-                controller = controllerObj.GetComponent<PhysBoneLightController>();
-                if (controller == null) controller = controllerObj.AddComponent<PhysBoneLightController>();
-                controller.externalLight = pcssLight;
+                sphereObj = sphereTransform.gameObject;
             }
             else
             {
-                // 既存のライトを探すか、新しく作成
-                Transform lightTransform = targetObject.transform.Find("PCSS_Light");
-                if (lightTransform == null)
-                {
-                    GameObject lightObj = new GameObject("PCSS_Light");
-                    lightTransform = lightObj.transform;
-                    lightTransform.SetParent(targetObject.transform, false);
-                }
-
-                // ライトコンポーネント設定
-                pcssLight = lightTransform.GetComponent<Light>();
-                if (pcssLight == null) pcssLight = lightTransform.gameObject.AddComponent<Light>();
-
-                // PhysBoneLightController設定
-                controller = lightTransform.GetComponent<PhysBoneLightController>();
-                if (controller == null) controller = lightTransform.gameObject.AddComponent<PhysBoneLightController>();
-                controller.externalLight = null; // 外部ライトモードでないことを明示
+                sphereObj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                sphereObj.name = "PCSS_Emissive";
+                sphereObj.transform.SetParent(targetObject.transform, false);
             }
-            
-            pcssLight.type = LightType.Directional;
-            pcssLight.shadows = LightShadows.Soft;
-            pcssLight.shadowStrength = 0.8f;
-            pcssLight.shadowNormalBias = 0.05f;
+            sphereObj.transform.localScale = Vector3.one * 0.15f;
 
-            // プリセットに応じた設定
-            switch (selectedPreset)
+            // Emissionマテリアル自動割り当て
+            Renderer rend = sphereObj.GetComponent<Renderer>();
+            if (rend == null) rend = sphereObj.AddComponent<MeshRenderer>();
+            Material mat = new Material(Shader.Find("Standard"));
+            mat.EnableKeyword("_EMISSION");
+            Color emissionColor = Color.white;
+            float emissionStrength = 1.0f;
+            Vector3 presetPos = Vector3.zero;
+            switch(selectedPreset)
             {
                 case Preset.Toon:
-                    pcssLight.color = Color.white;
-                    pcssLight.intensity = 1.2f;
-                    pcssLight.shadowBias = 0.01f;
+                    emissionColor = new Color(1.0f, 0.9f, 0.6f);
+                    emissionStrength = 2.0f;
+                    presetPos = new Vector3(0, 1.5f, 0.2f);
                     break;
                 case Preset.Realistic:
-                    pcssLight.color = new Color(1f, 0.95f, 0.84f); // Warm light
-                    pcssLight.intensity = 1.5f;
-                    pcssLight.shadowBias = 0.005f;
+                    emissionColor = new Color(1.0f, 0.8f, 0.4f);
+                    emissionStrength = 4.0f;
+                    presetPos = new Vector3(0, 1.3f, 0.1f);
                     break;
                 case Preset.Dark:
-                    pcssLight.color = new Color(0.8f, 0.8f, 1f); // Cool light
-                    pcssLight.intensity = 1.0f;
-                    pcssLight.shadowBias = 0.02f;
+                    emissionColor = new Color(0.5f, 0.5f, 1.0f);
+                    emissionStrength = 0.7f;
+                    presetPos = new Vector3(0, 1.0f, 0.0f);
                     break;
             }
+            mat.SetColor("_EmissionColor", emissionColor * emissionStrength);
+            rend.sharedMaterial = mat;
+            sphereObj.transform.localPosition = presetPos;
 
-            // PhysBoneLightController設定
-            controller.Initialize();
+            // PhysBoneLightController自動アタッチ・設定
+            var controller = sphereObj.GetComponent<PhysBoneLightController>();
+            if (controller == null) controller = sphereObj.AddComponent<PhysBoneLightController>();
+            controller.emissiveRenderer = rend;
+            controller.baseEmission = emissionColor;
+            controller.emissionStrength = emissionStrength;
+            controller.smoothing = 5.0f;
+            controller.enableDistanceAttenuation = true;
+            controller.maxEffectDistance = 10.0f;
 
-            // マテリアルの設定変更処理
+            // VRCPhysBone自動追加（存在しなければ）
+#if VRC_SDK_VRCSDK3
+            if (sphereObj.GetComponent<VRC.SDK3.Dynamics.PhysBone.Components.VRCPhysBone>() == null)
+            {
+                sphereObj.AddComponent<VRC.SDK3.Dynamics.PhysBone.Components.VRCPhysBone>();
+            }
+#endif
+            // マテリアル設定の自動適用
             ApplyMaterialSettings(targetObject, selectedPreset, useShadowMask);
-
-            EditorUtility.DisplayDialog("成功", $"「{targetObject.name}」にPCSSライトの設定を適用しました。\nプリセット: {selectedPreset}", "OK");
+            EditorUtility.DisplayDialog("完了", "PhysBoneエミッシブ球体セットアップが完了しました。", "OK");
         }
 
         private void ApplyMaterialSettings(GameObject target, Preset preset, bool useShadowMask)

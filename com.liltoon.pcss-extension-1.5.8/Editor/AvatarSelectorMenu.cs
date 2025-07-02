@@ -3,9 +3,11 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
-#if MODULAR_AVATAR_AVAILABLE
 using nadena.dev.modular_avatar.core;
-#endif
+
+// #if MODULAR_AVATAR_AVAILABLE
+// using nadena.dev.modular_avatar.core;
+// #endif
 
 namespace lilToon.PCSS.Editor
 {

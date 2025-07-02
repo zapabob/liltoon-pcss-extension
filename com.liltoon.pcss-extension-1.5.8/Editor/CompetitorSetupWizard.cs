@@ -5,9 +5,7 @@ using VRC.SDK3.Avatars.Components;
 #endif
 using System.Collections.Generic;
 using System.Linq;
-#if MODULAR_AVATAR_AVAILABLE
 using nadena.dev.modular_avatar.core;
-#endif
 
 namespace lilToon.PCSS.Editor
 {

@@ -27,10 +27,8 @@ namespace lilToon.PCSS
         [SerializeField] public Light externalLight;
 
         [Header("🎮 先行製品互換設定")]
-        // [SerializeField] private bool competitorCompatibilityMode = true;
-        // [SerializeField] private ControlMode controlMode = ControlMode.HeadTracking;
-        // [SerializeField, Range(0f, 1f)] private float lightFollowStrength = 1.0f;
-        // [SerializeField] private bool enableAutoDetection = true;
+        [SerializeField] private bool competitorCompatibilityMode = true;
+        [SerializeField] private bool enableAutoDetection = true;
 
         [Header("⚡ 高度な制御")]
         [SerializeField] private bool enableDistanceAttenuation = true;
@@ -38,10 +36,13 @@ namespace lilToon.PCSS
 
         public enum ControlMode
         {
-            HeadTracking,
-            HandTracking,
-            BodyTracking
+            None,
+            Follow // 必要に応じて他のモードを追加
         }
+        [SerializeField] private ControlMode controlMode = ControlMode.Follow;
+
+        [SerializeField, Range(0f, 1f)]
+        private float lightFollowStrength = 1.0f;
 
         private Light targetLight;
         private Vector3 lastDirection;
@@ -113,13 +114,9 @@ namespace lilToon.PCSS
             VRCPlayerApi.TrackingDataType trackingType;
             switch (controlMode)
             {
-                case ControlMode.HandTracking:
+                case ControlMode.Follow:
                     trackingType = VRCPlayerApi.TrackingDataType.RightHand;
                     break;
-                case ControlMode.BodyTracking:
-                    trackingType = VRCPlayerApi.TrackingDataType.Head;
-                    break;
-                case ControlMode.HeadTracking:
                 default:
                     trackingType = VRCPlayerApi.TrackingDataType.Head;
                     break;

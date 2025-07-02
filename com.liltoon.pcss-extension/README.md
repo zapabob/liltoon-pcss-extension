@@ -1,4 +1,4 @@
-# lilToon PCSS Extension v1.5.8
+# lilToon PCSS Extension v1.5.9
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Unity Version](https://img.shields.io/badge/Unity-2022.3%20LTS-blue.svg)](https://unity3d.com/get-unity/download)
@@ -14,6 +14,13 @@ A professional PCSS (Percentage-Closer Soft Shadows) extension for lilToon and P
 ## 主な修正点
 - PhysBoneLightController: 先行製品互換性・安定性向上、外部ライト指定・自動検出の堅牢化、距離減衰・スムージング制御の最適化、エラー時の自動無効化・デバッグ強化
 - Unity 2022.3 LTS/VRChat SDK 最新版での動作検証・最適化
+
+## 新機能・主な変更点
+- PhysBoneエミッシブ球体セットアップ機能を全面リファクタリング
+    - Lightコンポーネント依存を完全排除し、Renderer/MaterialのEmission制御型に刷新
+    - プリセット（Toon/Realistic/Dark）でEmission色・強度・位置を自動設定
+    - AutoFIX完全対応・外部依存ゼロ
+- CompetitorSetupWizard.csもEmission制御型に統一
 
 ---
 
@@ -55,6 +62,12 @@ A professional PCSS (Percentage-Closer Soft Shadows) extension for lilToon and P
 3. プリセットを選択し「適用 (Apply)」をクリック
 4. **MissingMaterialAutoFixer**: `Tools > lilToon PCSS > Missing Material AutoFixer` からシーン内のMissingマテリアルを検出・自動修復可能
 5. **FBX/Prefab自動リマップ**: FBXやPrefabインポート時にMissingスロットが自動でlilToonマテリアルに補完されます（手動操作不要）
+
+## 使い方（PhysBoneエミッシブ球体セットアップ）
+1. Unityエディタでアバターを選択
+2. メニューから「Tools > lilToon PCSS > PhysBoneエミッシブセットアップウィザード」を開く
+3. プリセットを選択し、「PhysBoneエミッシブを適用」ボタンを押す
+4. アバター直下にエミッシブ球体が生成され、PhysBoneで掴んで動かせる発光オブジェクトとして機能
 
 ---
 
