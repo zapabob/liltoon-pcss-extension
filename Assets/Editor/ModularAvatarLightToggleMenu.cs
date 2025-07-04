@@ -10,7 +10,7 @@ using nadena.dev.modular_avatar.core;
 /// </summary>
 public class ModularAvatarLightToggleMenu
 {
-    [MenuItem("Tools/ModularAvatar/Add Light Toggle")]
+    [MenuItem("Tools/lilToonPCSSExtension/Add Light Toggle")]
     public static void AddLightToggle()
     {
         // 選択中のGameObject（アバターのルート）を取得
