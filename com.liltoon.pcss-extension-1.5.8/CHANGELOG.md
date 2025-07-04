@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.5.11] 2025-07-03
+- バージョン番号を1.5.11にアップグレード。
+- 安定性・互換性の向上、ドキュメント・パッケージ構成の整理。
+- GUIDベースのマテリアルバックアップ・リストア機能の強化。
+
 ## [1.5.10] - 2025-07-04
 ### Changed
 - PhysBoneEmissiveController設計思想・AutoFIX完全対応・命名規則徹底・MaterialPropertyBlock活用・ModularAvatar/PhysBone連携リファクタリング
