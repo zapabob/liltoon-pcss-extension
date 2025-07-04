@@ -1,64 +1,95 @@
-# lilToon PCSS Extension v1.5.5
+# lilToon PCSS Extension
+
+---
 
 ## 概要
-
-**lilToon PCSS Extension** は、lilToonおよびPoiyomiシェーダー向けにプロフェッショナルなPCSS（Percentage-Closer Soft Shadows）機能を追加するUnity拡張パッケージです。VRChatアバターやワールドで美しいソフトシャドウを実現し、VCC（VRChat Creator Companion）からワンクリックで導入できます。
-
----
-
-## 主な機能
-- 高品質なPCSS（ソフトシャドウ）をlilToon/Poiyomiに追加
-- VRChat/ModularAvatar連携・PhysBone制御
-- アバターセレクターメニュー・プリセット切替
-- Quest/URP対応・パフォーマンス最適化
-- シーン/プロジェクト全体のマテリアル自動修復（AutoFIX）
-- Prefabインスタンス修正時のスクリプト無効化防止（v1.5.5）
+Unity/VRChat向け高品質影表現拡張「lilToon PCSS Extension」は、lilToonシェーダーにPCSS（ソフトシャドウ）や多彩な影制御機能を追加するパッケージです。ModularAvatar連携や自動マテリアルバックアップ、Booth/GitHub/VCC/VPM配布に対応し、アバター・ワールド制作のワークフローを強力にサポートします。
 
 ---
 
-## VCC（VRChat Creator Companion）でのインストール手順
-
-1. VCCを起動し「パッケージリポジトリを追加」から下記URLを入力：
-
-   ```
-   https://zapabob.github.io/liltoon-pcss-extension/index.json
-   ```
-
-2. 「lilToon PCSS Extension」を検索し、インストール
-3. Unityプロジェクトに自動で導入されます
-
-> ⚠️ **jsonファイルを直接開くと生データが表示されます。**
-> 見やすいHTML形式で内容を確認したい場合は [index.html](https://zapabob.github.io/liltoon-pcss-extension/index.html) または [json-viewer.html](https://zapabob.github.io/liltoon-pcss-extension/json-viewer.html) をご利用ください。
+## パッケージ内容
+- シェーダー拡張: `Shaders/lilToon_PCSS_Extension.shader` 他
+- エディタ拡張: `Editor/AutomatedMaterialBackup.cs` `Editor/ModularAvatarLightToggleMenu.cs` など
+- ランタイム: `Runtime/LilToonCompatibilityManager.cs` 他
+- サンプル・実装ログ: `_docs/` ディレクトリ
+- README, CHANGELOG, package.json
 
 ---
 
-## ドキュメント・サポート
-- [公式ドキュメント（GitHub Pages）](https://zapabob.github.io/liltoon-pcss-extension/index.html)
-- [GitHubリポジトリ](https://github.com/zapabob/liltoon-pcss-extension)
-- [CHANGELOG](https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md)
+## インストール手順
+### 1. VCC/VPM経由（推奨）
+- VCC（VRChat Creator Companion）で「lilToon PCSS Extension」を検索・追加
+- VPM（VRChat Package Manager）対応
 
-ご質問・不具合報告はGitHub Issuesまたはメール（r.minegishi1987@gmail.com）までご連絡ください。
+### 2. Booth/GitHub配布
+- BoothまたはGitHubからzipをダウンロードし、`com.liltoon.pcss-extension`フォルダごと`Assets`または`Packages`に配置
+- Unity再起動で自動認識
+
+### 3. .unitypackage形式
+- Unityメニュー「Assets > Import Package > Custom Package」からインポート
+
+---
+
+## 要件
+- Unity 2022.3 LTS 以降（推奨）
+- lilToon v1.4.0 以降
+- VRChat SDK3（アバター/ワールド用途）
+- ModularAvatar（連携機能利用時）
+- Windows11/RTX3080（推奨環境）
+
+---
+
+## 使い方
+### 1. シェーダー適用
+- マテリアルのShader欄で「lilToon PCSS Extension」を選択
+- InspectorでPCSSや影制御パラメータを調整
+
+### 2. マテリアル自動バックアップ/リストア
+- マテリアル編集時に自動でGUIDベースのバックアップを作成
+- パス変更やリネーム後も正確に復元可能
+- 復元は「Tools > lilToon > Restore Material」から
+
+### 3. ModularAvatar連携（ライトトグル自動化）
+- アバターのルートを選択し「Tools > ModularAvatar > Add Light Toggle」実行
+- LightToggleオブジェクトが自動生成され、全LightがObject Toggleに登録
+- VRChat内でON/OFFトグル可能
+
+---
+
+## よくある質問（FAQ）
+- Q: lilToon本体が必要ですか？
+  - A: 必須です。最新版推奨。
+- Q: 旧バージョンからのアップグレード方法は？
+  - A: 既存パッケージを削除し最新版を導入してください。マテリアルは自動バックアップされます。
+- Q: ModularAvatarが無いと使えませんか？
+  - A: シェーダー機能のみなら不要。トグル自動化等はModularAvatar必須です。
 
 ---
 
 ## ライセンス
-
-本パッケージはMITライセンスで提供されます。
+- 本パッケージはMITライセンスで配布されています。
+- 詳細は`LICENSE.md`を参照してください。
 
 ---
 
-## 更新履歴
+## サポート・リンク
+- [Booth配布ページ](https://booth.pm/ja/items/xxxxxx)
+- [GitHubリポジトリ](https://github.com/xxxxxx/lilToon-PCSS-Extension)
+- [ModularAvatar公式ドキュメント](https://modular-avatar.nadena.dev/docs/)
+- [実装ログ・技術詳細（_docs/）](./_docs/)
 
-- **v1.5.5**: AutoFIX Prefab対応・マテリアル自動修復強化（Prefabインスタンス修正時のスクリプト無効化防止）
-- **v1.5.4**: VRChat/Booth対応・シェーダーエラー修正・表情ライト強化
-- **v1.5.3**: パフォーマンス最適化・競合互換ウィザード追加
-- **v1.5.0**: VRChat/ModularAvatar連携・PhysBone制御・PCSSプリセット拡張
-- **v1.4.x**: URP対応・VRC Light Volumes連携・競合シェーダー互換
-- **v1.2.x**: 初期リリース
+---
 
-## v1.5.5の新機能・最適化
+## 更新履歴・実装ログ
+- 詳細な更新履歴・実装経緯は`_docs/`ディレクトリおよび`CHANGELOG.md`を参照してください。
 
-- ModularAvatar 1.12.5完全対応
-- MAMaterialSwap/MAPlatformFilter自動追加によるプリセット適用のModularAvatar流最適化
-- Quest/PC分岐例もサポート（MAPlatformFilterで自動切り替え可能）
-- 既存の手動マテリアル切り替えも残し、ModularAvatar未導入環境でも従来通り動作 
+---
+
+## 免責事項
+- 本パッケージの利用によるいかなる損害も作者は責任を負いません。
+- Unity/VRChat/lilToon/ModularAvatar等の仕様変更により動作が変わる場合があります。
+
+---
+
+## お問い合わせ
+- Booth/GitHubのメッセージ、または`_docs/`内の連絡先をご利用ください。
