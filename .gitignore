@@ -74,3 +74,10 @@ _config.yml
 docs/_config.yml*
 docs/Gemfile*
 docs/site/ 
+# Unity
+.vscode/
+.idea/
+*.swp
+*.swo
+*.meta
+
