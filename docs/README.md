@@ -119,4 +119,12 @@
 
 **Transform your avatar lighting today!** 🌟
 
-[![Add to VCC](https://img.shields.io/badge/Add%20to%20VCC-Get%20Started-blue?style=for-the-badge&logo=vrchat)](vcc://vpm/addRepo?url=https%3A%2F%2Fzapabob.github.io%2Fliltoon-pcss-extension%2Findex.json) | [Documentation](https://github.com/zapabob/liltoon-pcss-extension/blob/main/README.md) | [📝 実装ログ](../_docs/2025-07-03_PhysBoneEmissiveController_Refactor_Log.md) 
+[![Add to VCC](https://img.shields.io/badge/Add%20to%20VCC-Get%20Started-blue?style=for-the-badge&logo=vrchat)](vcc://vpm/addRepo?url=https%3A%2F%2Fzapabob.github.io%2Fliltoon-pcss-extension%2Findex.json) | [Documentation](https://github.com/zapabob/liltoon-pcss-extension/blob/main/README.md) | [📝 実装ログ](../_docs/2025-07-03_PhysBoneEmissiveController_Refactor_Log.md)
+
+# lilToon PCSS Extension - GitHub Pages
+
+## 最新版 v1.5.11 リリース
+- GUIDベースのマテリアルバックアップ・リストア機能を強化
+- パス変更・リネーム後も正確に復元可能
+- 安定性・互換性向上、ドキュメント整理
+- [最新版パッケージダウンロード（com.liltoon.pcss-extension-1.5.11.zip）](../com.liltoon.pcss-extension-1.5.11.zip) 
