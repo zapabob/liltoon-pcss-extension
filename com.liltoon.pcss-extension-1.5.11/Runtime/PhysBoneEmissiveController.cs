@@ -5,7 +5,7 @@ using VRC.SDK3.Avatars.Components;
 using VRC.SDK3.Dynamics.PhysBone.Components;
 #endif
 
-namespace lilToon.PCSS
+namespace lilToon.PCSS.Runtime
 {
     /// <summary>
     /// PhysBoneと連動してエミッシブ（発光）マテリアルを制御するコンポーネント。

@@ -43,6 +43,9 @@ Shader "lilToon/PCSS Extension"
         [Enum(UnityEngine.Rendering.StencilOp)] _StencilPass ("Stencil Pass", Float) = 0
         [Enum(UnityEngine.Rendering.StencilOp)] _StencilFail ("Stencil Fail", Float) = 0
         [Enum(UnityEngine.Rendering.StencilOp)] _StencilZFail ("Stencil ZFail", Float) = 0
+        // --- VirtualLight拡張 ---
+        _VirtualLightPos ("Virtual Light Position", Vector) = (0,0,0)
+        _VirtualLightDir ("Virtual Light Direction", Vector) = (0,0,0)
     }
 
     SubShader
@@ -132,8 +135,10 @@ Shader "lilToon/PCSS Extension"
             float _LocalPCSSLightSize;
             float _LocalPCSSSamples;
             float _LocalPCSSBias;
-            // _PCSSIntensityはすでにIncludesで定義されているため、ここでは再定義しない
             float _PCSSQualityLevel; // _PCSSQualityから_PCSSQualityLevelに変更
+            // --- VirtualLight拡張 ---
+            float3 _VirtualLightPos;
+            float3 _VirtualLightDir;
 
             // VRCライトボリューム用関数
             #if defined(VRC_LIGHT_VOLUMES_ENABLED)
@@ -212,20 +217,25 @@ Shader "lilToon/PCSS Extension"
                 
                 float shadow = 1.0;
                 #if defined(_USEPCSS_ON)
+                    // --- 仮想光源による減衰・角度・距離計算 ---
+                    float3 toLight = normalize(_VirtualLightPos - i.worldPos);
+                    float angle = dot(toLight, normalize(_VirtualLightDir));
+                    float attenuation = saturate(angle); // スポットライト的な減衰
+                    float dist = length(_VirtualLightPos - i.worldPos);
+                    float distAtten = 1.0 / (1.0 + dist * dist * 0.1); // 距離減衰（調整可）
+                    float pcssFilter = _LocalPCSSFilterRadius * attenuation * distAtten;
                     // PCSSを使用 - 標準のシャドウ座標を使用
                     #ifdef LIL_PCSS_MOBILE_PLATFORM
-                        // モバイル向け簡易版
                         shadow = SHADOW_ATTENUATION(i);
                         shadow = PCSSMobile(shadow, i.pos.z);
                     #else
-                        // フル機能版
                         shadow = SHADOW_ATTENUATION(i);
                         float samples = _LocalPCSSSamples;
-                        float quality = _PCSSQualityLevel; // 変数名を変更
+                        float quality = _PCSSQualityLevel;
                         if (quality < 1.0f) samples = max(8.0, samples * 0.5);
                         if (quality > 1.0f) samples = min(32.0, samples * 1.5);
                         if (quality > 2.0f) samples = min(64.0, samples * 2.0);
-                        shadow = PCSS(shadow, i.pos.z, _LocalPCSSFilterRadius, _LocalPCSSLightSize, samples);
+                        shadow = PCSS(shadow, i.pos.z, pcssFilter, _LocalPCSSLightSize, samples);
                         shadow = lerp(1.0, shadow, _PCSSIntensity);
                     #endif
                 #elif defined(_USESHADOW_ON)

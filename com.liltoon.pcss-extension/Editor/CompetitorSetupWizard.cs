@@ -5,7 +5,9 @@ using VRC.SDK3.Avatars.Components;
 #endif
 using System.Collections.Generic;
 using System.Linq;
+#if MODULAR_AVATAR_AVAILABLE
 using nadena.dev.modular_avatar.core;
+#endif
 
 namespace lilToon.PCSS.Editor
 {
@@ -41,6 +43,14 @@ namespace lilToon.PCSS.Editor
         public bool autoDetectPhysBones = true;
         public float lightIntensity = 1.0f;
         public Color lightColor = Color.white;
+        
+        [Header("Emission Settings")]
+        public Renderer emissiveRenderer;
+        public Color baseEmission = Color.white;
+        public float emissionStrength = 1.0f;
+        public float smoothing = 5.0f;
+        public bool enableDistanceAttenuation = true;
+        public float maxEffectDistance = 10.0f;
         
         private List<Component> physBoneComponents;
         private bool isInitialized = false;
@@ -142,7 +152,7 @@ namespace lilToon.PCSS.Editor
         [MenuItem("Tools/lilToon PCSS/競合互換セットアップウィザード")]
         public static void ShowWindow()
         {
-            GetWindow<CompetitorSetupWizard>("競合互換セットアップ");
+            PCSSSetupCenterWindow.ShowWindow();
         }
 
         void OnGUI()

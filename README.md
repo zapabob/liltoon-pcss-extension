@@ -54,6 +54,17 @@ Unity/VRChat向け高品質影表現拡張「lilToon PCSS Extension」は、lilT
 - LightToggleオブジェクトが自動生成され、全LightがObject Toggleに登録
 - VRChat内でON/OFFトグル可能
 
+## 🆕 セットアップセンター（統合管理UI）について
+
+2025年7月より、lilToon PCSS Extensionの全セットアップ・最適化・プリセット・ウィザード等は
+**「lilToon/PCSS Extension/セットアップセンター」**（PCSSSetupCenterWindow）から一元管理できます。
+
+- メニュー: `lilToon/PCSS Extension/セットアップセンター`
+- 一括セットアップ、プリセット適用、競合ウィザード、最適化、マテリアル修復、LightVolumes統合、ドキュメント等すべてこのウィンドウから操作可能
+- 旧来の個別メニューはすべてこのウィンドウにリダイレクトされます
+
+> **推奨:** 迷ったら「セットアップセンター」から全ての機能にアクセスしてください
+
 ---
 
 ## よくある質問（FAQ）

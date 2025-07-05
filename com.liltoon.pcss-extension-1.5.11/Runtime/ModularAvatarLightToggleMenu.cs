@@ -1,3 +1,5 @@
+namespace lilToon.PCSS.Runtime
+{
 #if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
@@ -64,4 +66,5 @@ public class ModularAvatarLightToggleMenu
 #endif
     }
 }
-#endif 
+#endif
+} 

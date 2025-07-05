@@ -430,11 +430,7 @@ namespace lilToon.PCSS.Editor
                         fixedMaterials.Add(material);
                     EditorUtility.SetDirty(material);
                     // --- Prefabインスタンス対応 ---
-                    var go = renderer.gameObject;
-                    if (PrefabUtility.IsPartOfPrefabInstance(go))
-                    {
-                        PrefabUtility.RecordPrefabInstancePropertyModifications(renderer);
-                    }
+                    // 削除: renderer変数はこのスコープでは存在しないため、この部分を削除
                 }
             }
 

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using VRC.SDKBase.Editor.BuildPipeline; // VRChat SDKのAPIを利用するために必要
+using VRC.SDK3.Avatars.Components; // VRCAvatarDescriptorを使用するために必要
 
 // IVRCSDKBuildRequestedCallbackを実装することで、VRChatのビルドプロセスに介入できる
 public class AutomatedMaterialBackup : IVRCSDKBuildRequestedCallback
@@ -15,14 +16,14 @@ public class AutomatedMaterialBackup : IVRCSDKBuildRequestedCallback
         if (buildType == VRCSDKRequestedBuildType.Avatar)
         {
             // シーンにいるアクティブなアバターを取得する
-            // (より堅牢にするなら、ビルド対象のアバターを正確に特定する方法を検討する)
-            var activeAvatar = VRC.SDKBase.Editor.VRC_SdkBuilder.GetMainAvatar();
+            // UnityEngine.Objectを使用してFindObjectOfTypeを呼び出す
+            var avatarDescriptor = UnityEngine.Object.FindObjectOfType<VRCAvatarDescriptor>();
 
-            if (activeAvatar != null)
+            if (avatarDescriptor != null)
             {
                 bool doBackup = EditorUtility.DisplayDialog(
                     "Material Backup",
-                    $"'{activeAvatar.name}'のマテリアルをバックアップしますか？\n\n" +
+                    $"'{avatarDescriptor.gameObject.name}'のマテリアルをバックアップしますか？\n\n" +
                     "アップロード後にマテリアルが破損した場合に復元できます。",
                     "はい、バックアップする",
                     "いいえ"
@@ -31,8 +32,8 @@ public class AutomatedMaterialBackup : IVRCSDKBuildRequestedCallback
                 if (doBackup)
                 {
                     // 以前作成したMaterialBackupクラスのバックアップ機能を呼び出す
-                    MaterialBackup.BackupMaterials(activeAvatar);
-                    Debug.Log($"[AutomatedMaterialBackup] Succeeded to backup materials for {activeAvatar.name}.");
+                    MaterialBackup.BackupMaterials(avatarDescriptor.gameObject);
+                    Debug.Log($"[AutomatedMaterialBackup] Succeeded to backup materials for {avatarDescriptor.gameObject.name}.");
                 }
             }
         }

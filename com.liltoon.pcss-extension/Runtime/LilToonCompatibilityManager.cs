@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace LilToon.PCSS.Runtime
+namespace lilToon.PCSS.Runtime
 {
     /// <summary>
     /// lilToonとの完全互換性を管理するクラス
@@ -15,16 +15,16 @@ namespace LilToon.PCSS.Runtime
     public class LilToonCompatibilityManager : MonoBehaviour
     {
         [Header("lilToon Version Detection")]
-        public string detectedLilToonVersion = "Not Detected";
-        public bool isCompatible = false;
+        [SerializeField] private string detectedLilToonVersion = "Not Detected";
+        [SerializeField] private bool isCompatible = false;
         
         [Header("Material Synchronization")]
-        public bool autoSyncMaterials = true;
-        public bool preserveOriginalColors = true;
-        public bool autoUpdateOnVersionChange = true;
+        [SerializeField] private bool autoSyncMaterials = true;
+        [SerializeField] private bool preserveOriginalColors = true;
+        [SerializeField] private bool autoUpdateOnVersionChange = true;
         
         [Header("Compatibility Settings")]
-        public List<Material> managedMaterials = new List<Material>();
+        [SerializeField] private List<Material> managedMaterials = new List<Material>();
         
         // lilToonプロパティマッピング
         private static readonly Dictionary<string, string> PropertyMappings = new Dictionary<string, string>
@@ -373,5 +373,12 @@ namespace LilToon.PCSS.Runtime
                 DetectLilToonVersion();
             }
         }
+
+        public string DetectedLilToonVersion => detectedLilToonVersion;
+        public bool IsCompatible => isCompatible;
+        public bool AutoSyncMaterials { get => autoSyncMaterials; set => autoSyncMaterials = value; }
+        public bool PreserveOriginalColors { get => preserveOriginalColors; set => preserveOriginalColors = value; }
+        public bool AutoUpdateOnVersionChange { get => autoUpdateOnVersionChange; set => autoUpdateOnVersionChange = value; }
+        public List<Material> ManagedMaterials => managedMaterials;
     }
 } 

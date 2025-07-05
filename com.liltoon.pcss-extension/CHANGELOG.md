@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.6.0] - 2025-07-04
+
+### Added / Changed
+- セットアップセンター（PCSSSetupCenterWindow）新設：全機能をタブUIで一元管理
+- バッチセットアップ機能（PCSSBatchSetupWindow）：シーン内の全アバター/ワールド/Rendererに一括適用
+- 影プリセット拡張：「リアル影」「アニメ」「映画風」「劇画調」4種の影プリセットを選択・適用可能
+- 既存の個別メニュー（AvatarSelectorMenu, CompetitorSetupWizard, PerformanceOptimizerMenu, MaterialBackup, MissingMaterialAutoFixer等）をセットアップセンターにリダイレクト
+- README・_docs/にセットアップセンター導入を追記
+- 既存機能の後方互換性維持
+- Runtimeクラス（VirtualLightBinder, PhysBoneLightController, PoiyomiPCSSIntegration等）にModularAvatarトグル・Editor拡張連携用API（光源自動生成・ON/OFF制御・状態同期）を追加
+- Editor拡張からの光源セットアップ・トグルON/OFF制御が確実に動作するよう改善
+
 ## [1.5.7] - 2025-06-24
 
 ### Added / Changed

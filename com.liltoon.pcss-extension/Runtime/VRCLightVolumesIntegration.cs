@@ -7,7 +7,7 @@ using VRC.SDKBase;
 using VRC.SDK3.Avatars.Components;
 #endif
 
-namespace lilToon.PCSS
+namespace lilToon.PCSS.Runtime
 {
     /// <summary>
     /// VRC Light Volumes統合システム
@@ -22,9 +22,9 @@ namespace lilToon.PCSS
         [SerializeField] private Color lightVolumeTint = Color.white;
         
         [Header("Performance Settings")]
-        [SerializeField] public bool enableMobileOptimization = true;
-        [SerializeField] public int maxLightVolumeDistance = 100;
-        [SerializeField] public float updateFrequency = 0.1f;
+        [SerializeField] private bool enableMobileOptimization = true;
+        [SerializeField] private int maxLightVolumeDistance = 100;
+        [SerializeField] private float updateFrequency = 0.1f;
         
         private static readonly int _VRCLightVolumeTexture = Shader.PropertyToID("_VRCLightVolumeTexture");
         private static readonly int _VRCLightVolumeParams = Shader.PropertyToID("_VRCLightVolumeParams");
@@ -349,6 +349,14 @@ namespace lilToon.PCSS
             Shader.DisableKeyword("VRC_LIGHT_VOLUMES_ENABLED");
             Shader.DisableKeyword("VRC_LIGHT_VOLUMES_MOBILE");
         }
+
+        public bool EnableVRCLightVolumes { get => enableVRCLightVolumes; set => enableVRCLightVolumes = value; }
+        public bool AutoDetectLightVolumes { get => autoDetectLightVolumes; set => autoDetectLightVolumes = value; }
+        public float LightVolumeIntensity { get => lightVolumeIntensity; set => lightVolumeIntensity = value; }
+        public Color LightVolumeTint { get => lightVolumeTint; set => lightVolumeTint = value; }
+        public bool EnableMobileOptimization { get => enableMobileOptimization; set => enableMobileOptimization = value; }
+        public int MaxLightVolumeDistance { get => maxLightVolumeDistance; set => maxLightVolumeDistance = value; }
+        public float UpdateFrequency { get => updateFrequency; set => updateFrequency = value; }
     }
     
     /// <summary>

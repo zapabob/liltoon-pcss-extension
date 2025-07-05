@@ -3,11 +3,10 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
-using nadena.dev.modular_avatar.core;
 
-// #if MODULAR_AVATAR_AVAILABLE
-// using nadena.dev.modular_avatar.core;
-// #endif
+#if MODULAR_AVATAR_AVAILABLE
+using nadena.dev.modular_avatar.core;
+#endif
 
 namespace lilToon.PCSS.Editor
 {
@@ -41,10 +40,7 @@ namespace lilToon.PCSS.Editor
         [MenuItem("Window/lilToon PCSS Extension/🎯 Avatar Selector")]
         public static void ShowWindow()
         {
-            var window = GetWindow<AvatarSelectorMenu>("Avatar Selector");
-            window.titleContent = new GUIContent("🎯 Avatar Selector", "アバター選択とPCSSプリセット適用");
-            window.minSize = new Vector2(400, 600);
-            window.Show();
+            PCSSSetupCenterWindow.ShowWindow();
         }
 
         private void OnEnable()
@@ -124,13 +120,13 @@ namespace lilToon.PCSS.Editor
                         EditorGUILayout.LabelField("✅ VRC", GUILayout.Width(40));
                     }
 
-                    // #if MODULAR_AVATAR_AVAILABLE
-                    // var modularAvatar = avatar.GetComponent<ModularAvatarInformation>();
-                    // if (modularAvatar != null)
-                    // {
-                    //     EditorGUILayout.LabelField("🔧 MA", GUILayout.Width(40));
-                    // }
-                    // #endif
+                    #if MODULAR_AVATAR_AVAILABLE
+                    var modularAvatar = avatar.GetComponent<ModularAvatarInformation>();
+                    if (modularAvatar != null)
+                    {
+                        EditorGUILayout.LabelField("🔧 MA", GUILayout.Width(40));
+                    }
+                    #endif
 
                     EditorGUILayout.EndHorizontal();
                 }
@@ -291,17 +287,17 @@ namespace lilToon.PCSS.Editor
             var avatarDescriptors = FindObjectsOfType<VRC.SDK3.Avatars.Components.VRCAvatarDescriptor>();
             detectedAvatars.AddRange(avatarDescriptors.Select(desc => desc.gameObject));
 
-            // #if MODULAR_AVATAR_AVAILABLE
-            // // ModularAvatarInformationを持つGameObjectも検索
-            // var modularAvatars = FindObjectsOfType<ModularAvatarInformation>();
-            // foreach (var ma in modularAvatars)
-            // {
-            //     if (!detectedAvatars.Contains(ma.gameObject))
-            //     {
-            //         detectedAvatars.Add(ma.gameObject);
-            //     }
-            // }
-            // #endif
+            #if MODULAR_AVATAR_AVAILABLE
+            // ModularAvatarInformationを持つGameObjectも検索
+            var modularAvatars = FindObjectsOfType<ModularAvatarInformation>();
+            foreach (var ma in modularAvatars)
+            {
+                if (!detectedAvatars.Contains(ma.gameObject))
+                {
+                    detectedAvatars.Add(ma.gameObject);
+                }
+            }
+            #endif
 
             // 重複を除去してソート
             detectedAvatars = detectedAvatars.Distinct().OrderBy(go => go.name).ToList();

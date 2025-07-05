@@ -19,22 +19,35 @@ namespace lilToon.PCSS.Runtime
     public class PoiyomiPCSSSettings
     {
         [Header("PCSS Configuration")]
-        public bool enablePCSS = true;
-        public PCSSUtils.PCSSQuality quality = PCSSUtils.PCSSQuality.Medium;
-        public float blockerSearchRadius = 0.01f;
-        public float filterRadius = 0.01f;
-        public int sampleCount = 16;
-        public float lightSize = 0.1f;
-        public float shadowBias = 0.001f;
+        [SerializeField] private bool enablePCSS = true;
+        [SerializeField] private PCSSUtils.PCSSQuality quality = PCSSUtils.PCSSQuality.Medium;
+        [SerializeField] private float blockerSearchRadius = 0.01f;
+        [SerializeField] private float filterRadius = 0.01f;
+        [SerializeField] private int sampleCount = 16;
+        [SerializeField] private float lightSize = 0.1f;
+        [SerializeField] private float shadowBias = 0.001f;
         
         [Header("VRChat Expression")]
-        public bool enableVRChatExpression = false;
-        public bool useBaseLayer = true;
-        public string parameterPrefix = "PCSS";
+        [SerializeField] private bool enableVRChatExpression = false;
+        [SerializeField] private bool useBaseLayer = true;
+        [SerializeField] private string parameterPrefix = "PCSS";
         
         [Header("Poiyomi Compatibility")]
-        public bool maintainPoiyomiFeatures = true;
-        public bool autoDetectPoiyomiShader = true;
+        [SerializeField] private bool maintainPoiyomiFeatures = true;
+        [SerializeField] private bool autoDetectPoiyomiShader = true;
+
+        public bool EnablePCSS { get => enablePCSS; set => enablePCSS = value; }
+        public PCSSUtils.PCSSQuality Quality { get => quality; set => quality = value; }
+        public float BlockerSearchRadius { get => blockerSearchRadius; set => blockerSearchRadius = value; }
+        public float FilterRadius { get => filterRadius; set => filterRadius = value; }
+        public int SampleCount { get => sampleCount; set => sampleCount = value; }
+        public float LightSize { get => lightSize; set => lightSize = value; }
+        public float ShadowBias { get => shadowBias; set => shadowBias = value; }
+        public bool EnableVRChatExpression { get => enableVRChatExpression; set => enableVRChatExpression = value; }
+        public bool UseBaseLayer { get => useBaseLayer; set => useBaseLayer = value; }
+        public string ParameterPrefix { get => parameterPrefix; set => parameterPrefix = value; }
+        public bool MaintainPoiyomiFeatures { get => maintainPoiyomiFeatures; set => maintainPoiyomiFeatures = value; }
+        public bool AutoDetectPoiyomiShader { get => autoDetectPoiyomiShader; set => autoDetectPoiyomiShader = value; }
     }
     
     // PCSSQuality enum is now defined in PCSSUtilities class
@@ -47,6 +60,7 @@ namespace lilToon.PCSS.Runtime
     [AddComponentMenu("lilToon PCSS/Poiyomi PCSS Integration")]
     public class PoiyomiPCSSIntegration : MonoBehaviour
     {
+        [SerializeField] private Light targetLight;
         [SerializeField] private PoiyomiPCSSSettings settings = new PoiyomiPCSSSettings();
         [SerializeField] private List<Material> targetMaterials = new List<Material>();
         [SerializeField] private List<Renderer> targetRenderers = new List<Renderer>();
@@ -348,6 +362,40 @@ namespace lilToon.PCSS.Runtime
             return UnityEditor.Selection.activeGameObject != null;
         }
         #endif
+
+        // ModularAvatarトグル連携用
+        public void OnToggleLight(bool isOn)
+        {
+            SetLightEnabled(isOn);
+        }
+
+        // Lightの有効/無効を切り替える
+        public void SetLightEnabled(bool enabled)
+        {
+            EnsureLightExists();
+            if (targetLight != null)
+                targetLight.enabled = enabled;
+        }
+
+        // Lightがなければ自動生成
+        public void EnsureLightExists()
+        {
+            if (targetLight == null)
+            {
+                var lightObj = new GameObject("PoiyomiPCSSLight");
+                lightObj.transform.SetParent(transform, false);
+                targetLight = lightObj.AddComponent<Light>();
+                targetLight.type = LightType.Point;
+                targetLight.range = 10f;
+                targetLight.intensity = 1f;
+            }
+        }
+
+        public Light GetOrCreateLight()
+        {
+            EnsureLightExists();
+            return targetLight;
+        }
     }
     
     /// <summary>
