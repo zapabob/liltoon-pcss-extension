@@ -19,22 +19,22 @@ namespace lilToon.PCSS.Runtime
     public class PoiyomiPCSSSettings
     {
         [Header("PCSS Configuration")]
-        [SerializeField] public bool enablePCSS = true;
-        [SerializeField] public PCSSUtils.PCSSQuality quality = PCSSUtils.PCSSQuality.Medium;
-        [SerializeField] public float blockerSearchRadius = 0.01f;
-        [SerializeField] public float filterRadius = 0.01f;
-        [SerializeField] public int sampleCount = 16;
-        [SerializeField] public float lightSize = 0.1f;
-        [SerializeField] public float shadowBias = 0.001f;
+        [SerializeField] private bool enablePCSS = true;
+        [SerializeField] private PCSSUtils.PCSSQuality quality = PCSSUtils.PCSSQuality.Medium;
+        [SerializeField] private float blockerSearchRadius = 0.01f;
+        [SerializeField] private float filterRadius = 0.01f;
+        [SerializeField] private int sampleCount = 16;
+        [SerializeField] private float lightSize = 0.1f;
+        [SerializeField] private float shadowBias = 0.001f;
         
         [Header("VRChat Expression")]
-        [SerializeField] public bool enableVRChatExpression = false;
-        [SerializeField] public bool useBaseLayer = true;
-        [SerializeField] public string parameterPrefix = "PCSS";
+        [SerializeField] private bool enableVRChatExpression = false;
+        [SerializeField] private bool useBaseLayer = true;
+        [SerializeField] private string parameterPrefix = "PCSS";
         
         [Header("Poiyomi Compatibility")]
-        [SerializeField] public bool maintainPoiyomiFeatures = true;
-        [SerializeField] public bool autoDetectPoiyomiShader = true;
+        [SerializeField] private bool maintainPoiyomiFeatures = true;
+        [SerializeField] private bool autoDetectPoiyomiShader = true;
 
         public bool EnablePCSS { get => enablePCSS; set => enablePCSS = value; }
         public PCSSUtils.PCSSQuality Quality { get => quality; set => quality = value; }
@@ -89,7 +89,7 @@ namespace lilToon.PCSS.Runtime
         
         private void Update()
         {
-            if (settings.EnableVRChatExpression)
+            if (settings.enableVRChatExpression)
             {
                 UpdateVRChatExpressionParameters();
             }
@@ -100,14 +100,14 @@ namespace lilToon.PCSS.Runtime
         /// </summary>
         public void InitializePCSSIntegration()
         {
-            if (settings.AutoDetectPoiyomiShader)
+            if (settings.autoDetectPoiyomiShader)
             {
                 AutoDetectPoiyomiMaterials();
             }
             
             ApplyPCSSSettings();
             
-            if (settings.EnableVRChatExpression)
+            if (settings.enableVRChatExpression)
             {
                 InitializeVRChatExpressionParameters();
             }
@@ -178,13 +178,13 @@ namespace lilToon.PCSS.Runtime
             if (material == null) return;
             
             // Apply basic settings
-            material.SetFloat("_PCSSEnabled", settings.EnablePCSS ? 1f : 0f);
-            material.SetFloat("_PCSSQuality", (float)settings.Quality);
+            material.SetFloat("_PCSSEnabled", settings.enablePCSS ? 1f : 0f);
+            material.SetFloat("_PCSSQuality", (float)settings.quality);
             
             // Apply quality preset or manual settings
-            if (qualityPresets.ContainsKey(settings.Quality))
+            if (qualityPresets.ContainsKey(settings.quality))
             {
-                var preset = qualityPresets[settings.Quality];
+                var preset = qualityPresets[settings.quality];
                 material.SetFloat("_PCSSSampleCount", preset.sampleCount);
                 material.SetFloat("_PCSSBlockerSearchRadius", preset.blockerSearchRadius);
                 material.SetFloat("_PCSSFilterRadius", preset.filterRadius);
@@ -194,15 +194,15 @@ namespace lilToon.PCSS.Runtime
             else
             {
                 // Apply manual settings
-                material.SetFloat("_PCSSSampleCount", settings.SampleCount);
-                material.SetFloat("_PCSSBlockerSearchRadius", settings.BlockerSearchRadius);
-                material.SetFloat("_PCSSFilterRadius", settings.FilterRadius);
-                material.SetFloat("_PCSSLightSize", settings.LightSize);
-                material.SetFloat("_PCSSShadowBias", settings.ShadowBias);
+                material.SetFloat("_PCSSSampleCount", settings.sampleCount);
+                material.SetFloat("_PCSSBlockerSearchRadius", settings.blockerSearchRadius);
+                material.SetFloat("_PCSSFilterRadius", settings.filterRadius);
+                material.SetFloat("_PCSSLightSize", settings.lightSize);
+                material.SetFloat("_PCSSShadowBias", settings.shadowBias);
             }
             
             // VRChat Expression settings
-            material.SetFloat("_VRChatExpression", settings.EnableVRChatExpression ? 1f : 0f);
+            material.SetFloat("_VRChatExpression", settings.enableVRChatExpression ? 1f : 0f);
         }
         
         /// <summary>
@@ -213,10 +213,10 @@ namespace lilToon.PCSS.Runtime
             expressionParameters.Clear();
             
             // Initialize default values
-            expressionParameters[$"{settings.ParameterPrefix}_Enable"] = settings.EnablePCSS ? 1f : 0f;
-            expressionParameters[$"{settings.ParameterPrefix}_Quality"] = (float)settings.Quality / 3f; // Normalize to 0-1
+            expressionParameters[$"{settings.parameterPrefix}_Enable"] = settings.enablePCSS ? 1f : 0f;
+            expressionParameters[$"{settings.parameterPrefix}_Quality"] = (float)settings.quality / 3f; // Normalize to 0-1
             
-            Debug.Log($"[PoiyomiPCSSIntegration] Initialized VRChat expression parameters with prefix: {settings.ParameterPrefix}");
+            Debug.Log($"[PoiyomiPCSSIntegration] Initialized VRChat expression parameters with prefix: {settings.parameterPrefix}");
         }
         
         /// <summary>
@@ -227,8 +227,8 @@ namespace lilToon.PCSS.Runtime
             // This would integrate with VRChat's parameter system
             // For now, we simulate parameter updates
             
-            bool enableParam = GetVRChatParameter($"{settings.ParameterPrefix}_Enable", settings.EnablePCSS ? 1f : 0f) > 0.5f;
-            float qualityParam = GetVRChatParameter($"{settings.ParameterPrefix}_Quality", (float)settings.Quality / 3f);
+            bool enableParam = GetVRChatParameter($"{settings.parameterPrefix}_Enable", settings.enablePCSS ? 1f : 0f) > 0.5f;
+            float qualityParam = GetVRChatParameter($"{settings.parameterPrefix}_Quality", (float)settings.quality / 3f);
             
             // Update materials with expression parameters
             foreach (var material in targetMaterials)
@@ -264,12 +264,12 @@ namespace lilToon.PCSS.Runtime
         /// </summary>
         public void TogglePCSS()
         {
-            settings.EnablePCSS = !settings.EnablePCSS;
+            settings.enablePCSS = !settings.enablePCSS;
             ApplyPCSSSettings();
             
-            if (settings.EnableVRChatExpression)
+            if (settings.enableVRChatExpression)
             {
-                SetVRChatParameter($"{settings.ParameterPrefix}_Enable", settings.EnablePCSS ? 1f : 0f);
+                SetVRChatParameter($"{settings.parameterPrefix}_Enable", settings.enablePCSS ? 1f : 0f);
             }
         }
         
@@ -278,12 +278,12 @@ namespace lilToon.PCSS.Runtime
         /// </summary>
         public void SetPCSSQuality(PCSSUtils.PCSSQuality quality)
         {
-            settings.Quality = quality;
+            settings.quality = quality;
             ApplyPCSSSettings();
             
-            if (settings.EnableVRChatExpression)
+            if (settings.enableVRChatExpression)
             {
-                SetVRChatParameter($"{settings.ParameterPrefix}_Quality", (float)quality / 3f);
+                SetVRChatParameter($"{settings.parameterPrefix}_Quality", (float)quality / 3f);
             }
         }
         
@@ -292,7 +292,7 @@ namespace lilToon.PCSS.Runtime
         /// </summary>
         public bool IsPCSSEnabled()
         {
-            return settings.EnablePCSS;
+            return settings.enablePCSS;
         }
         
         /// <summary>
@@ -300,7 +300,7 @@ namespace lilToon.PCSS.Runtime
         /// </summary>
         public PCSSUtils.PCSSQuality GetPCSSQuality()
         {
-            return settings.Quality;
+            return settings.quality;
         }
         
         /// <summary>
