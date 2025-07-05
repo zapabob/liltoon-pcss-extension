@@ -2,7 +2,7 @@
   "name": "com.liltoon.pcss-extension",
   "displayName": "lilToon PCSS Extension",
   "description": "🎯 Professional PCSS (Percentage-Closer Soft Shadows) extension for lilToon and Poiyomi shaders with Avatar Selector Menu. Features Unity 2022.3 LTS compatibility, URP 14.0.10 support, built-in preset system (Realistic/Anime/Cinematic), one-click avatar setup with ModularAvatar integration, Base layer red face light implementation, official support for Unity Editor Coroutines (com.unity.editor-coroutines), automatic material remapping on FBX/model import, and new: MissingMaterialAutoFixer Editor extension & FBX/Prefab auto-remap for missing materials.",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "unity": "2022.3",
   "unityRelease": "22f1",
   "dependencies": {
@@ -23,7 +23,7 @@
     "email": "r.minegishi1987@gmail.com",
     "url": "https://zapabob.github.io/liltoon-pcss-extension/"
   },
-  "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.6.0/com.liltoon.pcss-extension-1.6.0.zip",
+  "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.6.1/com.liltoon.pcss-extension-1.6.1.zip",
   "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
   "documentationUrl": "https://zapabob.github.io/liltoon-pcss-extension/",
   "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE",
