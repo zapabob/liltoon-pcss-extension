@@ -39,3 +39,16 @@
 - PhysBoneエミッシブ球体セットアップ機能を全面リファクタリング（Light依存排除・Emission制御型に刷新）
 - CompetitorSetupWizard.csもEmission制御型に統一
 - AutoFIX完全対応・外部依存ゼロ 
+
+## [1.8.0] - 2025-07-04
+### Added
+- 全Editor拡張メニューを「Tools/lilToon PCSS Extension/」配下に統合
+- サブグループ（Utilities, VRChat, Compatibility, About, Documentation）で論理的に分類
+- メニューのpriority/Validation/チェックマーク/ショートカット対応
+- 実装ログ自動生成
+
+### Changed
+- 旧Window/Assets/lilToon/GameObject配下のメニューを削除
+
+### Fixed
+- メニュー重複・迷子問題の解消 

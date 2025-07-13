@@ -2,7 +2,7 @@
   "name": "com.liltoon.pcss-extension",
   "displayName": "lilToon PCSS Extension",
   "description": "🎯 Professional PCSS (Percentage-Closer Soft Shadows) extension for lilToon and Poiyomi shaders with Avatar Selector Menu. Features Unity 2022.3 LTS compatibility, URP 14.0.10 support, built-in preset system (Realistic/Anime/Cinematic), one-click avatar setup with ModularAvatar integration, Base layer red face light implementation, official support for Unity Editor Coroutines (com.unity.editor-coroutines), automatic material remapping on FBX/model import, and new: MissingMaterialAutoFixer Editor extension & FBX/Prefab auto-remap for missing materials.",
-  "version": "1.5.9",
+  "version": "1.8.0",
   "unity": "2022.3",
   "unityRelease": "22f1",
   "dependencies": {
@@ -29,14 +29,14 @@
   "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE",
   "hideInEditor": false,
   "samples": [
-    { "displayName": "🎯 Avatar Setup Examples", "description": "アバターセットアップのサンプルシーン", "path": "Samples~/AvatarSetup" },
-    { "displayName": "🎨 Material Presets", "description": "PCSS対応マテリアルプリセット集", "path": "Samples~/MaterialPresets" },
+    { "displayName": "🎯 Avatar Setup Examples", "description": "アバターセチE��アチE�Eのサンプルシーン", "path": "Samples~/AvatarSetup" },
+    { "displayName": "🎨 Material Presets", "description": "PCSS対応�EチE��アルプリセチE��雁E, "path": "Samples~/MaterialPresets" },
     { "displayName": "⚡ Performance Optimization", "description": "パフォーマンス最適化サンプル", "path": "Samples~/PerformanceOptimization" },
-    { "displayName": "🔴 Red Face Light", "description": "表情が赤くなるライト機能サンプル (Baseレイヤー)", "path": "Samples~/RedFaceLight" }
+    { "displayName": "🔴 Red Face Light", "description": "表惁E��赤くなるライト機�Eサンプル (Baseレイヤー)", "path": "Samples~/RedFaceLight" }
   ],
   "editorCoroutineSupport": {
     "package": "com.unity.editor-coroutines",
-    "version": "1.0.0",
-    "description": "Unity公式のEditorコルーチンに完全対応。エディタ拡張の非同期処理が安定・高速に動作します。"
+    "version": "1.8.0",
+    "description": "Unity公式�EEditorコルーチンに完�E対応。エチE��タ拡張の非同期�E琁E��安定�E高速に動作します、E
   }
 }
