@@ -20,8 +20,8 @@ Unity/VRChat向け高品質PCSS（ソフトシャドウ）拡張。lilToon/Poiyo
 - 詳細は[CHANGELOG.md](./CHANGELOG.md)参照
 
 ## サポート・ドキュメント
-- [公式Wiki](https://github.com/lilxyzw/lilToonPCSS_Extension/wiki)
+- [公式Wiki](https://github.com/zapabob/lilToon-PCSS-Extension/wiki)
 - 不具合・要望はGitHub IssueまたはBOOTHメッセージまで
 
 ---
-(c) 2025 lilxyzw / lilToon PCSS Extension Project 
+(c) 2025 zapabob / lilToon PCSS Extension Project 
