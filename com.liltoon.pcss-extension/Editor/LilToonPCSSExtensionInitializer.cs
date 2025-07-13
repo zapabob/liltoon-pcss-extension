@@ -8,7 +8,7 @@ namespace lilToon.PCSS.Editor
 {
     /// <summary>
     /// lilToon PCSS Extension初期化クラス
-    /// lilToonの読み込み後に自動的にPCSSエクステンションを統合します
+    /// lilToonの読み込み後に自動的にPCSSエクスチE��ションを統合しまぁE
     /// </summary>
     [InitializeOnLoad]
     public class LilToonPCSSExtensionInitializer
@@ -28,32 +28,32 @@ namespace lilToon.PCSS.Editor
             RegisterShaderVariants();
             SetupMenuIntegration();
             SetupMaterialChangeCallback();
-            // --- ダミー参照: VRCLightVolumesIntegrationの自動削除防止 ---
+            // --- ダミ�E参�E: VRCLightVolumesIntegrationの自動削除防止 ---
             System.Type _ = typeof(lilToon.PCSS.VRCLightVolumesIntegration); // AutoFIX/最適化による削除防止
         }
         
         /// <summary>
-        /// PCSS拡張の設定とシンボル定義を行います
+        /// PCSS拡張の設定とシンボル定義を行いまぁE
         /// </summary>
         private static void CheckAndSetupExtension()
         {
-            // lilToonが存在するかチェック
+            // lilToonが存在するかチェチE��
             bool hasLilToon = IsLilToonInstalled();
             
             if (hasLilToon)
             {
                 AddDefineSymbol(PCSS_EXTENSION_DEFINE);
-                Debug.Log("[lilToon PCSS Extension] lilToonが検出されました。PCSS拡張が有効化されました。");
+                Debug.Log("[lilToon PCSS Extension] lilToonが検�Eされました。PCSS拡張が有効化されました、E);
             }
             else
             {
                 RemoveDefineSymbol(PCSS_EXTENSION_DEFINE);
-                Debug.LogWarning("[lilToon PCSS Extension] lilToonが見つかりません。先にlilToonをインストールしてください。");
+                Debug.LogWarning("[lilToon PCSS Extension] lilToonが見つかりません。�EにlilToonをインスト�Eルしてください、E);
             }
         }
         
         /// <summary>
-        /// lilToonがインストールされているかチェック
+        /// lilToonがインスト�EルされてぁE��かチェチE��
         /// </summary>
         private static bool IsLilToonInstalled()
         {
@@ -73,7 +73,7 @@ namespace lilToon.PCSS.Editor
                 }
             }
             
-            // UPMパッケージとしてのlilToonもチェック
+            // UPMパッケージとしてのlilToonもチェチE��
             var packagePath = "Packages/com.lilxyzw.liltoon";
             if (Directory.Exists(packagePath))
             {
@@ -97,7 +97,7 @@ namespace lilToon.PCSS.Editor
         }
         
         /// <summary>
-        /// シェーダーバリアントコレクションを作成
+        /// シェーダーバリアントコレクションを作�E
         /// </summary>
         private static void CreateShaderVariantCollection()
         {
@@ -107,7 +107,7 @@ namespace lilToon.PCSS.Editor
             var pcssShader = Shader.Find(PCSS_EXTENSION_SHADER_NAME);
             if (pcssShader != null)
             {
-                // 主要なキーワード組み合わせを追加
+                // 主要なキーワード絁E��合わせを追加
                 string[] keywords = {
                     "_USEPCSS_ON",
                     "_USESHADOW_ON",
@@ -129,7 +129,7 @@ namespace lilToon.PCSS.Editor
                 }
             }
             
-            // Resourcesフォルダに保存
+            // Resourcesフォルダに保孁E
             string resourcesPath = "Assets/Resources";
             if (!Directory.Exists(resourcesPath))
             {
@@ -141,27 +141,27 @@ namespace lilToon.PCSS.Editor
         }
         
         /// <summary>
-        /// メニュー統合の設定
+        /// メニュー統合�E設宁E
         /// </summary>
         private static void SetupMenuIntegration()
         {
-            // lilToonのメニューシステムと統合
+            // lilToonのメニューシスチE��と統吁E
             EditorApplication.hierarchyWindowItemOnGUI += OnHierarchyGUI;
         }
         
         /// <summary>
-        /// マテリアル変更コールバックの設定
+        /// マテリアル変更コールバックの設宁E
         /// </summary>
         private static void SetupMaterialChangeCallback()
         {
-            // マテリアルのシェーダー変更時のコールバックを登録
-            // Unity 2019以降ではMaterial.onBeforePropertyChangeが存在しないため、
+            // マテリアルのシェーダー変更時�Eコールバックを登録
+            // Unity 2019以降ではMaterial.onBeforePropertyChangeが存在しなぁE��め、E
             // Editorのコールバックを使用
             Undo.postprocessModifications += OnPostprocessModifications;
         }
         
         /// <summary>
-        /// マテリアルプロパティ変更時のコールバック
+        /// マテリアルプロパティ変更時�Eコールバック
         /// </summary>
         private static UndoPropertyModification[] OnPostprocessModifications(UndoPropertyModification[] modifications)
         {
@@ -169,10 +169,10 @@ namespace lilToon.PCSS.Editor
             {
                 if (mod.currentValue != null && mod.currentValue.target is Material material)
                 {
-                    // シェーダープロパティの変更を検出
+                    // シェーダープロパティの変更を検�E
                     if (material.shader != null && material.shader.name == PCSS_EXTENSION_SHADER_NAME)
                     {
-                        // シェーダーが変更された場合、必要なプロパティを設定
+                        // シェーダーが変更された場合、忁E��なプロパティを設宁E
                         EnsureRequiredProperties(material);
                         SetupShaderKeywords(material);
                     }
@@ -182,25 +182,25 @@ namespace lilToon.PCSS.Editor
         }
         
         /// <summary>
-        /// マテリアルに必要なプロパティが存在することを確認
+        /// マテリアルに忁E��なプロパティが存在することを確誁E
         /// </summary>
         public static void EnsureRequiredProperties(Material material)
         {
-            // 基本プロパティの確保
+            // 基本プロパティの確俁E
             if (material.HasProperty("_MainTex") && material.GetTexture("_MainTex") == null)
                 material.SetTexture("_MainTex", Texture2D.whiteTexture);
             
             if (material.HasProperty("_Color") && material.GetColor("_Color") == default)
                 material.SetColor("_Color", Color.white);
             
-            // シャドウ関連プロパティの確保
+            // シャドウ関連プロパティの確俁E
             if (material.HasProperty("_ShadowColorTex") && material.GetTexture("_ShadowColorTex") == null)
                 material.SetTexture("_ShadowColorTex", Texture2D.blackTexture);
             
-            // PCSS関連のデフォルト値設定
+            // PCSS関連のチE��ォルト値設宁E
             if (material.HasProperty("_UsePCSS") && !material.HasProperty("_PCSSPresetMode"))
             {
-                material.SetFloat("_PCSSPresetMode", 1.0f); // Animeプリセット
+                material.SetFloat("_PCSSPresetMode", 1.0f); // AnimeプリセチE��
                 material.SetFloat("_LocalPCSSFilterRadius", 0.01f);
                 material.SetFloat("_LocalPCSSLightSize", 0.1f);
                 material.SetFloat("_PCSSBias", 0.001f);
@@ -211,25 +211,25 @@ namespace lilToon.PCSS.Editor
         }
         
         /// <summary>
-        /// シェーダーキーワードを設定
+        /// シェーダーキーワードを設宁E
         /// </summary>
         public static void SetupShaderKeywords(Material material)
         {
-            // PCSSキーワード
+            // PCSSキーワーチE
             SetKeyword(material, "_USEPCSS_ON", material.HasProperty("_UsePCSS") && material.GetFloat("_UsePCSS") > 0.5f);
             
-            // シャドウキーワード
+            // シャドウキーワーチE
             SetKeyword(material, "_USESHADOW_ON", material.HasProperty("_UseShadow") && material.GetFloat("_UseShadow") > 0.5f);
             
-            // シャドウクランプキーワード
+            // シャドウクランプキーワーチE
             SetKeyword(material, "_USESHADOWCLAMP_ON", material.HasProperty("_UseShadowClamp") && material.GetFloat("_UseShadowClamp") > 0.5f);
             
-            // VRCライトボリュームキーワード
+            // VRCライト�EリュームキーワーチE
             SetKeyword(material, "_USEVRCLIGHT_VOLUMES_ON", material.HasProperty("_UseVRCLightVolumes") && material.GetFloat("_UseVRCLightVolumes") > 0.5f);
         }
         
         /// <summary>
-        /// シェーダーキーワードを設定するヘルパーメソッド
+        /// シェーダーキーワードを設定する�Eルパ�EメソチE��
         /// </summary>
         private static void SetKeyword(Material material, string keyword, bool state)
         {
@@ -256,7 +256,7 @@ namespace lilToon.PCSS.Editor
         }
         
         /// <summary>
-        /// オブジェクトがPCSSマテリアルを持っているかチェック
+        /// オブジェクトがPCSSマテリアルを持ってぁE��かチェチE��
         /// </summary>
         private static bool HasPCSSMaterials(GameObject obj)
         {
@@ -276,7 +276,7 @@ namespace lilToon.PCSS.Editor
         }
         
         /// <summary>
-        /// プリプロセッサシンボルを追加
+        /// プリプロセチE��シンボルを追加
         /// </summary>
         private static void AddDefineSymbol(string symbol)
         {
@@ -291,7 +291,7 @@ namespace lilToon.PCSS.Editor
         }
         
         /// <summary>
-        /// プリプロセッサシンボルを削除
+        /// プリプロセチE��シンボルを削除
         /// </summary>
         private static void RemoveDefineSymbol(string symbol)
         {
@@ -306,21 +306,21 @@ namespace lilToon.PCSS.Editor
         }
         
         /// <summary>
-        /// PCSS拡張のメニューアイテム
+        /// PCSS拡張のメニューアイチE��
         /// </summary>
-        [MenuItem("lilToon/PCSS Extension/About", false, 2000)]
+        [MenuItem("Tools/lilToon PCSS Extension/Utilities/PCSS Extension/About", false, 2000)]
         public static void ShowAbout()
         {
             EditorUtility.DisplayDialog(
                 "lilToon PCSS Extension",
                 "lilToon PCSS Extension v1.5.4\n\n" +
-                "このプラグインはlilToonにPCSS（Percentage-Closer Soft Shadows）機能を追加します。\n\n" +
-                "詳細な使用方法については、READMEファイルをご確認ください。",
+                "こ�EプラグインはlilToonにPCSS�E�Eercentage-Closer Soft Shadows�E�機�Eを追加します、En\n" +
+                "詳細な使用方法につぁE��は、READMEファイルをご確認ください、E,
                 "OK"
             );
         }
         
-        [MenuItem("lilToon/PCSS Extension/Open Documentation", false, 2001)]
+        [MenuItem("Tools/lilToon PCSS Extension/Utilities/PCSS Extension/Open Documentation", false, 2001)]
         public static void OpenDocumentation()
         {
             string readmePath = AssetDatabase.FindAssets("liltoon_pcss_readme t:TextAsset")[0];
@@ -331,34 +331,34 @@ namespace lilToon.PCSS.Editor
             }
         }
         
-        [MenuItem("lilToon/PCSS Extension/Check Installation", false, 2002)]
+        [MenuItem("Tools/lilToon PCSS Extension/Utilities/PCSS Extension/Check Installation", false, 2002)]
         public static void CheckInstallation()
         {
             bool hasLilToon = IsLilToonInstalled();
             bool hasPCSSShader = Shader.Find(PCSS_EXTENSION_SHADER_NAME) != null;
             
-            string message = "インストール状況:\n\n";
-            message += $"lilToon: {(hasLilToon ? "✓ インストール済み" : "✗ 未インストール")}\n";
-            message += $"PCSS Extension: {(hasPCSSShader ? "✓ インストール済み" : "✗ 未インストール")}\n";
+            string message = "インスト�Eル状況E\n\n";
+            message += $"lilToon: {(hasLilToon ? "✁Eインスト�Eル済み" : "✁E未インスト�Eル")}\n";
+            message += $"PCSS Extension: {(hasPCSSShader ? "✁Eインスト�Eル済み" : "✁E未インスト�Eル")}\n";
             
             if (hasLilToon && hasPCSSShader)
             {
-                message += "\n✓ すべて正常にインストールされています！";
+                message += "\n✁Eすべて正常にインスト�EルされてぁE��す！E;
             }
             else
             {
-                message += "\n✗ インストールに問題があります。";
-                if (!hasLilToon) message += "\n- lilToonをインストールしてください。";
-                if (!hasPCSSShader) message += "\n- PCSS Extensionシェーダーが見つかりません。";
+                message += "\n✁Eインスト�Eルに問題があります、E;
+                if (!hasLilToon) message += "\n- lilToonをインスト�Eルしてください、E;
+                if (!hasPCSSShader) message += "\n- PCSS Extensionシェーダーが見つかりません、E;
             }
             
-            EditorUtility.DisplayDialog("PCSS Extension インストール状況", message, "OK");
+            EditorUtility.DisplayDialog("PCSS Extension インスト�Eル状況E, message, "OK");
         }
         
-        [MenuItem("lilToon/PCSS Extension/Fix Materials", false, 2003)]
+        [MenuItem("Tools/lilToon PCSS Extension/Utilities/PCSS Extension/Fix Materials", false, 2003)]
         public static void FixMaterials()
         {
-            // シーン内のすべてのマテリアルを修復
+            // シーン冁E�Eすべてのマテリアルを修復
             var renderers = GameObject.FindObjectsOfType<Renderer>();
             List<Material> fixedMaterials = new List<Material>();
             Shader pcssShader = Shader.Find(PCSS_EXTENSION_SHADER_NAME);
@@ -390,7 +390,7 @@ namespace lilToon.PCSS.Editor
                         if (!fixedMaterials.Contains(material))
                             fixedMaterials.Add(material);
                         EditorUtility.SetDirty(material);
-                        // --- Prefabインスタンス対応 ---
+                        // --- Prefabインスタンス対忁E---
                         var go = renderer.gameObject;
                         if (PrefabUtility.IsPartOfPrefabInstance(go))
                         {
@@ -400,7 +400,7 @@ namespace lilToon.PCSS.Editor
                 }
             }
 
-            // プロジェクト内のマテリアルも修復
+            // プロジェクト�Eのマテリアルも修復
             string[] materialGuids = AssetDatabase.FindAssets("t:Material");
             foreach (string guid in materialGuids)
             {
@@ -429,7 +429,7 @@ namespace lilToon.PCSS.Editor
                     if (!fixedMaterials.Contains(material))
                         fixedMaterials.Add(material);
                     EditorUtility.SetDirty(material);
-                    // --- Prefabインスタンス対応 ---
+                    // --- Prefabインスタンス対忁E---
                     var go = renderer.gameObject;
                     if (PrefabUtility.IsPartOfPrefabInstance(go))
                     {
@@ -439,7 +439,7 @@ namespace lilToon.PCSS.Editor
             }
 
             AssetDatabase.SaveAssets();
-            EditorUtility.DisplayDialog("PCSS Extension マテリアル修復", $"{fixedMaterials.Count}個のマテリアルを自動修復しました。\n(シェーダーmissingやプロパティ欠損も自動復旧)", "OK");
+            EditorUtility.DisplayDialog("PCSS Extension マテリアル修復", $"{fixedMaterials.Count}個�Eマテリアルを�E動修復しました、En(シェーダーmissingめE�Eロパティ欠損も自動復旧)", "OK");
         }
     }
 }

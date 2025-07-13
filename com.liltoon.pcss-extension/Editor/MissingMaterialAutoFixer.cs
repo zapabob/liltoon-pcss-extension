@@ -84,7 +84,7 @@ namespace lilToon.PCSS.Editor
         }
     }
 
-    // FBX/Prefabインポート時の自動リマップ
+    // FBX/Prefabインポ�Eト時の自動リマッチE
     public class LilToonMaterialRemapper : AssetPostprocessor
     {
         void OnPostprocessModel(GameObject g)

@@ -30,7 +30,7 @@ namespace lilToon.PCSS.Editor
         [MenuItem(MenuPath)]
         private static void SetupPerformanceTuner()
         {
-            // シーン内に既にオプティマイザーが存在するか確認
+            // シーン冁E��既にオプティマイザーが存在するか確誁E
             VRChatPerformanceOptimizer existingOptimizer = Object.FindObjectOfType<VRChatPerformanceOptimizer>();
             if (existingOptimizer != null)
             {
@@ -39,14 +39,14 @@ namespace lilToon.PCSS.Editor
                 return;
             }
             
-            // 新しいGameObjectを作成し、コンポーネントをアタッチ
+            // 新しいGameObjectを作�Eし、コンポ�EネントをアタチE��
             GameObject optimizerObject = new GameObject(GameObjectName);
             optimizerObject.AddComponent<VRChatPerformanceOptimizer>();
 
             // 操作をUndo可能にする
             Undo.RegisterCreatedObjectUndo(optimizerObject, $"Create {GameObjectName}");
 
-            // 作成したオブジェクトを選択
+            // 作�Eしたオブジェクトを選抁E
             Selection.activeObject = optimizerObject;
 
             Debug.Log($"Successfully set up '{GameObjectName}'. The intelligent performance tuner is now active in your scene.");

@@ -10,8 +10,8 @@ using VRC.SDK3.Avatars.Components;
 namespace lilToon.PCSS
 {
     /// <summary>
-    /// VRC Light Volumes統合システム
-    /// REDSIMのVRC Light Volumesシステムとの統合を提供
+    /// VRC Light Volumes統合シスチE��
+    /// REDSIMのVRC Light VolumesシスチE��との統合を提侁E
     /// </summary>
     public class VRCLightVolumesIntegration : MonoBehaviour
     {
@@ -37,7 +37,7 @@ namespace lilToon.PCSS
         private float lastUpdateTime;
         private Camera mainCamera;
         
-        // VRC Light Volumes検出用のキーワード
+        // VRC Light Volumes検�E用のキーワーチE
         private static readonly string[] LIGHT_VOLUME_KEYWORDS = {
             "LIGHT_VOLUMES",
             "VRC_LIGHT_VOLUMES",
@@ -59,19 +59,19 @@ namespace lilToon.PCSS
                 UpdateLightVolumes();
                 lastUpdateTime = Time.time;
                 
-                // VRChatパフォーマンス監視
+                // VRChatパフォーマンス監要E
                 MonitorVRChatPerformance();
             }
         }
         
         /// <summary>
-        /// VRChatパフォーマンス監視
+        /// VRChatパフォーマンス監要E
         /// </summary>
         private void MonitorVRChatPerformance()
         {
             float currentFPS = 1f / Time.deltaTime;
             
-            // フレームレートが低下した場合の自動最適化
+            // フレームレートが低下した場合�E自動最適匁E
             if (currentFPS < 45f && !enableMobileOptimization)
             {
                 Debug.LogWarning("VRC Light Volumes: Low framerate detected. Enabling mobile optimization.");
@@ -79,7 +79,7 @@ namespace lilToon.PCSS
                 ApplyMobileOptimizations();
             }
             
-            // Quest環境での追加最適化
+            // Quest環墁E��の追加最適匁E
             if (IsQuestEnvironment() && lightVolumeIntensity > 0.5f)
             {
                 lightVolumeIntensity = Mathf.Min(lightVolumeIntensity, 0.5f);
@@ -88,7 +88,7 @@ namespace lilToon.PCSS
         }
         
         /// <summary>
-        /// Quest環境検出
+        /// Quest環墁E���E
         /// </summary>
         private bool IsQuestEnvironment()
         {
@@ -105,12 +105,12 @@ namespace lilToon.PCSS
             updateFrequency = Mathf.Max(updateFrequency, 0.2f);
             lightVolumeIntensity *= 0.8f;
             
-            // VRChat Avatar Culling設定を考慮
+            // VRChat Avatar Culling設定を老E�E
             ApplyVRChatCullingOptimizations();
         }
         
         /// <summary>
-        /// VRChat Avatar Culling最適化
+        /// VRChat Avatar Culling最適匁E
         /// </summary>
         private void ApplyVRChatCullingOptimizations()
         {
@@ -119,14 +119,14 @@ namespace lilToon.PCSS
             
             if (avatarCount > 10)
             {
-                // アバターが多い場合はLight Volume距離を短縮
+                // アバターが多い場合�ELight Volume距離を短縮
                 maxLightVolumeDistance = Mathf.Min(maxLightVolumeDistance, 30);
                 lightVolumeIntensity *= 0.9f;
             }
         }
         
         /// <summary>
-        /// 近くのアバター数をカウント
+        /// 近くのアバター数をカウンチE
         /// </summary>
         private int CountNearbyAvatars()
         {
@@ -149,7 +149,7 @@ namespace lilToon.PCSS
         }
         
         /// <summary>
-        /// アバターのレンダラーかチェック
+        /// アバターのレンダラーかチェチE��
         /// </summary>
         private bool IsAvatarRenderer(Renderer renderer)
         {
@@ -159,13 +159,13 @@ namespace lilToon.PCSS
         }
         
         /// <summary>
-        /// VRC Light Volumesの自動検出と初期化
+        /// VRC Light Volumesの自動検�Eと初期匁E
         /// </summary>
         public void DetectAndInitialize()
         {
             if (!autoDetectLightVolumes) return;
             
-            // シーン内のLight Volume Managerを検索
+            // シーン冁E�ELight Volume Managerを検索
             var lightVolumeManagers = FindObjectsOfType<MonoBehaviour>()
                 .Where(mb => mb.GetType().Name.Contains("LightVolumeManager") || 
                             mb.GetType().Name.Contains("VRCLightVolume"))
@@ -177,12 +177,12 @@ namespace lilToon.PCSS
                 InitializeLightVolumeSupport();
             }
             
-            // PCSS対応マテリアルを検索
+            // PCSS対応�EチE��アルを検索
             DetectPCSSMaterials();
         }
         
         /// <summary>
-        /// PCSS対応マテリアルの検出
+        /// PCSS対応�EチE��アルの検�E
         /// </summary>
         private void DetectPCSSMaterials()
         {
@@ -207,7 +207,7 @@ namespace lilToon.PCSS
         }
         
         /// <summary>
-        /// マテリアルがPCSS対応かチェック
+        /// マテリアルがPCSS対応かチェチE��
         /// </summary>
         private bool IsPCSSMaterial(Material material)
         {
@@ -220,18 +220,18 @@ namespace lilToon.PCSS
         }
         
         /// <summary>
-        /// Light Volume サポートの初期化
+        /// Light Volume サポ�Eト�E初期匁E
         /// </summary>
         private void InitializeLightVolumeSupport()
         {
-            // グローバルシェーダーキーワードを有効化
+            // グローバルシェーダーキーワードを有効匁E
             Shader.EnableKeyword("VRC_LIGHT_VOLUMES_ENABLED");
             
-            // 品質設定に基づく最適化
+            // 品質設定に基づく最適匁E
             if (enableMobileOptimization && IsMobilePlatform())
             {
                 Shader.EnableKeyword("VRC_LIGHT_VOLUMES_MOBILE");
-                lightVolumeIntensity *= 0.7f; // モバイルでは強度を下げる
+                lightVolumeIntensity *= 0.7f; // モバイルでは強度を下げめE
             }
             
             Debug.Log("[VRC Light Volumes] Light Volume support initialized");
@@ -251,11 +251,11 @@ namespace lilToon.PCSS
             {
                 if (material == null) continue;
                 
-                // VRC Light Volume パラメータを設定
+                // VRC Light Volume パラメータを設宁E
                 material.SetFloat(_VRCLightVolumeIntensity, lightVolumeIntensity);
                 material.SetColor(_VRCLightVolumeTint, lightVolumeTint);
                 
-                // 距離ベースの最適化
+                // 距離ベ�Eスの最適匁E
                 var renderer = targetRenderers.FirstOrDefault(r => r.materials.Contains(material));
                 if (renderer != null)
                 {
@@ -268,7 +268,7 @@ namespace lilToon.PCSS
         }
         
         /// <summary>
-        /// モバイルプラットフォームの判定
+        /// モバイルプラチE��フォームの判宁E
         /// </summary>
         private bool IsMobilePlatform()
         {
@@ -278,7 +278,7 @@ namespace lilToon.PCSS
         }
         
         /// <summary>
-        /// VRC Light Volumes機能の有効/無効切り替え
+        /// VRC Light Volumes機�Eの有効/無効刁E��替ぁE
         /// </summary>
         public void SetVRCLightVolumesEnabled(bool enabled)
         {
@@ -297,7 +297,7 @@ namespace lilToon.PCSS
         }
         
         /// <summary>
-        /// Light Volume強度の設定
+        /// Light Volume強度の設宁E
         /// </summary>
         public void SetLightVolumeIntensity(float intensity)
         {
@@ -313,7 +313,7 @@ namespace lilToon.PCSS
         }
         
         /// <summary>
-        /// Light Volume色調の設定
+        /// Light Volume色調の設宁E
         /// </summary>
         public void SetLightVolumeTint(Color tint)
         {
@@ -329,7 +329,7 @@ namespace lilToon.PCSS
         }
         
         /// <summary>
-        /// 統計情報の取得
+        /// 統計情報の取征E
         /// </summary>
         public VRCLightVolumeStats GetStats()
         {
@@ -345,7 +345,7 @@ namespace lilToon.PCSS
         
         private void OnDestroy()
         {
-            // クリーンアップ
+            // クリーンアチE�E
             Shader.DisableKeyword("VRC_LIGHT_VOLUMES_ENABLED");
             Shader.DisableKeyword("VRC_LIGHT_VOLUMES_MOBILE");
         }

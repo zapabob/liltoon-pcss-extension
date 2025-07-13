@@ -8,8 +8,8 @@ using VRC.SDK3.Dynamics.PhysBone.Components;
 namespace lilToon.PCSS
 {
     /// <summary>
-    /// PhysBoneと連動してエミッシブ（発光）マテリアルを制御するコンポーネント。
-    /// AutoFIX対策済み。エミッシブのみで光表現を実現し、Modular AvatarやPhysBone連携も対応。
+    /// PhysBoneと連動してエミッシブ（発光）�EチE��アルを制御するコンポ�Eネント、E
+    /// AutoFIX対策済み。エミッシブ�Eみで光表現を実現し、Modular AvatarやPhysBone連携も対応、E
     /// </summary>
 #if UNITY_EDITOR
     [AddComponentMenu("lilToon PCSS/PhysBone Emissive Controller")]
@@ -18,24 +18,24 @@ namespace lilToon.PCSS
     {
         public enum EmissivePresetPosition
         {
-            Free,      // 自由移動
+            Free,      // 自由移勁E
             Ground,    // 地面から1.5m
-            Head,      // 頭上（親の+1.7m）
-            Hand,      // 手元（親の+1.0m, 横に0.3m）
+            Head,      // 頭上（親の+1.7m�E�E
+            Hand,      // 手�E�E�親の+1.0m, 横に0.3m�E�E
         }
 
-        [Header("PhysBone連動エミッシブ制御（アバター用途）")]
+        [Header("PhysBone連動エミッシブ制御�E�アバター用途！E)]
         [SerializeField] private Renderer _emissiveRenderer;
         [SerializeField] private int _emissiveMaterialIndex = 0;
         [SerializeField] private string _emissionProperty = "_EmissionColor";
         [SerializeField] private Color _baseEmission = Color.white;
         [SerializeField, Range(0, 10)] private float _maxEmission = 5f;
         [SerializeField, Range(0f, 1f)] private float _emissionStrength = 1f;
-        [Header("Flicker（揺らぎ）効果")]
+        [Header("Flicker�E�揺らぎ�E�効极E)]
         [SerializeField] private bool _enableFlicker = false;
         [SerializeField, Range(0f, 0.2f)] private float _flickerStrength = 0.1f;
         [SerializeField, Range(0.01f, 0.5f)] private float _flickerSpeed = 0.1f;
-        [Header("エミッシブ位置プリセット")]
+        [Header("エミッシブ位置プリセチE��")]
         [SerializeField] private EmissivePresetPosition _presetPosition = EmissivePresetPosition.Free;
         [SerializeField] private Transform _referenceRoot;
         [SerializeField] private bool _snapToPreset = false;
@@ -106,7 +106,7 @@ namespace lilToon.PCSS
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
-            // 必要ならGizmos描画
+            // 忁E��ならGizmos描画
         }
 #endif
     }

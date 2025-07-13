@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-// ModularAvatar依存関係を削除し、リフレクションベースの実装に変更
+// ModularAvatar依存関係を削除し、リフレクションベ�Eスの実裁E��変更
 
 #if VRCHAT_SDK_AVAILABLE
 using VRC.SDKBase;
@@ -11,7 +11,7 @@ using VRC.SDK3.Avatars.Components;
 namespace lilToon.PCSS.Runtime
 {
     /// <summary>
-    /// PCSS関連のユーティリティ機能を提供するクラス
+    /// PCSS関連のユーチE��リチE��機�Eを提供するクラス
     /// </summary>
     public static class PCSSUtilities
     {
@@ -26,7 +26,7 @@ namespace lilToon.PCSS.Runtime
         };
 
         /// <summary>
-        /// 利用可能なシェーダータイプ
+        /// 利用可能なシェーダータイチE
         /// </summary>
         public enum ShaderType
         {
@@ -37,19 +37,19 @@ namespace lilToon.PCSS.Runtime
         }
 
         /// <summary>
-        /// 現在利用可能なシェーダータイプを検出
+        /// 現在利用可能なシェーダータイプを検�E
         /// </summary>
         public static ShaderType DetectAvailableShaders()
         {
             bool hasLilToon = false;
             bool hasPoiyomi = false;
 
-            // lilToon検出
+            // lilToon検�E
             var lilToonShader = Shader.Find("lilToon");
             var lilToonPCSSShader = Shader.Find("lilToon/PCSS Extension");
             hasLilToon = (lilToonShader != null || lilToonPCSSShader != null);
 
-            // Poiyomi検出
+            // Poiyomi検�E
             var poiyomiShader = Shader.Find("Poiyomi/Toon");
             var poiyomiPCSSShader = Shader.Find("Poiyomi/Toon/PCSS Extension");
             hasPoiyomi = (poiyomiShader != null || poiyomiPCSSShader != null);
@@ -65,7 +65,7 @@ namespace lilToon.PCSS.Runtime
         }
 
         /// <summary>
-        /// プリセット定義
+        /// プリセチE��定義
         /// </summary>
         public enum PCSSPreset
         {
@@ -76,18 +76,18 @@ namespace lilToon.PCSS.Runtime
         }
 
         /// <summary>
-        /// PCSS品質設定
+        /// PCSS品質設宁E
         /// </summary>
         public enum PCSSQuality
         {
             Low = 0,          // 低品質 (モバイル向け)
-            Medium = 1,       // 中品質 (標準)
+            Medium = 1,       // 中品質 (標溁E
             High = 2,         // 高品質 (PC向け)
             Ultra = 3         // 最高品質 (ハイエンドPC向け)
         }
 
         /// <summary>
-        /// プリセットパラメータを取得
+        /// プリセチE��パラメータを取征E
         /// </summary>
         public static Vector4 GetPresetParameters(PCSSPreset preset)
         {
@@ -105,7 +105,7 @@ namespace lilToon.PCSS.Runtime
         }
 
         /// <summary>
-        /// 品質設定パラメータを取得
+        /// 品質設定パラメータを取征E
         /// </summary>
         public static Vector3 GetQualityParameters(PCSSQuality quality)
         {
@@ -125,7 +125,7 @@ namespace lilToon.PCSS.Runtime
         }
 
         /// <summary>
-        /// マテリアルがPCSS対応かどうかをチェック（エラー耐性付き）
+        /// マテリアルがPCSS対応かどぁE��をチェチE���E�エラー耐性付き�E�E
         /// </summary>
         public static bool IsPCSSCompatible(Material material)
         {
@@ -135,15 +135,15 @@ namespace lilToon.PCSS.Runtime
             {
                 string shaderName = material.shader.name;
                 
-                // 利用可能なシェーダータイプを検出
+                // 利用可能なシェーダータイプを検�E
                 ShaderType availableShaders = DetectAvailableShaders();
                 
-                // シェーダータイプに応じた柔軟な判定
+                // シェーダータイプに応じた柔軟な判宁E
                 foreach (string supportedShader in SupportedShaders)
                 {
                     if (shaderName.Contains(supportedShader.Replace("/", "").Replace(" ", "")))
                     {
-                        // シェーダーが実際に利用可能かチェック
+                        // シェーダーが実際に利用可能かチェチE��
                         if (IsShaderTypeAvailable(shaderName, availableShaders))
                         {
                             return true;
@@ -155,14 +155,14 @@ namespace lilToon.PCSS.Runtime
             }
             catch (System.Exception ex)
             {
-                // エラーが発生した場合はfalseを返してログ出力
+                // エラーが発生した場合�Efalseを返してログ出劁E
                 Debug.LogWarning($"[PCSSUtilities] Error checking PCSS compatibility: {ex.Message}");
                 return false;
             }
         }
 
         /// <summary>
-        /// 指定されたシェーダーが利用可能なタイプに含まれるかチェック
+        /// 持E��されたシェーダーが利用可能なタイプに含まれるかチェチE��
         /// </summary>
         private static bool IsShaderTypeAvailable(string shaderName, ShaderType availableShaders)
         {
@@ -179,13 +179,13 @@ namespace lilToon.PCSS.Runtime
                     return isLilToon || isPoiyomi;
                 case ShaderType.Unknown:
                 default:
-                    // 不明な場合は寛容に判定（スタンドアロンモード）
+                    // 不�Eな場合�E寛容に判定（スタンドアロンモード！E
                     return true;
             }
         }
 
         /// <summary>
-        /// GameObjectからPCSS対応マテリアルを検索
+        /// GameObjectからPCSS対応�EチE��アルを検索
         /// </summary>
         public static List<Material> FindPCSSMaterials(GameObject target)
         {
@@ -209,7 +209,7 @@ namespace lilToon.PCSS.Runtime
         }
 
         /// <summary>
-        /// プリセットをマテリアルに適用
+        /// プリセチE��を�EチE��アルに適用
         /// </summary>
         public static void ApplyPresetToMaterial(Material material, PCSSPreset preset, Vector4? customParams = null)
         {
@@ -217,13 +217,13 @@ namespace lilToon.PCSS.Runtime
 
             Vector4 parameters = customParams ?? GetPresetParameters(preset);
 
-            // プリセットモードを設定
+            // プリセチE��モードを設宁E
             if (material.HasProperty("_PCSSPresetMode"))
             {
                 material.SetFloat("_PCSSPresetMode", (int)preset);
             }
 
-            // 個別パラメータを設定
+            // 個別パラメータを設宁E
             if (material.HasProperty("_PCSSFilterRadius"))
                 material.SetFloat("_PCSSFilterRadius", parameters.x);
             
@@ -236,13 +236,13 @@ namespace lilToon.PCSS.Runtime
             if (material.HasProperty("_PCSSIntensity"))
                 material.SetFloat("_PCSSIntensity", parameters.w);
 
-            // PCSS機能を有効化
+            // PCSS機�Eを有効匁E
             if (material.HasProperty("_PCSSEnabled"))
                 material.SetFloat("_PCSSEnabled", 1.0f);
         }
 
         /// <summary>
-        /// アバター全体にプリセットを適用
+        /// アバター全体にプリセチE��を適用
         /// </summary>
         public static int ApplyPresetToAvatar(GameObject avatar, PCSSPreset preset, Vector4? customParams = null)
         {
@@ -254,7 +254,7 @@ namespace lilToon.PCSS.Runtime
                 ApplyPresetToMaterial(material, preset, customParams);
             }
 
-            // ModularAvatarコンポーネントが存在する場合、情報を記録（リフレクション使用）
+            // ModularAvatarコンポ�Eネントが存在する場合、情報を記録�E�リフレクション使用�E�E
             try
             {
                 var modularAvatarType = System.Type.GetType("nadena.dev.modular_avatar.core.ModularAvatarInformation, ModularAvatar.Core");
@@ -263,7 +263,7 @@ namespace lilToon.PCSS.Runtime
                     var maInfo = avatar.GetComponent(modularAvatarType);
                     if (maInfo != null)
                     {
-                        // プリセット情報をコンポーネント名に記録
+                        // プリセチE��惁E��をコンポ�Eネント名に記録
                         maInfo.name = $"PCSS_{preset}_Applied";
                     }
                 }
@@ -277,7 +277,7 @@ namespace lilToon.PCSS.Runtime
         }
 
         /// <summary>
-        /// VRChatアバターかどうかをチェック
+        /// VRChatアバターかどぁE��をチェチE��
         /// </summary>
         public static bool IsVRChatAvatar(GameObject gameObject)
         {
@@ -285,7 +285,7 @@ namespace lilToon.PCSS.Runtime
         }
 
         /// <summary>
-        /// ModularAvatarコンポーネントが存在するかチェック（リフレクション使用）
+        /// ModularAvatarコンポ�Eネントが存在するかチェチE���E�リフレクション使用�E�E
         /// </summary>
         public static bool HasModularAvatar(GameObject gameObject)
         {
@@ -293,7 +293,7 @@ namespace lilToon.PCSS.Runtime
 
             try
             {
-                // リフレクションを使用してModularAvatarの存在をチェック
+                // リフレクションを使用してModularAvatarの存在をチェチE��
                 var modularAvatarType = System.Type.GetType("nadena.dev.modular_avatar.core.ModularAvatarInformation, ModularAvatar.Core");
                 if (modularAvatarType != null)
                 {
@@ -310,7 +310,7 @@ namespace lilToon.PCSS.Runtime
         }
 
         /// <summary>
-        /// ModularAvatarを使用してPCSSコンポーネントを追加（リフレクション使用）
+        /// ModularAvatarを使用してPCSSコンポ�Eネントを追加�E�リフレクション使用�E�E
         /// </summary>
         public static UnityEngine.Component AddPCSSModularAvatarComponent(GameObject avatar, PCSSPreset preset)
         {
@@ -318,7 +318,7 @@ namespace lilToon.PCSS.Runtime
 
             try
             {
-                // リフレクションを使用してModularAvatarコンポーネントを追加
+                // リフレクションを使用してModularAvatarコンポ�Eネントを追加
                 var modularAvatarType = System.Type.GetType("nadena.dev.modular_avatar.core.ModularAvatarInformation, ModularAvatar.Core");
                 if (modularAvatarType != null)
                 {
@@ -341,7 +341,7 @@ namespace lilToon.PCSS.Runtime
         }
 
         /// <summary>
-        /// パフォーマンス統計を取得
+        /// パフォーマンス統計を取征E
         /// </summary>
         public static PCSSPerformanceStats GetPerformanceStats(GameObject avatar)
         {

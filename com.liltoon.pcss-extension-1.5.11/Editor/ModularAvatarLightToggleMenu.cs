@@ -6,18 +6,18 @@ using nadena.dev.modular_avatar.core;
 #endif
 
 /// <summary>
-/// ModularAvatarでLightのON/OFFトグルをBaseレイヤーで制御するメニューを自動生成するエディタ拡張
+/// ModularAvatarでLightのON/OFFトグルをBaseレイヤーで制御するメニューを�E動生成するエチE��タ拡張
 /// </summary>
 public class ModularAvatarLightToggleMenu : MonoBehaviour
 {
 #if MODULAR_AVATAR_AVAILABLE
-    [MenuItem("lilToon/PCSS Extension/ModularAvatar/ライトトグルメニューを追加")]
+    [MenuItem("Tools/lilToon PCSS Extension/Utilities/PCSS Extension/ModularAvatar/ライトトグルメニューを追加")]
     public static void AddLightToggleMenu()
     {
         var selected = Selection.activeGameObject;
         if (selected == null)
         {
-            EditorUtility.DisplayDialog("エラー", "アバターのルートを選択してください。", "OK");
+            EditorUtility.DisplayDialog("エラー", "アバターのルートを選択してください、E, "OK");
             return;
         }
 
@@ -46,7 +46,7 @@ public class ModularAvatarLightToggleMenu : MonoBehaviour
         var rootMenu = new VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionMenu();
         var control = new VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionMenu.Control
         {
-            name = "ライトON/OFF",
+            name = "ライチEN/OFF",
             type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionMenu.ControlType.Toggle,
             parameter = new VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionParameters.Parameter { name = "LightToggle" }
         };
@@ -57,16 +57,16 @@ public class ModularAvatarLightToggleMenu : MonoBehaviour
         var lightObj = FindLightObject(selected.transform);
         if (lightObj == null)
         {
-            EditorUtility.DisplayDialog("エラー", "子オブジェクトにLightが見つかりません。", "OK");
+            EditorUtility.DisplayDialog("エラー", "子オブジェクトにLightが見つかりません、E, "OK");
             return;
         }
         var toggle = lightObj.GetComponent<ModularAvatarGameObjectToggle>();
         if (toggle == null) toggle = lightObj.AddComponent<ModularAvatarGameObjectToggle>();
         toggle.parameter = "LightToggle";
         toggle.isOn = true;
-        toggle.layer = ModularAvatarGameObjectToggle.LayerType.Base; // Baseレイヤーで動作
+        toggle.layer = ModularAvatarGameObjectToggle.LayerType.Base; // Baseレイヤーで動佁E
 
-        EditorUtility.DisplayDialog("完了", "ModularAvatarライトトグルメニューを追加しました。", "OK");
+        EditorUtility.DisplayDialog("完亁E, "ModularAvatarライトトグルメニューを追加しました、E, "OK");
     }
 
     private static GameObject FindLightObject(Transform root)

@@ -109,7 +109,7 @@ public class MaterialBackup : EditorWindow
                 }
             }
         }
-        // JSON保存
+        // JSON保孁E
         string json = JsonUtility.ToJson(new MaterialBackupListWrapper { list = backupList }, true);
         File.WriteAllText(Path.Combine(backupFolderPath, "material_backup.json"), json);
         AssetDatabase.SaveAssets();
@@ -191,7 +191,7 @@ public class MaterialBackup : EditorWindow
 
     private static Vector4 StringToVector4(string s)
     {
-        // UnityのVector4.ToString()形式: (x, y, z, w)
+        // UnityのVector4.ToString()形弁E (x, y, z, w)
         s = s.Trim('(', ')');
         var parts = s.Split(',');
         if (parts.Length == 4)
@@ -205,7 +205,7 @@ public class MaterialBackup : EditorWindow
         return Vector4.zero;
     }
 
-    // 追加: プロパティ名からインデックスを取得するヘルパー
+    // 追加: プロパティ名からインチE��クスを取得する�Eルパ�E
     private static int GetPropertyIndexByName(Shader shader, string propertyName)
     {
         int count = ShaderUtil.GetPropertyCount(shader);

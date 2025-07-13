@@ -10,7 +10,7 @@ using VRC.SDK3.Avatars.Components;
 using UnityEditor;
 #endif
 
-// PCSSUtilities の完全修飾名を使用してエラーを回避
+// PCSSUtilities の完�E修飾名を使用してエラーを回避
 using PCSSUtils = lilToon.PCSS.Runtime.PCSSUtilities;
 
 namespace lilToon.PCSS.Runtime

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class VRChatPerformanceOptimizer : MonoBehaviour
 {
-    // 不足している QualityProfile と QualityParameters の定義を追加
+    // 不足してぁE�� QualityProfile と QualityParameters の定義を追加
     public enum QualityProfile
     {
         Maximum,

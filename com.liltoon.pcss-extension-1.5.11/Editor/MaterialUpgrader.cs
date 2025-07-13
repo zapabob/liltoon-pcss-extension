@@ -9,13 +9,13 @@ namespace lilToon.PCSS.Editor
         private const string LILTOON_SHADER_NAME = "lilToon";
         private const string PCSS_EXTENSION_SHADER_NAME = "lilToon/PCSS Extension";
 
-        [MenuItem("Assets/lilToon/Upgrade Selected Materials to PCSS Extension v2", true)]
+        [MenuItem("Tools/lilToon PCSS Extension/Utilities/lilToon/Upgrade Selected Materials to PCSS Extension v2", true)]
         private static bool ValidateUpgradeMaterialsV2()
         {
             return Selection.GetFiltered<Material>(SelectionMode.Assets).Any(m => m.shader.name.Contains(LILTOON_SHADER_NAME) && m.shader.name != PCSS_EXTENSION_SHADER_NAME);
         }
 
-        [MenuItem("Assets/lilToon/Upgrade Selected Materials to PCSS Extension v2")]
+        [MenuItem("Tools/lilToon PCSS Extension/Utilities/lilToon/Upgrade Selected Materials to PCSS Extension v2")]
         private static void UpgradeMaterialsV2()
         {
             Shader pcssShader = Shader.Find(PCSS_EXTENSION_SHADER_NAME);

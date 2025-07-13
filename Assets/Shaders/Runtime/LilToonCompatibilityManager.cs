@@ -9,8 +9,8 @@ using System.Reflection;
 namespace LilToon.PCSS.Runtime
 {
     /// <summary>
-    /// lilToonとの完全互換性を管理するクラス
-    /// 自動バージョン検出、マテリアル同期、プロパティマッピングを提供
+    /// lilToonとの完�E互換性を管琁E��るクラス
+    /// 自動バージョン検�E、�EチE��アル同期、�Eロパティマッピングを提侁E
     /// </summary>
     public class LilToonCompatibilityManager : MonoBehaviour
     {
@@ -45,7 +45,7 @@ namespace LilToon.PCSS.Runtime
             {"_OutlineWidth", "_OutlineWidth"},
             {"_OutlineTex", "_OutlineTex"},
             
-            // 法線マップ
+            // 法線�EチE�E
             {"_BumpMap", "_BumpMap"},
             {"_BumpScale", "_BumpScale"},
             
@@ -53,7 +53,7 @@ namespace LilToon.PCSS.Runtime
             {"_EmissionColor", "_EmissionColor"},
             {"_EmissionMap", "_EmissionMap"},
             
-            // PCSS固有プロパティ
+            // PCSS固有�Eロパティ
             {"_PCSSEnabled", "_PCSSEnabled"},
             {"_PCSSLightSize", "_PCSSLightSize"},
             {"_PCSSMaxDistance", "_PCSSMaxDistance"},
@@ -70,7 +70,7 @@ namespace LilToon.PCSS.Runtime
         }
         
         /// <summary>
-        /// lilToonのバージョンを自動検出
+        /// lilToonのバ�Eジョンを�E動検�E
         /// </summary>
         public void DetectLilToonVersion()
         {
@@ -82,7 +82,7 @@ namespace LilToon.PCSS.Runtime
                 
                 if (lilToonAssembly != null)
                 {
-                    // バージョン情報を取得
+                    // バ�Eジョン惁E��を取征E
                     var versionAttribute = lilToonAssembly.GetCustomAttribute<AssemblyFileVersionAttribute>();
                     if (versionAttribute != null)
                     {
@@ -91,7 +91,7 @@ namespace LilToon.PCSS.Runtime
                     }
                     else
                     {
-                        // フォールバック: シェーダーから検出
+                        // フォールバック: シェーダーから検�E
                         DetectVersionFromShader();
                     }
                 }
@@ -109,7 +109,7 @@ namespace LilToon.PCSS.Runtime
         }
         
         /// <summary>
-        /// シェーダーからバージョンを検出（フォールバック）
+        /// シェーダーからバ�Eジョンを検�E�E�フォールバック�E�E
         /// </summary>
         private void DetectVersionFromShader()
         {
@@ -117,10 +117,10 @@ namespace LilToon.PCSS.Runtime
             if (lilToonShader != null)
             {
 #if UNITY_EDITOR
-                // エディター環境でのみシェーダープロパティを詳細チェック
+                // エチE��ター環墁E��のみシェーダープロパティを詳細チェチE��
                 var propertyCount = ShaderUtil.GetPropertyCount(lilToonShader);
                 
-                // v1.7.0以降の特徴的プロパティをチェック
+                // v1.7.0以降�E特徴皁E�EロパティをチェチE��
                 bool hasNewProperties = false;
                 for (int i = 0; i < propertyCount; i++)
                 {
@@ -135,9 +135,9 @@ namespace LilToon.PCSS.Runtime
                 detectedLilToonVersion = hasNewProperties ? "1.7.0+" : "1.6.x or older";
                 isCompatible = hasNewProperties;
 #else
-                // ランタイム環境では基本的な検出のみ
+                // ランタイム環墁E��は基本皁E��検�Eのみ
                 detectedLilToonVersion = "1.7.0+ (Runtime Detection)";
-                isCompatible = true; // lilToonが見つかった場合は互換性ありと仮定
+                isCompatible = true; // lilToonが見つかった場合�E互換性ありと仮宁E
 #endif
             }
             else
@@ -148,7 +148,7 @@ namespace LilToon.PCSS.Runtime
         }
         
         /// <summary>
-        /// バージョン互換性をチェック
+        /// バ�Eジョン互換性をチェチE��
         /// </summary>
         private bool CheckCompatibility(string version)
         {
@@ -160,7 +160,7 @@ namespace LilToon.PCSS.Runtime
                     int major = int.Parse(versionParts[0]);
                     int minor = int.Parse(versionParts[1]);
                     
-                    // lilToon 1.7.0以降をサポート
+                    // lilToon 1.7.0以降をサポ�EチE
                     return (major > 1) || (major == 1 && minor >= 7);
                 }
             }
@@ -173,7 +173,7 @@ namespace LilToon.PCSS.Runtime
         }
         
         /// <summary>
-        /// 全てのマテリアルを同期
+        /// 全てのマテリアルを同朁E
         /// </summary>
         public void SynchronizeAllMaterials()
         {
@@ -202,10 +202,10 @@ namespace LilToon.PCSS.Runtime
                 return;
             }
             
-            // プロパティ値を保存
+            // プロパティ値を保孁E
             var propertyValues = new Dictionary<string, object>();
             
-            // 元のプロパティを保存
+            // 允E�Eプロパティを保孁E
             foreach (var mapping in PropertyMappings)
             {
                 if (material.HasProperty(mapping.Key))
@@ -217,7 +217,7 @@ namespace LilToon.PCSS.Runtime
             // シェーダーを変更
             material.shader = pcssShader;
             
-            // プロパティを復元
+            // プロパティを復允E
             foreach (var mapping in PropertyMappings)
             {
                 if (propertyValues.ContainsKey(mapping.Key))
@@ -226,14 +226,14 @@ namespace LilToon.PCSS.Runtime
                 }
             }
             
-            // PCSS固有の初期設定
+            // PCSS固有�E初期設宁E
             SetupPCSSDefaults(material);
             
             Debug.Log($"Material '{material.name}' synchronized with lilToon compatibility");
         }
         
         /// <summary>
-        /// プロパティ値を保存
+        /// プロパティ値を保孁E
         /// </summary>
         private void SavePropertyValue(Material material, string propertyName, Dictionary<string, object> storage)
         {
@@ -257,12 +257,12 @@ namespace LilToon.PCSS.Runtime
                     break;
             }
 #else
-            // ランタイムでは型を推測して保存
+            // ランタイムでは型を推測して保孁E
             try
             {
                 if (material.HasProperty(propertyName))
                 {
-                    // 最も一般的なプロパティタイプを試行
+                    // 最も一般皁E��プロパティタイプを試衁E
                     if (propertyName.ToLower().Contains("color"))
                         storage[propertyName] = material.GetColor(propertyName);
                     else if (propertyName.ToLower().Contains("tex"))
@@ -279,7 +279,7 @@ namespace LilToon.PCSS.Runtime
         }
         
         /// <summary>
-        /// プロパティ値を復元
+        /// プロパティ値を復允E
         /// </summary>
         private void RestorePropertyValue(Material material, string propertyName, object value)
         {
@@ -310,11 +310,11 @@ namespace LilToon.PCSS.Runtime
         }
         
         /// <summary>
-        /// PCSS固有の初期設定
+        /// PCSS固有�E初期設宁E
         /// </summary>
         private void SetupPCSSDefaults(Material material)
         {
-            // PCSS基本設定
+            // PCSS基本設宁E
             if (material.HasProperty("_PCSSEnabled"))
                 material.SetFloat("_PCSSEnabled", 1.0f);
             
@@ -327,17 +327,17 @@ namespace LilToon.PCSS.Runtime
             if (material.HasProperty("_PCSSFilterRadius"))
                 material.SetFloat("_PCSSFilterRadius", 3.0f);
             
-            // VRChat最適化設定
+            // VRChat最適化設宁E
             if (material.HasProperty("_VRChatOptimization"))
                 material.SetFloat("_VRChatOptimization", 1.0f);
             
-            // Quest対応設定
+            // Quest対応設宁E
             if (material.HasProperty("_QuestCompatible"))
                 material.SetFloat("_QuestCompatible", 1.0f);
         }
         
         /// <summary>
-        /// マテリアルを管理リストに追加
+        /// マテリアルを管琁E��ストに追加
         /// </summary>
         public void AddMaterialToManagement(Material material)
         {
@@ -352,7 +352,7 @@ namespace LilToon.PCSS.Runtime
         }
         
         /// <summary>
-        /// 自動アップデート機能
+        /// 自動アチE�EチE�Eト機�E
         /// </summary>
         public void CheckForUpdates()
         {

@@ -10,8 +10,8 @@ using System.Linq;
 namespace lilToon.PCSS
 {
     /// <summary>
-    /// PhysBoneと連動してライトの方向を制御するシステム。
-    /// 先行製品の機能を参考にしつつ、より高度な統合機能を提供します。
+    /// PhysBoneと連動してライト�E方向を制御するシスチE��、E
+    /// 先行製品�E機�Eを参老E��しつつ、より高度な統合機�Eを提供します、E
     /// </summary>
 #if UNITY_EDITOR
     [AddComponentMenu("lilToon PCSS/PhysBone Light Controller")]

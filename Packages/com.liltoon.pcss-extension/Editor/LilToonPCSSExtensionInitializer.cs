@@ -8,7 +8,7 @@ public class LilToonPCSSExtensionInitializer : Editor
     [MenuItem("Tools/LilToon PCSS Extension/Initialize")]
     public static void Initialize()
     {
-        // プロジェクト内のマテリアルも修復
+        // プロジェクト�Eのマテリアルも修復
         string[] materialGuids = AssetDatabase.FindAssets("t:Material");
         foreach (string guid in materialGuids)
         {
