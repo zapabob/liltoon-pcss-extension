@@ -15799,6 +15799,28 @@ _**User**_
 
 _**Assistant**_
 
+```bash
+powershell Compress-Archive -Path com.liltoon.pcss-extension/* -DestinationPath com.liltoon.pcss-extension-1.8.1.zip -Force
+```
+
+---
+
+
+
+---
+
+_**User**_
+
+はい
+
+---
+
+_**Assistant**_
+
+
+
+---
+
 
 
 ---
