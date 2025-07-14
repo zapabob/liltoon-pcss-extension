@@ -15702,13 +15702,102 @@ Read file: com.liltoon.pcss-extension/CHANGELOG.md
 
 ---
 
+```diff
+  ## 概要
+  Unity/VRChat向け高品質PCSS（ソフトシャドウ）拡張。lilToon/Poiyomi両対応。プロフェッショナルな影表現と多彩な自動化ツールを提供。
++ 
++ ## 最新バージョン
++ - **v1.8.1**
++ - [リリースノートはこちら](./CHANGELOG.md)
+  
+  ## 特徴
+```
 
+```diff
+  - 全機能を「Tools/lilToon PCSS Extension/」配下に集約し、Utilities/VRChat/Compatibility/Documentation等で論理的に分類
+  - ショートカット・チェックマーク・Validation対応
++ - MenuItemパスの定数化・英語統一で保守性・国際化対応を強化
+  - 実装ログ自動生成
+  
+  ## 導入方法
+- 1. 最新の`com.liltoon.pcss-extension-1.8.0.zip`をダウンロード
++ 1. 最新の`com.liltoon.pcss-extension-1.8.1.zip`をダウンロード
+  2. Unityプロジェクトの`Packages`または`Assets`に展開
+  3. メニュー「Tools/lilToon PCSS Extension/」から各種ツールを利用
+  
+- ## 更新履歴
+- - 詳細は[CHANGELOG.md](./CHANGELOG.md)参照
++ ## v1.8.1の主な変更点
++ - 全Editor拡張MenuItemパスを`Tools/lilToon PCSS Extension/`配下に英語で統一
++ - MenuItemパスの定数化・サブグループ分類
++ - 旧パス・日本語混在のメニューを全て排除
++ - 保守性・国際化対応を大幅強化
++ - v1.8.1としてパッケージ化
+  
+  ## サポート・ドキュメント
+```
 
 ---
 
-
+```diff
+- 
++ # lilToon PCSS Extension v1.8.1 リリースノート
++ 
++ ## 主な変更点
++ - 全Editor拡張MenuItemパスを`Tools/lilToon PCSS Extension/`配下に英語で統一
++ - MenuItemパスの定数化・サブグループ分類（Utilities, VRChat, Compatibility, About, Documentation等）
++ - 旧パス・日本語混在のメニューを全て排除
++ - 保守性・国際化対応を大幅強化
++ - v1.8.1としてパッケージ化
++ 
++ ## アップデート内容
++ - メニュー構造の一貫性・可読性が大幅向上
++ - 将来の機能追加・ブランド名変更も定数一括修正で対応可能
++ - 国際展開・チーム開発にも最適化
++ 
++ ## 導入方法
++ 1. 最新の`com.liltoon.pcss-extension-1.8.1.zip`をダウンロード
++ 2. Unityプロジェクトの`Packages`または`Assets`に展開
++ 3. メニュー「Tools/lilToon PCSS Extension/」から各種ツールを利用
++ 
++ ---
++ (c) 2025 zapabob / lilToon PCSS Extension Project 
+```
 
 ---
+
+配布用READMEとリリースノート（v1.8.1）を自動生成しました。
+
+---
+
+## 生成内容
+
+### 1. 配布用README（com.liltoon.pcss-extension/README.md）
+- 最新バージョン・導入手順・特徴・主な変更点（v1.8.1）を反映
+- MenuItemパス統一・定数化・国際化対応などの強化点を明記
+
+### 2. リリースノート（com.liltoon.pcss-extension/ReleaseNote_v1.8.1.md）
+- v1.8.1の主な変更点・アップデート内容・導入メリットを簡潔にまとめて記載
+
+---
+
+### 配布・公開時の使い方
+- BoothやGitHubリリース、VCC配布時にこのREADMEとリリースノートを同梱・掲載してください。
+- CHANGELOG.mdも併せて公開することで、ユーザーが過去の更新履歴も追いやすくなります。
+
+---
+
+他にも「英語版README」や「Booth商品説明文」など自動生成したい場合はご指示ください！
+
+---
+
+_**User**_
+
+パッケージ化して
+
+---
+
+_**Assistant**_
 
 
 
