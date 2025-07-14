@@ -6,16 +6,21 @@ namespace lilToon.PCSS.Editor
 {
     public class LilToonPCSSMaterialUpgrader2
     {
+        private const string MenuRoot = "Tools/lilToon PCSS Extension/";
+        private const string UtilitiesMenu = MenuRoot + "Utilities/";
+        private const string LilToonMenu = UtilitiesMenu + "lilToon/";
+        private const string UpgradeMenuPath = LilToonMenu + "Upgrade Selected Materials to PCSS Extension v2";
+
         private const string LILTOON_SHADER_NAME = "lilToon";
         private const string PCSS_EXTENSION_SHADER_NAME = "lilToon/PCSS Extension";
 
-        [MenuItem("Tools/lilToon PCSS Extension/Utilities/lilToon/Upgrade Selected Materials to PCSS Extension v2", true)]
+        [MenuItem(UpgradeMenuPath, true)]
         private static bool ValidateUpgradeMaterialsV2()
         {
             return Selection.GetFiltered<Material>(SelectionMode.Assets).Any(m => m.shader.name.Contains(LILTOON_SHADER_NAME) && m.shader.name != PCSS_EXTENSION_SHADER_NAME);
         }
 
-        [MenuItem("Tools/lilToon PCSS Extension/Utilities/lilToon/Upgrade Selected Materials to PCSS Extension v2")]
+        [MenuItem(UpgradeMenuPath)]
         private static void UpgradeMaterialsV2()
         {
             Shader pcssShader = Shader.Find(PCSS_EXTENSION_SHADER_NAME);

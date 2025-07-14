@@ -6,6 +6,11 @@ namespace lilToon.PCSS
 {
     public class PoiyomiPCSSShaderGUI : ShaderGUI
     {
+        // --- MenuItemパス定数（将来の拡張用）---
+        protected const string MenuRoot = "Tools/lilToon PCSS Extension/";
+        protected const string UtilitiesMenu = MenuRoot + "Utilities/";
+        protected const string PCSSMenu = UtilitiesMenu + "PCSS Extension/";
+        
         private static readonly Dictionary<string, bool> foldouts = new Dictionary<string, bool>();
         private MaterialEditor materialEditor;
         private MaterialProperty[] properties;

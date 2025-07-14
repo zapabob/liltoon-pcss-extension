@@ -7,8 +7,11 @@ public class MaterialBackup : EditorWindow
 {
     private static readonly string BackupSubfolder = "MaterialBackups";
     private GameObject targetObject;
+    private const string MenuRoot = "Tools/lilToon PCSS Extension/";
+    private const string UtilitiesMenu = MenuRoot + "Utilities/";
+    private const string MenuPath = UtilitiesMenu + "Material Backup";
 
-    [MenuItem("Tools/Material Backup")]
+    [MenuItem(MenuPath)]
     public static void ShowWindow()
     {
         GetWindow<MaterialBackup>("Material Backup");

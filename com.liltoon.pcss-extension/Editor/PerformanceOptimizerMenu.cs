@@ -23,14 +23,16 @@ namespace lilToon.PCSS.Editor
 
     public class PerformanceOptimizerMenu : EditorWindow
     {
-        private const string MenuPath = "Tools/lilToon PCSS Extension/Setup Performance Tuner";
-        private const string PhysBoneMenuPath = "Tools/lilToon PCSS Extension/Setup PhysBone Light Controller";
+        private const string MenuRoot = "Tools/lilToon PCSS Extension/";
+        private const string UtilitiesMenu = MenuRoot + "Utilities/";
+        private const string SetupPerformanceTunerMenu = UtilitiesMenu + "Setup Performance Tuner";
+        private const string SetupPhysBoneLightControllerMenu = UtilitiesMenu + "Setup PhysBone Light Controller";
         private const string GameObjectName = "PCSS Performance Tuner";
 
-        [MenuItem(MenuPath)]
+        [MenuItem(SetupPerformanceTunerMenu)]
         private static void SetupPerformanceTuner()
         {
-            // シーン冁E��既にオプティマイザーが存在するか確誁E
+            // シーン冁E既にオプティマイザーが存在するか確誁E
             VRChatPerformanceOptimizer existingOptimizer = Object.FindObjectOfType<VRChatPerformanceOptimizer>();
             if (existingOptimizer != null)
             {
@@ -39,20 +41,20 @@ namespace lilToon.PCSS.Editor
                 return;
             }
             
-            // 新しいGameObjectを作�Eし、コンポ�EネントをアタチE��
+            // 新しいGameObjectを作�Eし、コンポ�EネントをアタチE��
             GameObject optimizerObject = new GameObject(GameObjectName);
             optimizerObject.AddComponent<VRChatPerformanceOptimizer>();
 
             // 操作をUndo可能にする
             Undo.RegisterCreatedObjectUndo(optimizerObject, $"Create {GameObjectName}");
 
-            // 作�Eしたオブジェクトを選抁E
+            // 作�Eしたオブジェクトを選抁E
             Selection.activeObject = optimizerObject;
 
             Debug.Log($"Successfully set up '{GameObjectName}'. The intelligent performance tuner is now active in your scene.");
         }
 
-        [MenuItem(PhysBoneMenuPath)]
+        [MenuItem(SetupPhysBoneLightControllerMenu)]
         public static void SetupPhysBoneLightController()
         {
             GameObject selectedObject = Selection.activeGameObject;

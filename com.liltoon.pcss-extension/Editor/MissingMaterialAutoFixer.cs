@@ -6,7 +6,11 @@ namespace lilToon.PCSS.Editor
 {
     public class MissingMaterialAutoFixer : EditorWindow
     {
-        [MenuItem("Tools/lilToon PCSS/Missing Material AutoFixer")]
+        private const string MenuRoot = "Tools/lilToon PCSS Extension/";
+        private const string UtilitiesMenu = MenuRoot + "Utilities/";
+        private const string PCSSMenu = UtilitiesMenu + "PCSS Extension/";
+        private const string MenuPath = PCSSMenu + "Missing Material AutoFixer";
+        [MenuItem(MenuPath)]
         public static void ShowWindow()
         {
             GetWindow<MissingMaterialAutoFixer>("Missing Material AutoFixer");
@@ -84,7 +88,7 @@ namespace lilToon.PCSS.Editor
         }
     }
 
-    // FBX/Prefabインポ�Eト時の自動リマッチE
+    // FBX/Prefabインポ�Eト時の自動リマッチE
     public class LilToonMaterialRemapper : AssetPostprocessor
     {
         void OnPostprocessModel(GameObject g)

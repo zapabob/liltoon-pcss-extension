@@ -11,7 +11,12 @@ namespace lilToon.PCSS.Editor
         private const string LILTOON_SHADER_NAME = "lilToon";
         private const string PCSS_EXTENSION_SHADER_NAME = "lilToon/PCSS Extension";
 
-        // プロパティのマッピング定義�E�EilToon ↁEPCSS Extension�E�E
+        private const string MenuRoot = "Tools/lilToon PCSS Extension/";
+        private const string UtilitiesMenu = MenuRoot + "Utilities/";
+        private const string LilToonMenu = UtilitiesMenu + "lilToon/";
+        private const string UpgradeMenuPath = LilToonMenu + "Upgrade Selected Materials to PCSS Extension";
+
+        // プロパティのマッピング定義�E�EilToon ↁEPCSS Extension�E�E
         private static readonly Dictionary<string, string> PropertyMapping = new Dictionary<string, string>()
         {
             // 基本プロパティ
@@ -29,7 +34,7 @@ namespace lilToon.PCSS.Editor
             { "_ZTest", "_ZTest" },
             { "_SrcBlend", "_SrcBlend" },
             { "_DstBlend", "_DstBlend" },
-            // スチE��シル設宁E
+            // スチE��シル設宁E
             { "_StencilRef", "_StencilRef" },
             { "_StencilReadMask", "_StencilReadMask" },
             { "_StencilWriteMask", "_StencilWriteMask" },
@@ -39,26 +44,26 @@ namespace lilToon.PCSS.Editor
             { "_StencilZFail", "_StencilZFail" },
         };
 
-        // チE��スチャプロパティのリスチE
+        // チE��スチャプロパティのリスチE
         private static readonly HashSet<string> TextureProperties = new HashSet<string>()
         {
             "_MainTex",
             "_ShadowColorTex"
         };
 
-        [MenuItem("Tools/lilToon PCSS Extension/Utilities/lilToon/Upgrade Selected Materials to PCSS Extension", true)]
+        [MenuItem(UpgradeMenuPath, true)]
         private static bool ValidateUpgradeMaterials()
         {
             return Selection.GetFiltered<Material>(SelectionMode.Assets).Any(m => m.shader != null && m.shader.name.Contains(LILTOON_SHADER_NAME) && m.shader.name != PCSS_EXTENSION_SHADER_NAME);
         }
 
-        [MenuItem("Tools/lilToon PCSS Extension/Utilities/lilToon/Upgrade Selected Materials to PCSS Extension")]
+        [MenuItem(UpgradeMenuPath)]
         private static void UpgradeMaterials()
         {
             Shader pcssShader = Shader.Find(PCSS_EXTENSION_SHADER_NAME);
             if (pcssShader == null)
             {
-                EditorUtility.DisplayDialog("エラー", $"シェーダー '{PCSS_EXTENSION_SHADER_NAME}' が見つかりません。PCSS Extensionが正しくインスト�EルされてぁE��か確認してください、E, "OK");
+                EditorUtility.DisplayDialog("エラー", $"シェーダー '{PCSS_EXTENSION_SHADER_NAME}' が見つかりません。PCSS Extensionが正しくインスト�EルされてぁE��か確認してください、E, "OK");
                 return;
             }
 
@@ -68,7 +73,7 @@ namespace lilToon.PCSS.Editor
 
             if (materialsToUpgrade.Count == 0)
             {
-                EditorUtility.DisplayDialog("アチE�Eグレード対象なぁE, "選択されたマテリアルの中にlilToonシェーダーを使用してぁE��も�Eがありません、E, "OK");
+                EditorUtility.DisplayDialog("アチE�Eグレード対象なぁE, "選択されたマテリアルの中にlilToonシェーダーを使用してぁE��も�Eがありません、E, "OK");
                 return;
             }
             
@@ -77,9 +82,9 @@ namespace lilToon.PCSS.Editor
             int upgradedCount = 0;
             foreach (var material in materialsToUpgrade)
             {
-                Debug.Log($"マテリアル '{material.name}' めE'{material.shader.name}' から '{PCSS_EXTENSION_SHADER_NAME}' にアチE�Eグレードします、E);
+                Debug.Log($"マテリアル '{material.name}' めE'{material.shader.name}' から '{PCSS_EXTENSION_SHADER_NAME}' にアチE�Eグレードします、E);
                 
-                // 允E�Eプロパティ値を保孁E
+                // 允E�Eプロパティ値を保孁E
                 Dictionary<string, object> savedProperties = new Dictionary<string, object>();
                 foreach (var mapping in PropertyMapping)
                 {
@@ -104,9 +109,9 @@ namespace lilToon.PCSS.Editor
                 // シェーダー変更
                 material.shader = pcssShader;
                 
-                // チE��ォルト値の設宁E
+                // チE��ォルト値の設宁E
                 material.SetFloat("_UsePCSS", 1.0f);
-                material.SetFloat("_PCSSPresetMode", 1.0f); // AnimeプリセチE��
+                material.SetFloat("_PCSSPresetMode", 1.0f); // AnimeプリセチE��
                 material.SetFloat("_LocalPCSSFilterRadius", 0.01f);
                 material.SetFloat("_LocalPCSSLightSize", 0.1f);
                 material.SetFloat("_PCSSBias", 0.001f);
@@ -121,7 +126,7 @@ namespace lilToon.PCSS.Editor
                 material.SetColor("_VRCLightVolumeTint", Color.white);
                 material.SetFloat("_VRCLightVolumeDistanceFactor", 0.1f);
                 
-                // 保存した�Eロパティ値を復允E
+                // 保存した�Eロパティ値を復允E
                 foreach (var mapping in PropertyMapping)
                 {
                     string originalProperty = mapping.Key;
@@ -144,7 +149,7 @@ namespace lilToon.PCSS.Editor
                     }
                 }
                 
-                // シェーダーキーワード�E設宁E
+                // シェーダーキーワード�E設宁E
                 material.EnableKeyword("_USEPCSS_ON");
                 if (material.HasProperty("_UseShadow") && material.GetFloat("_UseShadow") > 0.5f)
                     material.EnableKeyword("_USESHADOW_ON");
@@ -157,7 +162,7 @@ namespace lilToon.PCSS.Editor
             
             AssetDatabase.SaveAssets();
             
-            EditorUtility.DisplayDialog("アチE�Eグレード完亁E, $"{upgradedCount}個�EマテリアルがlilToon PCSS ExtensionシェーダーにアチE�Eグレードされました、E, "OK");
+            EditorUtility.DisplayDialog("アチE�Eグレード完亁E, $"{upgradedCount}個�EマテリアルがlilToon PCSS ExtensionシェーダーにアチE�Eグレードされました、E, "OK");
         }
     }
 } 

@@ -10,7 +10,7 @@ using nadena.dev.modular_avatar.core;
 namespace lilToon.PCSS.Editor
 {
     /// <summary>
-    /// 競合製品�EセチE��アチE�Eを模倣し、ワンクリチE��で設定を適用するウィザード、E
+    /// 競合製品�EセチE��アチE�Eを模倣し、ワンクリチE��で設定を適用するウィザード、E
     /// </summary>
     public class CompetitorSetupWizard : EditorWindow
     {
@@ -55,16 +55,16 @@ namespace lilToon.PCSS.Editor
 
             try
             {
-                // PhysBoneコンポ�Eネント�E自動検�E
+                // PhysBoneコンポEネントE自動検E
                 if (autoDetectPhysBones)
                 {
                     DetectPhysBoneComponents();
                 }
 
-                // 外部ライト�E設宁E
+                // 外部ライトE設宁E
                 SetupExternalLight();
 
-                // 初期化完亁E��ラグを設宁E
+                // 初期化完亁Eラグを設宁E
                 isInitialized = true;
                 
                 Debug.Log("PhysBoneLightController initialized successfully.");
@@ -79,7 +79,7 @@ namespace lilToon.PCSS.Editor
         {
             physBoneComponents = new List<Component>();
             
-            // VRCPhysBoneコンポ�Eネントを検索
+            // VRCPhysBoneコンポEネントを検索
             var physBones = GetComponentsInChildren<Component>()
                 .Where(comp => comp.GetType().Name.Contains("PhysBone"))
                 .ToList();
@@ -98,7 +98,7 @@ namespace lilToon.PCSS.Editor
                 return;
             }
 
-            // ライト�E基本設定を適用
+            // ライトE基本設定を適用
             externalLight.intensity = lightIntensity;
             externalLight.color = lightColor;
             externalLight.enabled = true;
@@ -135,20 +135,23 @@ namespace lilToon.PCSS.Editor
 
         private void OnDestroy()
         {
-            // クリーンアチE�E処琁E
+            // クリーンアチEE処琁E
             physBoneComponents?.Clear();
         }
     }
-        [MenuItem("Tools/lilToon PCSS/競合互換セチE��アチE�EウィザーチE)]
+        private const string MenuRoot = "Tools/lilToon PCSS Extension/";
+        private const string CompatibilityMenu = MenuRoot + "Compatibility/";
+        private const string MenuPath = CompatibilityMenu + "Competitor Setup Wizard";
+        [MenuItem(MenuPath)]
         public static void ShowWindow()
         {
-            GetWindow<CompetitorSetupWizard>("競合互換セチE��アチE�E");
+            GetWindow<CompetitorSetupWizard>("競合互換セチE��アチE�E");
         }
 
         void OnGUI()
         {
-            GUILayout.Label("競合製品互換セチE��アチE�E", EditorStyles.boldLabel);
-            EditorGUILayout.HelpBox("こ�Eウィザード�E、主要な競合製品�E機�Eを参老E��、ワンクリチE��でアバターに高品質な影設定を適用します、E, MessageType.Info);
+            GUILayout.Label("競合製品互換セチE��アチE�E", EditorStyles.boldLabel);
+            EditorGUILayout.HelpBox("こ�Eウィザード�E、主要な競合製品�E機�Eを参老E��、ワンクリチE��でアバターに高品質な影設定を適用します、E, MessageType.Info);
             
             EditorGUILayout.Space();
 
@@ -160,12 +163,12 @@ namespace lilToon.PCSS.Editor
 
             EditorGUILayout.Space();
 
-            GUILayout.Label("プリセチE��選抁E, EditorStyles.centeredGreyMiniLabel);
+            GUILayout.Label("プリセチE��選抁E, EditorStyles.centeredGreyMiniLabel);
             selectedPreset = (Preset)GUILayout.Toolbar((int)selectedPreset, new[] { "トゥーン", "リアル", "ダーク" });
 
             EditorGUILayout.Space();
 
-            useShadowMask = EditorGUILayout.Toggle(new GUIContent("シャドウマスクを有効にする", "マテリアルのシャドウマスク機�Eを有効化し、影の落ち方をより詳細に制御できるようにします、E), useShadowMask);
+            useShadowMask = EditorGUILayout.Toggle(new GUIContent("シャドウマスクを有効にする", "マテリアルのシャドウマスク機�Eを有効化し、影の落ち方をより詳細に制御できるようにします、E), useShadowMask);
 
             EditorGUILayout.Space();
 
@@ -190,20 +193,20 @@ namespace lilToon.PCSS.Editor
 #if VRC_SDK_VRCSDK3
             if (avatar == null)
             {
-                EditorUtility.DisplayDialog("エラー", "対象のアバターが選択されてぁE��せん、E, "OK");
+                EditorUtility.DisplayDialog("エラー", "対象のアバターが選択されてぁE��せん、E, "OK");
                 return;
             }
             GameObject targetObject = avatar.gameObject;
 #else
             if (avatarObject == null)
             {
-                EditorUtility.DisplayDialog("エラー", "対象のオブジェクトが選択されてぁE��せん、E, "OK");
+                EditorUtility.DisplayDialog("エラー", "対象のオブジェクトが選択されてぁE��せん、E, "OK");
                 return;
             }
             GameObject targetObject = avatarObject;
 #endif
 
-            // エミッシブ球体生成�E再利用
+            // エミッシブ球体生成�E再利用
             Transform sphereTransform = targetObject.transform.Find("PCSS_Emissive");
             GameObject sphereObj;
             if (sphereTransform != null)
@@ -248,7 +251,7 @@ namespace lilToon.PCSS.Editor
             rend.sharedMaterial = mat;
             sphereObj.transform.localPosition = presetPos;
 
-            // PhysBoneLightController自動アタチE��・設宁E
+            // PhysBoneLightController自動アタチE��・設宁E
             var controller = sphereObj.GetComponent<PhysBoneLightController>();
             if (controller == null) controller = sphereObj.AddComponent<PhysBoneLightController>();
             controller.emissiveRenderer = rend;
@@ -258,16 +261,16 @@ namespace lilToon.PCSS.Editor
             controller.enableDistanceAttenuation = true;
             controller.maxEffectDistance = 10.0f;
 
-            // VRCPhysBone自動追加�E�存在しなければ�E�E
+            // VRCPhysBone自動追加�E�存在しなければ�E�E
 #if VRC_SDK_VRCSDK3
             if (sphereObj.GetComponent<VRC.SDK3.Dynamics.PhysBone.Components.VRCPhysBone>() == null)
             {
                 sphereObj.AddComponent<VRC.SDK3.Dynamics.PhysBone.Components.VRCPhysBone>();
             }
 #endif
-            // マテリアル設定�E自動適用
+            // マテリアル設定�E自動適用
             ApplyMaterialSettings(targetObject, selectedPreset, useShadowMask);
-            EditorUtility.DisplayDialog("完亁E, "PhysBoneエミッシブ球体セチE��アチE�Eが完亁E��ました、E, "OK");
+            EditorUtility.DisplayDialog("完亁E, "PhysBoneエミッシブ球体セチE��アチE�Eが完亁E��ました、E, "OK");
         }
 
         private void ApplyMaterialSettings(GameObject target, Preset preset, bool useShadowMask)
@@ -275,20 +278,20 @@ namespace lilToon.PCSS.Editor
             var materials = FindMaterials(target);
             if (materials.Count == 0)
             {
-                Debug.LogWarning($"[CompetitorSetupWizard] 対象オブジェクト「{target.name}」に lilToon/PCSS Extension シェーダーを使用してぁE��マテリアルが見つかりませんでした、E);
+                Debug.LogWarning($"[CompetitorSetupWizard] 対象オブジェクト「{target.name}」に lilToon/PCSS Extension シェーダーを使用してぁE��マテリアルが見つかりませんでした、E);
                 return;
             }
 
             var renderers = target.GetComponentsInChildren<Renderer>(true);
             foreach (var renderer in renderers)
             {
-                // ModularAvatarが導�EされてぁE��ばMA Material Swap/Platform Filterを�E動追加
+                // ModularAvatarが導�EされてぁE��ばMA Material Swap/Platform Filterを�E動追加
                 #if MODULAR_AVATAR_AVAILABLE
                 var swap = renderer.gameObject.GetComponent<MAMaterialSwap>();
                 if (swap == null) swap = renderer.gameObject.AddComponent<MAMaterialSwap>();
                 swap.Renderer = renderer;
                 swap.Materials = new List<Material>(renderer.sharedMaterials);
-                // プリセチE��ごとにマテリアルプロパティを調整
+                // プリセチE��ごとにマテリアルプロパティを調整
                 foreach (var mat in swap.Materials)
                 {
                     mat.EnableKeyword("_USEPCSS_ON");
@@ -315,14 +318,14 @@ namespace lilToon.PCSS.Editor
                     }
                     mat.SetFloat("_UseShadowColorMask", useShadowMask ? 1 : 0);
                 }
-                // Quest/PC刁E��が忁E��ならMAPlatformFilterも追加侁E
+                // Quest/PC刁E��が忁E��ならMAPlatformFilterも追加侁E
                 // var filter = renderer.gameObject.GetComponent<MAPlatformFilter>();
                 // if (filter == null) filter = renderer.gameObject.AddComponent<MAPlatformFilter>();
                 // filter.Platform = MAPlatformFilter.PlatformType.Quest;
                 #endif
             }
 
-            // 既存�E手動マテリアル刁E��替えも残す�E�EodularAvatar未導�E時用�E�E
+            // 既存�E手動マテリアル刁E��替えも残す�E�EodularAvatar未導�E時用�E�E
             foreach (var mat in materials)
             {
                 mat.EnableKeyword("_USEPCSS_ON");
@@ -349,7 +352,7 @@ namespace lilToon.PCSS.Editor
                 }
                 mat.SetFloat("_UseShadowColorMask", useShadowMask ? 1 : 0);
             }
-            Debug.Log($"[CompetitorSetupWizard] {materials.Count}個�Eマテリアルに設定を適用しました、E);
+            Debug.Log($"[CompetitorSetupWizard] {materials.Count}個�Eマテリアルに設定を適用しました、E);
         }
 
         private List<Material> FindMaterials(GameObject target)
@@ -374,13 +377,13 @@ namespace lilToon.PCSS.Editor
                     }
                     else if (mat.shader.name == "lilToon/PCSS Extension")
                     {
-                        // 既に正しい場合もリストアチE�E
+                        // 既に正しい場合もリストアチE�E
                         needsFix = true;
                     }
                     if (needsFix && pcssShader != null)
                     {
                         mat.shader = pcssShader;
-                        // 忁E��なプロパティ・キーワードを補宁E
+                        // 忁E��なプロパティ・キーワードを補宁E
                         lilToon.PCSS.Editor.LilToonPCSSExtensionInitializer.EnsureRequiredProperties(mat);
                         lilToon.PCSS.Editor.LilToonPCSSExtensionInitializer.SetupShaderKeywords(mat);
                         EditorUtility.SetDirty(mat);

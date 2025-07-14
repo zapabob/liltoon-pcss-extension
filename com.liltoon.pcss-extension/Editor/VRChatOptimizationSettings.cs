@@ -6,7 +6,7 @@ using lilToon.PCSS.Runtime;
 namespace lilToon.PCSS.Editor
 {
     /// <summary>
-    /// VRChat最適化設定エチE��ター
+    /// VRChat最適化設定エチE��ター
     /// </summary>
     public class VRChatOptimizationSettings : EditorWindow
     {
@@ -15,7 +15,12 @@ namespace lilToon.PCSS.Editor
         private bool showAdvancedSettings = false;
         private bool showPerformanceStats = false;
         
-        [MenuItem("Tools/lilToon PCSS Extension/Utilities/PCSS Extension/VRChat Optimization Settings")]
+        private const string MenuRoot = "Tools/lilToon PCSS Extension/";
+        private const string UtilitiesMenu = MenuRoot + "Utilities/";
+        private const string PCSSMenu = UtilitiesMenu + "PCSS Extension/";
+        private const string MenuPath = PCSSMenu + "VRChat Optimization Settings";
+        
+        [MenuItem(MenuPath)]
         public static void ShowWindow()
         {
             var window = GetWindow<VRChatOptimizationSettings>("VRChat Optimization");
@@ -77,7 +82,7 @@ namespace lilToon.PCSS.Editor
         
         private void DrawProfileSelection()
         {
-            EditorGUILayout.LabelField("📋 最適化�Eロファイル", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("📋 最適化�Eロファイル", EditorStyles.boldLabel);
             
             EditorGUILayout.BeginHorizontal();
             
@@ -101,7 +106,7 @@ namespace lilToon.PCSS.Editor
         
         private void DrawVRChatQualityMapping()
         {
-            EditorGUILayout.LabelField("🎚�E�EVRChat品質マッピング", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("🎚�E�EVRChat品質マッピング", EditorStyles.boldLabel);
             
             EditorGUI.indentLevel++;
             
@@ -178,8 +183,8 @@ namespace lilToon.PCSS.Editor
         
         private void DrawPerformanceStats()
         {
-            // 統計機�Eは不要�Eため無効匁E
-            EditorGUILayout.HelpBox("パフォーマンス統計機�Eは無効化されてぁE��す、E, MessageType.Info);
+            // 統計機�Eは不要�Eため無効匁E
+            EditorGUILayout.HelpBox("パフォーマンス統計機�Eは無効化されてぁE��す、E, MessageType.Info);
         }
         
         private void DrawActionButtons()
@@ -213,7 +218,7 @@ namespace lilToon.PCSS.Editor
             
             EditorGUILayout.BeginHorizontal();
             
-            if (GUILayout.Button("シーン冁E�EPCSS材質を検索"))
+            if (GUILayout.Button("シーン冁E�EPCSS材質を検索"))
             {
                 FindAndOptimizePCSSMaterials();
             }
@@ -266,7 +271,7 @@ namespace lilToon.PCSS.Editor
             currentProfile.enableMobileOptimization = true;
             currentProfile.enableQuestOptimization = true;
             
-            Debug.Log("Quest最適化�Eロファイルを読み込みました");
+            Debug.Log("Quest最適化�Eロファイルを読み込みました");
         }
         
         private void LoadPCVRProfile()
@@ -283,7 +288,7 @@ namespace lilToon.PCSS.Editor
             currentProfile.vrcLightVolumeUpdateFrequency = 0.15f;
             currentProfile.enableVROptimization = true;
             
-            Debug.Log("PC VR最適化�Eロファイルを読み込みました");
+            Debug.Log("PC VR最適化�Eロファイルを読み込みました");
         }
         
         private void LoadDesktopProfile()
@@ -299,12 +304,12 @@ namespace lilToon.PCSS.Editor
             currentProfile.vrcLightVolumeMaxDistance = 150;
             currentProfile.vrcLightVolumeUpdateFrequency = 0.05f;
             
-            Debug.Log("Desktop最適化�Eロファイルを読み込みました");
+            Debug.Log("Desktop最適化�Eロファイルを読み込みました");
         }
         
         private void ApplySettings()
         {
-            // シーン冁E�EVRChatPerformanceOptimizerを更新
+            // シーン冁E�EVRChatPerformanceOptimizerを更新
             var optimizers = FindObjectsOfType<VRChatPerformanceOptimizer>();
             
             foreach (var optimizer in optimizers)
@@ -312,7 +317,7 @@ namespace lilToon.PCSS.Editor
                 ApplyProfileToOptimizer(optimizer);
             }
             
-            // シーン冁E�EVRCLightVolumesIntegrationを更新
+            // シーン冁E�EVRCLightVolumesIntegrationを更新
             var lightVolumeIntegrations = FindObjectsOfType<VRCLightVolumesIntegration>();
             
             foreach (var integration in lightVolumeIntegrations)
@@ -397,11 +402,11 @@ namespace lilToon.PCSS.Editor
             {
                 EditorUtility.DisplayDialog(
                     "PCSS材質検索完亁E,
-                    $"{pcssMaterials.Count}個�EPCSS対応材質が見つかりました、En" +
-                    "現在の設定で最適化しますか�E�E,
+                    $"{pcssMaterials.Count}個�EPCSS対応材質が見つかりました、En" +
+                    "現在の設定で最適化しますか�E�E,
                     "OK");
                 
-                Debug.Log($"PCSS材質を{pcssMaterials.Count}個検�Eしました");
+                Debug.Log($"PCSS材質を{pcssMaterials.Count}個検�Eしました");
             }
             else
             {
@@ -425,10 +430,10 @@ namespace lilToon.PCSS.Editor
                 issues.Add("VRCLightVolumesIntegrationが見つかりません");
             }
             
-            // 品質設定�E妥当性確誁E
+            // 品質設定�E妥当性確誁E
             if (currentProfile.targetFramerate < 30f)
             {
-                issues.Add("目標フレームレートが低すぎます！E0fps未満�E�E);
+                issues.Add("目標フレームレートが低すぎます！E0fps未満�E�E);
             }
             
             if (currentProfile.lowFramerateThreshold >= currentProfile.targetFramerate)
@@ -441,12 +446,12 @@ namespace lilToon.PCSS.Editor
             {
                 EditorUtility.DisplayDialog(
                     "✁E検証完亁E,
-                    "VRChat設定に問題�Eありません、E,
+                    "VRChat設定に問題�Eありません、E,
                     "OK");
             }
             else
             {
-                string message = "以下�E問題が見つかりました:\n\n" + string.Join("\n", issues);
+                string message = "以下�E問題が見つかりました:\n\n" + string.Join("\n", issues);
                 EditorUtility.DisplayDialog("❁E設定エラー", message, "OK");
             }
         }
@@ -454,7 +459,7 @@ namespace lilToon.PCSS.Editor
         private void SaveProfile()
         {
             string path = EditorUtility.SaveFilePanel(
-                "VRChat最適化�Eロファイルを保孁E,
+                "VRChat最適化�Eロファイルを保孁E,
                 "Assets",
                 "VRChatOptimizationProfile",
                 "asset");
@@ -472,7 +477,7 @@ namespace lilToon.PCSS.Editor
         private void LoadProfile()
         {
             string path = EditorUtility.OpenFilePanel(
-                "VRChat最適化�Eロファイルを読み込み",
+                "VRChat最適化�Eロファイルを読み込み",
                 "Assets",
                 "asset");
             
@@ -495,7 +500,7 @@ namespace lilToon.PCSS.Editor
     }
     
     /// <summary>
-    /// VRChat最適化�Eロファイル
+    /// VRChat最適化�Eロファイル
     /// </summary>
     [CreateAssetMenu(fileName = "VRChatOptimizationProfile", menuName = "lilToon/PCSS/VRChat Optimization Profile")]
     public class VRChatOptimizationProfile : ScriptableObject

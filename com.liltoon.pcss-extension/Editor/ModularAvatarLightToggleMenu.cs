@@ -6,12 +6,17 @@ using nadena.dev.modular_avatar.core;
 #endif
 
 /// <summary>
-/// ModularAvatarでLightのON/OFFトグルをBaseレイヤーで制御するメニューを�E動生成するエチE��タ拡張
+/// ModularAvatarでLightのON/OFFトグルをBaseレイヤーで制御するメニューを�E動生成するエチE��タ拡張
 /// </summary>
 public class ModularAvatarLightToggleMenu : MonoBehaviour
 {
 #if MODULAR_AVATAR_AVAILABLE
-    [MenuItem("Tools/lilToon PCSS Extension/Utilities/PCSS Extension/ModularAvatar/ライトトグルメニューを追加")]
+    private const string MenuRoot = "Tools/lilToon PCSS Extension/";
+    private const string UtilitiesMenu = MenuRoot + "Utilities/";
+    private const string PCSSMenu = UtilitiesMenu + "PCSS Extension/";
+    private const string ModularAvatarMenu = PCSSMenu + "ModularAvatar/";
+    private const string AddLightToggleMenuPath = ModularAvatarMenu + "Add Light Toggle Menu";
+    [MenuItem(AddLightToggleMenuPath)]
     public static void AddLightToggleMenu()
     {
         var selected = Selection.activeGameObject;
