@@ -1,0 +1,42 @@
+{
+  "name": "com.liltoon.pcss-extension",
+  "displayName": "lilToon PCSS Extension",
+  "description": "🎯 Professional PCSS (Percentage-Closer Soft Shadows) extension for lilToon and Poiyomi shaders with Avatar Selector Menu. Features Unity 2022.3 LTS compatibility, URP 14.0.10 support, built-in preset system (Realistic/Anime/Cinematic), one-click avatar setup with ModularAvatar integration, Base layer red face light implementation, official support for Unity Editor Coroutines (com.unity.editor-coroutines), automatic material remapping on FBX/model import, and new: MissingMaterialAutoFixer Editor extension & FBX/Prefab auto-remap for missing materials.",
+  "version": "1.8.1",
+  "unity": "2022.3",
+  "unityRelease": "22f1",
+  "dependencies": {
+    "com.unity.render-pipelines.universal": "12.1.12",
+    "jp.lilxyzw.liltoon": "1.7.0",
+    "com.unity.editor-coroutines": "1.0.0"
+  },
+  "vpmDependencies": {
+    "com.vrchat.avatars": ">=3.5.0",
+    "com.vrchat.base": ">=3.5.0",
+    "nadena.dev.modular-avatar": "1.12.5"
+  },
+  "keywords": [
+    "shader", "toon", "avatar", "pcss", "shadows", "vrchat", "lilToon", "poiyomi", "unity", "urp", "preset", "menu", "selector", "redface", "baseLayer", "material-remap"
+  ],
+  "author": {
+    "name": "lilToon PCSS Extension Team",
+    "email": "r.minegishi1987@gmail.com",
+    "url": "https://zapabob.github.io/liltoon-pcss-extension/"
+  },
+  "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v1.8.1/com.liltoon.pcss-extension-1.8.1.zip",
+  "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
+  "documentationUrl": "https://zapabob.github.io/liltoon-pcss-extension/",
+  "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE",
+  "hideInEditor": false,
+  "samples": [
+    { "displayName": "🎯 Avatar Setup Examples", "description": "アバターセチE��アチE�Eのサンプルシーン", "path": "Samples~/AvatarSetup" },
+    { "displayName": "🎨 Material Presets", "description": "PCSS対応�EチE��アルプリセチE��雁E, "path": "Samples~/MaterialPresets" },
+    { "displayName": "⚡ Performance Optimization", "description": "パフォーマンス最適化サンプル", "path": "Samples~/PerformanceOptimization" },
+    { "displayName": "🔴 Red Face Light", "description": "表惁E��赤くなるライト機�Eサンプル (Baseレイヤー)", "path": "Samples~/RedFaceLight" }
+  ],
+  "editorCoroutineSupport": {
+    "package": "com.unity.editor-coroutines",
+    "version": "1.8.0",
+    "description": "Unity公式�EEditorコルーチンに完�E対応。エチE��タ拡張の非同期�E琁E��安定�E高速に動作します、E
+  }
+}
