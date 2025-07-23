@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>ドキュメント - lilToon PCSS Extension</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="lilToon PCSS Extension の詳細ドキュメント、使用方法、設定ガイド">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #8b5cf6;
+      --accent: #06b6d4;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8fafc;
+      --bg-tertiary: #f1f5f9;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --border: #e2e8f0;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-tertiary: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #64748b;
+      --border: #334155;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header */
+    .header {
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .breadcrumb {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+    }
+
+    .breadcrumb a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 2px solid var(--border);
+      border-radius: 50px;
+      padding: 8px 12px;
+      cursor: pointer;
+      color: var(--text-primary);
+    }
+
+    /* Main Layout */
+    .main-layout {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 3rem;
+      padding: 3rem 0;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: var(--bg-secondary);
+      border-radius: 16px;
+      padding: 2rem;
+      height: fit-content;
+      position: sticky;
+      top: 2rem;
+    }
+
+    .sidebar-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+    }
+
+    .nav-list {
+      list-style: none;
+    }
+
+    .nav-item {
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-link {
+      display: block;
+      padding: 0.5rem 0.75rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* Content */
+    .content {
+      background: var(--bg-secondary);
+      border-radius: 16px;
+      padding: 3rem;
+    }
+
+    .page-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .page-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      margin-bottom: 3rem;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.75rem; }
+    h3 { font-size: 1.5rem; }
+    h4 { font-size: 1.25rem; }
+
+    p {
+      margin-bottom: 1rem;
+      color: var(--text-secondary);
+    }
+
+    /* Code */
+    code {
+      background: var(--bg-tertiary);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      color: var(--text-primary);
+    }
+
+    pre {
+      background: var(--bg-tertiary);
+      padding: 1.5rem;
+      border-radius: 12px;
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+    }
+
+    /* Lists */
+    ul, ol {
+      margin-left: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+      color: var(--text-secondary);
+    }
+
+    /* Cards */
+    .info-card {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .warning-card {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(251, 191, 36, 0.1));
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .success-card {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(52, 211, 153, 0.1));
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .card-title {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      margin: 0.5rem 0.5rem 0.5rem 0;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      border: 2px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      background: var(--bg-primary);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: var(--bg-tertiary);
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    td {
+      color: var(--text-secondary);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .content {
+        padding: 2rem;
+      }
+
+      .page-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <nav class="breadcrumb">
+          <a href="../index.html">🏠 ホーム</a> / 📖 ドキュメント
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()">
+          <span id="theme-icon">🌙</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container">
+    <div class="main-layout">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <h3 class="sidebar-title">📚 目次</h3>
+        <ul class="nav-list">
+          <li class="nav-item"><a href="#overview" class="nav-link active">概要</a></li>
+          <li class="nav-item"><a href="#features" class="nav-link">機能一覧</a></li>
+          <li class="nav-item"><a href="#installation" class="nav-link">インストール</a></li>
+          <li class="nav-item"><a href="#setup" class="nav-link">セットアップ</a></li>
+          <li class="nav-item"><a href="#usage" class="nav-link">使用方法</a></li>
+          <li class="nav-item"><a href="#optimization" class="nav-link">最適化</a></li>
+          <li class="nav-item"><a href="#troubleshooting" class="nav-link">トラブルシューティング</a></li>
+          <li class="nav-item"><a href="#api" class="nav-link">API リファレンス</a></li>
+        </ul>
+      </aside>
+
+      <!-- Content -->
+      <div class="content">
+        <h1 class="page-title">📖 lilToon PCSS Extension ドキュメント</h1>
+        <p class="page-subtitle">VRChat用高品質PCSS (Percentage-Closer Soft Shadows) ソリューションの完全ガイド</p>
+
+        <!-- Overview -->
+        <section id="overview">
+          <h2>🎯 概要</h2>
+          <p>
+            lilToon PCSS Extension は、VRChat向けに特別に最適化された高品質なソフトシャドウシステムです。
+            lilToon v1.10.3との完全互換性を保ちながら、PCSS (Percentage-Closer Soft Shadows) 技術を
+            統合し、リアルな影表現を実現します。
+          </p>
+
+          <div class="info-card">
+            <div class="card-title">
+              <span>ℹ️</span>
+              <span>重要な特徴</span>
+            </div>
+            <ul>
+              <li><strong>完全統合</strong>: lilToon との seamless な統合</li>
+              <li><strong>VCC対応</strong>: VRChat Creator Companion でワンクリックインストール</li>
+              <li><strong>Quest最適化</strong>: 自動パフォーマンス調整機能</li>
+              <li><strong>ModularAvatar対応</strong>: 非破壊セットアップ</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Features -->
+        <section id="features">
+          <h2>✨ 機能一覧</h2>
+          
+          <h3>🎨 シェーダー機能</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>機能</th>
+                <th>説明</th>
+                <th>対応プラットフォーム</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>PCSS Shadow</td>
+                <td>高品質なソフトシャドウレンダリング</td>
+                <td>PC / Quest</td>
+              </tr>
+              <tr>
+                <td>Dynamic Quality</td>
+                <td>デバイス性能に応じた自動品質調整</td>
+                <td>PC / Quest</td>
+              </tr>
+              <tr>
+                <td>Real-time Control</td>
+                <td>VRChat内でのリアルタイム調整</td>
+                <td>PC / Quest</td>
+              </tr>
+              <tr>
+                <td>VRC Light Volumes</td>
+                <td>次世代ボクセルライティング統合</td>
+                <td>PC / Quest</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>🔧 開発者機能</h3>
+          <ul>
+            <li><strong>VCC Setup Wizard</strong>: 自動セットアップウィザード</li>
+            <li><strong>Performance Profiler</strong>: リアルタイムパフォーマンス監視</li>
+            <li><strong>Expression Menu Creator</strong>: 自動エクスプレッションメニュー生成</li>
+            <li><strong>Compatibility Manager</strong>: lilToon バージョン互換性管理</li>
+          </ul>
+        </section>
+
+        <!-- Installation -->
+        <section id="installation">
+          <h2>📦 インストール</h2>
+          
+          <h3>🚀 VCC経由でのインストール（推奨）</h3>
+          <div class="success-card">
+            <div class="card-title">
+              <span>✅</span>
+              <span>最も簡単な方法</span>
+            </div>
+            <ol>
+              <li>VRChat Creator Companion を開く</li>
+              <li>Settings → Packages → Add Repository をクリック</li>
+              <li>以下のURLを追加:</li>
+            </ol>
+            <pre><code>https://zapabob.github.io/liltoon-pcss-extension/index.json</code></pre>
+            <p>
+              <a href="vcc://vpm/addRepo?url=https%3A%2F%2Fzapabob.github.io%2Fliltoon-pcss-extension%2Findex.json" class="btn btn-primary">
+                🚀 VCCに自動追加
+              </a>
+            </p>
+          </div>
+
+          <h3>💾 手動インストール</h3>
+          <ol>
+            <li>最新版をダウンロード: <a href="../Release/" class="btn btn-secondary">ダウンロード</a></li>
+            <li>UnityPackage を Unity プロジェクトにインポート</li>
+            <li>VCC Setup Wizard が自動で起動</li>
+            <li>セットアップを完了</li>
+          </ol>
+        </section>
+
+        <!-- Setup -->
+        <section id="setup">
+          <h2>⚙️ セットアップ</h2>
+          
+          <h3>🎮 基本セットアップ</h3>
+          <ol>
+            <li><strong>Setup Wizard 起動</strong>
+              <pre><code>Unity Editor → Window → lilToon PCSS Extension → Setup Wizard</code></pre>
+            </li>
+            <li><strong>lilToon 互換性チェック</strong>
+              <p>自動でlilToonのバージョンを検出し、互換性を確認します。</p>
+            </li>
+            <li><strong>VRChat SDK 統合</strong>
+              <p>VRChat SDK3 との統合設定を自動で行います。</p>
+            </li>
+            <li><strong>パフォーマンス設定</strong>
+              <p>プロジェクトに最適なパフォーマンス設定を適用します。</p>
+            </li>
+          </ol>
+
+          <div class="warning-card">
+            <div class="card-title">
+              <span>⚠️</span>
+              <span>注意事項</span>
+            </div>
+            <ul>
+              <li>lilToon v1.10.3 以降が必要です</li>
+              <li>VRChat SDK3 (Avatars) が必要です</li>
+              <li>Unity 2019.4.31f1 以降を推奨します</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Usage -->
+        <section id="usage">
+          <h2>🎯 使用方法</h2>
+          
+          <h3>🎨 マテリアル設定</h3>
+          <ol>
+            <li><strong>lilToon マテリアル作成</strong>
+              <pre><code>Project → Create → Material
+Inspector → Shader → lilToon/PCSS Extension</code></pre>
+            </li>
+            <li><strong>PCSS 設定</strong>
+              <ul>
+                <li>Shadow Quality: 影の品質設定</li>
+                <li>Shadow Distance: 影の描画距離</li>
+                <li>Shadow Bias: 影のバイアス調整</li>
+              </ul>
+            </li>
+            <li><strong>VRChat 最適化</strong>
+              <p>Quest対応の自動最適化が有効になります。</p>
+            </li>
+          </ol>
+
+          <h3>🎮 VRChat内での制御</h3>
+          <p>エクスプレッションメニューから以下を制御できます:</p>
+          <ul>
+            <li><strong>Shadow Intensity</strong>: 影の強度 (0-100%)</li>
+            <li><strong>Shadow Quality</strong>: 影の品質 (Low/Medium/High)</li>
+            <li><strong>Dynamic Adjustment</strong>: 動的品質調整のON/OFF</li>
+          </ul>
+        </section>
+
+        <!-- Optimization -->
+        <section id="optimization">
+          <h2>⚡ パフォーマンス最適化</h2>
+          
+          <h3>🎯 自動最適化機能</h3>
+          <ul>
+            <li><strong>Platform Detection</strong>: PC/Quest自動判定</li>
+            <li><strong>LOD System</strong>: 距離に応じた品質調整</li>
+            <li><strong>Frame Rate Monitoring</strong>: フレームレート監視による動的調整</li>
+          </ul>
+
+          <h3>📊 推奨設定</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>プラットフォーム</th>
+                <th>Shadow Quality</th>
+                <th>Max Distance</th>
+                <th>Sample Count</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>PC (High-End)</td>
+                <td>High</td>
+                <td>50m</td>
+                <td>32</td>
+              </tr>
+              <tr>
+                <td>PC (Mid-Range)</td>
+                <td>Medium</td>
+                <td>30m</td>
+                <td>16</td>
+              </tr>
+              <tr>
+                <td>Quest 2/3</td>
+                <td>Low</td>
+                <td>20m</td>
+                <td>8</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Troubleshooting -->
+        <section id="troubleshooting">
+          <h2>🆘 トラブルシューティング</h2>
+          
+          <h3>🔧 よくある問題</h3>
+          
+          <h4>❌ シェーダーコンパイルエラー</h4>
+          <div class="warning-card">
+            <div class="card-title">
+              <span>🛠️</span>
+              <span>解決方法</span>
+            </div>
+            <ol>
+              <li>Unity Editor を再起動</li>
+              <li>Assets → Reimport All を実行</li>
+              <li>Setup Wizard を再実行</li>
+            </ol>
+          </div>
+
+          <h4>❌ VRChatで影が表示されない</h4>
+          <ol>
+            <li>VRChat Settings → Graphics → Shadows が有効か確認</li>
+            <li>アバターのパフォーマンスランクを確認</li>
+            <li>エクスプレッションメニューでShadow Intensityを調整</li>
+          </ol>
+
+          <h4>❌ パフォーマンス問題</h4>
+          <ol>
+            <li>Shadow Quality を下げる</li>
+            <li>Shadow Distance を短くする</li>
+            <li>Dynamic Adjustment を有効にする</li>
+          </ol>
+        </section>
+
+        <!-- API Reference -->
+        <section id="api">
+          <h2>🔗 API リファレンス</h2>
+          
+          <h3>📝 主要クラス</h3>
+          
+          <h4>PCSSUtilities</h4>
+          <pre><code>// 影の品質を動的に変更
+PCSSUtilities.SetShadowQuality(ShadowQuality.Medium);
+
+// パフォーマンス監視開始
+PCSSUtilities.StartPerformanceMonitoring();
+
+// 最適化設定適用
+PCSSUtilities.ApplyOptimizationSettings();</code></pre>
+
+          <h4>VRChatPerformanceOptimizer</h4>
+          <pre><code>// Quest最適化の有効化
+VRChatPerformanceOptimizer.EnableQuestOptimization();
+
+// フレームレート監視
+VRChatPerformanceOptimizer.MonitorFrameRate(targetFPS: 90);</code></pre>
+
+          <h3>🎮 エクスプレッションパラメーター</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>パラメーター名</th>
+                <th>型</th>
+                <th>範囲</th>
+                <th>説明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>PCSS_Intensity</td>
+                <td>Float</td>
+                <td>0.0 - 1.0</td>
+                <td>影の強度</td>
+              </tr>
+              <tr>
+                <td>PCSS_Quality</td>
+                <td>Int</td>
+                <td>0 - 2</td>
+                <td>影の品質 (0:Low, 1:Medium, 2:High)</td>
+              </tr>
+              <tr>
+                <td>PCSS_Dynamic</td>
+                <td>Bool</td>
+                <td>true/false</td>
+                <td>動的調整の有効/無効</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Footer Navigation -->
+        <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center;">
+          <a href="../index.html" class="btn btn-secondary">🏠 ホームに戻る</a>
+          <a href="installation.html" class="btn btn-primary">📦 インストールガイド</a>
+          <a href="support.html" class="btn btn-secondary">🆘 サポート</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Theme Toggle
+    function toggleTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      const themeIcon = document.getElementById('theme-icon');
+      
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      themeIcon.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+    }
+
+    // Initialize theme
+    function initTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+      
+      document.documentElement.setAttribute('data-theme', theme);
+      document.getElementById('theme-icon').textContent = theme === 'dark' ? '☀️' : '🌙';
+    }
+
+    // Smooth scrolling for navigation
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+          
+          // Update active nav item
+          document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+          this.classList.add('active');
+        }
+      });
+    });
+
+    // Update active nav item on scroll
+    function updateActiveNavItem() {
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('.nav-link');
+      
+      let currentSection = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (window.scrollY >= sectionTop) {
+          currentSection = section.getAttribute('id');
+        }
+      });
+      
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + currentSection) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      initTheme();
+      updateActiveNavItem();
+    });
+
+    window.addEventListener('scroll', updateActiveNavItem);
+  </script>
+</body>
+</html> 

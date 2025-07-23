@@ -1,0 +1,54 @@
+{
+  "package_name": "com.liltoon.pcss-extension-2.2.0",
+  "version": "2.2.0",
+  "display_name": "lilToon PCSS Extension - Advanced Realistic Shadow System",
+  "description": "Advanced Realistic Shadow System for lilToon with Modular Avatar AAO integration. Features real-time PCSS, volumetric shadows, subsurface scattering, and performance optimization. Now with enhanced VCC compatibility and semantic versioning.",
+  "unity_version": "2019.4",
+  "dependencies": {
+    "com.unity.render-pipelines.universal": ">=7.0.0",
+    "com.unity.render-pipelines.core": ">=7.0.0"
+  },
+  "vpm_dependencies": {
+    "com.vrchat.avatars": ">=3.5.0",
+    "com.vrchat.base": ">=3.5.0",
+    "nadena.dev.modular-avatar": ">=1.12.5"
+  },
+  "keywords": [
+    "lilToon",
+    "PCSS",
+    "shadows",
+    "volumetric",
+    "subsurface",
+    "reflection",
+    "performance",
+    "VRChat",
+    "ModularAvatar",
+    "shader",
+    "realistic",
+    "advanced",
+    "vpm",
+    "vcc",
+    "semantic-versioning",
+    "power-protection",
+    "checkpoint-system"
+  ],
+  "author": {
+    "name": "lilToon PCSS Extension Team",
+    "email": "support@liltoon-pcss.com",
+    "url": "https://github.com/liltoon-pcss-extension"
+  },
+  "license": "MIT",
+  "created_at": "2025-07-23T12:36:26.745929",
+  "zip_file": "com.liltoon.pcss-extension-2.2.0.zip",
+  "zip_size_bytes": 289322,
+  "zip_size_mb": 0.28,
+  "semantic_versioning": true,
+  "vcc_compatible": true,
+  "features": [
+    "Advanced Realistic Shadow System",
+    "Modular Avatar AAO Integration",
+    "Power Protection System",
+    "Semantic Versioning",
+    "VCC Compatibility"
+  ]
+}

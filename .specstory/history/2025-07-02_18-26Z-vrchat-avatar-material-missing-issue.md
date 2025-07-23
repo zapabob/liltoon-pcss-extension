@@ -18895,3 +18895,9 @@ _**Assistant**_
 
 ---
 
+_**User**_
+
+PCSSEmissionやLightのマテリアルを球ではなく透明化してほしい
+
+---
+

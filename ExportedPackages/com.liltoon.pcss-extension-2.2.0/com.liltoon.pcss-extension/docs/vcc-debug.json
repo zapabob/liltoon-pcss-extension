@@ -1,0 +1,192 @@
+{
+  "debug": true,
+  "repository": {
+    "name": "lilToon PCSS Extension - Ultimate Commercial Edition",
+    "version": "0.2.0",
+    "lastUpdate": "2025-06-22T12:00:00Z",
+    "forceRefresh": true
+  },
+  "latestPackage": {
+    "name": "com.liltoon.pcss-extension",
+    "version": "1.4.1",
+    "displayName": "lilToon PCSS Extension - Ultimate Commercial Edition",
+    "status": "active",
+    "compilationFix": true,
+    "dependencyUpdate": true
+  },
+  "vccCompatibility": {
+    "status": "fully-compatible",
+    "tested": true,
+    "issues": "none"
+  },
+  "troubleshooting": {
+    "cacheRefresh": "VCCを再起動してキャッシュをクリアしてください",
+    "repositoryUrl": "https://zapabob.github.io/liltoon-pcss-extension/index.json",
+    "manualRefresh": "リポジトリを削除して再追加してください"
+  },
+  "debug_info": {
+    "repository_version": "0.2.1",
+    "last_updated": "2025-06-22T19:30:00Z",
+    "vcc_compatibility": "Enhanced Maximum Compatibility Mode",
+    "cache_strategy": "Aggressive No-Cache with Force-Refresh",
+    "issue_resolution": "Repository Listing Access Failure Fix"
+  },
+  "vcc_troubleshooting": {
+    "common_issues": [
+      {
+        "issue": "Failed to get Repository Listing",
+        "solution": "Clear VCC cache and retry",
+        "steps": [
+          "Close VCC completely",
+          "Clear browser cache if using web version",
+          "Restart VCC",
+          "Re-add repository URL"
+        ]
+      },
+      {
+        "issue": "Package not appearing",
+        "solution": "Force refresh repository",
+        "steps": [
+          "Remove repository from VCC",
+          "Wait 30 seconds",
+          "Re-add repository URL",
+          "Check for updates"
+        ]
+      }
+    ],
+    "repository_urls": {
+      "primary": "https://zapabob.github.io/liltoon-pcss-extension/index.json",
+      "direct_package": "https://zapabob.github.io/liltoon-pcss-extension/Release/com.liltoon.pcss-extension-1.4.1.zip",
+      "github_releases": "https://github.com/zapabob/liltoon-pcss-extension/releases"
+    }
+  },
+  "technical_details": {
+    "json_format": "VPM 2.0 Standard Compliant",
+    "compression": "None (for maximum compatibility)",
+    "encoding": "UTF-8",
+    "headers": {
+      "cache_control": "no-cache, no-store, must-revalidate",
+      "cors": "Enabled with wildcard origin",
+      "content_type": "application/json"
+    }
+  },
+  "package_info": {
+    "latest_version": "1.4.1",
+    "package_size_kb": 93.5,
+    "sha256": "A3AF359103D4CED561EEAEB4230BE61300B145857B73A5B1DE3226108D4D4600",
+    "unity_version": "2022.3.22f1",
+    "dependencies_updated": true,
+    "compilation_errors_fixed": true
+  },
+  "repository_health": {
+    "status": "Active",
+    "uptime": "99.9%",
+    "cdn": "GitHub Pages",
+    "ssl": "Enabled",
+    "accessibility": "Global"
+  },
+  "vcc_info": {
+    "version": "1.5.4",
+    "repository_url": "https://zapabob.github.io/liltoon-pcss-extension/index.json",
+    "last_updated": "2025-06-24",
+    "packages": [
+      "com.liltoon.pcss-extension"
+    ]
+  },
+  "unity_info": {
+    "compatible_unity_versions": [
+      "2022.3.22f1",
+      "2022.3.23f1",
+      "2022.3.24f1"
+    ],
+    "compatible_urp_versions": [
+      "12.1.12",
+      "14.0.10"
+    ]
+  },
+  "vrchat_info": {
+    "compatible_sdk_versions": [
+      "3.5.0",
+      "3.5.1"
+    ],
+    "modular_avatar_version": "1.10.0"
+  },
+  "package_info": {
+    "name": "com.liltoon.pcss-extension",
+    "version": "1.5.4",
+    "display_name": "lilToon PCSS Extension",
+    "description": "Professional PCSS shadows for VRChat avatars with lilToon and Poiyomi",
+    "unity": "2022.3",
+    "unity_release": "22f1",
+    "author": {
+      "name": "lilToon PCSS Extension Team",
+      "email": "r.minegishi1987@gmail.com",
+      "url": "https://zapabob.github.io/liltoon-pcss-extension/"
+    },
+    "dependencies": {
+      "com.unity.render-pipelines.universal": "12.1.12",
+      "jp.lilxyzw.liltoon": "1.7.0",
+      "com.unity.editor-coroutines": "1.0.0"
+    },
+    "vpm_dependencies": {
+      "com.vrchat.avatars": ">=3.5.0",
+      "com.vrchat.base": ">=3.5.0",
+      "nadena.dev.modular-avatar": "1.10.0"
+    }
+  },
+  "features": {
+    "avatar_selector": true,
+    "preset_system": true,
+    "performance_optimization": true,
+    "modular_avatar_integration": true,
+    "urp_support": true,
+    "vrc_light_volumes": true,
+    "poiyomi_support": true,
+    "red_face_light_base_layer": true
+  },
+  "presets": [
+    {
+      "name": "Realistic",
+      "filter_radius": 0.005,
+      "light_size": 0.05,
+      "bias": 0.0005,
+      "intensity": 1.0
+    },
+    {
+      "name": "Anime",
+      "filter_radius": 0.015,
+      "light_size": 0.1,
+      "bias": 0.001,
+      "intensity": 0.8
+    },
+    {
+      "name": "Cinematic",
+      "filter_radius": 0.025,
+      "light_size": 0.2,
+      "bias": 0.002,
+      "intensity": 1.2
+    }
+  ],
+  "red_face_light": {
+    "base_layer": true,
+    "intensity_levels": [
+      {
+        "name": "弱",
+        "value": 0.3,
+        "color": [1.0, 0.2, 0.2]
+      },
+      {
+        "name": "中",
+        "value": 0.6,
+        "color": [1.0, 0.2, 0.2]
+      },
+      {
+        "name": "強",
+        "value": 1.0,
+        "color": [1.0, 0.2, 0.2]
+      }
+    ],
+    "position": [0, 0, 0.1],
+    "range": 0.5
+  }
+} 

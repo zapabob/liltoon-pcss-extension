@@ -1,0 +1,83 @@
+# GitHub Pages Configuration for lilToon PCSS Extension
+title: "lilToon PCSS Extension - All-in-One Edition"
+description: "The Ultimate PCSS Solution for VRChat Avatars - Complete lilToon integration with VRC Light Volumes support"
+url: "https://zapabob.github.io"
+baseurl: "/liltoon-pcss-extension"
+
+# Theme
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# SEO
+author: "lilToon PCSS Extension Team"
+twitter:
+  username: zapabob_ouj
+  card: summary_large_image
+
+# GitHub
+github_username: zapabob
+repository: "zapabob/liltoon-pcss-extension"
+
+# Social
+social:
+  name: "lilToon PCSS Extension Team"
+  links:
+    - "https://github.com/zapabob/liltoon-pcss-extension"
+    - "https://twitter.com/zapabob_ouj"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+
+# Include files
+include:
+  - _pages
+
+# Collections
+collections:
+  pages:
+    output: true
+    permalink: /:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "lilToon PCSS Extension Team"
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+
+# Custom variables
+version: "1.2.0"
+liltoon_version: "1.10.3"
+vrchat_sdk_version: "3.7.0"
+unity_version: "2019.4.31f1"
+
+# Navigation
+header_pages:
+  - installation.md
+  - documentation.md
+  - support.md
+  - download.md 
