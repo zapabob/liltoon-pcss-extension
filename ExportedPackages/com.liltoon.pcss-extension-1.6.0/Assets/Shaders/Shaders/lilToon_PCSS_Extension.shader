@@ -24,13 +24,11 @@ Shader "lilToon/PCSS Extension"
         [lilToggle] _UseShadowClamp ("Use Shadow Clamp (Anime Style)", Float) = 0
         _ShadowClamp ("Shadow Clamp", Range(0, 1)) = 0.5
         _Translucency ("Translucency", Range(0, 1)) = 0.5
-        // --- VRC Light Volumes 2.0.0 ---
+        // --- VRC Light Volumes ---
         [lilToggle] _UseVRCLightVolumes ("Use VRC Light Volumes", Float) = 0
         _VRCLightVolumeIntensity ("VRC Light Volume Intensity", Range(0.0, 2.0)) = 1.0
         _VRCLightVolumeTint ("VRC Light Volume Tint", Color) = (1,1,1,1)
         _VRCLightVolumeDistanceFactor ("VRC Light Volume Distance Factor", Range(0.0, 1.0)) = 0.1
-        _EnvRimBorder ("[VRCLV] Rim Border", Range(0, 1)) = 0.85
-        _EnvRimBlur ("[VRCLV] Rim Blur", Range(0, 1)) = 0.35
         // --- Rendering ---
         [Enum(UnityEngine.Rendering.CullMode)] _Cull ("Cull Mode", Float) = 2
         [Enum(Off,0,On,1)] _ZWrite ("ZWrite", Float) = 1
@@ -87,7 +85,6 @@ Shader "lilToon/PCSS Extension"
             #pragma shader_feature_local _ _USEPCSS_ON
             #pragma shader_feature_local _ _USESHADOW_ON
             #pragma shader_feature_local _ _USEVRCLIGHT_VOLUMES_ON
-            #pragma shader_feature_local _ _USEVRCLV_RIMLIGHT_ON
             #pragma shader_feature_local _ _USESHADOWCLAMP_ON
             #pragma multi_compile _ VRC_LIGHT_VOLUMES_ENABLED
             #pragma multi_compile _ VRC_LIGHT_VOLUMES_MOBILE
