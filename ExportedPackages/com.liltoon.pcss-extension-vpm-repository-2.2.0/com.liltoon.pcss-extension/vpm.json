@@ -1,0 +1,231 @@
+{
+  "name": "lilToon PCSS Extension Repository",
+  "id": "com.liltoon.pcss-extension.repository",
+  "url": "https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension",
+  "packages": {
+    "com.liltoon.pcss-extension": {
+      "versions": {
+        "2.2.0": {
+          "name": "com.liltoon.pcss-extension",
+          "version": "2.2.0",
+          "displayName": "lilToon PCSS Extension - Advanced Realistic Shadow System",
+          "description": "Advanced Realistic Shadow System for lilToon with Modular Avatar AAO integration. Features real-time PCSS, volumetric shadows, subsurface scattering, and performance optimization. Now with enhanced VCC compatibility and semantic versioning.",
+          "unity": "2019.4",
+          "dependencies": {
+            "com.unity.render-pipelines.universal": ">=7.0.0",
+            "com.unity.render-pipelines.core": ">=7.0.0"
+          },
+          "vpmDependencies": {
+            "com.vrchat.avatars": ">=3.5.0",
+            "com.vrchat.base": ">=3.5.0",
+            "nadena.dev.modular-avatar": ">=1.12.5"
+          },
+          "keywords": [
+            "lilToon",
+            "PCSS",
+            "shadows",
+            "volumetric",
+            "subsurface",
+            "reflection",
+            "performance",
+            "VRChat",
+            "ModularAvatar",
+            "shader",
+            "realistic",
+            "advanced",
+            "vpm",
+            "vcc",
+            "semantic-versioning",
+            "power-protection",
+            "checkpoint-system"
+          ],
+          "author": {
+            "name": "lilToon PCSS Extension Team",
+            "email": "support@liltoon-pcss.com",
+            "url": "https://github.com/liltoon-pcss-extension"
+          },
+          "license": "MIT",
+          "repository": {
+            "type": "git",
+            "url": "https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension.git"
+          },
+          "bugs": {
+            "url": "https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension/issues"
+          },
+          "homepage": "https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension#readme",
+          "documentationUrl": "https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension/wiki",
+          "changelogUrl": "https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension/blob/main/CHANGELOG.md",
+          "url": "https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension/releases/download/v2.2.0/com.liltoon.pcss-extension-2.2.0.zip",
+          "licensesUrl": "https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension/blob/main/LICENSE",
+          "hideInEditor": false,
+          "samples": [
+            {
+              "displayName": "Advanced Shadow System Samples",
+              "description": "Sample scenes demonstrating the Advanced Realistic Shadow System features",
+              "path": "Samples~/AdvancedShadowSystem"
+            },
+            {
+              "displayName": "Modular Avatar Integration Samples",
+              "description": "Sample avatars with Modular Avatar AAO integration",
+              "path": "Samples~/ModularAvatarIntegration"
+            },
+            {
+              "displayName": "Performance Optimization Samples",
+              "description": "Sample scenes showing performance optimization features",
+              "path": "Samples~/PerformanceOptimization"
+            },
+            {
+              "displayName": "Power Protection System Samples",
+              "description": "Sample scenes demonstrating the power protection and checkpoint system",
+              "path": "Samples~/PowerProtectionSystem"
+            }
+          ]
+        },
+        "2.1.0": {
+          "name": "com.liltoon.pcss-extension",
+          "version": "2.1.0",
+          "displayName": "lilToon PCSS Extension - Advanced Realistic Shadow System",
+          "description": "Advanced Realistic Shadow System for lilToon with Modular Avatar AAO integration. Features real-time PCSS, volumetric shadows, subsurface scattering, and performance optimization. Now with enhanced VCC compatibility and semantic versioning.",
+          "unity": "2019.4",
+          "dependencies": {
+            "com.unity.render-pipelines.universal": ">=7.0.0",
+            "com.unity.render-pipelines.core": ">=7.0.0"
+          },
+          "vpmDependencies": {
+            "com.vrchat.avatars": ">=3.5.0",
+            "com.vrchat.base": ">=3.5.0",
+            "nadena.dev.modular-avatar": ">=1.12.5"
+          },
+          "keywords": [
+            "lilToon",
+            "PCSS",
+            "shadows",
+            "volumetric",
+            "subsurface",
+            "reflection",
+            "performance",
+            "VRChat",
+            "ModularAvatar",
+            "shader",
+            "realistic",
+            "advanced",
+            "vpm",
+            "vcc",
+            "semantic-versioning",
+            "power-protection",
+            "checkpoint-system"
+          ],
+          "author": {
+            "name": "lilToon PCSS Extension Team",
+            "email": "support@liltoon-pcss.com",
+            "url": "https://github.com/liltoon-pcss-extension"
+          },
+          "license": "MIT",
+          "repository": {
+            "type": "git",
+            "url": "https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension.git"
+          },
+          "bugs": {
+            "url": "https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension/issues"
+          },
+          "homepage": "https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension#readme",
+          "documentationUrl": "https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension/wiki",
+          "changelogUrl": "https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension/blob/main/CHANGELOG.md",
+          "url": "https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension/releases/download/v2.1.0/com.liltoon.pcss-extension-2.1.0.zip",
+          "licensesUrl": "https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension/blob/main/LICENSE",
+          "hideInEditor": false,
+          "samples": [
+            {
+              "displayName": "Advanced Shadow System Samples",
+              "description": "Sample scenes demonstrating the Advanced Realistic Shadow System features",
+              "path": "Samples~/AdvancedShadowSystem"
+            },
+            {
+              "displayName": "Modular Avatar Integration Samples",
+              "description": "Sample avatars with Modular Avatar AAO integration",
+              "path": "Samples~/ModularAvatarIntegration"
+            },
+            {
+              "displayName": "Performance Optimization Samples",
+              "description": "Sample scenes showing performance optimization features",
+              "path": "Samples~/PerformanceOptimization"
+            },
+            {
+              "displayName": "Power Protection System Samples",
+              "description": "Sample scenes demonstrating the power protection and checkpoint system",
+              "path": "Samples~/PowerProtectionSystem"
+            }
+          ]
+        },
+        "2.0.0": {
+          "name": "com.liltoon.pcss-extension",
+          "version": "2.0.0",
+          "displayName": "lilToon PCSS Extension - Advanced Realistic Shadow System",
+          "description": "Advanced Realistic Shadow System for lilToon with Modular Avatar AAO integration. Features real-time PCSS, volumetric shadows, subsurface scattering, and performance optimization.",
+          "unity": "2019.4",
+          "dependencies": {
+            "com.unity.render-pipelines.universal": ">=7.0.0",
+            "com.unity.render-pipelines.core": ">=7.0.0"
+          },
+          "vpmDependencies": {
+            "com.vrchat.avatars": ">=3.5.0",
+            "com.vrchat.base": ">=3.5.0",
+            "nadena.dev.modular-avatar": ">=1.12.5"
+          },
+          "keywords": [
+            "lilToon",
+            "PCSS",
+            "shadows",
+            "volumetric",
+            "subsurface",
+            "reflection",
+            "performance",
+            "VRChat",
+            "ModularAvatar",
+            "shader",
+            "realistic",
+            "advanced",
+            "vpm",
+            "vcc"
+          ],
+          "author": {
+            "name": "lilToon PCSS Extension Team",
+            "email": "support@liltoon-pcss.com",
+            "url": "https://github.com/liltoon-pcss-extension"
+          },
+          "license": "MIT",
+          "repository": {
+            "type": "git",
+            "url": "https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension.git"
+          },
+          "bugs": {
+            "url": "https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension/issues"
+          },
+          "homepage": "https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension#readme",
+          "documentationUrl": "https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension/wiki",
+          "changelogUrl": "https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension/blob/main/CHANGELOG.md",
+          "url": "https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension/releases/download/v2.0.0/com.liltoon.pcss-extension-2.0.0.zip",
+          "licensesUrl": "https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension/blob/main/LICENSE",
+          "hideInEditor": false,
+          "samples": [
+            {
+              "displayName": "Advanced Shadow System Samples",
+              "description": "Sample scenes demonstrating the Advanced Realistic Shadow System features",
+              "path": "Samples~/AdvancedShadowSystem"
+            },
+            {
+              "displayName": "Modular Avatar Integration Samples",
+              "description": "Sample avatars with Modular Avatar AAO integration",
+              "path": "Samples~/ModularAvatarIntegration"
+            },
+            {
+              "displayName": "Performance Optimization Samples",
+              "description": "Sample scenes showing performance optimization features",
+              "path": "Samples~/PerformanceOptimization"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

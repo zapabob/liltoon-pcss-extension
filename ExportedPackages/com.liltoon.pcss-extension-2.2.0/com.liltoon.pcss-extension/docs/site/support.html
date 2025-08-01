@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>サポート - lilToon PCSS Extension</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="lilToon PCSS Extension のサポート情報、FAQ、トラブルシューティング、コミュニティリンク">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #8b5cf6;
+      --accent: #06b6d4;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8fafc;
+      --bg-tertiary: #f1f5f9;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --border: #e2e8f0;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-tertiary: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #64748b;
+      --border: #334155;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+      color: white;
+      padding: 4rem 0;
+      text-align: center;
+    }
+
+    .header-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .header-subtitle {
+      font-size: 1.125rem;
+      opacity: 0.9;
+    }
+
+    .breadcrumb {
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .breadcrumb a {
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+    }
+
+    /* Main Content */
+    .main {
+      padding: 4rem 0;
+    }
+
+    .section {
+      margin-bottom: 4rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: var(--text-primary);
+      text-align: center;
+    }
+
+    /* Support Cards Grid */
+    .support-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .support-card {
+      background: var(--bg-secondary);
+      border-radius: 16px;
+      padding: 2rem;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .support-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    .support-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .support-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .support-description {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    /* FAQ Section */
+    .faq-container {
+      background: var(--bg-secondary);
+      border-radius: 16px;
+      padding: 2rem;
+      border: 1px solid var(--border);
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 0;
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .faq-question {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-question:hover {
+      color: var(--primary);
+    }
+
+    .faq-answer {
+      color: var(--text-secondary);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .faq-answer.active {
+      max-height: 200px;
+      margin-top: 1rem;
+    }
+
+    .faq-toggle {
+      font-size: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-toggle.active {
+      transform: rotate(180deg);
+    }
+
+    /* Contact Form */
+    .contact-form {
+      background: var(--bg-secondary);
+      border-radius: 16px;
+      padding: 2rem;
+      border: 1px solid var(--border);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: inherit;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      margin: 0.5rem 0.5rem 0.5rem 0;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      border: 2px solid var(--border);
+    }
+
+    .btn-accent {
+      background: linear-gradient(135deg, var(--accent), #0891b2);
+      color: white;
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, var(--success), #059669);
+      color: white;
+    }
+
+    /* Alert Cards */
+    .alert {
+      border-radius: 12px;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-left: 4px solid;
+    }
+
+    .alert-info {
+      background: rgba(99, 102, 241, 0.1);
+      border-color: var(--primary);
+    }
+
+    .alert-success {
+      background: rgba(16, 185, 129, 0.1);
+      border-color: var(--success);
+    }
+
+    .alert-warning {
+      background: rgba(245, 158, 11, 0.1);
+      border-color: var(--warning);
+    }
+
+    /* Status Indicators */
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .status-item {
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      border: 1px solid var(--border);
+    }
+
+    .status-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 0.5rem;
+    }
+
+    .status-online {
+      background: var(--success);
+    }
+
+    .status-maintenance {
+      background: var(--warning);
+    }
+
+    .status-offline {
+      background: var(--error);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .support-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .header-title {
+        font-size: 2rem;
+      }
+      
+      .breadcrumb {
+        position: static;
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <nav class="breadcrumb">
+      <a href="../index.html">🏠 ホーム</a> / 🆘 サポート
+    </nav>
+    <div class="container">
+      <h1 class="header-title">🆘 サポート</h1>
+      <p class="header-subtitle">困ったときはここで解決しよう</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="container">
+      <!-- Service Status -->
+      <section class="section">
+        <h2 class="section-title">📊 サービス状況</h2>
+        <div class="status-grid">
+          <div class="status-item">
+            <div>
+              <span class="status-indicator status-online"></span>
+              <strong>VPM Repository</strong>
+            </div>
+            <div style="font-size: 0.875rem; color: var(--text-secondary);">正常稼働中</div>
+          </div>
+          <div class="status-item">
+            <div>
+              <span class="status-indicator status-online"></span>
+              <strong>GitHub Pages</strong>
+            </div>
+            <div style="font-size: 0.875rem; color: var(--text-secondary);">正常稼働中</div>
+          </div>
+          <div class="status-item">
+            <div>
+              <span class="status-indicator status-online"></span>
+              <strong>Documentation</strong>
+            </div>
+            <div style="font-size: 0.875rem; color: var(--text-secondary);">正常稼働中</div>
+          </div>
+          <div class="status-item">
+            <div>
+              <span class="status-indicator status-online"></span>
+              <strong>Download Service</strong>
+            </div>
+            <div style="font-size: 0.875rem; color: var(--text-secondary);">正常稼働中</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Support Options -->
+      <section class="section">
+        <h2 class="section-title">🎯 サポートオプション</h2>
+        <div class="support-grid">
+          <div class="support-card">
+            <div class="support-icon">📖</div>
+            <h3 class="support-title">ドキュメント</h3>
+            <p class="support-description">
+              詳細な使用方法、API リファレンス、設定ガイドを確認できます。
+            </p>
+            <a href="documentation.html" class="btn btn-primary">📖 ドキュメントを見る</a>
+          </div>
+
+          <div class="support-card">
+            <div class="support-icon">💬</div>
+            <h3 class="support-title">GitHub Issues</h3>
+            <p class="support-description">
+              バグ報告、機能要望、技術的な質問はGitHubで受け付けています。
+            </p>
+            <a href="https://github.com/zapabob/liltoon-pcss-extension/issues" class="btn btn-accent" target="_blank">
+              💬 Issues を開く
+            </a>
+          </div>
+
+          <div class="support-card">
+            <div class="support-icon">🔧</div>
+            <h3 class="support-title">トラブルシューティング</h3>
+            <p class="support-description">
+              よくある問題と解決方法をまとめたガイドです。
+            </p>
+            <a href="#troubleshooting" class="btn btn-secondary">🔧 解決方法を見る</a>
+          </div>
+
+          <div class="support-card">
+            <div class="support-icon">🌐</div>
+            <h3 class="support-title">コミュニティ</h3>
+            <p class="support-description">
+              VRChatコミュニティでの情報交換や質問ができます。
+            </p>
+            <a href="#community" class="btn btn-success">🌐 コミュニティに参加</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="section">
+        <h2 class="section-title">❓ よくある質問</h2>
+        <div class="faq-container">
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <span>💾 インストールに失敗します</span>
+              <span class="faq-toggle">▼</span>
+            </div>
+            <div class="faq-answer">
+              <p><strong>解決方法:</strong></p>
+              <ol>
+                <li>Unity Editor を完全に再起動してください</li>
+                <li>VRChat SDK3 が最新版かご確認ください</li>
+                <li>lilToon v1.10.3 以降がインストールされているか確認してください</li>
+                <li>Assets → Reimport All を実行してください</li>
+              </ol>
+              <p>それでも解決しない場合は、<a href="https://github.com/zapabob/liltoon-pcss-extension/issues">GitHub Issues</a> でお問い合わせください。</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <span>🎮 VRChatで影が表示されません</span>
+              <span class="faq-toggle">▼</span>
+            </div>
+            <div class="faq-answer">
+              <p><strong>確認事項:</strong></p>
+              <ol>
+                <li>VRChat Settings → Graphics → Shadows が有効になっているか</li>
+                <li>アバターのパフォーマンスランクが制限されていないか</li>
+                <li>エクスプレッションメニューでShadow Intensityが0になっていないか</li>
+                <li>ワールドの照明設定が適切か</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <span>⚡ パフォーマンスが悪化しました</span>
+              <span class="faq-toggle">▼</span>
+            </div>
+            <div class="faq-answer">
+              <p><strong>最適化方法:</strong></p>
+              <ol>
+                <li>Shadow Quality を Medium または Low に設定</li>
+                <li>Shadow Distance を短くする（推奨: 20-30m）</li>
+                <li>Dynamic Adjustment を有効にする</li>
+                <li>不要なライトの数を減らす</li>
+              </ol>
+              <p>Quest向けには自動最適化が適用されますが、手動調整も可能です。</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <span>🔄 アップデートはどうすればいいですか？</span>
+              <span class="faq-toggle">▼</span>
+            </div>
+            <div class="faq-answer">
+              <p><strong>VCC経由の場合:</strong></p>
+              <ol>
+                <li>VCCでプロジェクトを開く</li>
+                <li>Manage Project → Updates タブを確認</li>
+                <li>利用可能な更新があれば Update ボタンをクリック</li>
+              </ol>
+              <p><strong>手動インストールの場合:</strong></p>
+              <ol>
+                <li>新しいバージョンをダウンロード</li>
+                <li>古いファイルを削除してから新しいバージョンをインポート</li>
+                <li>Setup Wizard を再実行</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <span>🎨 他のシェーダーとの互換性は？</span>
+              <span class="faq-toggle">▼</span>
+            </div>
+            <div class="faq-answer">
+              <p><strong>対応シェーダー:</strong></p>
+              <ul>
+                <li>✅ lilToon v1.10.3以降 - 完全対応</li>
+                <li>✅ Poiyomi Pro 8.1以降 - 実験的対応</li>
+                <li>⚠️ その他のシェーダー - 部分的対応</li>
+              </ul>
+              <p>新しいシェーダー対応のリクエストは GitHub Issues でお知らせください。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Troubleshooting -->
+      <section class="section" id="troubleshooting">
+        <h2 class="section-title">🔧 トラブルシューティング</h2>
+        
+        <div class="alert alert-info">
+          <strong>💡 まず試してください:</strong>
+          <ol>
+            <li>Unity Editor の完全再起動</li>
+            <li>Assets → Reimport All の実行</li>
+            <li>Setup Wizard の再実行</li>
+            <li>Unity Console のエラーメッセージ確認</li>
+          </ol>
+        </div>
+
+        <h3>🚨 緊急時の対処法</h3>
+        <div class="support-grid">
+          <div class="support-card">
+            <div class="support-icon">🔴</div>
+            <h4 class="support-title">Unity がクラッシュする</h4>
+            <p class="support-description">
+              1. Safe Mode で Unity を起動<br>
+              2. 問題のあるファイルを特定<br>
+              3. 必要に応じてプロジェクトを復元
+            </p>
+          </div>
+
+          <div class="support-card">
+            <div class="support-icon">⚠️</div>
+            <h4 class="support-title">アバターが壊れた</h4>
+            <p class="support-description">
+              1. アバターのバックアップを復元<br>
+              2. ModularAvatar設定をリセット<br>
+              3. Setup Wizard を再実行
+            </p>
+          </div>
+
+          <div class="support-card">
+            <div class="support-icon">🔧</div>
+            <h4 class="support-title">完全初期化</h4>
+            <p class="support-description">
+              1. 全ての関連ファイルを削除<br>
+              2. Unity Library フォルダを削除<br>
+              3. クリーンインストールを実行
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Community -->
+      <section class="section" id="community">
+        <h2 class="section-title">🌐 コミュニティ</h2>
+        <div class="support-grid">
+          <div class="support-card">
+            <div class="support-icon">📱</div>
+            <h3 class="support-title">Discord</h3>
+            <p class="support-description">
+              リアルタイムでの質問や情報交換ができます。
+            </p>
+            <a href="#" class="btn btn-accent">💬 Discord に参加</a>
+          </div>
+
+          <div class="support-card">
+            <div class="support-icon">🐦</div>
+            <h3 class="support-title">Twitter</h3>
+            <p class="support-description">
+              最新情報やアップデート通知を受け取れます。
+            </p>
+            <a href="#" class="btn btn-accent">🐦 フォローする</a>
+          </div>
+
+          <div class="support-card">
+            <div class="support-icon">📺</div>
+            <h3 class="support-title">YouTube</h3>
+            <p class="support-description">
+              使用方法やテクニックの動画チュートリアル。
+            </p>
+            <a href="#" class="btn btn-accent">📺 チャンネルを見る</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Form -->
+      <section class="section">
+        <h2 class="section-title">📧 お問い合わせ</h2>
+        <div class="contact-form">
+          <div class="alert alert-warning">
+            <strong>⚠️ 注意:</strong> 技術的な問題は <a href="https://github.com/zapabob/liltoon-pcss-extension/issues" target="_blank">GitHub Issues</a> でのご報告を推奨します。より迅速な対応が可能です。
+          </div>
+
+          <form id="contact-form">
+            <div class="form-group">
+              <label class="form-label" for="name">お名前 *</label>
+              <input type="text" id="name" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="email">メールアドレス *</label>
+              <input type="email" id="email" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="category">カテゴリ</label>
+              <select id="category" class="form-input">
+                <option value="bug">バグ報告</option>
+                <option value="feature">機能要望</option>
+                <option value="support">サポート</option>
+                <option value="other">その他</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="message">メッセージ *</label>
+              <textarea id="message" class="form-textarea" placeholder="詳細をご記入ください..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">📧 送信する</button>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    // FAQ Toggle
+    function toggleFAQ(element) {
+      const answer = element.nextElementSibling;
+      const toggle = element.querySelector('.faq-toggle');
+      
+      if (answer.classList.contains('active')) {
+        answer.classList.remove('active');
+        toggle.classList.remove('active');
+      } else {
+        // Close all other FAQs
+        document.querySelectorAll('.faq-answer.active').forEach(item => {
+          item.classList.remove('active');
+        });
+        document.querySelectorAll('.faq-toggle.active').forEach(item => {
+          item.classList.remove('active');
+        });
+        
+        // Open current FAQ
+        answer.classList.add('active');
+        toggle.classList.add('active');
+      }
+    }
+
+    // Contact Form
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Simulate form submission
+      const submitBtn = this.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      
+      submitBtn.innerHTML = '📤 送信中...';
+      submitBtn.disabled = true;
+      
+      setTimeout(() => {
+        submitBtn.innerHTML = '✅ 送信完了!';
+        setTimeout(() => {
+          submitBtn.innerHTML = originalText;
+          submitBtn.disabled = false;
+          this.reset();
+        }, 2000);
+      }, 1500);
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Service Status Check (simulated)
+    function updateServiceStatus() {
+      // This would normally make actual API calls
+      console.log('Service status checked - All systems operational');
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      updateServiceStatus();
+    });
+  </script>
+</body>
+</html> 

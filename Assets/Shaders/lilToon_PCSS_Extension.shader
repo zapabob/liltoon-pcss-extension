@@ -20,6 +20,9 @@ Shader "lilToon/PCSS Extension"
         _PCSSIntensity ("PCSS Intensity", Range(0.0, 2.0)) = 1.0
         [Enum(Low,0,Medium,1,High,2,Ultra,3)] _PCSSQualityLevel ("PCSS Quality", Float) = 1
         _LocalPCSSSamples ("PCSS Samples", Range(1, 64)) = 16
+        [lilToggle] _UseShadowMask ("Use Shadow Mask", Float) = 0
+        _ShadowMaskTex ("Shadow Mask (R)", 2D) = "white" {}
+        _ShadowMaskStrength ("Shadow Mask Strength", Range(0.0, 1.0)) = 1.0
         // --- その他（省略可） ---
         [lilToggle] _UseShadowClamp ("Use Shadow Clamp (Anime Style)", Float) = 0
         _ShadowClamp ("Shadow Clamp", Range(0, 1)) = 0.5
@@ -89,6 +92,8 @@ Shader "lilToon/PCSS Extension"
             #pragma shader_feature_local _ _USEVRCLIGHT_VOLUMES_ON
             #pragma shader_feature_local _ _USEVRCLV_RIMLIGHT_ON
             #pragma shader_feature_local _ _USESHADOWCLAMP_ON
+            #pragma shader_feature_local _ _USE_OPTIMIZED_PCSS_ON
+            #pragma shader_feature_local _ _USESHADOWMASK_ON
             #pragma multi_compile _ VRC_LIGHT_VOLUMES_ENABLED
             #pragma multi_compile _ VRC_LIGHT_VOLUMES_MOBILE
 
@@ -108,7 +113,11 @@ Shader "lilToon/PCSS Extension"
             #endif
             
             #include "Includes/lil_pcss_common.hlsl"
-            #include "Includes/lil_pcss_shadows.hlsl"
+            #if defined(_USE_OPTIMIZED_PCSS_ON)
+                #include "Includes/lil_pcss_shadows_optimized.hlsl"
+            #else
+                #include "Includes/lil_pcss_shadows.hlsl"
+            #endif
 
             // --- プロパティ宣言 ---
             sampler2D _MainTex;
@@ -137,6 +146,8 @@ Shader "lilToon/PCSS Extension"
             float _LocalPCSSBias;
             // _PCSSIntensityはすでにIncludesで定義されているため、ここでは再定義しない
             float _PCSSQualityLevel; // _PCSSQualityから_PCSSQualityLevelに変更
+            sampler2D _ShadowMaskTex;
+            float _ShadowMaskStrength;
 
             // VRCライトボリューム用関数
             #if defined(VRC_LIGHT_VOLUMES_ENABLED)
@@ -228,13 +239,22 @@ Shader "lilToon/PCSS Extension"
                         if (quality < 1.0f) samples = max(8.0, samples * 0.5);
                         if (quality > 1.0f) samples = min(32.0, samples * 1.5);
                         if (quality > 2.0f) samples = min(64.0, samples * 2.0);
-                        shadow = PCSS(shadow, i.pos.z, _LocalPCSSFilterRadius, _LocalPCSSLightSize, samples);
+                        #if defined(_USE_OPTIMIZED_PCSS_ON)
+                            shadow = PCSS_Optimized(shadow, i.pos.z, _LocalPCSSFilterRadius, _LocalPCSSLightSize, samples);
+                        #else
+                            shadow = PCSS(shadow, i.pos.z, _LocalPCSSFilterRadius, _LocalPCSSLightSize, samples);
+                        #endif
                         shadow = lerp(1.0, shadow, _PCSSIntensity);
                     #endif
                 #elif defined(_USESHADOW_ON)
                     shadow = SHADOW_ATTENUATION(i);
                     shadow = saturate(shadow + _ShadowBorder);
                     shadow = smoothstep(0.0, _ShadowBlur, shadow);
+                #endif
+                
+                #if defined(_USESHADOWMASK_ON)
+                    fixed4 mask = tex2D(_ShadowMaskTex, i.uv);
+                    shadow = lerp(shadow, 1.0, mask.r * _ShadowMaskStrength);
                 #endif
                 
                 #if defined(_USESHADOWCLAMP_ON)
