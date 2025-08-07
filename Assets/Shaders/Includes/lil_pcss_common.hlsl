@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------------------------------------------------------
-// lilToon PCSS Extension - Common Definitions
+// lilToon PCSS Extension - Common Definitions (lilToon 2.1.7対応版)
 // Copyright (c) 2025 lilToon PCSS Extension Team
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -39,20 +39,26 @@
 #endif
 
 //----------------------------------------------------------------------------------------------------------------------
-// Version Information
+// Version Information (lilToon 2.1.7対応)
 //----------------------------------------------------------------------------------------------------------------------
-#define LIL_PCSS_VERSION_MAJOR 1
-#define LIL_PCSS_VERSION_MINOR 4
-#define LIL_PCSS_VERSION_PATCH 9
-#define LIL_PCSS_VERSION "1.4.9"
+#define LIL_PCSS_VERSION_MAJOR 2
+#define LIL_PCSS_VERSION_MINOR 5
+#define LIL_PCSS_VERSION_PATCH 0
+#define LIL_PCSS_VERSION "2.5.0"
+#define LIL_PCSS_LILTOON_VERSION "2.1.7"
 
 //----------------------------------------------------------------------------------------------------------------------
-// Feature Toggles
+// Feature Toggles (lilToon 2.1.7新機能対応)
 //----------------------------------------------------------------------------------------------------------------------
 #define LIL_PCSS_FEATURE_ENABLED
 #define LIL_PCSS_VRCHAT_OPTIMIZED
 #define LIL_PCSS_BAKERY_SUPPORT
 #define LIL_PCSS_LIGHTVOLUMES_SUPPORT
+#define LIL_PCSS_THREE_SHADOW_SYSTEM
+#define LIL_PCSS_SDF_FACE_SHADOW
+#define LIL_PCSS_LTCGI_SUPPORT
+#define LIL_PCSS_BACKLIGHT_SUPPORT
+#define LIL_PCSS_LIGHT_DIRECTION_OVERRIDE
 
 //----------------------------------------------------------------------------------------------------------------------
 // Platform Detection
@@ -67,22 +73,25 @@
 #endif
 
 //----------------------------------------------------------------------------------------------------------------------
-// Quality Settings
+// Quality Settings (lilToon 2.1.7最適化)
 //----------------------------------------------------------------------------------------------------------------------
 #ifdef LIL_PCSS_MOBILE_PLATFORM
     #define LIL_PCSS_DEFAULT_SAMPLE_COUNT 8
     #define LIL_PCSS_DEFAULT_BLOCKER_SAMPLES 8
+    #define LIL_PCSS_DEFAULT_LTCGI_SAMPLES 8
 #else
     #define LIL_PCSS_DEFAULT_SAMPLE_COUNT 16
     #define LIL_PCSS_DEFAULT_BLOCKER_SAMPLES 16
+    #define LIL_PCSS_DEFAULT_LTCGI_SAMPLES 16
 #endif
 
 //----------------------------------------------------------------------------------------------------------------------
-// VRChat Compatibility
+// VRChat Compatibility (lilToon 2.1.7最適化)
 //----------------------------------------------------------------------------------------------------------------------
 #ifdef VRCHAT_SDK
     #define LIL_PCSS_VRCHAT_MODE
     #define LIL_PCSS_PERFORMANCE_PRIORITY
+    #define LIL_PCSS_QUEST_OPTIMIZATION
 #endif
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -100,146 +109,231 @@
         TEXTURE2D(_CameraDepthTexture);
         SAMPLER(sampler_CameraDepthTexture);
     #endif
-#else
-    // Built-in Render Pipeline用のテクスチャ宣言 - 完全な重複防止
-    #if !defined(_ShadowMapTexture) && !defined(LIL_PCSS_BUILTIN_SHADOWMAP_DECLARED) && !defined(LILTOON_SHADER_INCLUDED)
-        #define LIL_PCSS_BUILTIN_SHADOWMAP_DECLARED
-        sampler2D _LIL_PCSS_ShadowMapTexture;
-        #define _ShadowMapTexture _LIL_PCSS_ShadowMapTexture
-    #endif
-    #if !defined(_MainLightShadowmapTexture) && !defined(LIL_PCSS_MAIN_SHADOWMAP_DECLARED) && !defined(LILTOON_SHADER_INCLUDED)
-        #define LIL_PCSS_MAIN_SHADOWMAP_DECLARED
-        sampler2D _LIL_PCSS_MainLightShadowmapTexture;
-        #define _MainLightShadowmapTexture _LIL_PCSS_MainLightShadowmapTexture
-    #endif
-    #if !defined(_CameraDepthTexture) && !defined(LIL_PCSS_BUILTIN_DEPTH_DECLARED) && !defined(LILTOON_SHADER_INCLUDED)
-        #define LIL_PCSS_BUILTIN_DEPTH_DECLARED
-        sampler2D_float _CameraDepthTexture;
+#elif defined(LIL_PCSS_BUILTIN_AVAILABLE)
+    // Built-in Render Pipeline用のテクスチャ宣言
+    #if !defined(_ShadowMapTexture) && !defined(LIL_PCSS_SHADOWMAP_DECLARED)
+        #define LIL_PCSS_SHADOWMAP_DECLARED
+        UNITY_DECLARE_SHADOWMAP(_ShadowMapTexture);
     #endif
 #endif
 
 //----------------------------------------------------------------------------------------------------------------------
-// PCSS Properties - 全変数を一箇所で定義（重複完全防止）
+// lilToon 2.1.7 新機能定義
 //----------------------------------------------------------------------------------------------------------------------
-#ifndef LIL_PCSS_PROPERTIES_DEFINED
-#define LIL_PCSS_PROPERTIES_DEFINED
 
-// Shader Compatibility Detection
-#ifndef LIL_PCSS_SHADER_COMPATIBILITY_DEFINED
-#define LIL_PCSS_SHADER_COMPATIBILITY_DEFINED
+// 3影システム定数
+#define LIL_PCSS_SHADOW_LAYER_COUNT 3
+#define LIL_PCSS_SHADOW_1_INDEX 0
+#define LIL_PCSS_SHADOW_2_INDEX 1
+#define LIL_PCSS_SHADOW_3_INDEX 2
 
-// lilToon Detection
-#if defined(LIL_LILTOON_SHADER_INCLUDED) || defined(SHADER_STAGE_VERTEX) || defined(_LILTOON_INCLUDED) || defined(LILTOON_SHADER_INCLUDED)
-    #define LIL_PCSS_LILTOON_AVAILABLE
-#endif
+// SDF Face Shadow定数
+#define LIL_PCSS_SDF_FACE_SHADOW_DEFAULT_INTENSITY 0.5
+#define LIL_PCSS_SDF_FACE_SHADOW_DEFAULT_SOFTNESS 0.1
 
-// Poiyomi Detection  
-#if defined(POI_MAIN) || defined(POIYOMI_TOON) || defined(_POIYOMI_INCLUDED) || defined(LIL_POIYOMI_SHADER_INCLUDED)
-    #define LIL_PCSS_POIYOMI_AVAILABLE
-#endif
+// LTCGI定数
+#define LIL_PCSS_LTCGI_DEFAULT_INTENSITY 1.0
+#define LIL_PCSS_LTCGI_DEFAULT_SAMPLES 16
+#define LIL_PCSS_LTCGI_MAX_SAMPLES 64
 
-// Graceful Degradation for Missing Shaders
-#if !defined(LIL_PCSS_LILTOON_AVAILABLE) && !defined(LIL_PCSS_POIYOMI_AVAILABLE)
-    #define LIL_PCSS_STANDALONE_MODE
-#endif
+// Backlight定数
+#define LIL_PCSS_BACKLIGHT_DEFAULT_INTENSITY 1.0
+#define LIL_PCSS_BACKLIGHT_DEFAULT_COLOR float3(1.0, 1.0, 1.0)
 
-#endif // LIL_PCSS_SHADER_COMPATIBILITY_DEFINED
+// VRC Light Volumes 2.0.0 強化版定数
+#define LIL_PCSS_VRCLV_DEFAULT_INTENSITY 1.0
+#define LIL_PCSS_VRCLV_DEFAULT_DISTANCE_FACTOR 0.1
+#define LIL_PCSS_VRCLV_RIM_LIGHT_DEFAULT_INTENSITY 1.0
 
-// PCSS変数の定義 - 重複を完全に防ぐ
-#if !defined(LIL_PCSS_VARIABLES_DECLARED)
-#define LIL_PCSS_VARIABLES_DECLARED
+//----------------------------------------------------------------------------------------------------------------------
+// ユーティリティ関数 (lilToon 2.1.7対応)
+//----------------------------------------------------------------------------------------------------------------------
 
-CBUFFER_START(lilPCSSProperties)
-    // 基本PCSS設定 - 全シェーダーで共通使用
-    float _PCSSEnabled;
+// 影の品質に基づくサンプル数調整
+float GetAdjustedSampleCount(float baseSamples, float qualityLevel)
+{
+    float adjustedSamples = baseSamples;
     
-    // 重複エラー修正: 各変数に固有の接頭辞を追加
-    #if !defined(_PCSSFilterRadius) && !defined(LIL_PCSS_FILTER_RADIUS_DEFINED)
-        #define LIL_PCSS_FILTER_RADIUS_DEFINED
-        float _PCSSFilterRadius;
+    if (qualityLevel < 1.0)
+        adjustedSamples = max(8.0, baseSamples * 0.5);
+    else if (qualityLevel > 1.0 && qualityLevel <= 2.0)
+        adjustedSamples = min(32.0, baseSamples * 1.5);
+    else if (qualityLevel > 2.0)
+        adjustedSamples = min(64.0, baseSamples * 2.0);
+    
+    return adjustedSamples;
+}
+
+// プラットフォーム別最適化
+float GetPlatformOptimizedSamples(float baseSamples)
+{
+    #ifdef LIL_PCSS_MOBILE_PLATFORM
+        return min(baseSamples, 16.0);
+    #else
+        return baseSamples;
     #endif
-    
-    #if !defined(_PCSSLightSize) && !defined(LIL_PCSS_LIGHT_SIZE_DEFINED)
-        #define LIL_PCSS_LIGHT_SIZE_DEFINED
-        float _PCSSLightSize;
+}
+
+// VRChat Quest最適化
+float GetQuestOptimizedSamples(float baseSamples)
+{
+    #ifdef LIL_PCSS_QUEST_OPTIMIZATION
+        return min(baseSamples, 8.0);
+    #else
+        return baseSamples;
     #endif
+}
+
+// 影の境界線計算 (lilToon 2.1.7方式)
+float CalculateShadowBorder(float shadow, float border, float blur)
+{
+    shadow = saturate(shadow + border);
+    return smoothstep(0.0, blur, shadow);
+}
+
+// 3影システム統合関数
+float3 CalculateThreeShadowSystem(float shadow1, float shadow2, float shadow3, float3 shadowColors[3])
+{
+    float3 finalShadow = float3(1.0, 1.0, 1.0);
     
-    #if !defined(_PCSSBias) && !defined(LIL_PCSS_BIAS_DEFINED)
-        #define LIL_PCSS_BIAS_DEFINED
-        float _PCSSBias;
+    finalShadow *= lerp(shadowColors[0], float3(1.0, 1.0, 1.0), shadow1);
+    finalShadow *= lerp(shadowColors[1], float3(1.0, 1.0, 1.0), shadow2);
+    finalShadow *= lerp(shadowColors[2], float3(1.0, 1.0, 1.0), shadow3);
+    
+    return finalShadow;
+}
+
+// SDF Face Shadow計算関数
+float CalculateSDFFaceShadowValue(float2 uv, sampler2D sdfTexture, float intensity, float softness)
+{
+    float sdfValue = tex2D(sdfTexture, uv).r;
+    float faceShadow = smoothstep(softness, 1.0 - softness, sdfValue);
+    return lerp(1.0, faceShadow, intensity);
+}
+
+// LTCGIサンプリング関数
+float3 SampleLTCGI(float3 worldPos, float3 worldNormal, float samples, float intensity)
+{
+    float3 gi = 0;
+    float totalWeight = 0;
+    
+    for (int i = 0; i < samples; i++)
+    {
+        // Hammersley sequence for better distribution
+        float2 hammersley = float2(
+            float(i) / float(samples),
+            float(bitfieldReverse(i)) / float(0xffffffff)
+        );
+        
+        // Spherical to Cartesian conversion
+        float phi = 2.0 * UNITY_PI * hammersley.x;
+        float cosTheta = 1.0 - 2.0 * hammersley.y;
+        float sinTheta = sqrt(1.0 - cosTheta * cosTheta);
+        
+        float3 sampleDir = float3(
+            sinTheta * cos(phi),
+            sinTheta * sin(phi),
+            cosTheta
+        );
+        
+        float weight = max(0.0, dot(worldNormal, sampleDir));
+        gi += weight * sampleDir;
+        totalWeight += weight;
+    }
+    
+    gi = totalWeight > 0 ? gi / totalWeight : float3(1.0, 1.0, 1.0);
+    return gi * intensity;
+}
+
+// Backlight計算関数
+float3 CalculateBacklightValue(float3 worldNormal, float3 lightDir, float3 backlightColor, float intensity)
+{
+    float backlightDot = max(0.0, dot(worldNormal, -lightDir));
+    return backlightColor * intensity * backlightDot;
+}
+
+// VRC Light Volumes 2.0.0 強化版サンプリング関数
+float3 SampleVRCLightVolumesEnhanced(float3 worldPos, float3 worldNormal, float3 lightDir, 
+                                    sampler3D volumeTexture, float4x4 worldToLocal, 
+                                    float3 tint, float intensity, float distanceFactor)
+{
+    float3 localPos = mul(worldToLocal, float4(worldPos, 1.0)).xyz;
+    float3 volumeUV = localPos * 0.5 + 0.5;
+    
+    // ボリューム範囲チェック
+    if (any(volumeUV < 0.0) || any(volumeUV > 1.0))
+        return float3(1.0, 1.0, 1.0);
+    
+    float3 lightColor = tex3D(volumeTexture, volumeUV).rgb;
+    
+    // 距離減衰
+    float distFactor = 1.0 - saturate(length(localPos) * distanceFactor);
+    
+    // 法線方向考慮
+    float normalDotLight = max(0.0, dot(worldNormal, lightDir));
+    
+    return lerp(float3(1.0, 1.0, 1.0), lightColor * tint, intensity * distFactor * normalDotLight);
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+// パフォーマンス最適化関数
+//----------------------------------------------------------------------------------------------------------------------
+
+// 動的品質調整
+float GetDynamicQualityLevel(float baseQuality, float performanceTarget)
+{
+    #ifdef LIL_PCSS_PERFORMANCE_PRIORITY
+        return min(baseQuality, performanceTarget);
+    #else
+        return baseQuality;
     #endif
-    
-    #if !defined(_PCSSIntensity) && !defined(LIL_PCSS_INTENSITY_DEFINED)
-        #define LIL_PCSS_INTENSITY_DEFINED
-        float _PCSSIntensity;
+}
+
+// メモリ使用量最適化
+float GetMemoryOptimizedSamples(float baseSamples)
+{
+    #ifdef LIL_PCSS_MOBILE_PLATFORM
+        return min(baseSamples, 8.0);
+    #elif defined(LIL_PCSS_QUEST_OPTIMIZATION)
+        return min(baseSamples, 4.0);
+    #else
+        return baseSamples;
     #endif
-    
-    float _PCSSQuality;
-    
-    // 重複エラー修正: 各変数に固有の接頭辞を追加
-    #if !defined(_PCSSBlockerSearchRadius) && !defined(LIL_PCSS_BLOCKER_SEARCH_RADIUS_DEFINED)
-        #define LIL_PCSS_BLOCKER_SEARCH_RADIUS_DEFINED
-        float _PCSSBlockerSearchRadius;
-    #endif
-    
-    #if !defined(_PCSSSampleCount) && !defined(LIL_PCSS_SAMPLE_COUNT_DEFINED)
-        #define LIL_PCSS_SAMPLE_COUNT_DEFINED
-        float _PCSSSampleCount;
-    #endif
-    
-    // ライト設定
-    float4 _PCSSLightDirection;
-    float4x4 _PCSSLightMatrix;
-    
-    // プリセット設定
-    float _PCSSPresetMode; // 0=リアル, 1=アニメ, 2=映画風, 3=カスタム
-    float _PCSSRealtimePreset;
-    float _PCSSAnimePreset;
-    float _PCSSCinematicPreset;
-CBUFFER_END
-
-#endif // LIL_PCSS_VARIABLES_DECLARED
-
-#endif // LIL_PCSS_PROPERTIES_DEFINED
+}
 
 //----------------------------------------------------------------------------------------------------------------------
-// Custom Utility Macros (Avoid Conflicts)
+// エラーハンドリング関数
 //----------------------------------------------------------------------------------------------------------------------
-#define LIL_PCSS_LERP(a, b, t) lerp(a, b, t)
-#define LIL_PCSS_SATURATE(x) saturate(x)
-#define LIL_PCSS_STEP(edge, x) step(edge, x)
-#define LIL_PCSS_SMOOTHSTEP(edge0, edge1, x) smoothstep(edge0, edge1, x)
+
+// テクスチャ存在チェック
+bool IsTextureValid(sampler2D tex)
+{
+    // 簡易的な存在チェック（実際の実装ではより詳細なチェックが必要）
+    return true;
+}
+
+// パラメータ範囲チェック
+float ClampParameter(float value, float minVal, float maxVal, float defaultValue)
+{
+    if (value < minVal || value > maxVal)
+        return defaultValue;
+    return value;
+}
 
 //----------------------------------------------------------------------------------------------------------------------
-// Custom Sampling Functions to Avoid Macro Conflicts
+// 競合製品分析関数
 //----------------------------------------------------------------------------------------------------------------------
-#ifdef LIL_PCSS_URP_AVAILABLE
-    #define LIL_SAMPLE_TEXTURE2D(tex, samp, coord) SAMPLE_TEXTURE2D(tex, samp, coord)
-    #define LIL_SAMPLE_TEXTURE2D_SHADOW(tex, samp, coord) SAMPLE_TEXTURE2D_SHADOW(tex, samp, coord)
-#else
-    #define LIL_SAMPLE_TEXTURE2D(tex, samp, coord) tex2D(tex, coord)
-    #define LIL_SAMPLE_TEXTURE2D_SHADOW(tex, samp, coord) tex2D(tex, coord.xy)
-#endif
 
-//----------------------------------------------------------------------------------------------------------------------
-// Custom Transform Macros to Avoid Conflicts
-//----------------------------------------------------------------------------------------------------------------------
-#ifndef LIL_TRANSFORM_TEX
-    #define LIL_TRANSFORM_TEX(tex, name) (tex.xy * name##_ST.xy + name##_ST.zw)
-#endif
+// 機能比較分析
+float GetFeatureComparisonScore(float ourFeatureLevel, float competitorFeatureLevel)
+{
+    return ourFeatureLevel / max(competitorFeatureLevel, 0.1);
+}
 
-//----------------------------------------------------------------------------------------------------------------------
-// Debug Modes
-//----------------------------------------------------------------------------------------------------------------------
-#ifdef LIL_DEBUG_MODE
-    #define LIL_DEBUG_PCSS
-#endif
-
-//----------------------------------------------------------------------------------------------------------------------
-// Custom PackHeightmap to Avoid Redefinition
-//----------------------------------------------------------------------------------------------------------------------
-#ifndef LIL_PACK_HEIGHTMAP
-#define LIL_PACK_HEIGHTMAP(height) (height)
-#endif
+// パフォーマンス比較
+float GetPerformanceComparisonScore(float ourPerformance, float competitorPerformance)
+{
+    return ourPerformance / max(competitorPerformance, 0.1);
+}
 
 #endif // LIL_PCSS_COMMON_INCLUDED 

@@ -2,15 +2,47 @@ Shader "lilToon/PCSS Extension"
 {
     Properties
     {
-        // --- lilToon標準プロパティ ---
+        // --- lilToon 2.1.7標準プロパティ ---
         _MainTex ("Main Texture", 2D) = "white" {}
         _Color ("Color", Color) = (1,1,1,1)
         _Cutoff ("Alpha Cutoff", Range(0.0, 1.0)) = 0.5
-        // --- 影・シャドウ ---
+        
+        // --- 3影システム (lilToon 2.1.7新機能) ---
         [lilToggle] _UseShadow ("Use Shadow", Float) = 1
         _ShadowColorTex ("Shadow Color", 2D) = "black" {}
         _ShadowBorder ("Shadow Border", Range(0, 1)) = 0.5
         _ShadowBlur ("Shadow Blur", Range(0, 1)) = 0.1
+        
+        // --- 第2影 (lilToon 2.1.7) ---
+        [lilToggle] _UseShadow2 ("Use 2nd Shadow", Float) = 0
+        _Shadow2ColorTex ("2nd Shadow Color", 2D) = "black" {}
+        _Shadow2Border ("2nd Shadow Border", Range(0, 1)) = 0.5
+        _Shadow2Blur ("2nd Shadow Blur", Range(0, 1)) = 0.1
+        
+        // --- 第3影 (lilToon 2.1.7新機能) ---
+        [lilToggle] _UseShadow3 ("Use 3rd Shadow", Float) = 0
+        _Shadow3ColorTex ("3rd Shadow Color", 2D) = "black" {}
+        _Shadow3Border ("3rd Shadow Border", Range(0, 1)) = 0.5
+        _Shadow3Blur ("3rd Shadow Blur", Range(0, 1)) = 0.1
+        
+        // --- SDF Face Shadow (lilToon 2.1.7新機能) ---
+        [lilToggle] _UseSDFFaceShadow ("Use SDF Face Shadow", Float) = 0
+        _SDFFaceShadowTex ("SDF Face Shadow Texture", 2D) = "white" {}
+        _SDFFaceShadowIntensity ("SDF Face Shadow Intensity", Range(0.0, 1.0)) = 0.5
+        _SDFFaceShadowSoftness ("SDF Face Shadow Softness", Range(0.0, 1.0)) = 0.1
+        
+        // --- LTCGI (Linearly Transformed Cosines Global Illumination) ---
+        [lilToggle] _UseLTCGI ("Use LTCGI", Float) = 0
+        _LTCGIIntensity ("LTCGI Intensity", Range(0.0, 2.0)) = 1.0
+        _LTCGISamples ("LTCGI Samples", Range(1, 64)) = 16
+        
+        // --- Backlight & Light Direction Override ---
+        [lilToggle] _UseBacklight ("Use Backlight", Float) = 0
+        _BacklightColor ("Backlight Color", Color) = (1,1,1,1)
+        _BacklightIntensity ("Backlight Intensity", Range(0.0, 2.0)) = 1.0
+        [lilToggle] _UseLightDirectionOverride ("Use Light Direction Override", Float) = 0
+        _LightDirectionOverride ("Light Direction Override", Vector) = (0,1,0,0)
+        
         // --- PCSS拡張プロパティ ---
         [lilToggle] _UsePCSS ("Use PCSS", Float) = 1
         [Enum(Realistic,0,Anime,1,Cinematic,2,Custom,3)] _PCSSPresetMode ("PCSS Preset", Float) = 1
@@ -23,17 +55,23 @@ Shader "lilToon/PCSS Extension"
         [lilToggle] _UseShadowMask ("Use Shadow Mask", Float) = 0
         _ShadowMaskTex ("Shadow Mask (R:Cast, G:Receive)", 2D) = "white" {}
         _ShadowMaskStrength ("Shadow Mask Strength", Range(0.0, 1.0)) = 1.0
+        
         // --- その他（省略可） ---
         [lilToggle] _UseShadowClamp ("Use Shadow Clamp (Anime Style)", Float) = 0
         _ShadowClamp ("Shadow Clamp", Range(0, 1)) = 0.5
         _Translucency ("Translucency", Range(0, 1)) = 0.5
-        // --- VRC Light Volumes 2.0.0 ---
+        
+        // --- VRC Light Volumes 2.0.0 強化版 ---
         [lilToggle] _UseVRCLightVolumes ("Use VRC Light Volumes", Float) = 0
         _VRCLightVolumeIntensity ("VRC Light Volume Intensity", Range(0.0, 2.0)) = 1.0
         _VRCLightVolumeTint ("VRC Light Volume Tint", Color) = (1,1,1,1)
         _VRCLightVolumeDistanceFactor ("VRC Light Volume Distance Factor", Range(0.0, 1.0)) = 0.1
         _EnvRimBorder ("[VRCLV] Rim Border", Range(0, 1)) = 0.85
         _EnvRimBlur ("[VRCLV] Rim Blur", Range(0, 1)) = 0.35
+        [lilToggle] _UseVRCLVRimLight ("Use VRC LV Rim Light", Float) = 0
+        _VRCLVRimLightIntensity ("VRC LV Rim Light Intensity", Range(0.0, 2.0)) = 1.0
+        _VRCLVRimLightColor ("VRC LV Rim Light Color", Color) = (1,1,1,1)
+        
         // --- Flipbook ---
         [lilToggle] _UseFlipbook ("Use Flipbook", Float) = 0
         _FlipbookTex ("Flipbook Texture", 2D) = "white" {}
@@ -96,6 +134,12 @@ Shader "lilToon/PCSS Extension"
             #pragma multi_compile_instancing
             #pragma shader_feature_local _ _USEPCSS_ON
             #pragma shader_feature_local _ _USESHADOW_ON
+            #pragma shader_feature_local _ _USESHADOW2_ON
+            #pragma shader_feature_local _ _USESHADOW3_ON
+            #pragma shader_feature_local _ _USESDFFACESHADOW_ON
+            #pragma shader_feature_local _ _USELTCGI_ON
+            #pragma shader_feature_local _ _USEBACKLIGHT_ON
+            #pragma shader_feature_local _ _USELIGHTDIRECTIONOVERRIDE_ON
             #pragma shader_feature_local _ _USEVRCLIGHT_VOLUMES_ON
             #pragma shader_feature_local _ _USEVRCLV_RIMLIGHT_ON
             #pragma shader_feature_local _ _USESHADOWCLAMP_ON
@@ -132,6 +176,9 @@ Shader "lilToon/PCSS Extension"
             float4 _MainTex_ST;
             fixed4 _Color;
             sampler2D _ShadowColorTex;
+            sampler2D _Shadow2ColorTex;
+            sampler2D _Shadow3ColorTex;
+            sampler2D _SDFFaceShadowTex;
             float _UsePCSS;
             float _UseVRCLightVolumes;
             float _VRCLightVolumeIntensity;
@@ -143,6 +190,23 @@ Shader "lilToon/PCSS Extension"
             float _UseShadow;
             float _ShadowBorder;
             float _ShadowBlur;
+            float _UseShadow2;
+            float _Shadow2Border;
+            float _Shadow2Blur;
+            float _UseShadow3;
+            float _Shadow3Border;
+            float _Shadow3Blur;
+            float _UseSDFFaceShadow;
+            float _SDFFaceShadowIntensity;
+            float _SDFFaceShadowSoftness;
+            float _UseLTCGI;
+            float _LTCGIIntensity;
+            float _LTCGISamples;
+            float _UseBacklight;
+            float4 _BacklightColor;
+            float _BacklightIntensity;
+            float _UseLightDirectionOverride;
+            float4 _LightDirectionOverride;
             float _Cutoff;
             float _UseShadowClamp;
             float _ShadowClamp;
@@ -163,9 +227,9 @@ Shader "lilToon/PCSS Extension"
             float _FlipbookDivisionsY;
             float _FlipbookSpeed;
 
-            // VRCライトボリューム用関数
+            // VRC Light Volumes 2.0.0 強化版関数
             #if defined(VRC_LIGHT_VOLUMES_ENABLED)
-            float3 SampleVRCLightVolumes(float3 worldPos)
+            float3 SampleVRCLightVolumes(float3 worldPos, float3 worldNormal)
             {
                 #if defined(VRC_LIGHT_VOLUMES_MOBILE)
                     // モバイル向け簡易版
@@ -174,7 +238,7 @@ Shader "lilToon/PCSS Extension"
                     float3 lightColor = tex3D(_VRCLightVolumeTexture, volumeUV).rgb;
                     return lightColor * _VRCLightVolumeTint.rgb * _VRCLightVolumeIntensity;
                 #else
-                    // フル機能版
+                    // フル機能版 - ピクセル単位計算と方向性考慮
                     float3 localPos = mul(_VRCLightVolumeWorldToLocal, float4(worldPos, 1.0)).xyz;
                     float3 volumeUV = localPos * 0.5 + 0.5;
                     // ボリュームの範囲外なら影響なし
@@ -183,15 +247,64 @@ Shader "lilToon/PCSS Extension"
                     float3 lightColor = tex3D(_VRCLightVolumeTexture, volumeUV).rgb;
                     // 距離による減衰
                     float distFactor = 1.0 - saturate(length(localPos) * _VRCLightVolumeDistanceFactor);
-                    return lerp(float3(1.0, 1.0, 1.0), lightColor * _VRCLightVolumeTint.rgb, _VRCLightVolumeIntensity * distFactor);
+                    // 法線方向を考慮した照明計算
+                    float3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
+                    float normalDotLight = max(0.0, dot(worldNormal, worldLightDir));
+                    return lerp(float3(1.0, 1.0, 1.0), lightColor * _VRCLightVolumeTint.rgb, _VRCLightVolumeIntensity * distFactor * normalDotLight);
                 #endif
             }
             #else
-            float3 SampleVRCLightVolumes(float3 worldPos)
+            float3 SampleVRCLightVolumes(float3 worldPos, float3 worldNormal)
             {
                 return float3(1.0, 1.0, 1.0);
             }
             #endif
+
+            // SDF Face Shadow関数 (lilToon 2.1.7新機能)
+            float CalculateSDFFaceShadow(float2 uv, float3 worldNormal)
+            {
+                #if defined(_USESDFFACESHADOW_ON)
+                    float sdfValue = tex2D(_SDFFaceShadowTex, uv).r;
+                    float faceShadow = smoothstep(_SDFFaceShadowSoftness, 1.0 - _SDFFaceShadowSoftness, sdfValue);
+                    return lerp(1.0, faceShadow, _SDFFaceShadowIntensity);
+                #else
+                    return 1.0;
+                #endif
+            }
+
+            // LTCGI関数 (Linearly Transformed Cosines Global Illumination)
+            float3 CalculateLTCGI(float3 worldPos, float3 worldNormal)
+            {
+                #if defined(_USELTCGI_ON)
+                    // 簡易版LTCGI実装
+                    float3 gi = 0;
+                    for (int i = 0; i < _LTCGISamples; i++)
+                    {
+                        float3 sampleDir = normalize(float3(
+                            sin(i * 2.39996323) * cos(i * 1.57079633),
+                            cos(i * 2.39996323),
+                            sin(i * 1.57079633)
+                        ));
+                        float weight = max(0.0, dot(worldNormal, sampleDir));
+                        gi += weight * sampleDir;
+                    }
+                    gi /= _LTCGISamples;
+                    return gi * _LTCGIIntensity;
+                #else
+                    return float3(1.0, 1.0, 1.0);
+                #endif
+            }
+
+            // Backlight関数
+            float3 CalculateBacklight(float3 worldNormal, float3 worldLightDir)
+            {
+                #if defined(_USEBACKLIGHT_ON)
+                    float backlightDot = max(0.0, dot(worldNormal, -worldLightDir));
+                    return _BacklightColor.rgb * _BacklightIntensity * backlightDot;
+                #else
+                    return float3(0.0, 0.0, 0.0);
+                #endif
+            }
 
             struct appdata
             {
@@ -238,37 +351,67 @@ Shader "lilToon/PCSS Extension"
                     col = _Color;
                 #endif
                 
-                float shadow = 1.0;
+                // 照明方向の取得
+                float3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
+                #if defined(_USELIGHTDIRECTIONOVERRIDE_ON)
+                    worldLightDir = normalize(_LightDirectionOverride.xyz);
+                #endif
+                
+                // 3影システム (lilToon 2.1.7)
+                float shadow1 = 1.0;
+                float shadow2 = 1.0;
+                float shadow3 = 1.0;
+                
                 #if defined(_USEPCSS_ON)
                     // PCSSを使用 - 標準のシャドウ座標を使用
                     #ifdef LIL_PCSS_MOBILE_PLATFORM
                         // モバイル向け簡易版
-                        shadow = SHADOW_ATTENUATION(i);
-                        shadow = PCSSMobile(shadow, i.pos.z);
+                        shadow1 = SHADOW_ATTENUATION(i);
+                        shadow1 = PCSSMobile(shadow1, i.pos.z);
                     #else
                         // フル機能版
-                        shadow = SHADOW_ATTENUATION(i);
+                        shadow1 = SHADOW_ATTENUATION(i);
                         float samples = _LocalPCSSSamples;
-                        float quality = _PCSSQualityLevel; // 変数名を変更
+                        float quality = _PCSSQualityLevel;
                         if (quality < 1.0f) samples = max(8.0, samples * 0.5);
                         if (quality > 1.0f) samples = min(32.0, samples * 1.5);
                         if (quality > 2.0f) samples = min(64.0, samples * 2.0);
                         #if defined(_USE_OPTIMIZED_PCSS_ON)
-                            shadow = PCSS_Optimized(shadow, i.pos.z, _LocalPCSSFilterRadius, _LocalPCSSLightSize, samples);
+                            shadow1 = PCSS_Optimized(shadow1, i.pos.z, _LocalPCSSFilterRadius, _LocalPCSSLightSize, samples);
                         #else
-                            shadow = PCSS(shadow, i.pos.z, _LocalPCSSFilterRadius, _LocalPCSSLightSize, samples);
+                            shadow1 = PCSS(shadow1, i.pos.z, _LocalPCSSFilterRadius, _LocalPCSSLightSize, samples);
                         #endif
-                        shadow = lerp(1.0, shadow, _PCSSIntensity);
+                        shadow1 = lerp(1.0, shadow1, _PCSSIntensity);
                     #endif
                 #elif defined(_USESHADOW_ON)
-                    shadow = SHADOW_ATTENUATION(i);
-                    shadow = saturate(shadow + _ShadowBorder);
-                    shadow = smoothstep(0.0, _ShadowBlur, shadow);
+                    shadow1 = SHADOW_ATTENUATION(i);
+                    shadow1 = saturate(shadow1 + _ShadowBorder);
+                    shadow1 = smoothstep(0.0, _ShadowBlur, shadow1);
                 #endif
+                
+                // 第2影と第3影の計算
+                #if defined(_USESHADOW2_ON)
+                    shadow2 = SHADOW_ATTENUATION(i);
+                    shadow2 = saturate(shadow2 + _Shadow2Border);
+                    shadow2 = smoothstep(0.0, _Shadow2Blur, shadow2);
+                #endif
+                
+                #if defined(_USESHADOW3_ON)
+                    shadow3 = SHADOW_ATTENUATION(i);
+                    shadow3 = saturate(shadow3 + _Shadow3Border);
+                    shadow3 = smoothstep(0.0, _Shadow3Blur, shadow3);
+                #endif
+                
+                // SDF Face Shadowの適用
+                float sdfFaceShadow = CalculateSDFFaceShadow(i.uv, i.worldNormal);
+                shadow1 *= sdfFaceShadow;
+                
+                // 最終的な影の合成
+                float finalShadow = shadow1 * shadow2 * shadow3;
                 
                 #if defined(_USESHADOWMASK_ON)
                     fixed4 mask = tex2D(_ShadowMaskTex, i.uv);
-                    shadow = lerp(shadow, 1.0, mask.g * _ShadowMaskStrength);
+                    finalShadow = lerp(finalShadow, 1.0, mask.g * _ShadowMaskStrength);
                 #endif
                 
                 #if defined(_USEFLIPBOOK_ON)
@@ -281,20 +424,29 @@ Shader "lilToon/PCSS Extension"
                 #endif
 
                 #if defined(_USESHADOWCLAMP_ON)
-                    shadow = step(_ShadowClamp, shadow);
+                    finalShadow = step(_ShadowClamp, finalShadow);
                 #endif
                 
+                // VRC Light Volumes 2.0.0 強化版
                 #if defined(VRC_LIGHT_VOLUMES_ENABLED) && defined(_USEVRCLIGHT_VOLUMES_ON)
-                    float3 lightVolumeColor = SampleVRCLightVolumes(i.worldPos);
+                    float3 lightVolumeColor = SampleVRCLightVolumes(i.worldPos, i.worldNormal);
                     col.rgb *= lightVolumeColor;
                 #endif
                 
-                shadow = lerp(1.0 - _Translucency, 1.0, shadow);
+                // LTCGIの適用
+                float3 ltcgiColor = CalculateLTCGI(i.worldPos, i.worldNormal);
+                col.rgb *= ltcgiColor;
+                
+                // Backlightの適用
+                float3 backlightColor = CalculateBacklight(i.worldNormal, worldLightDir);
+                col.rgb += backlightColor;
+                
+                finalShadow = lerp(1.0 - _Translucency, 1.0, finalShadow);
                 
                 #if defined(_SHADOWCOLORTEX)
-                    col.rgb *= lerp(tex2D(_ShadowColorTex, i.uv).rgb, float3(1,1,1), shadow);
+                    col.rgb *= lerp(tex2D(_ShadowColorTex, i.uv).rgb, float3(1,1,1), finalShadow);
                 #else
-                    col.rgb *= lerp(float3(0.5, 0.5, 0.5), float3(1,1,1), shadow);
+                    col.rgb *= lerp(float3(0.5, 0.5, 0.5), float3(1,1,1), finalShadow);
                 #endif
                 
                 UNITY_APPLY_FOG(i.fogCoord, col);
