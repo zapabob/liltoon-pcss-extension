@@ -13,9 +13,9 @@ namespace lilToon.PCSS.Editor
     /// ModularAvatarを活用したライト制御システム
     /// 最新のModularAvatarドキュメントに基づき、Menu/Parameters/Sync/Asset管理を最大限活用
     /// </summary>
-    public class ModularAvatarLightControl : EditorWindow
-    {
-        private GameObject avatarObject;
+public class ModularAvatarLightControl : EditorWindow
+{
+    private GameObject avatarObject;
         private List<Light> avatarLights = new List<Light>();
 
         // Dummy stubs for missing ModularAvatar types
@@ -42,23 +42,23 @@ namespace lilToon.PCSS.Editor
         private bool showModularAvatarSettings = false;
 
         [MenuItem("Tools/lilToon PCSS/Modular Avatar Light Control")]
-        public static void ShowWindow()
-        {
-            GetWindow<ModularAvatarLightControl>("MA Light Control");
-        }
+    public static void ShowWindow()
+    {
+        GetWindow<ModularAvatarLightControl>("MA Light Control");
+    }
 
         private void OnEnable()
         {
             RefreshData();
-        }
+    }
 
-        private void OnGUI()
-        {
+    private void OnGUI()
+    {
             GUILayout.Label("Modular Avatar Light Control", EditorStyles.boldLabel);
 
             // アバター選択
             EditorGUILayout.BeginHorizontal();
-            avatarObject = (GameObject)EditorGUILayout.ObjectField("Avatar", avatarObject, typeof(GameObject), true);
+        avatarObject = (GameObject)EditorGUILayout.ObjectField("Avatar", avatarObject, typeof(GameObject), true);
             if (GUILayout.Button("Refresh", GUILayout.Width(60)))
             {
                 RefreshData();

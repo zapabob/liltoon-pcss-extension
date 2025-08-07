@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# VRChat Creator Companion specific
+User-agent: VRChat Creator Companion
+Allow: /
+Allow: /index.json
+Allow: /vpm.json
+Allow: /Release/
+
+# Sitemap
+Sitemap: https://zapabob.github.io/liltoon-pcss-extension/sitemap.xml 

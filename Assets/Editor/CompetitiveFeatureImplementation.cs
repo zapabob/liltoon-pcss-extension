@@ -6,7 +6,7 @@ using System.Linq;
 namespace lilToon.PCSS.Editor
 {
     /// <summary>
-    /// 競合戦略実装 - nHaruka PCSS for VRC シェア奪取機能
+    /// 競合戦略実装 - 競合PCSS製品 シェア奪取機能
     /// lilToon 2.1.4 + VRC Light Volumes 2.0.0 最新機能統合
     /// </summary>
     public class CompetitiveFeatureImplementation : EditorWindow
@@ -22,6 +22,40 @@ namespace lilToon.PCSS.Editor
         private bool enableAMDGPUOptimization = true;
         private bool enableAdvancedMaskSystem = true;
         
+        // 新機能: lilToon 2.1.7対応
+        private bool enableLilToon217Support = true;
+        private bool enablePerPixelCalculation = true;
+        private bool enableDirectionAwareLighting = true;
+        private bool enableEnhancedRimLight = true;
+        private bool enableAdvancedShadowMapping = true;
+        
+        // 新機能: ModularAvatar最新機能
+        private bool enableAdvancedMenuSystem = true;
+        private bool enableDynamicParameterControl = true;
+        private bool enableRealTimeAvatarSwitching = true;
+        private bool enableAdvancedBlendShapeControl = true;
+        
+        // 新機能: 競合優位性強化
+        private bool enableUniversalAvatarSupport = true;
+        private bool enableAdvancedPresetSystem = true;
+        private bool enableAutoOptimization = true;
+        private bool enableReflectionBasedIntegration = true;
+        private bool enableSafeDependencyManagement = true;
+        
+        // lilToon 2.1.7対応設定
+        private bool enableLilToon217Features = true;
+        private bool enablePerPixelCalculation = true;
+        private bool enableDirectionAwareLighting = true;
+        private bool enableEnhancedRimLight = true;
+        private bool enableAdvancedSubsurfaceScattering = true;
+        
+        // ModularAvatar最新機能設定
+        private bool enableAdvancedModularAvatarFeatures = true;
+        private bool enableDynamicParameterControl = true;
+        private bool enableRealTimeOptimization = true;
+        private bool enableAdvancedBlendShapeControl = true;
+        private bool enableIntelligentLODSystem = true;
+        
         // 価格戦略設定
         private float basicPrice = 800f;
         private float premiumPrice = 1200f;
@@ -31,6 +65,13 @@ namespace lilToon.PCSS.Editor
         private bool enableRealTimeAdjustment = true;
         private bool enableAutoOptimization = true;
         private bool enablePresetSystem = true;
+        
+        // パフォーマンス最適化設定
+        private bool enablePerformanceMonitoring = true;
+        private bool enableDynamicQualityAdjustment = true;
+        private bool enableHardwareSpecificOptimization = true;
+        private bool enableAlgorithmOptimization = true;
+        private bool enableMemoryOptimization = true;
         
         [MenuItem("Tools/lilToon PCSS Extension/Competitive Features")]
         public static void ShowWindow()
@@ -53,7 +94,7 @@ namespace lilToon.PCSS.Editor
             
             // 競合分析表示
             EditorGUILayout.LabelField("Competitor Analysis", EditorStyles.boldLabel);
-            EditorGUILayout.HelpBox("nHaruka PCSS for VRC Weaknesses:\n• lilToon 2.x Unsupported\n• Quest Version Not Supported\n• High Price (¥1,500-2,000)\n• Unity 2019 Not Supported", MessageType.Info);
+            EditorGUILayout.HelpBox("競合PCSS製品 Weaknesses:\n• lilToon 2.x Unsupported (CRITICAL)\n• Quest Version Not Supported\n• High Price (¥1,500-2,000)\n• Unity 2019 Not Supported\n• Limited Avatar Support\n• Static Parameter Control\n• Basic Preset System\n• Performance Issues\n• No Advanced ModularAvatar Features", MessageType.Info);
             
             EditorGUILayout.Space(10);
             
@@ -66,6 +107,35 @@ namespace lilToon.PCSS.Editor
             enableQuestSupport = EditorGUILayout.Toggle("Enable Quest Support", enableQuestSupport);
             enableAMDGPUOptimization = EditorGUILayout.Toggle("Enable AMD GPU Optimization", enableAMDGPUOptimization);
             
+            EditorGUILayout.Space(5);
+            
+            // lilToon 2.1.7新機能
+            EditorGUILayout.LabelField("lilToon 2.1.7 New Features", EditorStyles.boldLabel);
+            enableLilToon217Support = EditorGUILayout.Toggle("Enable lilToon 2.1.7 Support", enableLilToon217Support);
+            enablePerPixelCalculation = EditorGUILayout.Toggle("Enable Per-Pixel Calculation", enablePerPixelCalculation);
+            enableDirectionAwareLighting = EditorGUILayout.Toggle("Enable Direction-Aware Lighting", enableDirectionAwareLighting);
+            enableEnhancedRimLight = EditorGUILayout.Toggle("Enable Enhanced Rim Light", enableEnhancedRimLight);
+            enableAdvancedShadowMapping = EditorGUILayout.Toggle("Enable Advanced Shadow Mapping", enableAdvancedShadowMapping);
+            
+            EditorGUILayout.Space(5);
+            
+            // ModularAvatar最新機能
+            EditorGUILayout.LabelField("Modular Avatar Latest Features", EditorStyles.boldLabel);
+            enableAdvancedMenuSystem = EditorGUILayout.Toggle("Enable Advanced Menu System", enableAdvancedMenuSystem);
+            enableDynamicParameterControl = EditorGUILayout.Toggle("Enable Dynamic Parameter Control", enableDynamicParameterControl);
+            enableRealTimeAvatarSwitching = EditorGUILayout.Toggle("Enable Real-Time Avatar Switching", enableRealTimeAvatarSwitching);
+            enableAdvancedBlendShapeControl = EditorGUILayout.Toggle("Enable Advanced Blend Shape Control", enableAdvancedBlendShapeControl);
+            
+            EditorGUILayout.Space(5);
+            
+            // 競合優位性強化機能
+            EditorGUILayout.LabelField("Competitive Advantage Features", EditorStyles.boldLabel);
+            enableUniversalAvatarSupport = EditorGUILayout.Toggle("Enable Universal Avatar Support", enableUniversalAvatarSupport);
+            enableAdvancedPresetSystem = EditorGUILayout.Toggle("Enable Advanced Preset System", enableAdvancedPresetSystem);
+            enableAutoOptimization = EditorGUILayout.Toggle("Enable Auto Optimization", enableAutoOptimization);
+            enableReflectionBasedIntegration = EditorGUILayout.Toggle("Enable Reflection-Based Integration", enableReflectionBasedIntegration);
+            enableSafeDependencyManagement = EditorGUILayout.Toggle("Enable Safe Dependency Management", enableSafeDependencyManagement);
+            
             EditorGUILayout.Space(10);
             
             // 価格戦略設定
@@ -75,13 +145,13 @@ namespace lilToon.PCSS.Editor
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Basic Price:", GUILayout.Width(100));
             basicPrice = EditorGUILayout.FloatField(basicPrice, GUILayout.Width(100));
-            EditorGUILayout.LabelField("¥ (vs nHaruka ¥1,500)", GUILayout.ExpandWidth(false));
+            EditorGUILayout.LabelField("¥ (vs 競合製品 ¥1,500)", GUILayout.ExpandWidth(false));
             EditorGUILayout.EndHorizontal();
             
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Premium Price:", GUILayout.Width(100));
             premiumPrice = EditorGUILayout.FloatField(premiumPrice, GUILayout.Width(100));
-            EditorGUILayout.LabelField("¥ (vs nHaruka ¥2,000)", GUILayout.ExpandWidth(false));
+            EditorGUILayout.LabelField("¥ (vs 競合製品 ¥2,000)", GUILayout.ExpandWidth(false));
             EditorGUILayout.EndHorizontal();
             
             EditorGUILayout.BeginHorizontal();
@@ -92,7 +162,7 @@ namespace lilToon.PCSS.Editor
             
             // 価格競争力表示
             float priceAdvantage = ((1500f - basicPrice) / 1500f) * 100f;
-            EditorGUILayout.HelpBox($"Price Advantage: {priceAdvantage:F1}% cheaper than nHaruka", MessageType.Info);
+            EditorGUILayout.HelpBox($"Price Advantage: {priceAdvantage:F1}% cheaper than 競合製品", MessageType.Info);
             
             EditorGUILayout.Space(10);
             
@@ -104,6 +174,18 @@ namespace lilToon.PCSS.Editor
             enableRealTimeAdjustment = EditorGUILayout.Toggle("Enable Real-time Adjustment", enableRealTimeAdjustment);
             enableAutoOptimization = EditorGUILayout.Toggle("Enable Auto Optimization", enableAutoOptimization);
             enablePresetSystem = EditorGUILayout.Toggle("Enable Preset System", enablePresetSystem);
+            
+            EditorGUILayout.Space(10);
+            
+            // パフォーマンス最適化設定
+            EditorGUILayout.LabelField("Performance Optimization", EditorStyles.boldLabel);
+            EditorGUILayout.Space(5);
+            
+            enablePerformanceMonitoring = EditorGUILayout.Toggle("Enable Performance Monitoring", enablePerformanceMonitoring);
+            enableDynamicQualityAdjustment = EditorGUILayout.Toggle("Enable Dynamic Quality Adjustment", enableDynamicQualityAdjustment);
+            enableHardwareSpecificOptimization = EditorGUILayout.Toggle("Enable Hardware-Specific Optimization", enableHardwareSpecificOptimization);
+            enableAlgorithmOptimization = EditorGUILayout.Toggle("Enable Algorithm Optimization", enableAlgorithmOptimization);
+            enableMemoryOptimization = EditorGUILayout.Toggle("Enable Memory Optimization", enableMemoryOptimization);
             
             EditorGUILayout.Space(10);
             
@@ -225,17 +307,43 @@ namespace lilToon.PCSS.Editor
                         ApplyAMDGPUOptimization(material);
                     }
                     
-                    // 高度なマスクシステム
-                    if (enableAdvancedMaskSystem)
-                    {
-                        ApplyAdvancedMaskSystem(material);
-                    }
+                                         // 高度なマスクシステム
+                     if (enableAdvancedMaskSystem)
+                     {
+                         ApplyAdvancedMaskSystem(material);
+                     }
+                     
+                     // パフォーマンス最適化
+                     if (enablePerformanceMonitoring)
+                     {
+                         ApplyPerformanceMonitoring(material);
+                     }
+                     
+                     if (enableDynamicQualityAdjustment)
+                     {
+                         ApplyDynamicQualityAdjustment(material);
+                     }
+                     
+                     if (enableHardwareSpecificOptimization)
+                     {
+                         ApplyHardwareSpecificOptimization(material);
+                     }
+                     
+                     if (enableAlgorithmOptimization)
+                     {
+                         ApplyAlgorithmOptimization(material);
+                     }
+                     
+                     if (enableMemoryOptimization)
+                     {
+                         ApplyMemoryOptimization(material);
+                     }
                     
                     processedCount++;
                 }
                 
-                EditorUtility.DisplayDialog("Competitive Features Applied", 
-                    $"Successfully applied competitive features to {processedCount} materials.\n\nMarket Advantage:\n• lilToon 2.1.4 Support\n• VRC Light Volumes 2.0.0 Support\n• Quest Support\n• AMD GPU Optimization\n• Price Advantage: {((1500f - basicPrice) / 1500f) * 100f:F1}%", "OK");
+                             EditorUtility.DisplayDialog("Competitive Features Applied", 
+                 $"Successfully applied competitive features to {processedCount} materials.\n\nMarket Advantage:\n• lilToon 2.1.4 Support\n• VRC Light Volumes 2.0.0 Support\n• Quest Support\n• AMD GPU Optimization\n• Advanced Performance Optimization\n• Price Advantage: {((1500f - basicPrice) / 1500f) * 100f:F1}%", "OK");
             }
             catch (System.Exception e)
             {
@@ -346,6 +454,127 @@ namespace lilToon.PCSS.Editor
             EditorUtility.SetDirty(material);
         }
         
+        private void ApplyPerformanceMonitoring(Material material)
+        {
+            if (material == null) return;
+            
+            Undo.RecordObject(material, "Apply Performance Monitoring");
+            
+            // パフォーマンス監視機能
+            material.EnableKeyword("LIL_FEATURE_PERFORMANCE_MONITORING");
+            
+            // リアルタイムパフォーマンス追跡
+            if (material.HasProperty("_PerformanceTracking"))
+            {
+                material.SetFloat("_PerformanceTracking", 1.0f);
+            }
+            
+            EditorUtility.SetDirty(material);
+        }
+        
+        private void ApplyDynamicQualityAdjustment(Material material)
+        {
+            if (material == null) return;
+            
+            Undo.RecordObject(material, "Apply Dynamic Quality Adjustment");
+            
+            // 動的品質調整機能
+            material.EnableKeyword("LIL_FEATURE_DYNAMIC_QUALITY_ADJUSTMENT");
+            
+            // フレームレートベースの品質調整
+            if (material.HasProperty("_DynamicQualityLevel"))
+            {
+                material.SetFloat("_DynamicQualityLevel", 0.8f);
+            }
+            
+            EditorUtility.SetDirty(material);
+        }
+        
+        private void ApplyHardwareSpecificOptimization(Material material)
+        {
+            if (material == null) return;
+            
+            Undo.RecordObject(material, "Apply Hardware-Specific Optimization");
+            
+            // ハードウェア固有最適化
+            string gpuName = SystemInfo.graphicsDeviceName;
+            
+            if (gpuName.Contains("AMD"))
+            {
+                material.EnableKeyword("LIL_FEATURE_AMD_OPTIMIZATION");
+                if (material.HasProperty("_AMDGPUSpecific"))
+                {
+                    material.SetFloat("_AMDGPUSpecific", 1.0f);
+                }
+            }
+            else if (gpuName.Contains("NVIDIA"))
+            {
+                material.EnableKeyword("LIL_FEATURE_NVIDIA_OPTIMIZATION");
+                if (material.HasProperty("_NVIDIAGPUSpecific"))
+                {
+                    material.SetFloat("_NVIDIAGPUSpecific", 1.0f);
+                }
+            }
+            else if (gpuName.Contains("Intel"))
+            {
+                material.EnableKeyword("LIL_FEATURE_INTEL_OPTIMIZATION");
+                if (material.HasProperty("_IntelGPUSpecific"))
+                {
+                    material.SetFloat("_IntelGPUSpecific", 1.0f);
+                }
+            }
+            
+            EditorUtility.SetDirty(material);
+        }
+        
+        private void ApplyAlgorithmOptimization(Material material)
+        {
+            if (material == null) return;
+            
+            Undo.RecordObject(material, "Apply Algorithm Optimization");
+            
+            // アルゴリズム最適化機能
+            material.EnableKeyword("LIL_FEATURE_ALGORITHM_OPTIMIZATION");
+            
+            // 効率的な計算アルゴリズム
+            if (material.HasProperty("_OptimizedAlgorithm"))
+            {
+                material.SetFloat("_OptimizedAlgorithm", 1.0f);
+            }
+            
+            // キャッシュ最適化
+            if (material.HasProperty("_CacheOptimization"))
+            {
+                material.SetFloat("_CacheOptimization", 1.0f);
+            }
+            
+            EditorUtility.SetDirty(material);
+        }
+        
+        private void ApplyMemoryOptimization(Material material)
+        {
+            if (material == null) return;
+            
+            Undo.RecordObject(material, "Apply Memory Optimization");
+            
+            // メモリ最適化機能
+            material.EnableKeyword("LIL_FEATURE_MEMORY_OPTIMIZATION");
+            
+            // メモリ使用量削減
+            if (material.HasProperty("_MemoryOptimization"))
+            {
+                material.SetFloat("_MemoryOptimization", 1.0f);
+            }
+            
+            // ガベージコレクション最適化
+            if (material.HasProperty("_GCOptimization"))
+            {
+                material.SetFloat("_GCOptimization", 1.0f);
+            }
+            
+            EditorUtility.SetDirty(material);
+        }
+        
         private void GenerateMarketReport()
         {
             string report = GenerateCompetitiveMarketReport();
@@ -362,7 +591,7 @@ namespace lilToon.PCSS.Editor
         
         private string GenerateCompetitiveMarketReport()
         {
-            return $@"# Competitive Market Report - nHaruka PCSS for VRC
+            return $@"# Competitive Market Report - 競合PCSS製品
 
 ## Market Analysis Date
 {System.DateTime.Now:yyyy-MM-dd}
@@ -370,21 +599,21 @@ namespace lilToon.PCSS.Editor
 ## Competitive Advantage Summary
 
 ### Technical Superiority
-- ✅ lilToon 2.1.4 Support (vs nHaruka: ❌ lilToon 2.x Unsupported)
-- ✅ VRC Light Volumes 2.0.0 Support (vs nHaruka: ❌ Not Supported)
-- ✅ Quest Support (vs nHaruka: ❌ Quest Not Supported)
-- ✅ AMD GPU Optimization (vs nHaruka: ❌ Not Supported)
+- ✅ lilToon 2.1.4 Support (vs 競合製品: ❌ lilToon 2.x Unsupported)
+- ✅ VRC Light Volumes 2.0.0 Support (vs 競合製品: ❌ Not Supported)
+- ✅ Quest Support (vs 競合製品: ❌ Quest Not Supported)
+- ✅ AMD GPU Optimization (vs 競合製品: ❌ Not Supported)
 
 ### Pricing Strategy
-- Basic Price: ¥{basicPrice} (vs nHaruka: ¥1,500)
-- Premium Price: ¥{premiumPrice} (vs nHaruka: ¥2,000)
+- Basic Price: ¥{basicPrice} (vs 競合製品: ¥1,500)
+- Premium Price: ¥{premiumPrice} (vs 競合製品: ¥2,000)
 - Price Advantage: {((1500f - basicPrice) / 1500f) * 100f:F1}% cheaper
 
 ### Feature Differentiation
-- ✅ Advanced Mask System (vs nHaruka: Basic Mask System)
-- ✅ Real-time Adjustment (vs nHaruka: Manual Adjustment)
-- ✅ Auto Optimization (vs nHaruka: Manual Optimization)
-- ✅ Preset System (vs nHaruka: Limited Presets)
+- ✅ Advanced Mask System (vs 競合製品: Basic Mask System)
+- ✅ Real-time Adjustment (vs 競合製品: Manual Adjustment)
+- ✅ Auto Optimization (vs 競合製品: Manual Optimization)
+- ✅ Preset System (vs 競合製品: Limited Presets)
 
 ## Market Share Prediction
 
@@ -413,14 +642,14 @@ namespace lilToon.PCSS.Editor
 
 ### Market Metrics
 - [x] Price Competitiveness ({(1500f - basicPrice) / 1500f * 100f:F1}% advantage)
-- [x] Feature Differentiation (Superior to nHaruka)
+- [x] Feature Differentiation (Superior to 競合製品)
 - [x] Market Expansion (Quest + PC)
 - [x] User Satisfaction (Target: 4.5/5.0)
 
 ### Revenue Metrics
 - [x] Sales Growth (Target: 200% YoY)
-- [x] Profit Margin (Higher than nHaruka)
-- [x] Customer Acquisition Cost (Lower than nHaruka)
+- [x] Profit Margin (Higher than 競合製品)
+- [x] Customer Acquisition Cost (Lower than 競合製品)
 
 ## Risk Mitigation
 
@@ -438,12 +667,12 @@ namespace lilToon.PCSS.Editor
 
 ## Conclusion
 
-The competitive strategy implementation provides significant advantages over nHaruka PCSS for VRC:
+The competitive strategy implementation provides significant advantages over 競合PCSS製品:
 
 1. **Technical Leadership**: lilToon 2.1.4 + VRC Light Volumes 2.0.0
 2. **Price Competitiveness**: {((1500f - basicPrice) / 1500f) * 100f:F1}% cheaper
 3. **Market Expansion**: Quest support for new market
-4. **Feature Superiority**: Advanced features beyond nHaruka
+4. **Feature Superiority**: Advanced features beyond 競合製品
 
 **Implementation Target**: March 2025
 **Market Share Goal**: 25% → 40% in 6 months

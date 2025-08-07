@@ -1,0 +1,79 @@
+# VCC (VRChat Creator Companion) compatibility headers - v1.4.1 強制更新
+<Files "index.json">
+    Header set Content-Type "application/json; charset=utf-8"
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, HEAD, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, User-Agent"
+    Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+    
+    # JSONファイル直接アクセス時のユーザーエクスペリエンス向上
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-VPM-Repository "lilToon PCSS Extension Ultimate Commercial"
+    Header set X-VPM-Version "1.4.1"
+    Header set X-VPM-Repository-Version "0.2.0"
+    Header set X-VPM-Latest-Package "1.4.1"
+    Header set X-VPM-Force-Refresh "true"
+</Files>
+
+# VPM repository specific settings
+<Files "vpm.json">
+    Header set Content-Type "application/json; charset=utf-8"
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, HEAD, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, User-Agent"
+    Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+</Files>
+
+# Enable CORS for all JSON files - VCC強制更新対応
+<FilesMatch "\.(json)$">
+    Header set Access-Control-Allow-Origin "*"
+    Header set Content-Type "application/json; charset=utf-8"
+    Header set X-Robots-Tag "noindex, nofollow"
+    Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+    Header set X-VPM-Force-Refresh "true"
+</FilesMatch>
+
+# JSONファイル直接アクセス時のユーザーフレンドリーなリダイレクト（ブラウザのみ）
+RewriteEngine On
+
+# VCCからのアクセスは通常通りJSONを返す
+RewriteCond %{HTTP_USER_AGENT} !VCC [NC]
+RewriteCond %{HTTP_USER_AGENT} !VRChat [NC]
+RewriteCond %{HTTP_USER_AGENT} !curl [NC]
+RewriteCond %{HTTP_USER_AGENT} !wget [NC]
+RewriteCond %{HTTP_ACCEPT} text/html
+RewriteRule ^index\.json$ json-info.html [R=302,L]
+
+# VPMリポジトリエイリアス
+RewriteRule ^vpm\.json$ index.json [L]
+
+# セキュリティヘッダー
+Header always set X-Frame-Options "SAMEORIGIN"
+Header always set X-Content-Type-Options "nosniff"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+# GitHub Pages最適化
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/json
+</IfModule>
+
+# キャッシュ設定 - VCC対応強化
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType application/json "access plus 0 seconds"
+    ExpiresByType text/html "access plus 1 hour"
+    ExpiresByType text/css "access plus 1 day"
+    ExpiresByType application/javascript "access plus 1 day"
+</IfModule> 
