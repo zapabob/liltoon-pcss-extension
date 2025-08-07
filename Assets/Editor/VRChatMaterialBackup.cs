@@ -1,17 +1,36 @@
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
+using System.Linq;
 using System.IO;
 using System.Collections.Generic;
-using System.Linq;
 using System;
 using VRC.SDK3.Avatars.Components;
-using VRC.SDK3.Avatars.ScriptableObjects;
 
 namespace lilToon.PCSS.Editor
 {
     /// <summary>
-    /// VRChatアップロード時のlilToonマテリアルmissing問題を解決するUUIDベースバックアップシステム
-    /// なんｊ風に言うと「これで完璧なマテリアルバックアップシステムが完成したぜ！」💪🔥
+    /// VRChatアップロード前の自動バックアップ機能
+    /// </summary>
+    [InitializeOnLoad]
+    public class VRChatUploadBackup
+    {
+        static VRChatUploadBackup()
+        {
+            // VRChatアップロード前の自動バックアップ
+            EditorApplication.update += CheckForVRChatUpload;
+        }
+        
+        private static void CheckForVRChatUpload()
+        {
+            // VRChat SDKのアップロード処理を検出して自動バックアップを実行
+            // この部分はVRChat SDKの内部実装に依存するため、
+            // 実際の実装ではVRChat SDKのイベントをフックする必要があります
+        }
+    }
+
+    /// <summary>
+    /// VRChatマテリアルバックアップツール
+    /// なんｊ風に言うと「これで完璧なバックアップシステムが完成したぜ！」💪🔥
     /// </summary>
     public class VRChatMaterialBackup : EditorWindow
     {
@@ -27,26 +46,27 @@ namespace lilToon.PCSS.Editor
         private bool backupTextures = true;
         private bool backupShaderProperties = true;
         private bool createBackupBeforeUpload = true;
-        
+
         [MenuItem("Tools/lilToon PCSS/VRChat Material Backup")]
         public static void ShowWindow()
         {
             GetWindow<VRChatMaterialBackup>("VRChat Material Backup");
         }
-        
+
         private void OnEnable()
         {
-            // 自動的にアバターを検出
             FindAvatarInScene();
         }
-        
+
         private void OnGUI()
         {
-            GUILayout.Label("🎯 VRChat Material Backup System", EditorStyles.boldLabel);
+            scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
+            
+            GUILayout.Label("🎯 VRChat Material Backup", EditorStyles.boldLabel);
             EditorGUILayout.Space(5);
             
             // アバター選択
-            EditorGUILayout.LabelField("📋 Avatar Selection", EditorStyles.miniBoldLabel);
+            EditorGUILayout.LabelField(" Avatar Selection", EditorStyles.miniBoldLabel);
             targetAvatar = (GameObject)EditorGUILayout.ObjectField("Target Avatar", targetAvatar, typeof(GameObject), true);
             
             if (targetAvatar != null)
@@ -54,18 +74,29 @@ namespace lilToon.PCSS.Editor
                 avatarDescriptor = targetAvatar.GetComponent<VRCAvatarDescriptor>();
                 if (avatarDescriptor != null)
                 {
-                    EditorGUILayout.HelpBox($"✅ VRChat Avatar detected: {avatarDescriptor.name}", MessageType.Info);
-                }
-                else
-                {
-                    EditorGUILayout.HelpBox("⚠️ No VRCAvatarDescriptor found. This may not be a VRChat avatar.", MessageType.Warning);
+                    EditorGUILayout.LabelField($"Avatar Name: {targetAvatar.name}");
+                    EditorGUILayout.LabelField($"Avatar ID: {avatarDescriptor.name}");
                 }
             }
             
             EditorGUILayout.Space(10);
             
+            // バックアップオプション
+            EditorGUILayout.LabelField("⚙️ Backup Options", EditorStyles.miniBoldLabel);
+            autoBackupOnUpload = EditorGUILayout.Toggle("Auto backup on upload", autoBackupOnUpload);
+            backupTextures = EditorGUILayout.Toggle("Backup textures", backupTextures);
+            backupShaderProperties = EditorGUILayout.Toggle("Backup shader properties", backupShaderProperties);
+            createBackupBeforeUpload = EditorGUILayout.Toggle("Create backup before upload", createBackupBeforeUpload);
+            
+            EditorGUILayout.Space(10);
+            
             // メイン機能
             EditorGUILayout.LabelField("🚀 Main Functions", EditorStyles.miniBoldLabel);
+            
+            if (GUILayout.Button("🔍 Find Avatar in Scene", GUILayout.Height(30)))
+            {
+                FindAvatarInScene();
+            }
             
             if (GUILayout.Button("💾 Create Material Backup", GUILayout.Height(30)))
             {
@@ -75,11 +106,11 @@ namespace lilToon.PCSS.Editor
                 }
                 else
                 {
-                    EditorUtility.DisplayDialog("Error", "Please select a target avatar.", "OK");
+                    EditorUtility.DisplayDialog("Error", "Please select an avatar first", "OK");
                 }
             }
             
-            if (GUILayout.Button("🔄 Restore Materials from Backup", GUILayout.Height(30)))
+            if (GUILayout.Button("🔄 Restore from Backup", GUILayout.Height(30)))
             {
                 if (targetAvatar != null)
                 {
@@ -87,65 +118,57 @@ namespace lilToon.PCSS.Editor
                 }
                 else
                 {
-                    EditorUtility.DisplayDialog("Error", "Please select a target avatar.", "OK");
+                    EditorUtility.DisplayDialog("Error", "Please select an avatar first", "OK");
                 }
             }
             
             if (GUILayout.Button("🔍 Scan for Missing Materials", GUILayout.Height(30)))
             {
-                ScanForMissingMaterials();
-            }
-            
-            EditorGUILayout.Space(10);
-            
-            // 高度なオプション
-            showAdvancedOptions = EditorGUILayout.Foldout(showAdvancedOptions, "⚙️ Advanced Options");
-            if (showAdvancedOptions)
-            {
-                EditorGUI.indentLevel++;
-                
-                autoBackupOnUpload = EditorGUILayout.Toggle("Auto backup before upload", autoBackupOnUpload);
-                backupTextures = EditorGUILayout.Toggle("Backup textures", backupTextures);
-                backupShaderProperties = EditorGUILayout.Toggle("Backup shader properties", backupShaderProperties);
-                createBackupBeforeUpload = EditorGUILayout.Toggle("Create backup before upload", createBackupBeforeUpload);
-                
-                EditorGUILayout.Space(5);
-                
-                if (GUILayout.Button("🗑️ Clear All Backups"))
+                if (targetAvatar != null)
                 {
-                    if (EditorUtility.DisplayDialog("Clear Backups", 
-                        "Are you sure you want to clear all material backups?", "Yes", "No"))
-                    {
-                        ClearAllBackups();
-                    }
+                    ScanForMissingMaterials();
                 }
-                
-                EditorGUI.indentLevel--;
+                else
+                {
+                    EditorUtility.DisplayDialog("Error", "Please select an avatar first", "OK");
+                }
+            }
+            
+            if (GUILayout.Button("️ Clear All Backups", GUILayout.Height(30)))
+            {
+                if (EditorUtility.DisplayDialog("Confirm", "Are you sure you want to clear all backups?", "Yes", "No"))
+                {
+                    ClearAllBackups();
+                }
             }
             
             EditorGUILayout.Space(10);
             
-            // 情報表示
-            EditorGUILayout.LabelField("📊 Backup Information", EditorStyles.miniBoldLabel);
+            // バックアップ情報表示
+            EditorGUILayout.LabelField(" Backup Information", EditorStyles.miniBoldLabel);
             DisplayBackupInfo();
+            
+            EditorGUILayout.EndScrollView();
         }
-        
+
         private void FindAvatarInScene()
         {
-            // シーン内のVRCAvatarDescriptorを検索
             var avatars = FindObjectsOfType<VRCAvatarDescriptor>();
             if (avatars.Length > 0)
             {
                 targetAvatar = avatars[0].gameObject;
-                avatarDescriptor = avatars[0];
+                Debug.Log($"Found avatar: {targetAvatar.name}");
+            }
+            else
+            {
+                Debug.LogWarning("No VRChat avatar found in scene");
             }
         }
-        
+
         private void CreateMaterialBackup(GameObject avatar)
         {
             try
             {
-                string backupPath = GetBackupFolderPath(avatar.name);
                 var backupData = new VRChatMaterialBackupData
                 {
                     avatarName = avatar.name,
@@ -153,79 +176,67 @@ namespace lilToon.PCSS.Editor
                     version = BackupVersion,
                     materials = new List<MaterialBackupEntry>()
                 };
-                
-                // すべてのRendererを取得
-                var renderers = avatar.GetComponentsInChildren<Renderer>(true);
-                int totalMaterials = 0;
-                int backedUpMaterials = 0;
-                
+
+                var renderers = avatar.GetComponentsInChildren<Renderer>();
                 foreach (var renderer in renderers)
                 {
-                    foreach (var material in renderer.sharedMaterials)
+                    var materials = renderer.sharedMaterials;
+                    for (int i = 0; i < materials.Length; i++)
                     {
-                        totalMaterials++;
-                        
-                        if (material != null)
+                        if (materials[i] != null)
                         {
-                            var entry = CreateMaterialBackupEntry(material, renderer);
+                            var entry = CreateMaterialBackupEntry(materials[i], renderer, i);
                             backupData.materials.Add(entry);
-                            backedUpMaterials++;
                         }
                     }
                 }
+
+                string backupPath = GetBackupFolderPath(avatar.name);
+                string backupFile = Path.Combine(backupPath, $"MaterialBackup_{DateTime.Now:yyyyMMdd_HHmmss}.json");
                 
-                // JSONとして保存
                 string json = JsonUtility.ToJson(backupData, true);
-                string filePath = Path.Combine(backupPath, BackupFileName);
-                File.WriteAllText(filePath, json);
+                File.WriteAllText(backupFile, json);
                 
-                AssetDatabase.SaveAssets();
-                
-                EditorUtility.DisplayDialog("Success", 
-                    $"Material backup created successfully!\n" +
-                    $"Avatar: {avatar.name}\n" +
-                    $"Materials backed up: {backedUpMaterials}/{totalMaterials}\n" +
-                    $"Location: {filePath}", "OK");
-                
-                Debug.Log($"[VRChatMaterialBackup] Created backup for {avatar.name}: {backedUpMaterials}/{totalMaterials} materials");
+                Debug.Log($"Material backup created: {backupFile}");
+                EditorUtility.DisplayDialog("Success", $"Material backup created successfully!\nPath: {backupFile}", "OK");
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Debug.LogError($"[VRChatMaterialBackup] Error creating backup: {e.Message}");
-                EditorUtility.DisplayDialog("Error", $"Failed to create backup: {e.Message}", "OK");
+                Debug.LogError($"Failed to create material backup: {ex.Message}");
+                EditorUtility.DisplayDialog("Error", $"Failed to create backup: {ex.Message}", "OK");
             }
         }
-        
-        private MaterialBackupEntry CreateMaterialBackupEntry(Material material, Renderer renderer)
+
+        private MaterialBackupEntry CreateMaterialBackupEntry(Material material, Renderer renderer, int materialIndex)
         {
             var entry = new MaterialBackupEntry
             {
                 materialName = material.name,
                 materialGUID = AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(material)),
                 materialPath = AssetDatabase.GetAssetPath(material),
-                shaderName = material.shader.name,
-                shaderGUID = AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(material.shader)),
+                shaderName = material.shader != null ? material.shader.name : "",
+                shaderGUID = material.shader != null ? AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(material.shader)) : "",
                 rendererName = renderer.name,
                 rendererPath = GetGameObjectPath(renderer.gameObject),
+                materialIndex = materialIndex,
                 properties = new Dictionary<string, string>(),
                 textureGUIDs = new Dictionary<string, string>()
             };
-            
-            // シェーダープロパティをバックアップ
-            if (backupShaderProperties)
+
+            // プロパティの保存
+            if (backupShaderProperties && material.shader != null)
             {
                 var shader = material.shader;
                 int propertyCount = ShaderUtil.GetPropertyCount(shader);
-                
                 for (int i = 0; i < propertyCount; i++)
                 {
                     string propertyName = ShaderUtil.GetPropertyName(shader, i);
-                    var propertyType = ShaderUtil.GetPropertyType(shader, i);
+                    ShaderUtil.ShaderPropertyType propertyType = ShaderUtil.GetPropertyType(shader, i);
                     
                     switch (propertyType)
                     {
                         case ShaderUtil.ShaderPropertyType.Color:
-                            entry.properties[propertyName] = ColorUtility.ToHtmlStringRGBA(material.GetColor(propertyName));
+                            entry.properties[propertyName] = material.GetColor(propertyName).ToString();
                             break;
                         case ShaderUtil.ShaderPropertyType.Vector:
                             entry.properties[propertyName] = material.GetVector(propertyName).ToString();
@@ -240,224 +251,244 @@ namespace lilToon.PCSS.Editor
                                 var texture = material.GetTexture(propertyName);
                                 if (texture != null)
                                 {
-                                    string texturePath = AssetDatabase.GetAssetPath(texture);
-                                    entry.textureGUIDs[propertyName] = AssetDatabase.AssetPathToGUID(texturePath);
+                                    entry.textureGUIDs[propertyName] = AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(texture));
                                 }
                             }
                             break;
                     }
                 }
             }
-            
+
             return entry;
         }
-        
+
         private void RestoreMaterialsFromBackup(GameObject avatar)
         {
-            try
+            if (avatar == null) return;
+
+            string avatarName = avatar.name;
+            string backupPath = GetBackupFolderPath(avatarName);
+            
+            if (!Directory.Exists(backupPath))
             {
-                string backupPath = GetBackupFolderPath(avatar.name);
-                string filePath = Path.Combine(backupPath, BackupFileName);
-                
-                if (!File.Exists(filePath))
+                EditorUtility.DisplayDialog("Error", "No backup folder found!", "OK");
+                return;
+            }
+
+            var backupFiles = Directory.GetFiles(backupPath, "MaterialBackup_*.json");
+            if (backupFiles.Length == 0)
+            {
+                EditorUtility.DisplayDialog("Error", "No backup files found!", "OK");
+                return;
+            }
+
+            // 最新のバックアップファイルを選択
+            string latestBackup = backupFiles.OrderByDescending(f => File.GetLastWriteTime(f)).First();
+            string jsonData = File.ReadAllText(latestBackup);
+            var backupData = JsonUtility.FromJson<VRChatMaterialBackupData>(jsonData);
+            
+            if (backupData == null || backupData.materials == null)
+            {
+                EditorUtility.DisplayDialog("Error", "Invalid backup data!", "OK");
+                return;
+            }
+
+            int restoredCount = 0;
+            var renderers = avatar.GetComponentsInChildren<Renderer>(true);
+            var rendererDict = renderers.ToDictionary(r => GetGameObjectPath(r.gameObject), r => r);
+
+            foreach (var backupEntry in backupData.materials)
+            {
+                if (rendererDict.TryGetValue(backupEntry.rendererPath, out var renderer))
                 {
-                    EditorUtility.DisplayDialog("Error", $"No backup found for {avatar.name}", "OK");
-                    return;
-                }
-                
-                string json = File.ReadAllText(filePath);
-                var backupData = JsonUtility.FromJson<VRChatMaterialBackupData>(json);
-                
-                int restoredCount = 0;
-                int totalMaterials = 0;
-                
-                var renderers = avatar.GetComponentsInChildren<Renderer>(true);
-                
-                foreach (var renderer in renderers)
-                {
-                    var materials = renderer.sharedMaterials;
-                    bool changed = false;
-                    
-                    for (int i = 0; i < materials.Length; i++)
+                    var restoredMat = RestoreMaterialFromBackup(backupEntry);
+                    if (restoredMat != null)
                     {
-                        totalMaterials++;
-                        
-                        if (materials[i] == null)
+                        var mats = renderer.sharedMaterials;
+                        if (backupEntry.materialIndex < mats.Length)
                         {
-                            // Missing material - try to restore
-                            var backupEntry = FindBackupEntry(backupData, renderer, i);
-                            if (backupEntry != null)
-                            {
-                                var restoredMaterial = RestoreMaterialFromBackup(backupEntry);
-                                if (restoredMaterial != null)
-                                {
-                                    materials[i] = restoredMaterial;
-                                    changed = true;
-                                    restoredCount++;
-                                    Debug.Log($"[VRChatMaterialBackup] Restored material: {backupEntry.materialName} on {renderer.name}");
-                                }
-                            }
+                            mats[backupEntry.materialIndex] = restoredMat;
+                            renderer.sharedMaterials = mats;
+                            EditorUtility.SetDirty(renderer);
+                            restoredCount++;
                         }
                     }
-                    
-                    if (changed)
-                    {
-                        Undo.RecordObject(renderer, "Restore Materials from Backup");
-                        renderer.sharedMaterials = materials;
-                        EditorUtility.SetDirty(renderer);
-                    }
                 }
-                
-                AssetDatabase.SaveAssets();
-                
-                EditorUtility.DisplayDialog("Success", 
-                    $"Material restoration completed!\n" +
-                    $"Materials restored: {restoredCount}/{totalMaterials}", "OK");
-                
-                Debug.Log($"[VRChatMaterialBackup] Restored {restoredCount}/{totalMaterials} materials for {avatar.name}");
             }
-            catch (Exception e)
-            {
-                Debug.LogError($"[VRChatMaterialBackup] Error restoring materials: {e.Message}");
-                EditorUtility.DisplayDialog("Error", $"Failed to restore materials: {e.Message}", "OK");
-            }
+
+            AssetDatabase.SaveAssets();
+            EditorUtility.DisplayDialog("Restore Complete", $"Restored {restoredCount} materials from backup.", "OK");
         }
-        
+
         private MaterialBackupEntry FindBackupEntry(VRChatMaterialBackupData backupData, Renderer renderer, int materialIndex)
         {
             string rendererPath = GetGameObjectPath(renderer.gameObject);
-            
-            // レンダラーパスとマテリアルインデックスで一致を検索
-            return backupData.materials.FirstOrDefault(m => 
-                m.rendererPath == rendererPath && 
-                m.materialIndex == materialIndex);
+            return backupData.materials.FirstOrDefault(e => e.rendererPath == rendererPath && e.materialIndex == materialIndex);
         }
-        
+
         private Material RestoreMaterialFromBackup(MaterialBackupEntry backupEntry)
         {
-            // GUIDからマテリアルを復元
-            string materialPath = AssetDatabase.GUIDToAssetPath(backupEntry.materialGUID);
-            if (!string.IsNullOrEmpty(materialPath))
+            // マテリアルアセットの復元を試行
+            if (!string.IsNullOrEmpty(backupEntry.materialGUID))
             {
-                var material = AssetDatabase.LoadAssetAtPath<Material>(materialPath);
-                if (material != null)
+                string materialPath = AssetDatabase.GUIDToAssetPath(backupEntry.materialGUID);
+                if (!string.IsNullOrEmpty(materialPath))
                 {
-                    // シェーダーを復元
-                    string shaderPath = AssetDatabase.GUIDToAssetPath(backupEntry.shaderGUID);
-                    if (!string.IsNullOrEmpty(shaderPath))
-                    {
-                        var shader = AssetDatabase.LoadAssetAtPath<Shader>(shaderPath);
-                        if (shader != null)
-                        {
-                            material.shader = shader;
-                        }
-                    }
-                    
-                    // プロパティを復元
-                    foreach (var kvp in backupEntry.properties)
-                    {
-                        if (kvp.Key.StartsWith("_Color"))
-                        {
-                            if (ColorUtility.TryParseHtmlString(kvp.Value, out Color color))
-                            {
-                                material.SetColor(kvp.Key, color);
-                            }
-                        }
-                        else if (kvp.Key.StartsWith("_Vector"))
-                        {
-                            material.SetVector(kvp.Key, StringToVector4(kvp.Value));
-                        }
-                        else if (kvp.Key.StartsWith("_Float") || kvp.Key.StartsWith("_Range"))
-                        {
-                            if (float.TryParse(kvp.Value, out float value))
-                            {
-                                material.SetFloat(kvp.Key, value);
-                            }
-                        }
-                    }
-                    
-                    // テクスチャを復元
-                    foreach (var kvp in backupEntry.textureGUIDs)
-                    {
-                        string texturePath = AssetDatabase.GUIDToAssetPath(kvp.Value);
-                        if (!string.IsNullOrEmpty(texturePath))
-                        {
-                            var texture = AssetDatabase.LoadAssetAtPath<Texture>(texturePath);
-                            if (texture != null)
-                            {
-                                material.SetTexture(kvp.Key, texture);
-                            }
-                        }
-                    }
-                    
-                    return material;
+                    var loadedMaterial = AssetDatabase.LoadAssetAtPath<Material>(materialPath);
+                    if (loadedMaterial != null)
+                        return loadedMaterial;
                 }
             }
-            
-            return null;
+
+            // シェーダーから新規作成
+            Shader shader = null;
+            if (!string.IsNullOrEmpty(backupEntry.shaderGUID))
+            {
+                string shaderPath = AssetDatabase.GUIDToAssetPath(backupEntry.shaderGUID);
+                if (!string.IsNullOrEmpty(shaderPath))
+                {
+                    shader = AssetDatabase.LoadAssetAtPath<Shader>(shaderPath);
+                }
+            }
+
+            if (shader == null && !string.IsNullOrEmpty(backupEntry.shaderName))
+            {
+                shader = Shader.Find(backupEntry.shaderName);
+            }
+
+            if (shader == null)
+            {
+                shader = Shader.Find("lilToon");
+            }
+
+            if (shader == null)
+                return null;
+
+            var newMaterial = new Material(shader) { name = backupEntry.materialName };
+
+            // プロパティの復元
+            foreach (var kvp in backupEntry.properties)
+            {
+                string propertyName = kvp.Key;
+                string propertyValue = kvp.Value;
+
+                if (newMaterial.HasProperty(propertyName))
+                {
+                    if (propertyValue.StartsWith("RGBA("))
+                    {
+                        // Color型の復元
+                        var colorMatch = System.Text.RegularExpressions.Regex.Match(propertyValue, @"RGBA\(([^)]+)\)");
+                        if (colorMatch.Success)
+                        {
+                            var colorValues = colorMatch.Groups[1].Value.Split(',');
+                            if (colorValues.Length == 4)
+                            {
+                                float.TryParse(colorValues[0], out float r);
+                                float.TryParse(colorValues[1], out float g);
+                                float.TryParse(colorValues[2], out float b);
+                                float.TryParse(colorValues[3], out float a);
+                                newMaterial.SetColor(propertyName, new Color(r, g, b, a));
+                            }
+                        }
+                    }
+                    else if (propertyValue.StartsWith("(") && propertyValue.EndsWith(")"))
+                    {
+                        // Vector4型の復元
+                        newMaterial.SetVector(propertyName, StringToVector4(propertyValue));
+                    }
+                    else
+                    {
+                        // Float型の復元
+                        if (float.TryParse(propertyValue, out float floatValue))
+                        {
+                            newMaterial.SetFloat(propertyName, floatValue);
+                        }
+                    }
+                }
+            }
+
+            // テクスチャの復元
+            foreach (var kvp in backupEntry.textureGUIDs)
+            {
+                string propertyName = kvp.Key;
+                string textureGUID = kvp.Value;
+
+                if (!string.IsNullOrEmpty(textureGUID))
+                {
+                    string texturePath = AssetDatabase.GUIDToAssetPath(textureGUID);
+                    if (!string.IsNullOrEmpty(texturePath))
+                    {
+                        var texture = AssetDatabase.LoadAssetAtPath<Texture>(texturePath);
+                        if (texture != null && newMaterial.HasProperty(propertyName))
+                        {
+                            newMaterial.SetTexture(propertyName, texture);
+                        }
+                    }
+                }
+            }
+
+            return newMaterial;
         }
-        
+
         private void ScanForMissingMaterials()
         {
-            var missingMaterials = new List<string>();
-            var renderers = FindObjectsOfType<Renderer>();
+            if (targetAvatar == null) return;
+
+            int count = 0;
+            var renderers = targetAvatar.GetComponentsInChildren<Renderer>();
             
             foreach (var renderer in renderers)
             {
-                for (int i = 0; i < renderer.sharedMaterials.Length; i++)
+                var materials = renderer.sharedMaterials;
+                for (int i = 0; i < materials.Length; i++)
                 {
-                    if (renderer.sharedMaterials[i] == null)
+                    if (materials[i] == null)
                     {
-                        missingMaterials.Add($"{renderer.name} (Material {i})");
+                        count++;
+                        Debug.LogWarning($"Missing material found: {renderer.name} at index {i}");
                     }
                 }
             }
             
-            if (missingMaterials.Count > 0)
-            {
-                string message = $"Found {missingMaterials.Count} missing materials:\n\n" + string.Join("\n", missingMaterials);
-                EditorUtility.DisplayDialog("Missing Materials Found", message, "OK");
-            }
-            else
-            {
-                EditorUtility.DisplayDialog("Scan Complete", "No missing materials found!", "OK");
-            }
+            EditorUtility.DisplayDialog("Scan Result", $"Missing materials found: {count}", "OK");
         }
-        
+
         private void ClearAllBackups()
         {
             string backupRootPath = Path.Combine("Assets", BackupSubfolder);
             if (Directory.Exists(backupRootPath))
             {
                 Directory.Delete(backupRootPath, true);
-                AssetDatabase.Refresh();
-                Debug.Log("[VRChatMaterialBackup] All backups cleared");
+                Debug.Log("All backups cleared");
             }
         }
-        
+
         private void DisplayBackupInfo()
         {
-            string backupRootPath = Path.Combine("Assets", BackupSubfolder);
-            if (Directory.Exists(backupRootPath))
+            if (targetAvatar == null)
             {
-                var backupFolders = Directory.GetDirectories(backupRootPath);
-                EditorGUILayout.LabelField($"Backup folders: {backupFolders.Length}");
+                EditorGUILayout.LabelField("No avatar selected");
+                return;
+            }
+
+            string avatarName = targetAvatar.name;
+            string backupPath = GetBackupFolderPath(avatarName);
+            
+            if (Directory.Exists(backupPath))
+            {
+                var backupFiles = Directory.GetFiles(backupPath, "MaterialBackup_*.json");
+                EditorGUILayout.LabelField($"Backup files: {backupFiles.Length}");
                 
-                foreach (var folder in backupFolders)
+                if (backupFiles.Length > 0)
                 {
-                    string folderName = Path.GetFileName(folder);
-                    string backupFile = Path.Combine(folder, BackupFileName);
-                    
-                    if (File.Exists(backupFile))
-                    {
-                        var fileInfo = new FileInfo(backupFile);
-                        EditorGUILayout.LabelField($"📁 {folderName}: {fileInfo.LastWriteTime:yyyy-MM-dd HH:mm}");
-                    }
+                    var latestBackup = backupFiles.OrderByDescending(f => File.GetLastWriteTime(f)).First();
+                    EditorGUILayout.LabelField($"Latest backup: {Path.GetFileName(latestBackup)}");
+                    EditorGUILayout.LabelField($"Last modified: {File.GetLastWriteTime(latestBackup)}");
                 }
             }
             else
             {
-                EditorGUILayout.LabelField("No backups found");
+                EditorGUILayout.LabelField("No backup folder found");
             }
         }
         
@@ -507,48 +538,4 @@ namespace lilToon.PCSS.Editor
             return Vector4.zero;
         }
     }
-    
-    [System.Serializable]
-    public class VRChatMaterialBackupData
-    {
-        public string avatarName;
-        public string backupTime;
-        public string version;
-        public List<MaterialBackupEntry> materials;
-    }
-    
-    [System.Serializable]
-    public class MaterialBackupEntry
-    {
-        public string materialName;
-        public string materialGUID;
-        public string materialPath;
-        public string shaderName;
-        public string shaderGUID;
-        public string rendererName;
-        public string rendererPath;
-        public int materialIndex;
-        public Dictionary<string, string> properties;
-        public Dictionary<string, string> textureGUIDs;
-    }
-    
-    /// <summary>
-    /// VRChatアップロード前の自動バックアップ機能
-    /// </summary>
-    [InitializeOnLoad]
-    public class VRChatUploadBackup
-    {
-        static VRChatUploadBackup()
-        {
-            // VRChatアップロード前の自動バックアップ
-            EditorApplication.update += CheckForVRChatUpload;
-        }
-        
-        private static void CheckForVRChatUpload()
-        {
-            // VRChat SDKのアップロード処理を検出して自動バックアップを実行
-            // この部分はVRChat SDKの内部実装に依存するため、
-            // 実際の実装ではVRChat SDKのイベントをフックする必要があります
-        }
-    }
-} 
+}

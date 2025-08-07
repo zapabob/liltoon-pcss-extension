@@ -21,7 +21,7 @@ Shader "lilToon/PCSS Extension"
         [Enum(Low,0,Medium,1,High,2,Ultra,3)] _PCSSQualityLevel ("PCSS Quality", Float) = 1
         _LocalPCSSSamples ("PCSS Samples", Range(1, 64)) = 16
         [lilToggle] _UseShadowMask ("Use Shadow Mask", Float) = 0
-        _ShadowMaskTex ("Shadow Mask (R)", 2D) = "white" {}
+        _ShadowMaskTex ("Shadow Mask (R:Cast, G:Receive)", 2D) = "white" {}
         _ShadowMaskStrength ("Shadow Mask Strength", Range(0.0, 1.0)) = 1.0
         // --- その他（省略可） ---
         [lilToggle] _UseShadowClamp ("Use Shadow Clamp (Anime Style)", Float) = 0
@@ -34,6 +34,13 @@ Shader "lilToon/PCSS Extension"
         _VRCLightVolumeDistanceFactor ("VRC Light Volume Distance Factor", Range(0.0, 1.0)) = 0.1
         _EnvRimBorder ("[VRCLV] Rim Border", Range(0, 1)) = 0.85
         _EnvRimBlur ("[VRCLV] Rim Blur", Range(0, 1)) = 0.35
+        // --- Flipbook ---
+        [lilToggle] _UseFlipbook ("Use Flipbook", Float) = 0
+        _FlipbookTex ("Flipbook Texture", 2D) = "white" {}
+        _FlipbookDivisionsX ("Flipbook Divisions X", Float) = 4
+        _FlipbookDivisionsY ("Flipbook Divisions Y", Float) = 4
+        _FlipbookSpeed ("Flipbook Speed", Float) = 10
+
         // --- Rendering ---
         [Enum(UnityEngine.Rendering.CullMode)] _Cull ("Cull Mode", Float) = 2
         [Enum(Off,0,On,1)] _ZWrite ("ZWrite", Float) = 1
@@ -94,6 +101,7 @@ Shader "lilToon/PCSS Extension"
             #pragma shader_feature_local _ _USESHADOWCLAMP_ON
             #pragma shader_feature_local _ _USE_OPTIMIZED_PCSS_ON
             #pragma shader_feature_local _ _USESHADOWMASK_ON
+            #pragma shader_feature_local _ _USEFLIPBOOK_ON
             #pragma multi_compile _ VRC_LIGHT_VOLUMES_ENABLED
             #pragma multi_compile _ VRC_LIGHT_VOLUMES_MOBILE
 
@@ -148,6 +156,12 @@ Shader "lilToon/PCSS Extension"
             float _PCSSQualityLevel; // _PCSSQualityから_PCSSQualityLevelに変更
             sampler2D _ShadowMaskTex;
             float _ShadowMaskStrength;
+
+            // Flipbook
+            sampler2D _FlipbookTex;
+            float _FlipbookDivisionsX;
+            float _FlipbookDivisionsY;
+            float _FlipbookSpeed;
 
             // VRCライトボリューム用関数
             #if defined(VRC_LIGHT_VOLUMES_ENABLED)
@@ -254,9 +268,18 @@ Shader "lilToon/PCSS Extension"
                 
                 #if defined(_USESHADOWMASK_ON)
                     fixed4 mask = tex2D(_ShadowMaskTex, i.uv);
-                    shadow = lerp(shadow, 1.0, mask.r * _ShadowMaskStrength);
+                    shadow = lerp(shadow, 1.0, mask.g * _ShadowMaskStrength);
                 #endif
                 
+                #if defined(_USEFLIPBOOK_ON)
+                    float flipbookTotalFrames = _FlipbookDivisionsX * _FlipbookDivisionsY;
+                    float currentFrame = floor(fmod(_Time.y * _FlipbookSpeed, flipbookTotalFrames));
+                    float frameX = fmod(currentFrame, _FlipbookDivisionsX);
+                    float frameY = floor(currentFrame / _FlipbookDivisionsX);
+                    float2 flipbookUV = i.uv / float2(_FlipbookDivisionsX, _FlipbookDivisionsY) + float2(frameX / _FlipbookDivisionsX, -frameY / _FlipbookDivisionsY);
+                    col *= tex2D(_FlipbookTex, flipbookUV);
+                #endif
+
                 #if defined(_USESHADOWCLAMP_ON)
                     shadow = step(_ShadowClamp, shadow);
                 #endif

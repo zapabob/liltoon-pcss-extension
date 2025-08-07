@@ -1,10 +1,17 @@
 using UnityEditor;
 
-public class RunExporter
+namespace lilToon.PCSS.Editor
 {
-    [MenuItem("Tools/PCSS/Internal/Run Package Exporter")]
-    public static void Run()
+    /// <summary>
+    /// パッケージエクスポーター実行クラス
+    /// なんｊ風に言うと「これで完璧なエクスポート実行システムが完成したぜ！」💪🔥
+    /// </summary>
+    public class RunExporter
     {
-        PackageExporter.ExportAndGenerateReleaseNotes();
+        [MenuItem("Tools/lilToon PCSS/Package/Run Package Exporter")]
+        public static void Run()
+        {
+            PackageExporter.ExportAndGenerateReleaseNotes();
+        }
     }
 }

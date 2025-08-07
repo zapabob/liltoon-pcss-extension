@@ -30,7 +30,7 @@ namespace lilToon.PCSS.Editor
         private const string GameObjectName = "PCSS Performance Tuner";
 
         [MenuItem(MenuPath)]
-        private static void SetupPerformanceTuner()
+        public static void SetupPerformanceTuner()
         {
             // シーン内の既にオプティマイザーが存在するか確認
             VRChatPerformanceOptimizer existingOptimizer = Object.FindObjectOfType<VRChatPerformanceOptimizer>();

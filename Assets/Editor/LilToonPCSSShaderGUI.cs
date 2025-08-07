@@ -1,165 +1,34 @@
 using UnityEditor;
 using UnityEngine;
-using System.Linq;
-using System.Collections.Generic;
-using System.Collections;
-using lilToon;
+
 namespace lilToon.PCSS.Editor
 {
-    public class LilToonPCSSMaterialUpgrader
+    public class LilToonPCSSShaderGUI : ShaderGUI
     {
-        private const string LILTOON_SHADER_NAME = "lilToon";
-        private const string PCSS_EXTENSION_SHADER_NAME = "lilToon/PCSS Extension";
-
-        // プロパティのマッピング定義�E�EilToon ↁEPCSS Extension�E�E
-        private static readonly Dictionary<string, string> PropertyMapping = new Dictionary<string, string>()
+        public override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
         {
-            // 基本プロパティ
-            { "_MainTex", "_MainTex" },
-            { "_Color", "_Color" },
-            { "_Cutoff", "_Cutoff" },
-            // シャドウ関連
-            { "_UseShadow", "_UseShadow" },
-            { "_ShadowColorTex", "_ShadowColorTex" },
-            { "_ShadowBorder", "_ShadowBorder" },
-            { "_ShadowBlur", "_ShadowBlur" },
-            // レンダリング設宁E
-            { "_Cull", "_Cull" },
-            { "_ZWrite", "_ZWrite" },
-            { "_ZTest", "_ZTest" },
-            { "_SrcBlend", "_SrcBlend" },
-            { "_DstBlend", "_DstBlend" },
-            // スチE��シル設宁E
-            { "_StencilRef", "_StencilRef" },
-            { "_StencilReadMask", "_StencilReadMask" },
-            { "_StencilWriteMask", "_StencilWriteMask" },
-            { "_StencilComp", "_StencilComp" },
-            { "_StencilPass", "_StencilPass" },
-            { "_StencilFail", "_StencilFail" },
-            { "_StencilZFail", "_StencilZFail" },
-        };
+            base.OnGUI(materialEditor, properties);
 
-        // チE��スチャプロパティのリスチE
-        private static readonly HashSet<string> TextureProperties = new HashSet<string>()
-        {
-            "_MainTex",
-            "_ShadowColorTex"
-        };
+            Material targetMat = materialEditor.target as Material;
 
-        [MenuItem("Tools/lilToon PCSS Extension/Utilities/lilToon/Upgrade Selected Materials to PCSS Extension", true)]
-        private static bool ValidateUpgradeMaterials()
-        {
-            return Selection.GetFiltered<Material>(SelectionMode.Assets).Any(m => m.shader != null && m.shader.name.Contains(LILTOON_SHADER_NAME) && m.shader.name != PCSS_EXTENSION_SHADER_NAME);
-        }
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Flipbook Settings", EditorStyles.boldLabel);
 
-        [MenuItem("Tools/lilToon PCSS Extension/Utilities/lilToon/Upgrade Selected Materials to PCSS Extension")]
-        private static void UpgradeMaterials()
-        {
-            Shader pcssShader = Shader.Find(PCSS_EXTENSION_SHADER_NAME);
-            if (pcssShader == null)
+            MaterialProperty useFlipbook = FindProperty("_UseFlipbook", properties);
+            materialEditor.ShaderProperty(useFlipbook, "Use Flipbook");
+
+            if (useFlipbook.floatValue != 0)
             {
-                EditorUtility.DisplayDialog("エラー", $"シェーダー '{PCSS_EXTENSION_SHADER_NAME}' が見つかりません。PCSS Extensionが正しくインスト�EルされてぁE��か確認してください、E, "OK");
-                return;
+                targetMat.EnableKeyword("_USEFLIPBOOK_ON");
+                materialEditor.TextureProperty(FindProperty("_FlipbookTex", properties), "Flipbook Texture");
+                materialEditor.ShaderProperty(FindProperty("_FlipbookDivisionsX", properties), "Divisions X");
+                materialEditor.ShaderProperty(FindProperty("_FlipbookDivisionsY", properties), "Divisions Y");
+                materialEditor.ShaderProperty(FindProperty("_FlipbookSpeed", properties), "Speed");
             }
-
-            var materialsToUpgrade = Selection.GetFiltered<Material>(SelectionMode.Assets)
-                                              .Where(m => m.shader != null && m.shader.name.Contains(LILTOON_SHADER_NAME) && m.shader.name != PCSS_EXTENSION_SHADER_NAME)
-                                              .ToList();
-
-            if (materialsToUpgrade.Count == 0)
+            else
             {
-                EditorUtility.DisplayDialog("アチE�Eグレード対象なぁE, "選択されたマテリアルの中にlilToonシェーダーを使用してぁE��も�Eがありません、E, "OK");
-                return;
+                targetMat.DisableKeyword("_USEFLIPBOOK_ON");
             }
-            
-            Undo.RecordObjects(materialsToUpgrade.ToArray(), "Upgrade to PCSS Material");
-
-            int upgradedCount = 0;
-            foreach (var material in materialsToUpgrade)
-            {
-                Debug.Log($"マテリアル '{material.name}' めE'{material.shader.name}' から '{PCSS_EXTENSION_SHADER_NAME}' にアチE�Eグレードします、E);
-                
-                // 允E�Eプロパティ値を保孁E
-                Dictionary<string, object> savedProperties = new Dictionary<string, object>();
-                foreach (var mapping in PropertyMapping)
-                {
-                    string originalProperty = mapping.Key;
-                    if (material.HasProperty(originalProperty))
-                    {
-                        if (TextureProperties.Contains(originalProperty))
-                        {
-                            savedProperties[originalProperty] = material.GetTexture(originalProperty);
-                        }
-                        else if (originalProperty == "_Color")
-                        {
-                            savedProperties[originalProperty] = material.GetColor(originalProperty);
-                        }
-                        else
-                        {
-                            savedProperties[originalProperty] = material.GetFloat(originalProperty);
-                        }
-                    }
-                }
-                
-                // シェーダー変更
-                material.shader = pcssShader;
-                
-                // デフォルト値の設定
-                material.SetFloat("_UsePCSS", 1.0f);
-                material.SetFloat("_PCSSPresetMode", 1.0f); // AnimeプリセチE��
-                material.SetFloat("_LocalPCSSFilterRadius", 0.01f);
-                material.SetFloat("_LocalPCSSLightSize", 0.1f);
-                material.SetFloat("_PCSSBias", 0.001f);
-                material.SetFloat("_PCSSIntensity", 1.0f);
-                material.SetFloat("_PCSSQuality", 1.0f); // Medium
-                material.SetFloat("_LocalPCSSSamples", 16.0f);
-                material.SetFloat("_UseShadowClamp", 0.0f);
-                material.SetFloat("_ShadowClamp", 0.5f);
-                material.SetFloat("_Translucency", 0.5f);
-                material.SetFloat("_UseVRCLightVolumes", 0.0f);
-                material.SetFloat("_VRCLightVolumeIntensity", 1.0f);
-                material.SetColor("_VRCLightVolumeTint", Color.white);
-                material.SetFloat("_VRCLightVolumeDistanceFactor", 0.1f);
-                material.SetFloat("_VRCLV_RimBorder", 0.85f);
-                material.SetFloat("_VRCLV_RimBlur", 0.35f);
-                
-                // 保存した�Eロパティ値を復允E
-                foreach (var mapping in PropertyMapping)
-                {
-                    string originalProperty = mapping.Key;
-                    string targetProperty = mapping.Value;
-                    
-                    if (savedProperties.ContainsKey(originalProperty) && material.HasProperty(targetProperty))
-                    {
-                        if (TextureProperties.Contains(originalProperty))
-                        {
-                            material.SetTexture(targetProperty, (Texture)savedProperties[originalProperty]);
-                        }
-                        else if (originalProperty == "_Color")
-                        {
-                            material.SetColor(targetProperty, (Color)savedProperties[originalProperty]);
-                        }
-                        else
-                        {
-                            material.SetFloat(targetProperty, (float)savedProperties[originalProperty]);
-                        }
-                    }
-                }
-                
-                // シェーダーキーワード�E設宁E
-                material.EnableKeyword("_USEPCSS_ON");
-                if (material.HasProperty("_UseShadow") && material.GetFloat("_UseShadow") > 0.5f)
-                    material.EnableKeyword("_USESHADOW_ON");
-                else
-                    material.DisableKeyword("_USESHADOW_ON");
-                
-                upgradedCount++;
-                EditorUtility.SetDirty(material);
-            }
-            
-            AssetDatabase.SaveAssets();
-            
-            EditorUtility.DisplayDialog("アチE�Eグレード完亁E, $"{upgradedCount}個�EマテリアルがlilToon PCSS ExtensionシェーダーにアチE�Eグレードされました、E, "OK");
         }
     }
-} 
+}

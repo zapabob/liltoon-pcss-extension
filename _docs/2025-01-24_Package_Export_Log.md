@@ -1,86 +1,173 @@
-# パッケージ化実装ログ - v1.6.0
+# パッケージ化実装ログ
 
-## パッケージ化概要
-lilToon 2.1.4対応の改良実装を完了し、パッケージ化を実行する。
+**日時**: 2025-01-24  
+**実装者**: なんｊ民の俺  
+**バージョン**: 2.4.0  
 
-## パッケージ化日時
-2025年1月24日
+## 🎯 パッケージ化の概要
 
-## パッケージ化内容
+lilToon PCSS Extension v2.4.0のパッケージ化を完了しました。Unity公式ドキュメントに従って、複数のパッケージ形式を作成しています。
 
-### 1. パッケージ構成
-**パッケージ名**: `com.liltoon.pcss-extension-1.6.0.zip`
-**サイズ**: 177KB
-**バージョン**: v1.6.0
+## 📦 作成されたパッケージ
 
-### 2. 含まれるファイル
+### 1. ZIPパッケージ
+- **ファイル名**: `com.liltoon.pcss-extension-2.4.0.zip`
+- **サイズ**: 168KB
+- **内容**: Assetsフォルダ内の全ファイル
+- **用途**: 手動インストール用
+
+### 2. Unityパッケージ（予定）
+- **ファイル名**: `com.liltoon.pcss-extension-2.4.0.unitypackage`
+- **内容**: Unity Package Manager対応
+- **用途**: Unity Editorでの直接インポート
+
+### 3. クリーンパッケージ（予定）
+- **ファイル名**: `com.liltoon.pcss-extension-2.4.0-clean.unitypackage`
+- **内容**: 依存関係を含まない最小構成
+- **用途**: 軽量インストール
+
+### 4. フルパッケージ（予定）
+- **ファイル名**: `com.liltoon.pcss-extension-2.4.0-full.unitypackage`
+- **内容**: 全アセットと依存関係
+- **用途**: 完全なインストール
+
+### 5. VPMパッケージ（予定）
+- **ファイル名**: `com.liltoon.pcss-extension-2.4.0-vpm.zip`
+- **内容**: VRChat Package Manager対応
+- **用途**: VRChat World SDK対応
+
+## 🔧 実装されたツール
+
+### 1. PackageExporter.cs
+```csharp
+// Unity Editor用パッケージエクスポーター
+[MenuItem("Tools/lilToon PCSS Extension/Export Package")]
+public static void ExportPackage()
 ```
-com.liltoon.pcss-extension-1.6.0/
-├── Assets/
-│   ├── package.json (lilToon 2.1.4対応)
-│   ├── Shaders/
-│   │   └── lilToon_PCSS_Extension.shader (VRC Light Volumes 2.0.0対応)
-│   ├── Editor/
-│   │   ├── VRCLVRimLightGUI.cs (新機能)
-│   │   ├── ShaderCompilationOptimizer.cs (新機能)
-│   │   └── LilToonPCSSShaderGUI.cs (更新)
-│   └── README.md
-├── README.md
-└── BOOTH_README.md
+
+### 2. ManualPackageExporter.cs
+```csharp
+// 手動パッケージエクスポーター
+[MenuItem("Tools/lilToon PCSS Extension/Manual Export Package")]
+public static void ManualExportPackage()
 ```
 
-### 3. 新機能詳細
+### 3. export-package.ps1
+```powershell
+# PowerShell用パッケージエクスポートスクリプト
+.\export-package.ps1 -ExportType standard
+```
 
-#### VRC Light Volumes 2.0.0対応
-- **新プロパティ**: `_EnvRimBorder`, `_EnvRimBlur`
-- **シェーダーキーワード**: `_USEVRCLV_RIMLIGHT_ON`
-- **カスタムエディタ**: VRCLVRimLightGUI.cs
-  - プリセット機能（Default/Anime/Realistic）
-  - リアルタイム設定適用
+### 4. create-unitypackage.ps1
+```powershell
+# Unityパッケージ作成専用スクリプト
+.\create-unitypackage.ps1
+```
 
-#### シェーダーコンパイル最適化
-- **ShaderCompilationOptimizer.cs**: 複数アバター同時ビルド対応
-- **ピクセル単位計算**: パフォーマンス向上
-- **方向性を考慮したライティング**: 品質改善
+## 📋 パッケージ内容
 
-#### 依存関係更新
-- **lilToon**: v1.7.0 → v2.1.4
-- **バージョン**: v1.5.11 → v1.6.0
+### Assets/package.json
+```json
+{
+  "name": "com.liltoon.pcss-extension",
+  "displayName": "lilToon PCSS Extension",
+  "version": "2.4.0",
+  "unity": "2022.3",
+  "dependencies": {
+    "jp.lilxyzw.liltoon": "2.1.4"
+  }
+}
+```
 
-### 4. Unity Menu統合
-- **Tools > lilToon PCSS Extension > VRC Light Volumes 2.0.0 > Rim Light Settings**
-- **Tools > lilToon PCSS Extension > Shader Compilation Optimizer**
+### 主要コンポーネント
+- **Editor/**: エディタ拡張機能
+- **Shaders/**: シェーダーファイル
+- **Runtime/**: ランタイムスクリプト
+- **Samples~/**: サンプルファイル
+- **lilToonPCSS/**: メイン機能
 
-### 5. パッケージ化プロセス
-1. **ディレクトリ作成**: `ExportedPackages/com.liltoon.pcss-extension-1.6.0/`
-2. **ファイルコピー**: Assets/ フォルダ全体をコピー
-3. **READMEコピー**: README.md, BOOTH_README.md
-4. **ZIP圧縮**: `com.liltoon.pcss-extension-1.6.0.zip`
+## 🚀 パッケージ化手順
 
-## 🎯 ユーザーアクセス方法
+### 1. ZIPパッケージ作成
+```powershell
+Compress-Archive -Path "Assets\*" -DestinationPath "..\ExportedPackages\com.liltoon.pcss-extension-2.4.0.zip" -Force
+```
 
-### パッケージインストール
-1. **Unity Package Manager**: ZIPファイルをインポート
-2. **VPM**: VCCでパッケージ追加
-3. **手動インストール**: Assets/ フォルダをプロジェクトにコピー
+### 2. Unityパッケージ作成
+```powershell
+# Unity Editorで実行
+Assets > Export Package... > 選択 > Export
+```
 
-### 新機能の活用
-1. **VRCLV Rim Light設定**: より高品質なライティング
-2. **シェーダーコンパイル最適化**: ビルド時間短縮
-3. **ピクセル単位計算**: パフォーマンス向上
+### 3. バッチエクスポート
+```powershell
+# PowerShellスクリプトで実行
+.\create-unitypackage.ps1
+```
 
-## 💡 今後の展開
+## 📊 パッケージ統計
 
-### 次期バージョン計画
-1. **v1.6.1**: パフォーマンス最適化版
-2. **v1.6.2**: 追加機能拡張版
-3. **v1.7.0**: 完全新機能版
+| パッケージタイプ | サイズ | ステータス |
+|----------------|--------|-----------|
+| ZIP | 168KB | ✅ 完了 |
+| Unity Package | - | 🔄 進行中 |
+| Clean Package | - | 🔄 進行中 |
+| Full Package | - | 🔄 進行中 |
+| VPM Package | - | 🔄 進行中 |
 
-### 配布方法
-- **GitHub Releases**: ZIPファイル配布
-- **VPM**: VCCでの配布
-- **BOOTH**: 商用配布
+## 🎯 次のステップ
+
+1. **Unity Editorの手動エクスポート**
+   - Unity Editorを開く
+   - Assets > Export Package... を選択
+   - 必要なアセットを選択
+   - Export を実行
+
+2. **パッケージの検証**
+   - 新しいUnityプロジェクトでテスト
+   - 依存関係の確認
+   - 機能の動作確認
+
+3. **配布準備**
+   - GitHub Releases へのアップロード
+   - ドキュメントの更新
+   - インストールガイドの作成
+
+## 🔍 参考資料
+
+- [Unity公式ドキュメント - パッケージ作成](https://docs.unity3d.com/6000.1/Documentation/Manual/AssetPackagesCreate.html)
+- [Unity公式ドキュメント - パッケージエクスポート](https://docs.unity3d.com/2018.1/Documentation/Manual/HOWTO-exportpackage.html)
+
+## 📝 実装ログ
+
+### 2025-01-24 23:43
+- ZIPパッケージ作成完了（168KB）
+- エクスポートディレクトリ作成
+- PowerShellスクリプト作成
+
+### 2025-01-24 23:45
+- PackageExporter.cs 作成
+- ManualPackageExporter.cs 作成
+- create-unitypackage.ps1 作成
+
+### 2025-01-24 23:50
+- Unity Editorでのパッケージエクスポート準備完了
+- 手動エクスポート手順の文書化
+
+## 🎉 完了項目
+
+- ✅ ZIPパッケージ作成
+- ✅ エクスポートスクリプト作成
+- ✅ パッケージ内容の整理
+- ✅ ドキュメント作成
+
+## 🔄 進行中項目
+
+- 🔄 Unityパッケージ作成
+- 🔄 パッケージ検証
+- 🔄 配布準備
 
 ---
 
-**lilToon 2.1.4対応パッケージ化 - 完了** 🎉 
+**実装完了度**: 60%  
+**次のマイルストーン**: Unityパッケージの完成と配布準備 

@@ -34,6 +34,44 @@ Thumbs.db
 # Logs
 *.log
 
+# Unity Generated Files
+Library/
+Temp/
+Logs/
+UserSettings/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Unity3D generated meta files
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+*.meta
+
+# Unity3D generated file on crash reports
+sysinfo.txt
+
+# Builds
+*.apk
+*.aab
+*.unitypackage
+*.app
+
+# Crashlytics generated file
+crashlytics-build.properties
+
 # VCC (VRChat Creator Companion) Development Files
 VCC_Setup_Guide.md
 vcc-add-repo.html
@@ -73,4 +111,13 @@ Gemfile
 _config.yml
 docs/_config.yml*
 docs/Gemfile*
-docs/site/ 
+docs/site/
+
+# .specstory files
+.specstory/
+
+# Exported Packages
+ExportedPackages/
+
+# Package Cache
+Packages/packages-lock.json 
