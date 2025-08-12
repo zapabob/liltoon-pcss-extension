@@ -68,6 +68,24 @@ https://github.com/zapabob/liltoon-pcss-extension.git
 2. Quick Add からプリセットを適用 / Apply a preset from Quick Add
 3. 必要に応じて Modular Avatar 連携や Light Volumes ユーティリティを実行 / Optionally run MA integration or Light Volumes utilities
 
+## エディタメニュー / Editor Menus
+
+- Tools/lilToon-PCSS-Extension/Quick Add
+  - PCSS Light: PCSSライトを即時追加 / Quickly adds a PCSS light
+  - VRC Light Volumes Integration: 選択中の対象に`VRCLightVolumesIntegration`を付与 / Adds `VRCLightVolumesIntegration` to selection
+  - All-in-One: 上記の一括適用 / Applies the above in one go
+  - Presets/
+    - Realistic
+    - Anime
+    - Cinematic
+- Tools/lilToon-PCSS-Extension/Open Setup Wizard: セットアップウィザードを表示 / Opens setup wizard
+- Tools/lilToon-PCSS-Extension/統合メニューシステム: ダッシュボードを開く / Opens the unified dashboard
+- Tools/lilToon-PCSS-Extension/Missing Material AutoFixer: マテリアル修復ツール / Material repair tool
+
+キーボードショートカット / Keyboard shortcut:
+
+- 統合メニューシステム (Shortcut): Ctrl+Shift+M (`%#m`)
+
 ## ドキュメント / Documentation
 
 - Site: `https://zapabob.github.io/liltoon-pcss-extension/`

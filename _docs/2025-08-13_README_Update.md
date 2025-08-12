@@ -16,6 +16,7 @@
 - Power Protection（自動チェックポイント5分・緊急保存・バックアップ10個・復旧）を記載
 - VCC レポジトリ URL とワンクリック導入を記載
 - ドキュメント参照（`docs/`）を整理
+- 「エディタメニュー / Editor Menus」節を追加（Quick Add、Setup Wizard、統合メニュー、AutoFixer、ショートカット）
 
 ## 整合性 / Consistency
 
