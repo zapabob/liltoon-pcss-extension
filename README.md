@@ -1,287 +1,104 @@
-# lilToon PCSS Extension - Advanced Realistic Shadow System
+# lilToon PCSS Extension — Advanced Realistic Shadow System
 
-[![Version](https://img.shields.io/badge/version-2.1.0-blue.svg)](https://semver.org/)
-[![Unity](https://img.shields.io/badge/Unity-2022.3+-green.svg)](https://unity.com/)
+[![Version](https://img.shields.io/badge/version-2.6.0-blue.svg)](https://semver.org/)
+[![Unity](https://img.shields.io/badge/Unity-2022.3%2B-green.svg)](https://unity.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![lilToon](https://img.shields.io/badge/lilToon-Compatible-brightgreen.svg)](https://github.com/lilxyzw/lilToon)
+[![lilToon](https://img.shields.io/badge/lilToon-2.1.4%2B-brightgreen.svg)](https://github.com/lilxyzw/lilToon)
+[![Poiyomi](https://img.shields.io/badge/Poiyomi-Compatible-pink.svg)](https://poiyomi.com/)
 [![ModularAvatar](https://img.shields.io/badge/ModularAvatar-AAO%20Compatible-orange.svg)](https://github.com/bdunderscore/modular-avatar)
 [![VRChat](https://img.shields.io/badge/VRChat-SDK%20Compatible-purple.svg)](https://vrchat.com/)
 [![VCC](https://img.shields.io/badge/VCC-Compatible-cyan.svg)](https://vcc.docs.vrchat.com/)
-[![Semantic Versioning](https://img.shields.io/badge/Semantic%20Versioning-2.0.0-lightgrey.svg)](https://semver.org/)
+[![Semantic Versioning](https://img.shields.io/badge/SemVer-2.0.0-lightgrey.svg)](https://semver.org/)
 
-Advanced Realistic Shadow System for lilToon with Modular Avatar AAO integration. Features real-time PCSS, volumetric shadows, subsurface scattering, and performance optimization. **Now with enhanced VCC compatibility and semantic versioning support.**
+## 概要 / Overview
 
-## 🎯 Features
+- 日本語: lilToon/Poiyomi 向けのプロフェッショナルな PCSS（Percentage‑Closer Soft Shadows）拡張。Modular Avatar 連携のワンクリック導入、Quick Add プリセット（Realistic/Anime/Cinematic）、Missing Material AutoFixer、FBX/Prefab 自動リマップ、VRC Light Volumes 2.0.0 連携、電源断保護（Power Protection）などを搭載。Unity 2022.3 LTS・URP 12.1.12 対応。
+- English: A professional PCSS extension for lilToon/Poiyomi with one‑click Modular Avatar integration, Quick Add presets (Realistic/Anime/Cinematic), Missing Material AutoFixer, FBX/Prefab auto‑remap, VRC Light Volumes 2.0.0 integration, and a Power Protection system. Supports Unity 2022.3 LTS and URP 12.1.12.
 
-### ✨ Advanced Realistic Shadow System
-- **Real-time PCSS**: Percentage-Closer Soft Shadows with dynamic quality adjustment
-- **Volumetric Shadows**: Advanced volumetric shadow effects with density and step controls
-- **Subsurface Scattering**: Realistic subsurface scattering with strength and color controls
-- **Real-time Reflection**: Dynamic reflection system with strength and roughness controls
-- **Distance-based Quality**: Automatic quality adjustment based on distance
-- **Performance Optimization**: LOD, frame rate, memory, and GPU optimization
+## 主な機能 / Key Features
 
-### 🔧 Modular Avatar AAO Integration
-- **Reflection-based Integration**: Safe dependency management without direct dependencies
-- **Real-time Parameter Control**: Dynamic parameter changes through ModularAvatar
-- **Automatic Menu Generation**: Automatic ModularAvatar menu setup
-- **Blend Shape Control**: Dynamic blend shape control for avatar customization
+- PCSS ソフトシャドウ / PCSS soft shadows (dynamic quality, penumbra control)
+- Quick Add メニューとプリセット（Realistic/Anime/Cinematic） / Quick Add menu and built‑in presets
+- Modular Avatar 連携（AAO・反射ベース・安全な依存管理） / Modular Avatar AAO integration (reflection‑based)
+- Missing Material AutoFixer と GUID ベースのバックアップ / Missing material auto‑fix with GUID‑based backups
+- FBX/Prefab インポート時の自動マテリアルリマップ / Auto material remap on FBX/Prefab import
+- VRC Light Volumes 2.0.0 連携ユーティリティ / VRC Light Volumes 2.0.0 utilities
+- Power Protection（自動チェックポイント5分/緊急保存/バックアップ10個/復旧） / Power Protection (auto checkpoint every 5 min, emergency save, rotation backups, recovery)
+- Editor Coroutines 正式対応（`com.unity.editor-coroutines`） / Official Editor Coroutines support
 
-### 🎨 Advanced Lighting System
-- **Dynamic Light Control**: Real-time light intensity adjustment
-- **Environmental Light Control**: Dynamic environmental light adjustment
-- **Volumetric Lighting**: Advanced volumetric lighting effects
-- **Real-time Reflection**: Dynamic reflection control
+## 動作環境 / Requirements
 
-### 📦 Dynamic Material System
-- **Quality-based Control**: Dynamic adjustment based on quality level
-- **Time-based Control**: Dynamic changes based on time progression
-- **Distance-based Control**: Dynamic adjustment based on distance
-- **Performance Optimization**: Automatic performance adjustment
+- Unity 2022.3 LTS 以上 / Unity 2022.3 LTS or later
+- URP 12.1.12 以上 / URP 12.1.12 or later
+- lilToon 2.1.4 以上（推奨）/ lilToon 2.1.4+ (recommended)
+- VRChat SDK 3.5.0 以上 / VRChat SDK 3.5.0+
+- Modular Avatar 1.12.5 以上 / Modular Avatar 1.12.5+
+- `com.unity.editor-coroutines` 1.0.0
 
-### ⚡ Performance Optimization System
-- **Dynamic LOD**: Distance-based LOD control
-- **Frame Rate Optimization**: Dynamic frame rate adjustment
-- **Memory Optimization**: Automatic memory usage optimization
-- **GPU Optimization**: Dynamic GPU usage optimization
+## インストール / Installation
 
-### 🎛️ Advanced Custom Editor GUI
-- **18 Categorized Settings**: Organized settings in 18 categories
-- **Auto-upgrade Functionality**: Automatic conversion of existing lilToon materials
-- **Quick Actions**: Quality presets and bulk feature control
-- **Modular Avatar Integration**: Dedicated setup functionality
+### VCC（推奨）/ VCC (Recommended)
 
-### 🛡️ Power Protection System
-- **Automatic Checkpoint Saving**: 5-minute interval automatic saves
-- **Emergency Save Functionality**: Ctrl+C and abnormal termination protection
-- **Backup Rotation System**: Maximum 10 automatic backups
-- **Session Management**: Unique ID for complete session tracking
-- **Signal Handler Support**: SIGINT, SIGTERM, SIGBREAK handling
-- **Recovery System**: Automatic restoration from previous session
-- **Data Integrity**: JSON+Pickle composite saving
+- Repository URL: `https://zapabob.github.io/liltoon-pcss-extension/index.json`
+- One‑click: `vcc://vpm/addRepo?url=https%3A%2F%2Fzapabob.github.io%2Fliltoon-pcss-extension%2Findex.json`
 
-### 🔄 VCC & Semantic Versioning
-- **VCC Compatibility**: Full VRChat Creator Companion support
-- **Semantic Versioning**: [Semantic Versioning 2.0.0](https://semver.org/) compliance
-- **Version Management**: Automated version bumping and tracking
-- **Package Repository**: Enhanced VPM repository structure
-- **Dependency Management**: Improved dependency resolution
+1) VCC を開く → 2) Settings > Packages に上記 URL を追加 → 3) プロジェクトで「lilToon PCSS Extension」を追加
 
-## 📋 Requirements
+### Unity Package Manager（Git URL）
 
-### Unity
-- **Unity 2019.4** or later
-- **Universal Render Pipeline (URP)** 7.0.0 or later
-- **Core Render Pipeline** 7.0.0 or later
+Add package from git URL:
 
-### Dependencies
-- **lilToon**: Compatible with lilToon shaders
-- **Modular Avatar AAO**: Optional integration (reflection-based, no direct dependency)
-
-### VCC Requirements
-- **VRChat Creator Companion**: For VCC package management
-- **VRChat SDK**: 3.5.0 or later
-- **Modular Avatar**: 1.12.5 or later
-
-## 🚀 Installation
-
-### Via VCC (Recommended)
-1. Open VRChat Creator Companion
-2. Go to "Worlds" or "Avatars" project
-3. Click "Add Package"
-4. Search for "lilToon PCSS Extension"
-5. Click "Install"
-
-### Via Unity Package Manager
-1. Open Unity Package Manager
-2. Click the "+" button
-3. Select "Add package from git URL"
-4. Enter: `https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension.git`
-
-### Via Git Submodule
-```bash
-git submodule add https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension.git
+```text
+https://github.com/zapabob/liltoon-pcss-extension.git
 ```
 
-### Manual Installation
-1. Download the latest release
-2. Extract to your Unity project's `Packages` folder
-3. Restart Unity
+### 直接ダウンロード / Direct download
 
-## 🎮 Usage
+- Releases: `https://github.com/zapabob/liltoon-pcss-extension/releases`
+- Latest ZIP (2.6.0): `https://github.com/zapabob/liltoon-pcss-extension/releases/download/v2.6.0/com.liltoon.pcss-extension-2.6.0.zip`
 
-### Basic Setup
-1. Select your avatar's root GameObject
-2. Go to `Tools/lilToon PCSS Extension/Advanced Integration/Setup Advanced Integration`
-3. All systems will be automatically set up
+## 使い方 / Usage
 
-### Individual Setup
-- **Create lilToon Modular Avatar**: Modular Avatar integration only
-- **Setup Advanced Lighting System**: Advanced lighting only
-- **Create Dynamic Material System**: Dynamic materials only
-- **Setup Advanced Shader System**: Advanced shaders only
-- **Create Performance Optimizer**: Performance optimization only
+- 日本語: Unity メニューの `Window/` または `Tools/` 配下にある `lilToon PCSS Extension` から、Quick Add プリセット適用、Modular Avatar 連携セットアップ、AutoFixer などを実行できます。
+- English: From the `lilToon PCSS Extension` menu under `Window/` or `Tools/`, run Quick Add presets, set up Modular Avatar integration, and use the Missing Material AutoFixer.
 
-### Shader Usage
-1. Select a material
-2. Change shader to "lilToon/Advanced Modular Avatar Integration"
-3. Configure detailed settings in the custom editor GUI
-4. Apply presets using quick actions
+典型的なフロー / Typical flow:
 
-### Version Management
-```bash
-# マイナーバージョンをインクリメント（新機能追加）
-python scripts/version_manager.py bump-minor
+1. アバターを選択 → `lilToon PCSS Extension` メニューを開く / Select avatar → open the extension menu
+2. Quick Add からプリセットを適用 / Apply a preset from Quick Add
+3. 必要に応じて Modular Avatar 連携や Light Volumes ユーティリティを実行 / Optionally run MA integration or Light Volumes utilities
 
-# パッチバージョンをインクリメント（バグ修正）
-python scripts/version_manager.py bump-patch
+## ドキュメント / Documentation
 
-# メジャーバージョンをインクリメント（破壊的変更）
-python scripts/version_manager.py bump-major
+- Site: `https://zapabob.github.io/liltoon-pcss-extension/`
+- Getting Started: `docs/tutorials/getting-started.md`
+- PCSS Settings Reference: `docs/reference/pcss-settings.md`
 
-# 特定のバージョンを設定
-python scripts/version_manager.py set-version --version 2.1.0
-```
+## トラブルシューティング / Troubleshooting
 
-## 📊 Performance Comparison
+- lilToon の導入と URP 設定を確認 / Ensure lilToon is installed and URP is configured
+- Modular Avatar は任意（反射ベースで安全）/ MA is optional (reflection‑based integration)
+- パフォーマンス低下時はプリセット/サンプル数/距離を調整 / Tune preset, samples, and distances for performance
 
-| Feature | This Implementation | Competitor A | Competitor B |
-|---------|-------------------|--------------|--------------|
-| lilToon Integration | ✅ Complete | ⚠️ Partial | ❌ None |
-| Modular Avatar Integration | ✅ Complete | ⚠️ Partial | ❌ None |
-| Advanced Lighting | ✅ Implemented | ⚠️ Basic | ❌ None |
-| Dynamic Materials | ✅ Implemented | ❌ None | ❌ None |
-| Advanced Shaders | ✅ Implemented | ❌ None | ❌ None |
-| Performance Optimization | ✅ Implemented | ⚠️ Basic | ❌ None |
-| Custom Editor GUI | ✅ Implemented | ⚠️ Basic | ❌ None |
+Issues: `https://github.com/zapabob/liltoon-pcss-extension/issues`
 
-| Metric | This Implementation | Competitor A | Competitor B |
-|--------|-------------------|--------------|--------------|
-| Memory Usage | Low | Medium | High |
-| GPU Usage | Optimized | Basic | Unoptimized |
-| Frame Rate | Stable | Unstable | Unstable |
-| Load Time | Fast | Medium | Slow |
+## 変更履歴 / Changelog
 
-## 🔧 Configuration
+- `CHANGELOG.md` を参照（最新: 2.6.0 に合わせた機能と互換性の更新）/ See `CHANGELOG.md` (aligned with 2.6.0 features and compatibility)
 
-### Quality Presets
-- **Ultra Realistic**: Maximum quality with all features enabled
-- **Photorealistic**: High quality with balanced features
-- **Cinematic**: Medium quality optimized for cinematic effects
-- **Anime Enhanced**: Optimized for anime-style rendering
-- **Performance**: Maximum performance with minimal quality loss
+## ライセンス / License
 
-### Advanced Settings
-The custom editor GUI provides 18 categories of settings:
-1. Basic Settings
-2. Modular Avatar Integration
-3. Advanced Lighting System
-4. Dynamic Material System
-5. Advanced Shader System
-6. Performance Optimization
-7. Shadow Settings
-8. PCSS Settings
-9. Volumetric Settings
-10. Reflection Settings
-11. Subsurface Scattering
-12. Quality Settings
-13. VRC Light Volumes
-14. Anime Settings
-15. Cinematic Settings
-16. Rendering Settings
-17. Stencil Settings
+MIT License — see `LICENSE`.
 
-## 🐛 Troubleshooting
+## クレジット / Credits
 
-### Common Issues
-
-#### Shader Not Found
-- Ensure lilToon is properly installed
-- Check Unity version compatibility
-- Verify URP is installed and configured
-
-#### Modular Avatar Integration Issues
-- Modular Avatar AAO is optional (reflection-based integration)
-- Check for any ModularAvatar version conflicts
-- Ensure proper avatar setup
-
-#### Performance Issues
-- Use performance presets for better frame rates
-- Enable performance optimization features
-- Adjust quality settings based on your hardware
-
-### Getting Help
-- **GitHub Issues**: [Report bugs and request features](https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension/issues)
-- **Documentation**: [Wiki and guides](https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension/wiki)
-- **Email Support**: support@liltoon-pcss.com
-
-## 🔄 Migration Guide
-
-### From Version 1.8.1 to 2.0.0
-Due to the complete rewrite in version 2.0.0, migration requires:
-
-1. **Backup your project** before upgrading
-2. **Remove old package** completely
-3. **Install new package** version 2.0.0
-4. **Run auto-upgrade** using the new menu items
-5. **Review and adjust** settings in the new advanced GUI
-6. **Test thoroughly** with your existing avatars
-
-### Breaking Changes in 2.0.0
-- Complete API rewrite
-- New shader names and properties
-- Different menu structure
-- New dependency requirements
-- Changed Unity version compatibility
-
-## 📈 Roadmap
-
-### Short-term Goals (1-3 months)
-- [ ] Additional quality presets
-- [ ] More detailed benchmark features
-- [ ] User setting save/restore functionality
-
-### Medium-term Goals (3-6 months)
-- [ ] Enhanced real-time reflection
-- [ ] More advanced volumetric shadow features
-- [ ] Custom shader feature additions
-
-### Long-term Goals (6+ months)
-- [ ] Integration with other shaders (Poiyomi, Unity Standard)
-- [ ] Cloud-based setting synchronization
-- [ ] AI-driven automatic optimization
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
-
-### Development Setup
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- **lilToon Team**: For the excellent base shader system
-- **Modular Avatar Team**: For the powerful avatar customization system
-- **Unity Technologies**: For the amazing game engine
-- **VRChat Community**: For inspiration and feedback
-
-## 📞 Contact
-
-- **GitHub**: [liltoon-pcss-extension](https://github.com/liltoon-pcss-extension)
-- **Email**: support@liltoon-pcss.com
-- **Discord**: [Join our community](https://discord.gg/liltoon-pcss)
+- lilToon Team, Modular Avatar Team, Unity Technologies, VRChat Community
 
 ---
 
-**Version**: 2.0.0  
-**Last Updated**: 2025-01-28  
-**Unity Compatibility**: 2019.4+  
-**License**: MIT
+メタ情報 / Meta
+
+- Version: 2.6.0
+- Last Updated: 2025-08-13
+- Unity: 2022.3+
+- Author: lilToon PCSS Extension Team
