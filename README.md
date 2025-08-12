@@ -1,7 +1,7 @@
 # lilToon PCSS Extension - Advanced Realistic Shadow System
 
 [![Version](https://img.shields.io/badge/version-2.1.0-blue.svg)](https://semver.org/)
-[![Unity](https://img.shields.io/badge/Unity-2019.4+-green.svg)](https://unity.com/)
+[![Unity](https://img.shields.io/badge/Unity-2022.3+-green.svg)](https://unity.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![lilToon](https://img.shields.io/badge/lilToon-Compatible-brightgreen.svg)](https://github.com/lilxyzw/lilToon)
 [![ModularAvatar](https://img.shields.io/badge/ModularAvatar-AAO%20Compatible-orange.svg)](https://github.com/bdunderscore/modular-avatar)
