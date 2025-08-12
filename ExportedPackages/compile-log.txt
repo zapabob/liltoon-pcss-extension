@@ -1,0 +1,7 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+[Licensing::IpcConnector] Error: Connection attempt to the License Client on channel: "LicenseClient-downl" failed because Connection Refused; code: "0x8000000a"
+[Licensing::Module] Successfully launched the LicensingClient (PId: 25436)
+[Licensing::IpcConnector] Error: Connection attempt to the License Client on channel: "LicenseClient-downl" failed because Connection Refused; code: "0x8000000a"
+[Licensing::Module] Timed-out after 60.00s, waiting for channel: "LicenseClient-downl"
+IPC channel to LicensingClient doesn't exist; aborting
+Exiting without the bug reporter. Application will terminate with return code 199

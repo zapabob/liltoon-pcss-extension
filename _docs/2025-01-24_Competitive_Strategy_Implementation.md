@@ -1,14 +1,14 @@
-# 競合戦略実装計画 - nHaruka PCSS for VRC シェア奪取
+# 競合戦略実装計画 - 競合PCSS製品 シェア奪取
 
 ## 戦略概要
-nHaruka PCSS for VRCを競合として、lilToon 2.1.4とVRC Light Volumes 2.0.0の最新機能を活用してシェアを奪取する戦略的実装。
+競合PCSS製品を競合として、lilToon 2.1.4とVRC Light Volumes 2.0.0の最新機能を活用してシェアを奪取する戦略的実装。
 
 ## 実装日時
 2025年1月24日
 
 ## 🎯 競合分析結果
 
-### nHaruka PCSS for VRCの弱点
+### 競合PCSS製品の弱点
 1. **lilToon 2.x未対応** - 最大の弱点
 2. **Quest版非対応** - 市場制限
 3. **高価格** - ¥1,500-2,000
@@ -41,7 +41,7 @@ nHaruka PCSS for VRCを競合として、lilToon 2.1.4とVRC Light Volumes 2.0.0
 ### 2. 価格戦略
 
 #### 競合価格分析
-- **nHaruka**: ¥1,500 (通常版) / ¥2,000 (作者支援版)
+- **競合製品**: ¥1,500 (通常版) / ¥2,000 (作者支援版)
 - **自社戦略**: ¥800-1,200 (機能対価格比向上)
 
 #### 価格設定
@@ -147,7 +147,7 @@ public class PricingStrategy
     // 競合価格比較
     public bool IsCompetitivePrice()
     {
-        return BASIC_PRICE < 1500f; // nHaruka基本版より安価
+        return BASIC_PRICE < 1500f; // 競合製品基本版より安価
     }
 }
 ```
@@ -305,7 +305,7 @@ public class AdvancedMaskSystem
 
 ## 🎯 結論
 
-nHaruka PCSS for VRCの**lilToon 2.x未対応**という最大の弱点を突き、最新技術と価格戦略でシェアを奪取する戦略的実装計画を策定した。
+競合PCSS製品の**lilToon 2.x未対応**という最大の弱点を突き、最新技術と価格戦略でシェアを奪取する戦略的実装計画を策定した。
 
 **成功の鍵**:
 1. **技術的先進性**: lilToon 2.1.4 + VRC Light Volumes 2.0.0

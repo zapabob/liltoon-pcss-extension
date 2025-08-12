@@ -67,7 +67,7 @@ lilToonだけでなく、Poiyomiシェーダーにも対応しており、幅広
 3. 「+」ボタンをクリックし、「Add package from git URL...」を選択します
 4. 以下のURLを入力します：
    ```
-   https://github.com/zapabob/liltoon-pcss-extension.git?path=com.liltoon.pcss-extension
+   https://github.com/zapabob/liltoon-pcss-extension.git
    ```
 5. 「追加」をクリックします
 
@@ -130,7 +130,7 @@ A: VCCを使用している場合は、VCC内で自動的に更新通知が表�
 ## ライセンス
 
 このパッケージはMITライセンスで公開されています。個人利用および商用利用が可能です。詳細はライセンス条項をご確認ください。
-
+商用目的での再頒布、自作を剽窃するは禁止しております。
 ---
 
 © 2025 lilToon PCSS Extension Team. All Rights Reserved. 
