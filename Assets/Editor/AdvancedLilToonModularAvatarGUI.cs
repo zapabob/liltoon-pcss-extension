@@ -746,10 +746,10 @@ namespace lilToon.PCSS.Editor
 
             Undo.RecordObject(avatarRoot, "Setup Modular Avatar Integration");
 
-            // ModularAvatarPCSSControllerコンポーネントの追加
-            if (avatarRoot.GetComponent<ModularAvatarPCSSController>() == null)
+            // Runtime版のPCSSコントローラを追加（Editor内の同名ダミーを使わない）
+            if (avatarRoot.GetComponent<lilToon.PCSS.Runtime.ModularAvatarPCSSController>() == null)
             {
-                avatarRoot.AddComponent<ModularAvatarPCSSController>();
+                avatarRoot.AddComponent<lilToon.PCSS.Runtime.ModularAvatarPCSSController>();
             }
 
             material.SetFloat("_UseModularAvatarIntegration", 1.0f);
@@ -771,69 +771,11 @@ namespace lilToon.PCSS.Editor
         }
     }
 
+    #if PCSS_DEV
     /// <summary>
-    /// Modular Avatar PCSS制御コンポーネント
+    /// Editor内の開発用ダミー（製品ビルドでは無効）
     /// </summary>
-    public class ModularAvatarPCSSController : MonoBehaviour
-    {
-        [Header("PCSS Settings")]
-        public bool usePCSS = true;
-        public float pcssQuality = 1.0f;
-        public int pcssSamples = 16;
-        public float pcssFilterRadius = 0.01f;
-        public float pcssLightSize = 0.1f;
-        public float pcssBias = 0.001f;
-        public float pcssIntensity = 1.0f;
-
-        [Header("Performance Settings")]
-        public bool usePerformanceMode = false;
-        public bool useMemoryOptimization = true;
-        public bool useCPUOptimization = true;
-        public bool useGPUOptimization = true;
-
-        [Header("Advanced Settings")]
-        public bool useAdvancedLighting = true;
-        public bool useDynamicMaterials = true;
-        public bool useAdvancedShaders = true;
-        public bool useVolumetricShadows = true;
-        public bool useRealTimeReflection = true;
-        public bool useSubsurfaceScattering = true;
-
-        private void Start()
-        {
-            ApplySettings();
-        }
-
-        private void ApplySettings()
-        {
-            var materials = GetComponentsInChildren<Renderer>()
-                .SelectMany(r => r.sharedMaterials)
-                .Where(m => m != null && m.shader.name.Contains("lilToon"))
-                .ToArray();
-
-            foreach (var material in materials)
-            {
-                material.SetFloat("_UseRealTimePCSS", usePCSS ? 1.0f : 0.0f);
-                material.SetFloat("_PCSSQuality", pcssQuality);
-                material.SetFloat("_PCSSSamples", pcssSamples);
-                material.SetFloat("_PCSSFilterRadius", pcssFilterRadius);
-                material.SetFloat("_PCSSLightSize", pcssLightSize);
-                material.SetFloat("_PCSSBias", pcssBias);
-                material.SetFloat("_PCSSIntensity", pcssIntensity);
-
-                material.SetFloat("_PerformanceMode", usePerformanceMode ? 1.0f : 0.0f);
-                material.SetFloat("_MemoryOptimization", useMemoryOptimization ? 1.0f : 0.0f);
-                material.SetFloat("_CPUOptimization", useCPUOptimization ? 1.0f : 0.0f);
-                material.SetFloat("_GPUOptimization", useGPUOptimization ? 1.0f : 0.0f);
-
-                material.SetFloat("_UseAdvancedLighting", useAdvancedLighting ? 1.0f : 0.0f);
-                material.SetFloat("_UseDynamicMaterials", useDynamicMaterials ? 1.0f : 0.0f);
-                material.SetFloat("_UseAdvancedShaders", useAdvancedShaders ? 1.0f : 0.0f);
-                material.SetFloat("_UseVolumetricShadows", useVolumetricShadows ? 1.0f : 0.0f);
-                material.SetFloat("_UseRealTimeReflection", useRealTimeReflection ? 1.0f : 0.0f);
-                material.SetFloat("_UseSubsurfaceScattering", useSubsurfaceScattering ? 1.0f : 0.0f);
-            }
-        }
-    }
+    public class ModularAvatarPCSSController : MonoBehaviour { }
+    #endif
 }
 #endif

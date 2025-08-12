@@ -37,7 +37,7 @@ namespace lilToon.PCSS.Editor
         private float memoryUsage = 0f;
         private float gpuUsage = 0f;
         
-        [MenuItem("Tools/lilToon PCSS Extension/Performance Optimizer")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Performance Optimizer")]
         public static void ShowWindow()
         {
             PerformanceOptimizer window = GetWindow<PerformanceOptimizer>("Performance Optimizer");

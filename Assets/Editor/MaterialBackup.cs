@@ -9,7 +9,7 @@ public class MaterialBackup : EditorWindow
     private static readonly string BackupSubfolder = "MaterialBackups";
     private GameObject targetObject;
 
-    [MenuItem("Tools/Material Backup")]
+    [MenuItem("Tools/lilToon-PCSS-Extension/Material Backup")]
     public static void ShowWindow()
     {
         GetWindow<MaterialBackup>("Material Backup");
@@ -205,7 +205,7 @@ public class MaterialBackup : EditorWindow
         return Vector4.zero;
     }
 
-    // 追加: プロパティ名からインチE��クスを取得する�Eルパ�E
+    // 追加: プロパティ名からインチE��クスを取得する�Eルパ�E
     private static int GetPropertyIndexByName(Shader shader, string propertyName)
     {
         int count = ShaderUtil.GetPropertyCount(shader);

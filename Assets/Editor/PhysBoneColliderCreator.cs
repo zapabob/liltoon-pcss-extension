@@ -17,7 +17,7 @@ using VRC.SDK3.Dynamics.PhysBone.Components;
 /// </summary>
 public class PhysBoneColliderCreator : MonoBehaviour
 {
-    private const string MenuRoot = "Tools/lilToon PCSS Extension/";
+    private const string MenuRoot = "Tools/lilToon-PCSS-Extension/";
     private const string UtilitiesMenu = MenuRoot + "Utilities/";
     private const string PhysBoneMenu = UtilitiesMenu + "PhysBone Controller/";
     

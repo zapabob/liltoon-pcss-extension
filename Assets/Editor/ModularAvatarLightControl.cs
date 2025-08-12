@@ -18,7 +18,8 @@ public class ModularAvatarLightControl : EditorWindow
     private GameObject avatarObject;
         private List<Light> avatarLights = new List<Light>();
 
-        // Dummy stubs for missing ModularAvatar types
+        // Dummy stubs for missing ModularAvatar types（製品では無効）
+        #if PCSS_DEV
         private class DummyMenuGroup : MonoBehaviour
         {
             public GameObject targetObject;
@@ -33,15 +34,20 @@ public class ModularAvatarLightControl : EditorWindow
             public ParameterType type;
             public float defaultValue;
         }
+        #endif
 
+        #if PCSS_DEV
         private List<DummyMenuGroup> menuGroups = new List<DummyMenuGroup>();
         private List<DummyMenuInstaller> menuInstallers = new List<DummyMenuInstaller>();
         private List<DummyParameter> maParameters = new List<DummyParameter>();
+        #endif
         private Vector2 scrollPosition;
-        private bool showAdvancedSettings = false;
-        private bool showModularAvatarSettings = false;
+        private bool showAdvancedSettings = false; // 実GUIで使用中（Foldout）
+        #if PCSS_DEV
+        private bool showModularAvatarSettings = false; // 開発モードFoldout
+        #endif
 
-        [MenuItem("Tools/lilToon PCSS/Modular Avatar Light Control")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Modular Avatar Light Control")]
     public static void ShowWindow()
     {
         GetWindow<ModularAvatarLightControl>("MA Light Control");
@@ -77,10 +83,14 @@ public class ModularAvatarLightControl : EditorWindow
             DrawLightControlSection();
 
             // ModularAvatarメニュー制御セクション
+            #if PCSS_DEV
             DrawModularAvatarMenuSection();
+            #endif
 
             // ModularAvatarパラメータ制御セクション
+            #if PCSS_DEV
             DrawModularAvatarParameterSection();
+            #endif
 
             // 高度な設定セクション
             DrawAdvancedSettingsSection();
@@ -109,6 +119,7 @@ public class ModularAvatarLightControl : EditorWindow
                 EditorGUILayout.BeginVertical("box");
                 EditorGUILayout.LabelField($"Light: {light.name}", EditorStyles.boldLabel);
 
+                #if PCSS_DEV
                 // ModularAvatarParameterを使った有効/無効制御
                 string toggleParam = $"Light_{light.name}_Enabled";
                 var param = EnsureParameter(toggleParam, DummyParameter.ParameterType.Bool, defaultValue: light.enabled ? 1f : 0f);
@@ -151,6 +162,32 @@ public class ModularAvatarLightControl : EditorWindow
                     EditorUtility.SetDirty(paramG);
                     EditorUtility.SetDirty(paramB);
                 }
+                #else
+                // 製品ビルドでは直接 Light を制御（即時反映）
+                bool newEnabled = EditorGUILayout.Toggle("Enabled", light.enabled);
+                if (newEnabled != light.enabled)
+                {
+                    Undo.RecordObject(light, "Toggle Light");
+                    light.enabled = newEnabled;
+                    EditorUtility.SetDirty(light);
+                }
+
+                float newIntensity = EditorGUILayout.Slider("Intensity", light.intensity, 0f, 8f);
+                if (Math.Abs(newIntensity - light.intensity) > 0.001f)
+                {
+                    Undo.RecordObject(light, "Change Light Intensity");
+                    light.intensity = newIntensity;
+                    EditorUtility.SetDirty(light);
+                }
+
+                Color newColor = EditorGUILayout.ColorField("Color", light.color);
+                if (newColor != light.color)
+                {
+                    Undo.RecordObject(light, "Change Light Color");
+                    light.color = newColor;
+                    EditorUtility.SetDirty(light);
+                }
+                #endif
 
                 EditorGUILayout.EndVertical();
                 EditorGUILayout.Space();
@@ -159,6 +196,7 @@ public class ModularAvatarLightControl : EditorWindow
             EditorGUILayout.HelpBox("これらのパラメータはModularAvatarのParametersとして自動管理されます。アニメーターやメニューから制御可能です。", MessageType.Info);
         }
 
+        #if PCSS_DEV
         private void DrawModularAvatarMenuSection()
         {
             EditorGUILayout.Space();
@@ -242,7 +280,9 @@ public class ModularAvatarLightControl : EditorWindow
 
             EditorGUILayout.HelpBox("ModularAvatarのMenuGroup/MenuInstallerを活用して、アバターのメニューを柔軟に拡張できます。", MessageType.Info);
         }
+        #endif
 
+        #if PCSS_DEV
         private void DrawModularAvatarParameterSection()
         {
             EditorGUILayout.Space();
@@ -287,6 +327,7 @@ public class ModularAvatarLightControl : EditorWindow
 
             EditorGUILayout.HelpBox("ModularAvatarParameterは、アバターの同期・メニュー・アニメーター制御に利用されます。", MessageType.Info);
         }
+        #endif
 
         private void DrawAdvancedSettingsSection()
         {
@@ -325,6 +366,25 @@ public class ModularAvatarLightControl : EditorWindow
             }
 
             EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Quick Actions", EditorStyles.miniBoldLabel);
+            EditorGUILayout.BeginHorizontal();
+            GUI.enabled = avatarObject != null;
+            if (GUILayout.Button("Create MA Light Toggle (ON/OFF + Intensity)"))
+            {
+                SafeCall(() => ModularAvatarLightToggleBuilder.Build());
+            }
+            if (GUILayout.Button("Build VRC Expressions (Light)"))
+            {
+                SafeCall(() => VRChatLightMenuBuilder.BuildLightExpressions());
+            }
+            if (GUILayout.Button("Place Hip-based Lights (MA)"))
+            {
+                SafeCall(() => HipBasedLightPlacement.CreateHipBasedLights(avatarObject));
+            }
+            GUI.enabled = true;
+            EditorGUILayout.EndHorizontal();
         }
 
         private void RefreshData()
@@ -336,6 +396,7 @@ public class ModularAvatarLightControl : EditorWindow
                 avatarLights.AddRange(avatarObject.GetComponentsInChildren<Light>(true));
             }
 
+            #if PCSS_DEV
             // ModularAvatarのMenuGroup/MenuInstaller/Parameterを取得
             menuGroups.Clear();
             menuInstallers.Clear();
@@ -346,11 +407,13 @@ public class ModularAvatarLightControl : EditorWindow
                 menuInstallers.AddRange(avatarObject.GetComponentsInChildren<DummyMenuInstaller>(true));
                 maParameters.AddRange(avatarObject.GetComponentsInChildren<DummyParameter>(true));
             }
+            #endif
         }
 
         /// <summary>
         /// ModularAvatarParameterをアバター上で検索し、なければ新規作成
         /// </summary>
+        #if PCSS_DEV
         private DummyParameter EnsureParameter(string paramName, DummyParameter.ParameterType type, float defaultValue = 0f)
         {
             var param = maParameters.FirstOrDefault(p => p != null && p.name == paramName);
@@ -372,6 +435,7 @@ public class ModularAvatarLightControl : EditorWindow
             }
             return param;
         }
+        #endif
 
         private void RebuildModularAvatar()
         {
@@ -383,15 +447,11 @@ public class ModularAvatarLightControl : EditorWindow
 
             try
             {
-                // ModularAvatarのリビルド
-                DummyMenuInstaller[] installers = avatarObject.GetComponentsInChildren<DummyMenuInstaller>(true);
-                foreach (var installer in installers)
-                {
-                    if (installer != null)
-                    {
-                        // ModularAvatarMenuInstallerEditor.RebuildMenu(installer); // Not available
-                    }
-                }
+            #if PCSS_DEV
+            // ModularAvatarのリビルド（ダミー）
+            var installers = avatarObject.GetComponentsInChildren<DummyMenuInstaller>(true);
+            foreach (var installer in installers) { }
+            #endif
                 EditorUtility.DisplayDialog("Rebuild Complete", "Modular Avatar rebuilt successfully! (Dummy)", "OK");
             }
             catch (Exception e)
@@ -411,15 +471,26 @@ public class ModularAvatarLightControl : EditorWindow
 
             try
             {
-                // ModularAvatarのバリデーション (Dummy)
-                // var issues = ModularAvatarValidator.ValidateAvatar(avatarObject); // Not available
-                // For demonstration, always "no issues"
+                #if PCSS_DEV
+                // ModularAvatarのバリデーション（ダミー）
+                // var issues = ModularAvatarValidator.ValidateAvatar(avatarObject);
+                #endif
                 EditorUtility.DisplayDialog("Validation Complete", "No issues found! (Dummy)", "OK");
             }
             catch (Exception e)
             {
                 Debug.LogError($"Failed to validate components: {e.Message}");
                 EditorUtility.DisplayDialog("Error", $"Failed to validate components: {e.Message}", "OK");
+            }
+        }
+
+        private void SafeCall(Action action)
+        {
+            try { action?.Invoke(); }
+            catch (Exception e)
+            {
+                Debug.LogError($"[PCSS] Action failed: {e.Message}\n{e}");
+                EditorUtility.DisplayDialog("PCSS", $"Action failed: {e.Message}", "OK");
             }
         }
     }

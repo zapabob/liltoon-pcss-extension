@@ -199,10 +199,11 @@ namespace lilToon.PCSS.Editor
             
             foreach (var material in allMaterials)
             {
-                // VRC Light Volumes対応プロパティを設定
-                if (material.HasProperty("_VRCLightVolumeIntensity"))
+                // VRC Light Volumes対応プロパティを設定（ID経由・存在チェック）
+                var idIntensity = Shader.PropertyToID("_VRCLightVolumeIntensity");
+                if (material.HasProperty(idIntensity))
                 {
-                    material.SetFloat("_VRCLightVolumeIntensity", integration.GetStats().LightVolumeIntensity);
+                    material.SetFloat(idIntensity, integration.GetStats().LightVolumeIntensity);
                     updatedCount++;
                 }
             }
@@ -251,7 +252,7 @@ namespace lilToon.PCSS.Editor
     /// </summary>
     public static class VRCLightVolumesMenu
     {
-        [MenuItem("Tools/lilToon PCSS Extension/Utilities/PCSS Extension/VRC Light Volumes/Add Integration Component")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Utilities/VRC Light Volumes/Add Integration Component")]
         public static void AddIntegrationComponent()
         {
             var selected = Selection.activeGameObject;
@@ -271,7 +272,7 @@ namespace lilToon.PCSS.Editor
             EditorUtility.DisplayDialog("完了", "VRCLightVolumesIntegrationを追加しました。", "OK");
         }
         
-        [MenuItem("Tools/lilToon PCSS Extension/Utilities/PCSS Extension/VRC Light Volumes/Create Light Volume Manager")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Utilities/VRC Light Volumes/Create Light Volume Manager")]
         public static void CreateLightVolumeManager()
         {
             var go = new GameObject("VRC Light Volumes Manager");
@@ -287,14 +288,14 @@ namespace lilToon.PCSS.Editor
                 "「Light Volumes検出」ボタンをクリックしてください。", "OK");
         }
         
-        [MenuItem("Tools/lilToon PCSS Extension/Utilities/PCSS Extension/VRC Light Volumes/Enable Global Light Volumes")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Utilities/VRC Light Volumes/Enable Global Light Volumes")]
         public static void EnableGlobalLightVolumes()
         {
             Shader.EnableKeyword("VRC_LIGHT_VOLUMES_ENABLED");
             EditorUtility.DisplayDialog("完了", "グローバルVRC Light Volumesを有効にしました。", "OK");
         }
         
-        [MenuItem("Tools/lilToon PCSS Extension/Utilities/PCSS Extension/VRC Light Volumes/Disable Global Light Volumes")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Utilities/VRC Light Volumes/Disable Global Light Volumes")]
         public static void DisableGlobalLightVolumes()
         {
             Shader.DisableKeyword("VRC_LIGHT_VOLUMES_ENABLED");

@@ -64,7 +64,7 @@ namespace lilToon.PCSS.Editor
             Critical
         }
         
-        [MenuItem("Tools/lilToon PCSS Extension/Error Handler")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Error Handler")]
         public static void ShowWindow()
         {
             ErrorHandler window = GetWindow<ErrorHandler>("Error Handler");

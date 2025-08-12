@@ -32,8 +32,8 @@ namespace lilToon.PCSS.Editor
     }
 
     /// <summary>
-    /// マテリアルバックアップエントリ構造
-    /// なんｊ風に言うと「これで完璧なマテリアルバックアップ構造が完成したぜ！」💪🔥
+    /// Material Backup/Restoreエントリ構造
+    /// なんｊ風に言うと「これで完璧なMaterial Backup/Restore構造が完成したぜ！」💪🔥
     /// </summary>
     [System.Serializable]
     public class MaterialBackupEntry

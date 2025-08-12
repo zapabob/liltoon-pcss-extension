@@ -223,7 +223,8 @@ namespace lilToon.PCSS.Editor
         private Vector2 scrollPosition;
         private PCSSPreset selectedPreset;
         private List<PCSSPreset> customPresets = new List<PCSSPreset>();
-        private bool showAdvancedSettings = false;
+        // 未使用のため一旦停止（GUI拡張時に復帰）
+        // private bool showAdvancedSettings = false;
         private bool showCustomPresets = false;
         private string newPresetName = "";
         private string newPresetDescription = "";
@@ -232,7 +233,7 @@ namespace lilToon.PCSS.Editor
         
         #region メニューアイテム
         
-        [MenuItem("Tools/lilToon PCSS/プリセット管理")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/プリセット管理")]
         public static void ShowWindow()
         {
             var window = GetWindow<PCSSPresetManager>("PCSSプリセット管理");
@@ -240,19 +241,19 @@ namespace lilToon.PCSS.Editor
             window.Show();
         }
         
-        [MenuItem("Tools/lilToon PCSS/リアル影プリセット適用")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/リアル影プリセット適用")]
         public static void ApplyRealisticPreset()
         {
             ApplyPreset(DefaultPresets[0]);
         }
         
-        [MenuItem("Tools/lilToon PCSS/アニメ風プリセット適用")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/アニメ風プリセット適用")]
         public static void ApplyAnimePreset()
         {
             ApplyPreset(DefaultPresets[1]);
         }
         
-        [MenuItem("Tools/lilToon PCSS/映画風プリセット適用")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/映画風プリセット適用")]
         public static void ApplyCinematicPreset()
         {
             ApplyPreset(DefaultPresets[2]);

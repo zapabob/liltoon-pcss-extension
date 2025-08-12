@@ -245,7 +245,7 @@ namespace lilToon.PCSS.Editor
         
         #region メニューアイテム
         
-        [MenuItem("Tools/lilToon PCSS/統合プリセット管理")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/統合プリセット管理")]
         public static void ShowWindow()
         {
             var window = GetWindow<PCSSMenuSystem>("PCSS統合プリセット");
@@ -253,31 +253,31 @@ namespace lilToon.PCSS.Editor
             window.Show();
         }
         
-        [MenuItem("Tools/lilToon PCSS/リアル風セット適用")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/リアル風セット適用")]
         public static void ApplyRealisticSet()
         {
             ApplyIntegratedPreset(IntegratedPresets[0]);
         }
         
-        [MenuItem("Tools/lilToon PCSS/アニメ風セット適用")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/アニメ風セット適用")]
         public static void ApplyAnimeSet()
         {
             ApplyIntegratedPreset(IntegratedPresets[1]);
         }
         
-        [MenuItem("Tools/lilToon PCSS/映画風セット適用")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/映画風セット適用")]
         public static void ApplyCinematicSet()
         {
             ApplyIntegratedPreset(IntegratedPresets[2]);
         }
         
-        [MenuItem("Tools/lilToon PCSS/ポートレート風セット適用")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/ポートレート風セット適用")]
         public static void ApplyPortraitSet()
         {
             ApplyIntegratedPreset(IntegratedPresets[3]);
         }
         
-        [MenuItem("Tools/lilToon PCSS/ゲーム風セット適用")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/ゲーム風セット適用")]
         public static void ApplyGameSet()
         {
             ApplyIntegratedPreset(IntegratedPresets[4]);

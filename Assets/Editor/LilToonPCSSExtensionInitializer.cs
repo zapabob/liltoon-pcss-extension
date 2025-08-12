@@ -19,6 +19,8 @@ namespace lilToon.PCSS.Editor
         
         static LilToonPCSSExtensionInitializer()
         {
+            // lilToon設定JSONが空だと起動時に例外を出すため、最優先で修復を試みる
+            try { RepairLilToonEmptySettingsJson(); } catch { /* best-effort */ }
             EditorApplication.delayCall += Initialize;
         }
         
@@ -28,8 +30,10 @@ namespace lilToon.PCSS.Editor
             RegisterShaderVariants();
             SetupMenuIntegration();
             SetupMaterialChangeCallback();
-            // --- ダミ�E参�E: VRCLightVolumesIntegrationの自動削除防止 ---
-            System.Type _ = typeof(lilToon.PCSS.VRCLightVolumesIntegration); // AutoFIX/最適化による削除防止
+#if PCSS_DEV
+            // --- 開発時のみ: VRCLightVolumesIntegration 参照保持（製品版では不要・AutoFix対策で除外） ---
+            System.Type _ = typeof(lilToon.PCSS.VRCLightVolumesIntegration);
+#endif
         }
         
         /// <summary>
@@ -73,14 +77,58 @@ namespace lilToon.PCSS.Editor
                 }
             }
             
-            // UPMパッケージとしてのlilToonもチェック
-            var packagePath = "Packages/com.lilxyzw.liltoon";
-            if (Directory.Exists(packagePath))
+            // UPMパッケージとしてのlilToonもチェック（旧/新の両パス対応）
+            var packagePaths = new[] { "Packages/jp.lilxyzw.liltoon", "Packages/com.lilxyzw.liltoon" };
+            foreach (var p in packagePaths)
             {
-                return true;
+                if (Directory.Exists(p)) return true;
             }
             
             return false;
+        }
+
+        /// <summary>
+        /// lilToonの設定JSONが空の時、最小JSONで埋めて起動時例外を回避
+        /// </summary>
+        private static void RepairLilToonEmptySettingsJson()
+        {
+            var candidateRoots = new List<string> { "Packages/jp.lilxyzw.liltoon", "Packages/com.lilxyzw.liltoon" };
+            // 追加でプロジェクト内の一般的な場所も見る
+            candidateRoots.Add("ProjectSettings");
+            candidateRoots.Add("Assets");
+            foreach (var root in candidateRoots)
+            {
+                if (!Directory.Exists(root)) continue;
+                string[] jsons;
+                try { jsons = Directory.GetFiles(root, "*.json", SearchOption.AllDirectories); }
+                catch { continue; }
+                foreach (var path in jsons)
+                {
+                    // lilToonの設定っぽい名称のみ対象
+                    var file = Path.GetFileName(path).ToLowerInvariant();
+                    if (!(file.Contains("lil") && (file.Contains("setting") || file.Contains("config")))) continue;
+                    try
+                    {
+                        var text = File.ReadAllText(path);
+                        if (string.IsNullOrWhiteSpace(text))
+                        {
+                            File.WriteAllText(path, "{}");
+                            Debug.Log($"[lilToon PCSS] Repaired empty lilToon settings JSON: {path}");
+                        }
+                        else
+                        {
+                            // 破損（空配列/空白のみ）も最小オブジェクトへ整形
+                            var trimmed = text.Trim();
+                            if (trimmed == "[]")
+                            {
+                                File.WriteAllText(path, "{}");
+                                Debug.Log($"[lilToon PCSS] Normalized [] to {{}} for: {path}");
+                            }
+                        }
+                    }
+                    catch { /* 読み書き不可は無視 */ }
+                }
+            }
         }
         
         /// <summary>
@@ -308,7 +356,7 @@ namespace lilToon.PCSS.Editor
         /// <summary>
         /// PCSS拡張のメニューアイチE��
         /// </summary>
-        [MenuItem("Tools/lilToon PCSS Extension/Utilities/PCSS Extension/About", false, 2000)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Utilities/PCSS Extension/About", false, 2000)]
         public static void ShowAbout()
         {
             EditorUtility.DisplayDialog(
@@ -320,7 +368,7 @@ namespace lilToon.PCSS.Editor
             );
         }
         
-        [MenuItem("Tools/lilToon PCSS Extension/Utilities/PCSS Extension/Open Documentation", false, 2001)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Utilities/PCSS Extension/Open Documentation", false, 2001)]
         public static void OpenDocumentation()
         {
             string readmePath = AssetDatabase.FindAssets("liltoon_pcss_readme t:TextAsset")[0];
@@ -331,7 +379,7 @@ namespace lilToon.PCSS.Editor
             }
         }
         
-        [MenuItem("Tools/lilToon PCSS Extension/Utilities/PCSS Extension/Check Installation", false, 2002)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Utilities/PCSS Extension/Check Installation", false, 2002)]
         public static void CheckInstallation()
         {
             bool hasLilToon = IsLilToonInstalled();
@@ -355,7 +403,7 @@ namespace lilToon.PCSS.Editor
             EditorUtility.DisplayDialog("PCSS Extension インストール状況", message, "OK");
         }
         
-        [MenuItem("Tools/lilToon PCSS Extension/Utilities/PCSS Extension/Fix Materials", false, 2003)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Utilities/PCSS Extension/Fix Materials", false, 2003)]
         public static void FixMaterials()
         {
             // シーン内のすべてのマテリアルを修復

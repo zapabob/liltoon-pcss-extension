@@ -37,7 +37,7 @@ public class OneClickSetupWizard : EditorWindow
         private string lilToonVersion = "";
         private string vrcSdkVersion = "";
 
-    [MenuItem("Tools/lilToon PCSS Extension/One-Click Setup Wizard")]
+    [MenuItem("Tools/lilToon-PCSS-Extension/One-Click Setup Wizard")]
     public static void ShowWindow()
     {
             OneClickSetupWizard window = GetWindow<OneClickSetupWizard>("One-Click Setup Wizard");

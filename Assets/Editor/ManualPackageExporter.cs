@@ -6,14 +6,14 @@ namespace lilToonPCSS.Editor
 {
     public class ManualPackageExporter : EditorWindow
     {
-        [MenuItem("Tools/lilToon PCSS Extension/Manual Export Package Window")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Manual Export Package Window")]
         public static void ShowWindow()
         {
             var window = GetWindow<ManualPackageExporter>("手動パッケージエクスポーター");
             window.Show();
         }
         
-        [MenuItem("Tools/lilToon PCSS Extension/Manual Export Package")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Manual Export Package")]
         public static void ManualExportPackage()
         {
             Debug.Log("🎯 手動パッケージエクスポート開始...");
@@ -46,7 +46,7 @@ namespace lilToonPCSS.Editor
             }
         }
         
-        [MenuItem("Tools/lilToon PCSS Extension/Export All Package Types")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Export All Package Types")]
         public static void ExportAllPackageTypes()
         {
             Debug.Log("🚀 全パッケージタイプのエクスポート開始...");

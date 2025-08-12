@@ -11,98 +11,103 @@ namespace lilToon.PCSS.Editor
     {
         #region ショートカットキー定義
         
-        [MenuItem("Tools/lilToon PCSS/統合メニューシステム %#m", false, 0)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/統合メニューシステム (Shortcut) %#m", false, 0)]
         public static void OpenUnifiedMenu()
         {
             UnifiedMenuSystem.ShowWindow();
         }
         
-        [MenuItem("Tools/lilToon PCSS/プリセット管理 %#p", false, 10)]
+        #if PCSS_DEV
+        [MenuItem("Tools/lilToon-PCSS-Extension/プリセット管理 %#p", false, 10)]
         public static void OpenPresetManager()
         {
             PCSSMenuSystem.ShowWindow();
         }
         
-        [MenuItem("Tools/lilToon PCSS/高度プリセット管理 %#h", false, 11)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/高度プリセット管理 %#h", false, 11)]
         public static void OpenAdvancedPresetManager()
         {
             AdvancedPCSSMenuSystem.ShowWindow();
         }
         
-        [MenuItem("Tools/lilToon PCSS/ライト管理 %#l", false, 20)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/ライト管理 %#l", false, 20)]
         public static void OpenLightManager()
         {
             ExternalLightManager.ShowWindow();
         }
         
-        [MenuItem("Tools/lilToon PCSS/マテリアルアップグレード %#u", false, 30)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/マテリアルアップグレード %#u", false, 30)]
         public static void OpenMaterialUpgrader()
         {
             LilToonPCSSMaterialUpgrader.UpgradeMaterials();
         }
         
-        [MenuItem("Tools/lilToon PCSS/パフォーマンス最適化 %#o", false, 40)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/パフォーマンス最適化 %#o", false, 40)]
         public static void OpenPerformanceOptimizer()
         {
             PerformanceOptimizer.ShowWindow();
         }
         
-        [MenuItem("Tools/lilToon PCSS/VRChat最適化 %#v", false, 50)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/VRChat最適化 %#v", false, 50)]
         public static void OpenVRChatOptimization()
         {
             VRChatOptimizationSettings.ShowWindow();
         }
         
-        [MenuItem("Tools/lilToon PCSS/バックアップ管理 %#b", false, 60)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/バックアップ管理 %#b", false, 60)]
         public static void OpenBackupManager()
         {
             MaterialBackup.ShowWindow();
         }
         
-        [MenuItem("Tools/lilToon PCSS/エクスポート %#e", false, 70)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/エクスポート %#e", false, 70)]
         public static void OpenExporter()
         {
             PackageExporter.ExportPackage();
         }
+        #endif
         
         #endregion
         
         #region クイックアクセスメニュー
         
-        [MenuItem("Tools/lilToon PCSS/クイックアクセス/リアル風セット適用", false, 100)]
+        #if PCSS_DEV
+        [MenuItem("Tools/lilToon-PCSS-Extension/クイックアクセス/リアル風セット適用", false, 100)]
         public static void QuickApplyRealisticSet()
         {
             PCSSMenuSystem.ApplyRealisticSet();
         }
         
-        [MenuItem("Tools/lilToon PCSS/クイックアクセス/アニメ風セット適用", false, 101)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/クイックアクセス/アニメ風セット適用", false, 101)]
         public static void QuickApplyAnimeSet()
         {
             PCSSMenuSystem.ApplyAnimeSet();
         }
         
-        [MenuItem("Tools/lilToon PCSS/クイックアクセス/映画風セット適用", false, 102)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/クイックアクセス/映画風セット適用", false, 102)]
         public static void QuickApplyCinematicSet()
         {
             PCSSMenuSystem.ApplyCinematicSet();
         }
         
-        [MenuItem("Tools/lilToon PCSS/クイックアクセス/ポートレート風セット適用", false, 103)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/クイックアクセス/ポートレート風セット適用", false, 103)]
         public static void QuickApplyPortraitSet()
         {
             PCSSMenuSystem.ApplyPortraitSet();
         }
         
-        [MenuItem("Tools/lilToon PCSS/クイックアクセス/ゲーム風セット適用", false, 104)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/クイックアクセス/ゲーム風セット適用", false, 104)]
         public static void QuickApplyGameSet()
         {
             PCSSMenuSystem.ApplyGameSet();
         }
+        #endif
         
         #endregion
         
         #region コンテキストメニュー
         
+        #if PCSS_DEV
         [MenuItem("GameObject/lilToon PCSS/プリセット適用/リアル風", false, 10)]
         public static void ContextApplyRealisticSet()
         {
@@ -147,11 +152,13 @@ namespace lilToon.PCSS.Editor
                 PerformanceOptimizer.ShowWindow();
             }
         }
+        #endif
         
         #endregion
         
         #region アセットメニュー
         
+        #if PCSS_DEV
         [MenuItem("Assets/lilToon PCSS/マテリアルアップグレード", false, 10)]
         public static void AssetMaterialUpgrade()
         {
@@ -181,7 +188,7 @@ namespace lilToon.PCSS.Editor
                 PackageExporter.ExportPackage();
             }
         }
-        
+        #endif
         #endregion
         
         #region バリデーション
@@ -193,7 +200,11 @@ namespace lilToon.PCSS.Editor
         [MenuItem("GameObject/lilToon PCSS/パフォーマンス最適化", true)]
         public static bool ValidateGameObjectMenu()
         {
+            #if PCSS_DEV
             return Selection.gameObjects.Length > 0;
+            #else
+            return false;
+            #endif
         }
         
         [MenuItem("Assets/lilToon PCSS/マテリアルアップグレード", true)]
@@ -201,7 +212,11 @@ namespace lilToon.PCSS.Editor
         [MenuItem("Assets/lilToon PCSS/エクスポート", true)]
         public static bool ValidateAssetMenu()
         {
+            #if PCSS_DEV
             return Selection.GetFiltered<Object>(SelectionMode.Assets).Length > 0;
+            #else
+            return false;
+            #endif
         }
         
         #endregion
@@ -212,7 +227,7 @@ namespace lilToon.PCSS.Editor
     /// </summary>
     public class ShortcutHelpWindow : EditorWindow
     {
-        [MenuItem("Tools/lilToon PCSS/ショートカットヘルプ", false, 3)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/ショートカットヘルプ", false, 3)]
         public static void ShowWindow()
         {
             var window = GetWindow<ShortcutHelpWindow>("ショートカットヘルプ");

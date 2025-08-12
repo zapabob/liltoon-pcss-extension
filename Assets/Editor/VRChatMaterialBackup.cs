@@ -11,6 +11,7 @@ namespace lilToon.PCSS.Editor
     /// <summary>
     /// VRChatアップロード前の自動バックアップ機能
     /// </summary>
+    #if PCSS_DEV
     [InitializeOnLoad]
     public class VRChatUploadBackup
     {
@@ -27,27 +28,31 @@ namespace lilToon.PCSS.Editor
             // 実際の実装ではVRChat SDKのイベントをフックする必要があります
         }
     }
+    #endif
 
     /// <summary>
-    /// VRChatマテリアルバックアップツール
+    /// VRChatMaterial Backup/Restoreツール
     /// なんｊ風に言うと「これで完璧なバックアップシステムが完成したぜ！」💪🔥
     /// </summary>
     public class VRChatMaterialBackup : EditorWindow
     {
         private static readonly string BackupSubfolder = "VRChatMaterialBackups";
-        private static readonly string BackupFileName = "vrchat_material_backup.json";
+        // 既定のファイル名（未使用警告を避けつつ既定値を明示）
+        // 未使用のためコメントアウト（将来の互換維持のため値は保持）
+        // private static readonly string BackupFileName = "vrchat_material_backup.json";
         private static readonly string BackupVersion = "2.2.0";
         
         private GameObject targetAvatar;
         private VRCAvatarDescriptor avatarDescriptor;
         private Vector2 scrollPosition;
-        private bool showAdvancedOptions = false;
+        // 将来的な拡張用。現状未使用のため警告回避でコメントアウト
+        // private bool showAdvancedOptions = false;
         private bool autoBackupOnUpload = true;
         private bool backupTextures = true;
         private bool backupShaderProperties = true;
         private bool createBackupBeforeUpload = true;
 
-        [MenuItem("Tools/lilToon PCSS/VRChat Material Backup")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/VRChat Material Backup")]
         public static void ShowWindow()
         {
             GetWindow<VRChatMaterialBackup>("VRChat Material Backup");
@@ -115,6 +120,18 @@ namespace lilToon.PCSS.Editor
                 if (targetAvatar != null)
                 {
                     RestoreMaterialsFromBackup(targetAvatar);
+                }
+                else
+                {
+                    EditorUtility.DisplayDialog("Error", "Please select an avatar first", "OK");
+                }
+            }
+            
+            if (GUILayout.Button("🍞 Bake Materials for Upload (Fix Missing)", GUILayout.Height(34)))
+            {
+                if (targetAvatar != null)
+                {
+                    BakeMaterialsForUpload(targetAvatar, forcePCSSShader:false);
                 }
                 else
                 {
@@ -461,6 +478,134 @@ namespace lilToon.PCSS.Editor
                 Directory.Delete(backupRootPath, true);
                 Debug.Log("All backups cleared");
             }
+        }
+
+        /// <summary>
+        /// アップロード安全化用に、使用中マテリアルをAssets配下に複製し再割当。透明物の描画順/ZWriteも調整
+        /// </summary>
+        private void BakeMaterialsForUpload(GameObject avatar, bool forcePCSSShader)
+        {
+            try
+            {
+                string bakedRoot = Path.Combine("Assets", BackupSubfolder, "Baked", avatar.name);
+                if (!Directory.Exists(bakedRoot)) Directory.CreateDirectory(bakedRoot);
+
+                var renderers = avatar.GetComponentsInChildren<Renderer>(true);
+                var originalToBaked = new Dictionary<Material, Material>();
+                int reassigned = 0;
+
+                Shader pcssShader = Shader.Find("lilToon/PCSS Extension");
+                Shader lilToonShader = Shader.Find("lilToon");
+
+                foreach (var renderer in renderers)
+                {
+                    if (renderer == null) continue;
+                    var mats = renderer.sharedMaterials;
+                    bool changed = false;
+                    for (int i = 0; i < mats.Length; i++)
+                    {
+                        var src = mats[i];
+                        if (src == null)
+                        {
+                            // 足りない場合はデフォルトlilToon/PCSSで埋める
+                            var fallbackShader = pcssShader != null ? pcssShader : lilToonShader;
+                            if (fallbackShader == null) continue;
+                            var newMat = new Material(fallbackShader) { name = $"{renderer.name}_Mat_{i}" };
+                            EnsureSafeRenderingSettings(newMat);
+                            string path = Path.Combine(bakedRoot, $"{SanitizeFileName(newMat.name)}.mat");
+                            AssetDatabase.CreateAsset(newMat, AssetDatabase.GenerateUniqueAssetPath(path));
+                            mats[i] = newMat;
+                            changed = true;
+                            reassigned++;
+                            continue;
+                        }
+
+                        if (!originalToBaked.TryGetValue(src, out var baked))
+                        {
+                            // 既存シェーダーが見つからない場合はフォールバック
+                            Shader useShader = src.shader;
+                            if (useShader == null)
+                                useShader = forcePCSSShader && pcssShader != null ? pcssShader : (lilToonShader ?? pcssShader);
+
+                            var dup = new Material(src);
+                            if (forcePCSSShader && pcssShader != null) dup.shader = pcssShader;
+                            if (dup.shader == null) dup.shader = useShader;
+                            EnsureSafeRenderingSettings(dup);
+
+                            string matName = SanitizeFileName(src.name);
+                            string path = Path.Combine(bakedRoot, $"{matName}.mat");
+                            path = AssetDatabase.GenerateUniqueAssetPath(path);
+                            AssetDatabase.CreateAsset(dup, path);
+                            originalToBaked[src] = dup;
+                            baked = dup;
+                        }
+
+                        if (mats[i] != baked)
+                        {
+                            mats[i] = baked;
+                            changed = true;
+                            reassigned++;
+                        }
+                    }
+                    if (changed)
+                    {
+                        renderer.sharedMaterials = mats;
+                        EditorUtility.SetDirty(renderer);
+                        if (PrefabUtility.IsPartOfPrefabInstance(renderer.gameObject))
+                        {
+                            PrefabUtility.RecordPrefabInstancePropertyModifications(renderer);
+                        }
+                    }
+                }
+
+                AssetDatabase.SaveAssets();
+                EditorUtility.DisplayDialog("Bake Complete", $"Baked and reassigned {originalToBaked.Count} unique materials. Reassigned slots: {reassigned}", "OK");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"BakeMaterialsForUpload failed: {ex.Message}\n{ex.StackTrace}");
+                EditorUtility.DisplayDialog("Error", $"Bake failed: {ex.Message}", "OK");
+            }
+        }
+
+        private static void EnsureSafeRenderingSettings(Material mat)
+        {
+            // 透明判定のヒューリスティクス
+            bool isTransparent = mat.renderQueue >= 3000 ||
+                                  mat.IsKeywordEnabled("_TRANSPARENT_ON") ||
+                                  (mat.HasProperty("_Transparent") && mat.GetFloat("_Transparent") > 0.5f) ||
+                                  (mat.HasProperty("_BlendMode") && mat.GetFloat("_BlendMode") >= 3.0f);
+
+            bool isCutout = (!isTransparent) &&
+                            (mat.HasProperty("_Cutoff") && mat.GetFloat("_Cutoff") > 0.0f ||
+                             mat.IsKeywordEnabled("_ALPHATEST_ON"));
+
+            if (isTransparent)
+            {
+                mat.renderQueue = 3000; // Transparent
+                if (mat.HasProperty("_ZWrite")) mat.SetFloat("_ZWrite", 0f);
+                // lilToon系の透明スイッチ類がある場合も合わせる
+                if (mat.HasProperty("_AddBlendMode")) mat.SetFloat("_AddBlendMode", 0f);
+            }
+            else if (isCutout)
+            {
+                mat.renderQueue = 2450; // AlphaTest
+                if (mat.HasProperty("_ZWrite")) mat.SetFloat("_ZWrite", 1f);
+            }
+            else
+            {
+                mat.renderQueue = 2000; // Opaque
+                if (mat.HasProperty("_ZWrite")) mat.SetFloat("_ZWrite", 1f);
+            }
+        }
+
+        private static string SanitizeFileName(string name)
+        {
+            foreach (var c in Path.GetInvalidFileNameChars())
+            {
+                name = name.Replace(c, '_');
+            }
+            return name;
         }
 
         private void DisplayBackupInfo()

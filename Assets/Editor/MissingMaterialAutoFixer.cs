@@ -16,7 +16,7 @@ namespace lilToon.PCSS.Editor
     {
         private static readonly string BackupSubfolder = "VRChatMaterialBackups";
         
-        [MenuItem("Tools/lilToon PCSS/Missing Material AutoFixer")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Missing Material AutoFixer")]
         public static void ShowWindow()
         {
             GetWindow<MissingMaterialAutoFixer>("Missing Material AutoFixer");

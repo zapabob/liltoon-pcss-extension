@@ -30,7 +30,7 @@ namespace lilToonPCSS.Editor
         private bool enablePerformanceOptimization = true;
         private bool enableAdvancedMaskSystem = true;
         
-        [MenuItem("Tools/lilToon PCSS Extension/lilToon 2.1.7 Compatibility")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/lilToon 2.1.7 Compatibility")]
         public static void ShowWindow()
         {
             LilToon217CompatibilityChecker window = GetWindow<LilToon217CompatibilityChecker>("lilToon 2.1.7 Compatibility");

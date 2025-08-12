@@ -33,7 +33,7 @@ namespace lilToonPCSS.Editor
         private bool enableDynamicQualityAdjustment = true;
         private bool enableHardwareSpecificOptimization = true;
         
-        [MenuItem("Tools/lilToon PCSS Extension/ModularAvatar Competitive Advantage")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/ModularAvatar Competitive Advantage")]
         public static void ShowWindow()
         {
             ModularAvatarCompetitiveAdvantage window = GetWindow<ModularAvatarCompetitiveAdvantage>("ModularAvatar Competitive Advantage");
@@ -438,19 +438,9 @@ namespace lilToonPCSS.Editor
     }
     
     // 競合優位性コンポーネントクラス
-    public class AdvancedMenuController : MonoBehaviour
-    {
-        // 高度なメニュー制御機能
-    }
-    
     public class RealTimeOptimizer : MonoBehaviour
     {
         // リアルタイム最適化機能
-    }
-    
-    public class AdvancedBlendShapeController : MonoBehaviour
-    {
-        // 高度なブレンドシェイプ制御機能
     }
     
     public class IntelligentLODController : MonoBehaviour
@@ -461,11 +451,6 @@ namespace lilToonPCSS.Editor
     public class CompetitiveMenuSystem : MonoBehaviour
     {
         // 競合優位性メニューシステム
-    }
-    
-    public class AdvancedPresetSystem : MonoBehaviour
-    {
-        // 高度なプリセットシステム
     }
     
     public class IntelligentAutoSetup : MonoBehaviour

@@ -23,7 +23,7 @@ namespace lilToon.PCSS.Editor
         private List<Material> materialsToOptimize = new List<Material>();
         private List<Shader> shadersToOptimize = new List<Shader>();
 
-        [MenuItem("Tools/lilToon PCSS Extension/Shader Compilation Optimizer")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Shader Compilation Optimizer")]
         public static void ShowWindow()
         {
             ShaderCompilationOptimizer window = GetWindow<ShaderCompilationOptimizer>("Shader Compilation Optimizer");

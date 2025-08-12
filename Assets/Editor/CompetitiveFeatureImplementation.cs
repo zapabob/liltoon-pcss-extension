@@ -42,28 +42,17 @@ namespace lilToon.PCSS.Editor
         private bool enableReflectionBasedIntegration = true;
         private bool enableSafeDependencyManagement = true;
         
-        // lilToon 2.1.7対応設定
-        private bool enableLilToon217Features = true;
-        private bool enablePerPixelCalculation = true;
-        private bool enableDirectionAwareLighting = true;
-        private bool enableEnhancedRimLight = true;
-        private bool enableAdvancedSubsurfaceScattering = true;
         
-        // ModularAvatar最新機能設定
-        private bool enableAdvancedModularAvatarFeatures = true;
-        private bool enableDynamicParameterControl = true;
-        private bool enableRealTimeOptimization = true;
-        private bool enableAdvancedBlendShapeControl = true;
-        private bool enableIntelligentLODSystem = true;
-        
+       
         // 価格戦略設定
-        private float basicPrice = 800f;
+        private float basicPrice = 1000f;
         private float premiumPrice = 1200f;
         private float addonPrice = 300f;
         
+        
         // 機能差別化設定
         private bool enableRealTimeAdjustment = true;
-        private bool enableAutoOptimization = true;
+        
         private bool enablePresetSystem = true;
         
         // パフォーマンス最適化設定
@@ -73,7 +62,7 @@ namespace lilToon.PCSS.Editor
         private bool enableAlgorithmOptimization = true;
         private bool enableMemoryOptimization = true;
         
-        [MenuItem("Tools/lilToon PCSS Extension/Competitive Features")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Competitive Features")]
         public static void ShowWindow()
         {
             CompetitiveFeatureImplementation window = GetWindow<CompetitiveFeatureImplementation>("Competitive Features");
@@ -343,7 +332,7 @@ namespace lilToon.PCSS.Editor
                 }
                 
                              EditorUtility.DisplayDialog("Competitive Features Applied", 
-                 $"Successfully applied competitive features to {processedCount} materials.\n\nMarket Advantage:\n• lilToon 2.1.4 Support\n• VRC Light Volumes 2.0.0 Support\n• Quest Support\n• AMD GPU Optimization\n• Advanced Performance Optimization\n• Price Advantage: {((1500f - basicPrice) / 1500f) * 100f:F1}%", "OK");
+                 $"Successfully applied competitive features to {processedCount} materials.\n\nMarket Advantage:\n• lilToon 2.1.7 Support\n• VRC Light Volumes 2.0.0 Support\n• Quest Support\n• AMD GPU Optimization\n• Advanced Performance Optimization\n• Price Advantage: {((1500f - basicPrice) / 1500f) * 100f:F1}%", "OK");
             }
             catch (System.Exception e)
             {

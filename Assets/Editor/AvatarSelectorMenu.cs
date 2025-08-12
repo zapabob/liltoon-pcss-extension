@@ -40,7 +40,7 @@ namespace lilToon.PCSS.Editor
         private float customBias = 0.001f;
         private float customIntensity = 1.0f;
 
-        [MenuItem("Tools/lilToon PCSS Extension/lilToon PCSS Extension/🎯 Avatar Selector")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/🎯 Avatar Selector")]
         public static void ShowWindow()
         {
             var window = GetWindow<AvatarSelectorMenu>("Avatar Selector");

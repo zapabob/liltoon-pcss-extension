@@ -33,7 +33,7 @@ namespace lilToonPCSS.Editor
         private bool enableSafeDependencyManagement = true;
         private bool enableAdvancedErrorHandling = true;
         
-        [MenuItem("Tools/lilToon PCSS Extension/Modular Avatar Advanced Integration")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Modular Avatar Advanced Integration")]
         public static void ShowWindow()
         {
             ModularAvatarAdvancedIntegration window = GetWindow<ModularAvatarAdvancedIntegration>("Modular Avatar Advanced");

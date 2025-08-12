@@ -15,7 +15,7 @@ namespace lilToon.PCSS.Editor
         private bool showAdvancedSettings = false;
         private bool showPerformanceStats = false;
         
-        [MenuItem("Tools/lilToon PCSS Extension/Utilities/PCSS Extension/VRChat Optimization Settings")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Utilities/PCSS Extension/VRChat Optimization Settings")]
         public static void ShowWindow()
         {
             var window = GetWindow<VRChatOptimizationSettings>("VRChat Optimization");

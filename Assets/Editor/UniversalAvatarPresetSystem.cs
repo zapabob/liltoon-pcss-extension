@@ -3,6 +3,13 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Animations;
+using VRC.SDK3.Avatars.Components;
+
+// ↓ これをガードで囲う（今のCS0246の根本）
+#if HAS_MODULAR_AVATAR
+using nadena.dev.modular_avatar.core;
+#endif
 
 namespace lilToonPCSS.Editor
 {
@@ -97,9 +104,11 @@ namespace lilToonPCSS.Editor
 
                 // アニメーターコントローラーを作成
                 RuntimeAnimatorController animatorController = CreatePresetAnimator(presetName, presetData);
-                presetObject.GetComponent<Animator>().runtimeAnimatorController = animatorController;
+                var animator = presetObject.GetComponent<Animator>() ?? presetObject.AddComponent<Animator>();
+                animator.runtimeAnimatorController = animatorController;
 
                 // Modular Avatar Merge Animatorを設定
+                #if HAS_MODULAR_AVATAR
                 var mergeAnimator = presetObject.GetComponent<ModularAvatarMergeAnimator>();
                 if (mergeAnimator != null)
                 {
@@ -109,6 +118,7 @@ namespace lilToonPCSS.Editor
                     mergeAnimator.pathMode = ModularAvatarMergeAnimatorPathMode.Relative;
                     mergeAnimator.deleteAttachedAnimator = true;
                 }
+                #endif
 
                 // 成功メッセージ
                 EditorUtility.DisplayDialog($"{presetName} Preset Applied", 
@@ -137,17 +147,18 @@ namespace lilToonPCSS.Editor
         private static void AddModularAvatarComponents(GameObject obj, string presetName)
         {
             // Modular Avatar Merge Animatorを追加
-            var mergeAnimator = obj.AddComponent<ModularAvatarMergeAnimator>();
-            
-            // Modular Avatar Menu Itemを追加
+            #if HAS_MODULAR_AVATAR
+            var ma = obj.AddComponent<ModularAvatarMergeAnimator>();
             var menuItem = obj.AddComponent<ModularAvatarMenuItem>();
             if (menuItem != null)
             {
-                menuItem.control = new ModularAvatarMenuGroup();
-                menuItem.control.name = $"{presetName} Preset";
-                menuItem.control.targetObject = new AvatarObjectReference();
-                menuItem.control.targetObject.reference = obj;
+                menuItem.control = new ModularAvatarMenuGroup
+                {
+                    name = $"{presetName} Preset",
+                    targetObject = new AvatarObjectReference { reference = obj }
+                };
             }
+            #endif
         }
 
         /// <summary>

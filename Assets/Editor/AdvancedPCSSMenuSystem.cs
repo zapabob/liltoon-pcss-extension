@@ -100,7 +100,7 @@ namespace lilToon.PCSS.Editor
         
         #region メニューアイテム
         
-        [MenuItem("Tools/lilToon PCSS/高度な統合プリセット管理")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/高度な統合プリセット管理")]
         public static void ShowWindow()
         {
             var window = GetWindow<AdvancedPCSSMenuSystem>("PCSS高度統合システム");

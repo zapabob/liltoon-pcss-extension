@@ -16,53 +16,53 @@ namespace lilToon.PCSS.Editor
         private static readonly string[] HiddenMenus = new string[]
         {
             // 個別のプリセット適用メニュー（統合メニューに移行）
-            "Tools/lilToon PCSS/リアル風セット適用",
-            "Tools/lilToon PCSS/アニメ風セット適用", 
-            "Tools/lilToon PCSS/映画風セット適用",
-            "Tools/lilToon PCSS/ポートレート風セット適用",
-            "Tools/lilToon PCSS/ゲーム風セット適用",
+            "Tools/lilToon-PCSS-Extension/リアル風セット適用",
+            "Tools/lilToon-PCSS-Extension/アニメ風セット適用", 
+            "Tools/lilToon-PCSS-Extension/映画風セット適用",
+            "Tools/lilToon-PCSS-Extension/ポートレート風セット適用",
+            "Tools/lilToon-PCSS-Extension/ゲーム風セット適用",
             
             // 個別の管理メニュー（統合メニューに移行）
-            "Tools/lilToon PCSS/統合プリセット管理",
-            "Tools/lilToon PCSS/高度な統合プリセット管理",
+            "Tools/lilToon-PCSS-Extension/統合プリセット管理",
+            "Tools/lilToon-PCSS-Extension/高度な統合プリセット管理",
             
             // 重複するメニュー
-            "Tools/lilToon PCSS/外部ライト管理",
-            "Tools/lilToon PCSS/ModularAvatarライト制御",
-            "Tools/lilToon PCSS/ライトトグルメニュー",
-            "Tools/lilToon PCSS/マテリアルアップグレーダー",
-            "Tools/lilToon PCSS/マテリアルバックアップ",
-            "Tools/lilToon PCSS/マテリアル自動修復",
-            "Tools/lilToon PCSS/シェーダー自動変換",
-            "Tools/lilToon PCSS/パフォーマンス最適化",
-            "Tools/lilToon PCSS/パフォーマンス最適化メニュー",
-            "Tools/lilToon PCSS/シェーダーコンパイル最適化",
-            "Tools/lilToon PCSS/VRChat最適化設定",
-            "Tools/lilToon PCSS/VRChat式メニュー作成",
-            "Tools/lilToon PCSS/VRChatマテリアルバックアップ",
-            "Tools/lilToon PCSS/VRChatアップロード自動バックアップ",
-            "Tools/lilToon PCSS/自動マテリアルバックアップ",
-            "Tools/lilToon PCSS/セッション復元",
-            "Tools/lilToon PCSS/パッケージエクスポーター",
-            "Tools/lilToon PCSS/手動パッケージエクスポーター",
-            "Tools/lilToon PCSS/ワンクリックセットアップ",
-            "Tools/lilToon PCSS/競合機能実装",
-            "Tools/lilToon PCSS/競合セットアップウィザード",
-            "Tools/lilToon PCSS/アバター選択メニュー",
-            "Tools/lilToon PCSS/高度マスクシステム",
-            "Tools/lilToon PCSS/PhysBoneコライダー作成",
-            "Tools/lilToon PCSS/VRChatライトボリューム",
-            "Tools/lilToon PCSS/VRChatリムライトGUI",
-            "Tools/lilToon PCSS/エラーハンドラー",
-            "Tools/lilToon PCSS/コンパイルチェッカー",
-            "Tools/lilToon PCSS/メニュー名リファクターツール"
+            "Tools/lilToon-PCSS-Extension/外部ライト管理",
+            "Tools/lilToon-PCSS-Extension/ModularAvatarライト制御",
+            "Tools/lilToon-PCSS-Extension/ライトトグルメニュー",
+            "Tools/lilToon-PCSS-Extension/マテリアルアップグレーダー",
+            "Tools/lilToon-PCSS-Extension/Material Backup/Restore",
+            "Tools/lilToon-PCSS-Extension/マテリアル自動修復",
+            "Tools/lilToon-PCSS-Extension/シェーダー自動変換",
+            "Tools/lilToon-PCSS-Extension/パフォーマンス最適化",
+            "Tools/lilToon-PCSS-Extension/パフォーマンス最適化メニュー",
+            "Tools/lilToon-PCSS-Extension/シェーダーコンパイル最適化",
+            "Tools/lilToon-PCSS-Extension/VRChat最適化設定",
+            "Tools/lilToon-PCSS-Extension/VRChat式メニュー作成",
+            "Tools/lilToon-PCSS-Extension/VRChatMaterial Backup/Restore",
+            "Tools/lilToon-PCSS-Extension/VRChatアップロード自動バックアップ",
+            "Tools/lilToon-PCSS-Extension/自動Material Backup/Restore",
+            "Tools/lilToon-PCSS-Extension/セッション復元",
+            "Tools/lilToon-PCSS-Extension/パッケージエクスポーター",
+            "Tools/lilToon-PCSS-Extension/手動パッケージエクスポーター",
+            "Tools/lilToon-PCSS-Extension/ワンクリックセットアップ",
+            "Tools/lilToon-PCSS-Extension/競合機能実装",
+            "Tools/lilToon-PCSS-Extension/競合セットアップウィザード",
+            "Tools/lilToon-PCSS-Extension/アバター選択メニュー",
+            "Tools/lilToon-PCSS-Extension/高度マスクシステム",
+            "Tools/lilToon-PCSS-Extension/PhysBoneコライダー作成",
+            "Tools/lilToon-PCSS-Extension/VRChatライトボリューム",
+            "Tools/lilToon-PCSS-Extension/VRChatリムライトGUI",
+            "Tools/lilToon-PCSS-Extension/エラーハンドラー",
+            "Tools/lilToon-PCSS-Extension/コンパイルチェッカー",
+            "Tools/lilToon-PCSS-Extension/メニュー名リファクターツール"
         };
         
         #endregion
         
         #region メニュー整理
         
-        [MenuItem("Tools/lilToon PCSS/メニュー整理/古いメニューを非表示化", false, 100)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/メニュー整理/古いメニューを非表示化", false, 100)]
         public static void HideOldMenus()
         {
             var hiddenCount = 0;
@@ -80,7 +80,7 @@ namespace lilToon.PCSS.Editor
                 $"{hiddenCount}個の古いメニューを非表示化しました。\n統合メニューシステムをご利用ください。", "OK");
         }
         
-        [MenuItem("Tools/lilToon PCSS/メニュー整理/統合メニューを推奨", false, 101)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/メニュー整理/統合メニューを推奨", false, 101)]
         public static void ShowUnifiedMenuRecommendation()
         {
             EditorUtility.DisplayDialog("統合メニューシステム推奨",
@@ -97,7 +97,7 @@ namespace lilToon.PCSS.Editor
                 "古いメニューは段階的に非表示化されます。", "OK");
         }
         
-        [MenuItem("Tools/lilToon PCSS/メニュー整理/メニュー状態を確認", false, 102)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/メニュー整理/メニュー状態を確認", false, 102)]
         public static void CheckMenuStatus()
         {
             var report = new System.Text.StringBuilder();
@@ -190,7 +190,7 @@ namespace lilToon.PCSS.Editor
     /// </summary>
     public class MenuMigrationAssistant : EditorWindow
     {
-        [MenuItem("Tools/lilToon PCSS/メニュー移行アシスタント", false, 103)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/メニュー移行アシスタント", false, 103)]
         public static void ShowWindow()
         {
             var window = GetWindow<MenuMigrationAssistant>("メニュー移行アシスタント");
@@ -235,7 +235,7 @@ namespace lilToon.PCSS.Editor
                 DrawMigrationItem("マテリアルアップグレーダー", "マテリアル → マテリアルアップグレーダー");
                 DrawMigrationItem("パフォーマンス最適化", "パフォーマンス → パフォーマンス最適化");
                 DrawMigrationItem("VRChat最適化設定", "VRChat → VRChat最適化設定");
-                DrawMigrationItem("バックアップ管理", "バックアップ → 自動マテリアルバックアップ");
+                DrawMigrationItem("バックアップ管理", "バックアップ → 自動Material Backup/Restore");
                 DrawMigrationItem("エクスポート", "エクスポート → パッケージエクスポーター");
                 
                 EditorGUILayout.EndVertical();

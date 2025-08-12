@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Linq;
 
-#if MODULAR_AVATAR_AVAILABLE
+#if MODULAR_AVATAR
 // ModularAvatarのコア名前空間（必要に応じてパッケージ名を調整）
 using nadena.dev.modular_avatar.core;
 #endif
@@ -13,7 +13,7 @@ using nadena.dev.modular_avatar.core;
 /// </summary>
 public class ModularAvatarLightToggleMenu
 {
-    [MenuItem("Tools/lilToonPCSSExtension/Add Light Toggle")]
+    [MenuItem("Tools/lilToon-PCSS-Extension/Utilities/Modular Avatar/Add Light Toggle")]
     public static void AddLightToggle()
     {
         // 選択中のGameObject（アバターのルート）を取得
@@ -24,7 +24,7 @@ public class ModularAvatarLightToggleMenu
             return;
         }
 
-#if MODULAR_AVATAR_AVAILABLE
+#if MODULAR_AVATAR
         // 既存のLightToggleがあれば削除
         var old = avatar.transform.Find("LightToggle");
         if (old != null) Object.DestroyImmediate(old.gameObject);

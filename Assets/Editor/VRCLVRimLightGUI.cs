@@ -17,7 +17,7 @@ namespace lilToon.PCSS.Editor
         private Color vrcLightVolumeTint = Color.white;
         private float vrcLightVolumeDistanceFactor = 0.1f;
 
-        [MenuItem("Tools/lilToon PCSS Extension/VRC Light Volumes 2.0.0/Rim Light Settings")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/VRC Light Volumes 2.0.0/Rim Light Settings")]
         public static void ShowWindow()
         {
             VRCLVRimLightGUI window = GetWindow<VRCLVRimLightGUI>("VRCLV Rim Light");

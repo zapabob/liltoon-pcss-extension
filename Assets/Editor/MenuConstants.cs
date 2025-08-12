@@ -10,7 +10,7 @@ namespace lilToonPCSS.Editor
     public static class MenuConstants
     {
         // メインルート
-        public const string MENU_ROOT = "Tools/lilToon PCSS Extension/";
+        public const string MENU_ROOT = "Tools/lilToon-PCSS-Extension/";
         
         // 主要機能
         public const string MATERIALS_MENU = MENU_ROOT + "Materials/";

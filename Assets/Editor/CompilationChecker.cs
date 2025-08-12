@@ -11,7 +11,7 @@ namespace lilToon.PCSS.Editor
     /// </summary>
     public static class CompilationChecker
     {
-        [MenuItem("Tools/lilToon PCSS Extension/Check Compilation Errors")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Check Compilation Errors")]
         public static void CheckCompilationErrors()
         {
             Debug.Log("=== lilToon PCSS Extension Compilation Check ===");

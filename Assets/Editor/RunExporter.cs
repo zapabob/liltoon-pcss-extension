@@ -8,7 +8,7 @@ namespace lilToon.PCSS.Editor
     /// </summary>
     public class RunExporter
     {
-        [MenuItem("Tools/lilToon PCSS/Package/Run Package Exporter")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Package/Run Package Exporter")]
         public static void Run()
         {
             PackageExporter.ExportAndGenerateReleaseNotes();

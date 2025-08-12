@@ -2,6 +2,8 @@ Shader "lilToon/PCSS Extension"
 {
     Properties
     {
+        // lilToon migration compatibility
+        [HideInInspector] _lilToonVersion ("lilToonVersion", Float) = 0
         // --- lilToon 2.1.7標準プロパティ ---
         _MainTex ("Main Texture", 2D) = "white" {}
         _Color ("Color", Color) = (1,1,1,1)
@@ -132,6 +134,8 @@ Shader "lilToon/PCSS Extension"
             #pragma multi_compile_fwdbase
             #pragma multi_compile_fog
             #pragma multi_compile_instancing
+            // lilToon互換のためのアルファテストキーワードを追加
+            #pragma shader_feature_local _ _ALPHATEST_ON
             #pragma shader_feature_local _ _USEPCSS_ON
             #pragma shader_feature_local _ _USESHADOW_ON
             #pragma shader_feature_local _ _USESHADOW2_ON
@@ -164,6 +168,7 @@ Shader "lilToon/PCSS Extension"
                 #define _SHADOWCOLORTEX
             #endif
             
+            // lilToon標準の変数やパイプライン前提に合わせた順序でPCSSインクルード
             #include "Includes/lil_pcss_common.hlsl"
             #if defined(_USE_OPTIMIZED_PCSS_ON)
                 #include "Includes/lil_pcss_shadows_optimized.hlsl"
@@ -350,6 +355,11 @@ Shader "lilToon/PCSS Extension"
                 #else
                     col = _Color;
                 #endif
+
+                // lilToon慣習: アルファテスト有効時はForwardでもclipを適用
+                #if defined(_ALPHATEST_ON)
+                    clip(col.a - _Cutoff);
+                #endif
                 
                 // 照明方向の取得
                 float3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
@@ -371,17 +381,18 @@ Shader "lilToon/PCSS Extension"
                     #else
                         // フル機能版
                         shadow1 = SHADOW_ATTENUATION(i);
-                        float samples = _LocalPCSSSamples;
-                        float quality = _PCSSQualityLevel;
-                        if (quality < 1.0f) samples = max(8.0, samples * 0.5);
-                        if (quality > 1.0f) samples = min(32.0, samples * 1.5);
-                        if (quality > 2.0f) samples = min(64.0, samples * 2.0);
+                        float samples = max(1.0, _LocalPCSSSamples);
+                        int quality = (int)round(_PCSSQualityLevel);
+                        if (quality == 0) samples = max(8.0, samples * 0.5);   // Low
+                        if (quality == 2) samples = min(32.0, samples * 1.5);  // High
+                        if (quality == 3) samples = min(64.0, samples * 2.0);  // Ultra
                         #if defined(_USE_OPTIMIZED_PCSS_ON)
                             shadow1 = PCSS_Optimized(shadow1, i.pos.z, _LocalPCSSFilterRadius, _LocalPCSSLightSize, samples);
                         #else
                             shadow1 = PCSS(shadow1, i.pos.z, _LocalPCSSFilterRadius, _LocalPCSSLightSize, samples);
                         #endif
-                        shadow1 = lerp(1.0, shadow1, _PCSSIntensity);
+                        // D3D11 の型推論で失敗しないよう明示的に float 化
+                        shadow1 = lerp(1.0f, shadow1, (float)_PCSSIntensity);
                     #endif
                 #elif defined(_USESHADOW_ON)
                     shadow1 = SHADOW_ATTENUATION(i);
@@ -402,9 +413,11 @@ Shader "lilToon/PCSS Extension"
                     shadow3 = smoothstep(0.0, _Shadow3Blur, shadow3);
                 #endif
                 
-                // SDF Face Shadowの適用
-                float sdfFaceShadow = CalculateSDFFaceShadow(i.uv, i.worldNormal);
-                shadow1 *= sdfFaceShadow;
+                // SDF Face Shadowの適用（キーワード連動）
+                #if defined(_USESDFFACESHADOW_ON)
+                    float sdfFaceShadow = CalculateSDFFaceShadow(i.uv, i.worldNormal);
+                    shadow1 *= sdfFaceShadow;
+                #endif
                 
                 // 最終的な影の合成
                 float finalShadow = shadow1 * shadow2 * shadow3;
@@ -433,9 +446,11 @@ Shader "lilToon/PCSS Extension"
                     col.rgb *= lightVolumeColor;
                 #endif
                 
-                // LTCGIの適用
-                float3 ltcgiColor = CalculateLTCGI(i.worldPos, i.worldNormal);
-                col.rgb *= ltcgiColor;
+                // LTCGIの適用（キーワード連動）
+                #if defined(_USELTCGI_ON)
+                    float3 ltcgiColor = CalculateLTCGI(i.worldPos, i.worldNormal);
+                    col.rgb *= ltcgiColor;
+                #endif
                 
                 // Backlightの適用
                 float3 backlightColor = CalculateBacklight(i.worldNormal, worldLightDir);
@@ -510,6 +525,7 @@ Shader "lilToon/PCSS Extension"
             ENDCG
         }
     }
+    // lilToon フォールバック互換：標準トゥーンに落とす
     FallBack "lilToon"
     CustomEditor "lilToon.PCSS.Editor.LilToonPCSSShaderGUI"
 } 

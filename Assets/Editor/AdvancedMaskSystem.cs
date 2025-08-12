@@ -31,7 +31,7 @@ namespace lilToon.PCSS.Editor
         private string[] presetNames = { "Default", "Anime Style", "Realistic", "Custom" };
         private int selectedPreset = 0;
 
-        [MenuItem("Tools/lilToon PCSS Extension/Advanced Mask System")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Advanced Mask System")]
         public static void ShowWindow()
         {
             AdvancedMaskSystem window = GetWindow<AdvancedMaskSystem>("Advanced Mask System");

@@ -110,11 +110,8 @@
         SAMPLER(sampler_CameraDepthTexture);
     #endif
 #elif defined(LIL_PCSS_BUILTIN_AVAILABLE)
-    // Built-in Render Pipeline用のテクスチャ宣言
-    #if !defined(_ShadowMapTexture) && !defined(LIL_PCSS_SHADOWMAP_DECLARED)
-        #define LIL_PCSS_SHADOWMAP_DECLARED
-        UNITY_DECLARE_SHADOWMAP(_ShadowMapTexture);
-    #endif
+    // Built-in Render Pipelineでは Unity の標準インクルードが宣言を行うため、ここでは宣言しない
+    // 再定義を避けるため、明示的な宣言は行わない
 #endif
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -146,8 +143,73 @@
 #define LIL_PCSS_VRCLV_RIM_LIGHT_DEFAULT_INTENSITY 1.0
 
 //----------------------------------------------------------------------------------------------------------------------
+// PCSS プロパティ（不足時の安全宣言）
+//----------------------------------------------------------------------------------------------------------------------
+#if !defined(_PCSSIntensity) && !defined(LIL_PCSS_INTENSITY_DEFINED)
+    #define LIL_PCSS_INTENSITY_DEFINED
+    float _PCSSIntensity;
+#endif
+
+//----------------------------------------------------------------------------------------------------------------------
 // ユーティリティ関数 (lilToon 2.1.7対応)
 //----------------------------------------------------------------------------------------------------------------------
+
+// HLSL/CG 互換用 bitfieldReverse ラッパー
+// - D3D11 などのデスクトップ環境では HLSL の reversebits を使用
+// - 非対応環境ではビットスワップで 32bit 反転を実装
+uint LIL_PCSS_BitReverse32_Software(uint v)
+{
+    v = ((v >> 1) & 0x55555555u) | ((v & 0x55555555u) << 1);
+    v = ((v >> 2) & 0x33333333u) | ((v & 0x33333333u) << 2);
+    v = ((v >> 4) & 0x0F0F0F0Fu) | ((v & 0x0F0F0F0Fu) << 4);
+    v = ((v >> 8) & 0x00FF00FFu) | ((v & 0x00FF00FFu) << 8);
+    v = (v >> 16) | (v << 16);
+    return v;
+}
+
+uint bitfieldReverse(uint x)
+{
+#if defined(SHADER_API_DESKTOP) || defined(SHADER_API_D3D11) || defined(SHADER_API_XBOXONE) || defined(SHADER_API_PSSL)
+    return reversebits(x);
+#else
+    return LIL_PCSS_BitReverse32_Software(x);
+#endif
+}
+
+uint2 bitfieldReverse(uint2 x)
+{
+    return uint2(bitfieldReverse(x.x), bitfieldReverse(x.y));
+}
+
+uint3 bitfieldReverse(uint3 x)
+{
+    return uint3(bitfieldReverse(x.x), bitfieldReverse(x.y), bitfieldReverse(x.z));
+}
+
+uint4 bitfieldReverse(uint4 x)
+{
+    return uint4(bitfieldReverse(x.x), bitfieldReverse(x.y), bitfieldReverse(x.z), bitfieldReverse(x.w));
+}
+
+int bitfieldReverse(int x)
+{
+    return asint(bitfieldReverse(asuint(x)));
+}
+
+int2 bitfieldReverse(int2 x)
+{
+    return int2(bitfieldReverse(x.x), bitfieldReverse(x.y));
+}
+
+int3 bitfieldReverse(int3 x)
+{
+    return int3(bitfieldReverse(x.x), bitfieldReverse(x.y), bitfieldReverse(x.z));
+}
+
+int4 bitfieldReverse(int4 x)
+{
+    return int4(bitfieldReverse(x.x), bitfieldReverse(x.y), bitfieldReverse(x.z), bitfieldReverse(x.w));
+}
 
 // 影の品質に基づくサンプル数調整
 float GetAdjustedSampleCount(float baseSamples, float qualityLevel)

@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.5.0] - 2025-08-08
+### Added
+- **nHaruka PCSSForVRC互換システム**: PhysBone制御ライトシステムの完全実装
+- **PhysBoneLightController**: リアルタイム影制御、距離制御、自動検出機能
+- **ModularAvatarPCSSSetupWizard**: ワンクリックセットアップウィザード
+- **UnifiedPCSSMenuSystem**: 統合メニューシステム
+- **リアルタイム影制御**: アニメ・映画風の高品質な影表現
+- **距離制御**: プレイヤーからの距離に基づくライトのフェード制御
+- **競合製品互換性**: 他のPCSSシステムとの互換性
+- **高度なプリセット管理**: カスタムプリセットの作成・管理
+
+### Changed
+- バージョンを2.5.0に更新
+- package.jsonの依存関係を最新版に更新
+- 実装ログの自動保存機能を強化
+
 ## [1.5.10] - 2025-07-04
 ### Changed
 - PhysBoneEmissiveController設計思想・AutoFIX完全対応・命名規則徹底・MaterialPropertyBlock活用・ModularAvatar/PhysBone連携リファクタリング

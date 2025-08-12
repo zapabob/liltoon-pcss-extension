@@ -14,19 +14,21 @@ using UnityEditor;
 
 namespace lilToon.PCSS.Editor
 {
+    #if PCSS_DEV
     public class PhysBoneLightController : MonoBehaviour
     {
         public Light targetLight;
         public Transform lightOrigin;
-#if VRCHAT_SDK_AVAILABLE
+    #if VRCHAT_SDK_AVAILABLE
         public VRCPhysBone targetPhysBone;
-#endif
+    #endif
     }
+    #endif
 
     public class PerformanceOptimizerMenu : EditorWindow
     {
-        private const string MenuPath = "Tools/lilToon PCSS Extension/Setup Performance Tuner";
-        private const string PhysBoneMenuPath = "Tools/lilToon PCSS Extension/Setup PhysBone Light Controller";
+        private const string MenuPath = "Tools/lilToon-PCSS-Extension/Setup Performance Tuner";
+        private const string PhysBoneMenuPath = "Tools/lilToon-PCSS-Extension/Setup PhysBone Light Controller";
         private const string GameObjectName = "PCSS Performance Tuner";
 
         [MenuItem(MenuPath)]
@@ -54,6 +56,7 @@ namespace lilToon.PCSS.Editor
             Debug.Log($"Successfully set up '{GameObjectName}'. The intelligent performance tuner is now active in your scene.");
         }
 
+        #if PCSS_DEV
         [MenuItem(PhysBoneMenuPath)]
         public static void SetupPhysBoneLightController()
         {
@@ -65,19 +68,19 @@ namespace lilToon.PCSS.Editor
             }
 
             Animator animator = selectedObject.GetComponent<Animator>();
-#if VRCHAT_SDK_AVAILABLE
+        #if VRCHAT_SDK_AVAILABLE
             if (selectedObject.GetComponent<VRCAvatarDescriptor>() == null)
             {
                 EditorUtility.DisplayDialog("Error", "The selected object does not appear to be a VRChat avatar. Please select the root of your avatar.", "OK");
                 return;
             }
-#else
+        #else
             if (animator == null || !animator.isHuman)
             {
                 EditorUtility.DisplayDialog("Error", "The selected object does not appear to be a humanoid avatar. Please select the root of your avatar.", "OK");
                 return;
             }
-#endif
+        #endif
 
             Transform headBone = animator.GetBoneTransform(HumanBodyBones.Head);
             if (headBone == null)
@@ -109,7 +112,7 @@ namespace lilToon.PCSS.Editor
             controller.lightOrigin = headBone;
 
             // Try to find a hair PhysBone
-#if VRCHAT_SDK_AVAILABLE
+        #if VRCHAT_SDK_AVAILABLE
             var physBones = selectedObject.GetComponentsInChildren<VRC.SDK3.Dynamics.PhysBone.Components.VRCPhysBone>(true);
             var hairBone = System.Array.Find(physBones, pb => pb.name.ToLower().Contains("hair"));
             if (hairBone != null)
@@ -117,10 +120,61 @@ namespace lilToon.PCSS.Editor
                 controller.targetPhysBone = hairBone;
                 Debug.Log($"Found hair PhysBone: {hairBone.name}");
             }
-#endif
+        #endif
 
             Selection.activeObject = lightObject;
-            Debug.Log("PhysBone Light Controller setup complete. The light will now follow the avatar's head movement.");
+            Debug.Log("PhysBone Light Controller setup complete. The light will now follow the avatar's head movement.
+            Note: This is a development-only feature and should be cleaned before VRChat upload.");
+        }
+        #endif
+
+        [MenuItem("Tools/lilToon-PCSS-Extension/VRChat向けクリーンアップ/不許可コンポーネント削除 (Scene)", false, 80)]
+        public static void CleanupForVRChat()
+        {
+            var root = Selection.activeGameObject;
+            if (root == null)
+            {
+                EditorUtility.DisplayDialog("Cleanup", "Please select your avatar root.", "OK");
+                return;
+            }
+
+            int removed = 0;
+
+            // Remove our dev-only PhysBoneLightController if present
+            var devControllers = root.GetComponentsInChildren<Component>(true)
+                .Where(c => c != null && c.GetType().Name == "PhysBoneLightController").ToArray();
+            foreach (var c in devControllers)
+            {
+                Undo.DestroyObjectImmediate(c);
+                removed++;
+            }
+
+            // Remove our runtime ModularAvatarPCSSController from avatar (not allowed by VRChat)
+            var runtimeControllers = root.GetComponentsInChildren<Component>(true)
+                .Where(c => c != null && c.GetType().FullName == "lilToon.PCSS.Runtime.ModularAvatarPCSSController").ToArray();
+            foreach (var c in runtimeControllers)
+            {
+                Undo.DestroyObjectImmediate(c);
+                removed++;
+            }
+
+            // Remove any Light components under the avatar (VRChat AutoFix may reject)
+            var lights = root.GetComponentsInChildren<Light>(true);
+            foreach (var l in lights)
+            {
+                Undo.DestroyObjectImmediate(l.gameObject);
+                removed++;
+            }
+
+            // Remove our auto light group if exists
+            var autoGroup = root.transform.Find("PCSS External Lights (Auto)");
+            if (autoGroup != null)
+            {
+                Undo.DestroyObjectImmediate(autoGroup.gameObject);
+                removed++;
+            }
+
+            EditorUtility.DisplayDialog("Cleanup", $"Removed {removed} disallowed components/objects for VRChat.", "OK");
         }
     }
 } 

@@ -1,8 +1,11 @@
+// このコンポーネントはワールド専用。アバターに含めるとVRChat AutoFixに弾かれるため
+// エディタ・開発専用に限定し、ビルドに含めない
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEngine.Rendering;
 using System.Collections.Generic;
 using System.Linq;
-#if VRCHAT_SDK_AVAILABLE
+#if VRC_SDK_VRCSDK3
 using VRC.SDKBase;
 using VRC.SDK3.Avatars.Components;
 #endif
@@ -10,8 +13,8 @@ using VRC.SDK3.Avatars.Components;
 namespace lilToon.PCSS
 {
     /// <summary>
-    /// VRC Light Volumes統合シスチE��
-    /// REDSIMのVRC Light VolumesシスチE��との統合を提侁E
+    /// VRC Light Volumes統合シスチE��
+    /// REDSIMのVRC Light VolumesシスチE��との統合を提侁E
     /// </summary>
     public class VRCLightVolumesIntegration : MonoBehaviour
     {
@@ -31,13 +34,14 @@ namespace lilToon.PCSS
         private static readonly int _VRCLightVolumeWorldToLocal = Shader.PropertyToID("_VRCLightVolumeWorldToLocal");
         private static readonly int _VRCLightVolumeIntensity = Shader.PropertyToID("_VRCLightVolumeIntensity");
         private static readonly int _VRCLightVolumeTint = Shader.PropertyToID("_VRCLightVolumeTint");
+        private static readonly int _VRCLightVolumeDistanceFactor = Shader.PropertyToID("_VRCLightVolumeDistanceFactor");
         
         private List<Renderer> targetRenderers = new List<Renderer>();
         private List<Material> pcssMaterials = new List<Material>();
         private float lastUpdateTime;
         private Camera mainCamera;
         
-        // VRC Light Volumes検�E用のキーワーチE
+        // VRC Light Volumes検�E用のキーワーチE
         private static readonly string[] LIGHT_VOLUME_KEYWORDS = {
             "LIGHT_VOLUMES",
             "VRC_LIGHT_VOLUMES",
@@ -53,6 +57,7 @@ namespace lilToon.PCSS
         private void Update()
         {
             if (!enableVRCLightVolumes) return;
+            if (!Application.isPlaying) return;
             
             if (Time.time - lastUpdateTime > updateFrequency)
             {
@@ -71,7 +76,7 @@ namespace lilToon.PCSS
         {
             float currentFPS = 1f / Time.deltaTime;
             
-            // フレームレートが低下した場合�E自動最適匁E
+            // フレームレートが低下した場合�E自動最適匁E
             if (currentFPS < 45f && !enableMobileOptimization)
             {
                 Debug.LogWarning("VRC Light Volumes: Low framerate detected. Enabling mobile optimization.");
@@ -79,7 +84,7 @@ namespace lilToon.PCSS
                 ApplyMobileOptimizations();
             }
             
-            // Quest環墁E��の追加最適匁E
+            // Quest環墁E��の追加最適匁E
             if (IsQuestEnvironment() && lightVolumeIntensity > 0.5f)
             {
                 lightVolumeIntensity = Mathf.Min(lightVolumeIntensity, 0.5f);
@@ -88,7 +93,7 @@ namespace lilToon.PCSS
         }
         
         /// <summary>
-        /// Quest環墁E���E
+        /// Quest環墁E���E
         /// </summary>
         private bool IsQuestEnvironment()
         {
@@ -105,7 +110,7 @@ namespace lilToon.PCSS
             updateFrequency = Mathf.Max(updateFrequency, 0.2f);
             lightVolumeIntensity *= 0.8f;
             
-            // VRChat Avatar Culling設定を老E�E
+            // VRChat Avatar Culling設定を老E�E
             ApplyVRChatCullingOptimizations();
         }
         
@@ -119,7 +124,7 @@ namespace lilToon.PCSS
             
             if (avatarCount > 10)
             {
-                // アバターが多い場合�ELight Volume距離を短縮
+                // アバターが多い場合�ELight Volume距離を短縮
                 maxLightVolumeDistance = Mathf.Min(maxLightVolumeDistance, 30);
                 lightVolumeIntensity *= 0.9f;
             }
@@ -149,7 +154,7 @@ namespace lilToon.PCSS
         }
         
         /// <summary>
-        /// アバターのレンダラーかチェチE��
+        /// アバターのレンダラーかチェチE��
         /// </summary>
         private bool IsAvatarRenderer(Renderer renderer)
         {
@@ -159,13 +164,13 @@ namespace lilToon.PCSS
         }
         
         /// <summary>
-        /// VRC Light Volumesの自動検�Eと初期匁E
+        /// VRC Light Volumesの自動検�Eと初期匁E
         /// </summary>
         public void DetectAndInitialize()
         {
             if (!autoDetectLightVolumes) return;
             
-            // シーン冁E�ELight Volume Managerを検索
+            // シーン冁E�ELight Volume Managerを検索
             var lightVolumeManagers = FindObjectsOfType<MonoBehaviour>()
                 .Where(mb => mb.GetType().Name.Contains("LightVolumeManager") || 
                             mb.GetType().Name.Contains("VRCLightVolume"))
@@ -177,12 +182,12 @@ namespace lilToon.PCSS
                 InitializeLightVolumeSupport();
             }
             
-            // PCSS対応�EチE��アルを検索
+            // PCSS対応�EチE��アルを検索
             DetectPCSSMaterials();
         }
         
         /// <summary>
-        /// PCSS対応�EチE��アルの検�E
+        /// PCSS対応�EチE��アルの検�E
         /// </summary>
         private void DetectPCSSMaterials()
         {
@@ -207,7 +212,7 @@ namespace lilToon.PCSS
         }
         
         /// <summary>
-        /// マテリアルがPCSS対応かチェチE��
+        /// マテリアルがPCSS対応かチェチE��
         /// </summary>
         private bool IsPCSSMaterial(Material material)
         {
@@ -220,7 +225,7 @@ namespace lilToon.PCSS
         }
         
         /// <summary>
-        /// Light Volume サポ�Eト�E初期匁E
+        /// Light Volume サポ�Eト�E初期匁E
         /// </summary>
         private void InitializeLightVolumeSupport()
         {
@@ -251,24 +256,33 @@ namespace lilToon.PCSS
             {
                 if (material == null) continue;
                 
-                // VRC Light Volume パラメータを設宁E
-                material.SetFloat(_VRCLightVolumeIntensity, lightVolumeIntensity);
-                material.SetColor(_VRCLightVolumeTint, lightVolumeTint);
+                // VRC Light Volume パラメータを安全に設定（存在チェック）
+                if (material.HasProperty(_VRCLightVolumeIntensity))
+                {
+                    material.SetFloat(_VRCLightVolumeIntensity, lightVolumeIntensity);
+                }
+                if (material.HasProperty(_VRCLightVolumeTint))
+                {
+                    material.SetColor(_VRCLightVolumeTint, lightVolumeTint);
+                }
                 
-                // 距離ベ�Eスの最適匁E
+                // 距離ベ�Eスの最適匁E
                 var renderer = targetRenderers.FirstOrDefault(r => r.materials.Contains(material));
                 if (renderer != null)
                 {
                     float distance = Vector3.Distance(cameraPos, renderer.transform.position);
                     float distanceFactor = Mathf.Clamp01(1.0f - (distance / maxLightVolumeDistance));
                     
-                    material.SetFloat("_VRCLightVolumeDistanceFactor", distanceFactor);
+                    if (material.HasProperty(_VRCLightVolumeDistanceFactor))
+                    {
+                        material.SetFloat(_VRCLightVolumeDistanceFactor, distanceFactor);
+                    }
                 }
             }
         }
         
         /// <summary>
-        /// モバイルプラチE��フォームの判宁E
+        /// モバイルプラチE��フォームの判宁E
         /// </summary>
         private bool IsMobilePlatform()
         {
@@ -278,7 +292,7 @@ namespace lilToon.PCSS
         }
         
         /// <summary>
-        /// VRC Light Volumes機�Eの有効/無効刁E��替ぁE
+        /// VRC Light Volumes機�Eの有効/無効刁E��替ぁE
         /// </summary>
         public void SetVRCLightVolumesEnabled(bool enabled)
         {
@@ -345,7 +359,7 @@ namespace lilToon.PCSS
         
         private void OnDestroy()
         {
-            // クリーンアチE�E
+            // クリーンアチE�E
             Shader.DisableKeyword("VRC_LIGHT_VOLUMES_ENABLED");
             Shader.DisableKeyword("VRC_LIGHT_VOLUMES_MOBILE");
         }
@@ -363,4 +377,5 @@ namespace lilToon.PCSS
         public float LightVolumeIntensity;
         public bool IsMobileOptimized;
     }
-} 
+}
+#endif

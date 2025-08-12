@@ -55,8 +55,8 @@ namespace lilToon.PCSS
         
         private static ScriptableObject CreateExpressionParameters(string parameterPrefix)
         {
-            // VRChat Expression Parameters用のScriptableObjectを作�E
-            // 実際のVRCSDKが無ぁE��合�E代替実裁E
+            // VRChat Expression Parameters用のScriptableObjectを作�E
+            // 実際のVRCSDKが無ぁE��合�E代替実裁E
             
             var parametersAsset = ScriptableObject.CreateInstance<ScriptableObject>();
             
@@ -68,7 +68,7 @@ namespace lilToon.PCSS
         
         private static ScriptableObject CreateExpressionMenu(Material targetMaterial, string parameterPrefix)
         {
-            // VRChat Expression Menu用のScriptableObjectを作�E
+            // VRChat Expression Menu用のScriptableObjectを作�E
             var menuAsset = ScriptableObject.CreateInstance<ScriptableObject>();
             
             string assetPath = $"{MENU_FOLDER}/{targetMaterial.name}_PCSS_Menu.asset";
@@ -324,7 +324,7 @@ namespace lilToon.PCSS
             EditorUtility.SetDirty(clip);
         }
         
-        [MenuItem("Tools/lilToon PCSS Extension/Utilities/PCSS Extension/Create VRChat Expression Menu")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Utilities/PCSS Extension/Create VRChat Expression Menu")]
         public static void CreateVRChatExpressionMenuFromMenu()
         {
             var selectedMaterials = Selection.GetFiltered<Material>(SelectionMode.Assets);
@@ -345,7 +345,7 @@ namespace lilToon.PCSS
             }
         }
         
-        [MenuItem("Tools/lilToon PCSS Extension/Utilities/PCSS Extension/Create VRChat Expression Menu", true)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Utilities/PCSS Extension/Create VRChat Expression Menu", true)]
         public static bool ValidateCreateVRChatExpressionMenuFromMenu()
         {
             var selectedMaterials = Selection.GetFiltered<Material>(SelectionMode.Assets);

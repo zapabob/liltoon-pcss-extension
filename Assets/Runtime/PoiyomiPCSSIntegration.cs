@@ -10,7 +10,7 @@ using VRC.SDK3.Avatars.Components;
 using UnityEditor;
 #endif
 
-// PCSSUtilities の完�E修飾名を使用してエラーを回避
+// PCSSUtilities の完�E修飾名を使用してエラーを回避
 using PCSSUtils = lilToon.PCSS.Runtime.PCSSUtilities;
 
 namespace lilToon.PCSS.Runtime
@@ -227,15 +227,64 @@ namespace lilToon.PCSS.Runtime
         }
         
         /// <summary>
-        /// Get VRChat parameter value (placeholder for actual VRChat integration)
+        /// Get VRChat parameter value.
+        /// EditorではアバターのExpressionParametersから既定値を参照し、
+        /// ランタイムでは内部ディクショナリを参照する。
         /// </summary>
         private float GetVRChatParameter(string parameterName, float defaultValue)
         {
-            // In actual VRChat integration, this would get the parameter from the avatar
-            // For now, return the stored value or default
-            return expressionParameters.ContainsKey(parameterName) ? 
-                   expressionParameters[parameterName] : defaultValue;
+#if UNITY_EDITOR && VRCHAT_SDK_AVAILABLE
+            var avatar = GetComponentInParent<VRCAvatarDescriptor>();
+            if (avatar != null && avatar.expressionParameters != null)
+            {
+                var ep = avatar.expressionParameters;
+                if (ep.parameters != null)
+                {
+                    var p = ep.parameters.FirstOrDefault(x => x != null && x.name == parameterName);
+                    if (p != null)
+                    {
+                        // Bool は 0/1、Float/Int は defaultValue を返す
+                        switch (p.valueType)
+                        {
+                            case VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionParameters.ValueType.Bool:
+                                return Mathf.Approximately(p.defaultValue, 0f) ? 0f : 1f;
+                            case VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionParameters.ValueType.Float:
+                            case VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionParameters.ValueType.Int:
+                                return p.defaultValue;
+                        }
+                    }
+                }
+            }
+#endif
+            return expressionParameters.ContainsKey(parameterName) ? expressionParameters[parameterName] : defaultValue;
         }
+
+#if UNITY_EDITOR && VRCHAT_SDK_AVAILABLE
+        /// <summary>
+        /// アバターのExpressionParametersからPCSS関連プレフィックスの既定値を読み込み、即時反映する。
+        /// </summary>
+        [UnityEditor.MenuItem("Tools/lilToon-PCSS-Extension/Poiyomi/Sync From Avatar Expression Parameters", false, 1200)]
+        private static void SyncFromAvatarExpression()
+        {
+            var selected = UnityEditor.Selection.activeGameObject;
+            if (selected == null)
+            {
+                UnityEditor.EditorUtility.DisplayDialog("PCSS", "対象のオブジェクトを選択してください。", "OK");
+                return;
+            }
+            var integration = selected.GetComponentInParent<PoiyomiPCSSIntegration>();
+            if (integration == null)
+            {
+                UnityEditor.EditorUtility.DisplayDialog("PCSS", "PoiyomiPCSSIntegration が見つかりません。", "OK");
+                return;
+            }
+            integration.InitializePCSSIntegration();
+            integration.ApplyPCSSSettings();
+            UnityEditor.EditorUtility.SetDirty(integration);
+            UnityEditor.AssetDatabase.SaveAssets();
+            Debug.Log("[PoiyomiPCSSIntegration] Synced from avatar expression parameters.");
+        }
+#endif
         
         /// <summary>
         /// Set VRChat parameter value (for testing/simulation)
@@ -320,7 +369,7 @@ namespace lilToon.PCSS.Runtime
         
         // Unity Editor integration
         #if UNITY_EDITOR
-        [UnityEditor.MenuItem("GameObject/lilToon PCSS/Add Poiyomi PCSS Integration", false, 10)]
+        [UnityEditor.MenuItem("GameObject/lilToon PCSS/Add Poiyomi PCSS Integration (Runtime)", false, 10)]
         private static void AddPoiyomiPCSSIntegration()
         {
             var selected = UnityEditor.Selection.activeGameObject;
@@ -342,7 +391,7 @@ namespace lilToon.PCSS.Runtime
             }
         }
         
-        [UnityEditor.MenuItem("GameObject/lilToon PCSS/Add Poiyomi PCSS Integration", true)]
+        [UnityEditor.MenuItem("GameObject/lilToon PCSS/Add Poiyomi PCSS Integration (Runtime)", true)]
         private static bool ValidateAddPoiyomiPCSSIntegration()
         {
             return UnityEditor.Selection.activeGameObject != null;

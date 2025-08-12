@@ -7,9 +7,13 @@
 // PCSS Configuration
 //----------------------------------------------------------------------------------------------------------------------
 
-// シャドウマップテクスチャ参照の安全性確保
-#ifndef _ShadowMapTexture
-sampler2D _ShadowMapTexture;
+// シャドウマップテクスチャ参照の重複防止
+#if !defined(LIL_PCSS_SHADOWMAP_DECLARED)
+#define LIL_PCSS_SHADOWMAP_DECLARED 1
+    // Unityのスクリーン空間シャドウ（SHADOWS_SCREEN）が有効なときはUnity側定義を使用
+    #if !defined(SHADOWS_SCREEN)
+        sampler2D _ShadowMapTexture;
+    #endif
 #endif
 
 // PCSS関数定義 - シャドウ値を直接受け取る

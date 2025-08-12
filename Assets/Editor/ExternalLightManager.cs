@@ -151,7 +151,8 @@ namespace lilToon.PCSS.Editor
         private Vector2 scrollPosition;
         private ExternalLightSettings currentSettings = new ExternalLightSettings();
         private ExternalLightSettings selectedPreset;
-        private bool showAdvancedSettings = false;
+        // 未使用のため一旦停止（GUI拡張時に復帰）
+        // private bool showAdvancedSettings = false;
         private bool showLightList = false;
         private List<Light> sceneLights = new List<Light>();
         
@@ -159,7 +160,7 @@ namespace lilToon.PCSS.Editor
         
         #region メニューアイテム
         
-        [MenuItem("Tools/lilToon PCSS/外部ライト管理")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/外部ライト管理")]
         public static void ShowWindow()
         {
             var window = GetWindow<ExternalLightManager>("外部ライト管理");
@@ -167,31 +168,31 @@ namespace lilToon.PCSS.Editor
             window.Show();
         }
         
-        [MenuItem("Tools/lilToon PCSS/リアルライト作成")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/リアルライト作成")]
         public static void CreateRealisticLight()
         {
             CreateLightFromPreset(LightPresets[0]);
         }
         
-        [MenuItem("Tools/lilToon PCSS/アニメライト作成")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/アニメライト作成")]
         public static void CreateAnimeLight()
         {
             CreateLightFromPreset(LightPresets[1]);
         }
         
-        [MenuItem("Tools/lilToon PCSS/映画ライト作成")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/映画ライト作成")]
         public static void CreateCinematicLight()
         {
             CreateLightFromPreset(LightPresets[2]);
         }
         
-        [MenuItem("Tools/lilToon PCSS/ポートレートライト作成")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/ポートレートライト作成")]
         public static void CreatePortraitLight()
         {
             CreateLightFromPreset(LightPresets[3]);
         }
         
-        [MenuItem("Tools/lilToon PCSS/ゲームライト作成")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/ゲームライト作成")]
         public static void CreateGameLight()
         {
             CreateLightFromPreset(LightPresets[4]);

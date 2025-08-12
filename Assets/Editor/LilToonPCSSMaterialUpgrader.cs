@@ -47,13 +47,13 @@ namespace lilToon.PCSS.Editor
             "_ShadowColorTex"
         };
 
-        [MenuItem("Tools/lilToon PCSS Extension/Utilities/lilToon/Upgrade Selected Materials to PCSS Extension", true)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Utilities/lilToon/Upgrade Selected Materials to PCSS Extension", true)]
         private static bool ValidateUpgradeMaterials()
         {
             return Selection.GetFiltered<Material>(SelectionMode.Assets).Any(m => m.shader != null && m.shader.name.Contains(LILTOON_SHADER_NAME) && m.shader.name != PCSS_EXTENSION_SHADER_NAME);
         }
 
-        [MenuItem("Tools/lilToon PCSS Extension/Utilities/lilToon/Upgrade Selected Materials to PCSS Extension")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Utilities/lilToon/Upgrade Selected Materials to PCSS Extension")]
         public static void UpgradeMaterials()
         {
             Shader pcssShader = Shader.Find(PCSS_EXTENSION_SHADER_NAME);

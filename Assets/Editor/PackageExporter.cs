@@ -20,7 +20,7 @@ namespace lilToon.PCSS.Editor
         private static readonly string PackageUnityVersion = "2022.3.0f1";
         private static readonly string PackageKeywords = "lilToon, PCSS, Shadows, VRChat, Avatar, Shader";
 
-        [MenuItem("Tools/lilToon PCSS/Package/Export Package")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Package/Export Package")]
         public static void ExportPackage()
         {
             try
@@ -263,14 +263,14 @@ namespace lilToon.PCSS.Editor
             AssetDatabase.Refresh();
         }
 
-        [MenuItem("Tools/lilToon PCSS/Package/Generate Documentation")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Package/Generate Documentation")]
         public static void GenerateDocumentationOnly()
         {
             GenerateDocumentation();
             EditorUtility.DisplayDialog("Documentation Generated", "Documentation has been generated successfully.", "OK");
         }
 
-        [MenuItem("Tools/lilToon PCSS/Package/Create Package Manifest")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Package/Create Package Manifest")]
         public static void CreatePackageManifestOnly()
         {
             CreatePackageManifest();

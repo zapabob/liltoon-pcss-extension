@@ -16,7 +16,8 @@ namespace lilToon.PCSS.Editor
     public class VRChatUploadAutoBackup
     {
         private static readonly string BackupSubfolder = "VRChatMaterialBackups";
-        private static readonly string AutoBackupFileName = "vrchat_auto_backup.json";
+        // 使っていないが将来的に拡張予定。未使用警告を避けるためコメントアウト
+        // private static readonly string AutoBackupFileName = "vrchat_auto_backup.json";
         private static readonly string BackupVersion = "2.2.0";
         
         private static bool isUploading = false;

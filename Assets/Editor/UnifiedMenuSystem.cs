@@ -56,7 +56,6 @@ namespace lilToon.PCSS.Editor
         private string[] tabNames = { "すべて", "お気に入り", "最近使用", "カテゴリ別" };
 
         private Vector2 scrollPosition;
-        private bool showAdvancedOptions = false;
         private bool showSearchBar = true;
         private bool showCategoryFilter = true;
         private bool showFavorites = true;
@@ -74,7 +73,7 @@ namespace lilToon.PCSS.Editor
 
         #region メニューアイテム
 
-        [MenuItem("Tools/lilToon PCSS/統合メニューシステム", false, 1)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/統合メニューシステム", false, 1)]
         public static void ShowWindow()
         {
             var window = GetWindow<UnifiedMenuSystem>("lilToon PCSS 統合メニュー");
@@ -135,6 +134,8 @@ namespace lilToon.PCSS.Editor
             // ライト関連
             AddMenuItem("外部ライト自動配置", "アバター身長から最適な位置にライトを自動配置", "ライト", 
                 () => AutoLightPlacement.AutoPlaceExternalLights(), tags: new[] { "ライト", "自動配置", "最適化" });
+            AddMenuItem("Hip基準ライト配置 (MA)", "Modular AvatarのBone ProxyでHip追従アンカーに3点ライト", "ライト",
+                () => HipBasedLightPlacement.CreateHipBasedLights(Selection.activeGameObject), tags: new[] { "ライト", "ModularAvatar", "見栄え" }, requiresSelection: true);
             AddMenuItem("ライト管理", "外部ライトの管理と設定", "ライト", 
                 () => ExternalLightManager.ShowWindow(), tags: new[] { "ライト", "管理", "設定" });
 
@@ -143,7 +144,7 @@ namespace lilToon.PCSS.Editor
                 () => PerformanceOptimizerMenu.SetupPerformanceTuner(), tags: new[] { "パフォーマンス", "最適化", "VRChat" });
 
             // バックアップ関連
-            AddMenuItem("マテリアルバックアップ", "マテリアルのバックアップと復元", "バックアップ", 
+            AddMenuItem("Material Backup/Restore", "マテリアルのバックアップと復元", "バックアップ", 
                 () => MaterialBackup.ShowWindow(), tags: new[] { "バックアップ", "マテリアル", "復元" });
 
             // エクスポート関連
@@ -560,7 +561,7 @@ namespace lilToon.PCSS.Editor
         private bool showFavorites = true;
         private bool showRecent = true;
 
-        [MenuItem("Tools/lilToon PCSS/統合メニュー設定", false, 2)]
+        [MenuItem("Tools/lilToon-PCSS-Extension/統合メニュー設定", false, 2)]
         public static void ShowWindow()
         {
             var window = GetWindow<UnifiedMenuSettings>("統合メニュー設定");

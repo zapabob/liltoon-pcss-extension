@@ -141,7 +141,7 @@ namespace lilToon.PCSS.Editor
             physBoneComponents?.Clear();
         }
     }
-        [MenuItem("Tools/lilToon PCSS/競合互換セットアップウィザード")]
+        [MenuItem("Tools/lilToon-PCSS-Extension/Competitor Setup Wizard")]
         public static void ShowWindow()
         {
             GetWindow<CompetitorSetupWizard>("競合互換セットアップ");
