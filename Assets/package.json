@@ -1,13 +1,13 @@
 {
   "name": "com.liltoon.pcss-extension",
   "displayName": "lilToon PCSS Extension",
-  "description": "🎯 Professional PCSS (Percentage-Closer Soft Shadows) extension for lilToon 2.1.4 and Poiyomi shaders with Avatar Selector Menu. Features Unity 2022.3 LTS compatibility, URP 14.0.10 support, built-in preset system (Realistic/Anime/Cinematic), one-click avatar setup with ModularAvatar integration, Base layer red face light implementation, official support for Unity Editor Coroutines (com.unity.editor-coroutines), automatic material remapping on FBX/model import, and new: MissingMaterialAutoFixer Editor extension & FBX/Prefab auto-remap for missing materials. 新: lilToon 2.1.4完全対応・VRC Light Volumes 2.0.0対応・PhysBoneEmissiveController設計思想・AutoFIX完全対応・命名規則徹底・MaterialPropertyBlock活用・ModularAvatar/PhysBone連携リファクタリング。",
-  "version": "2.6.0",
+  "description": "🎯 Professional PCSS (Percentage-Closer Soft Shadows) extension for lilToon 2.1.9 and Poiyomi shaders with Avatar Selector Menu. Features Unity 2022.3 LTS compatibility, URP 14.0.10 support, built-in preset system (Realistic/Anime/Cinematic), one-click avatar setup with ModularAvatar integration, Base layer red face light implementation, official support for Unity Editor Coroutines (com.unity.editor-coroutines), automatic material remapping on FBX/model import, and new: MissingMaterialAutoFixer Editor extension & FBX/Prefab auto-remap for missing materials. 新: lilToon 2.1.9完全対応・VRC Light Volumes 2.0.0対応・PhysBoneEmissiveController設計思想・AutoFIX完全対応・命名規則徹底・MaterialPropertyBlock活用・ModularAvatar/PhysBone連携リファクタリング・Unity 2022以前サポート終了対応・メッシュ暗号化削除対応・ファー機能Subdivision統一対応。",
+  "version": "2.7.0",
   "unity": "2022.3",
   "unityRelease": "22f1",
   "dependencies": {
     "com.unity.render-pipelines.universal": "12.1.12",
-    "jp.lilxyzw.liltoon": "2.1.4",
+    "jp.lilxyzw.liltoon": "2.1.9",
     "com.unity.editor-coroutines": "1.0.0"
   },
   "vpmDependencies": {
@@ -16,14 +16,14 @@
     "nadena.dev.modular-avatar": "1.12.5"
   },
   "keywords": [
-    "shader", "toon", "avatar", "pcss", "shadows", "vrchat", "lilToon", "poiyomi", "unity", "urp", "preset", "menu", "selector", "redface", "baseLayer", "material-remap", "power-protection", "error-fixes"
+    "shader", "toon", "avatar", "pcss", "shadows", "vrchat", "lilToon", "poiyomi", "unity", "urp", "preset", "menu", "selector", "redface", "baseLayer", "material-remap", "power-protection", "error-fixes", "liltoon-2.1.9", "unity-2022.3", "mesh-encryption-removed", "fur-subdivision"
   ],
   "author": {
     "name": "lilToon PCSS Extension Team",
     "email": "r.minegishi1987@gmail.com",
     "url": "https://zapabob.github.io/liltoon-pcss-extension/"
   },
-  "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v2.6.0/com.liltoon.pcss-extension-2.6.0.zip",
+  "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v2.7.0/com.liltoon.pcss-extension-2.7.0.zip",
   "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
   "documentationUrl": "https://zapabob.github.io/liltoon-pcss-extension/",
   "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE",
@@ -33,14 +33,26 @@
     { "displayName": "🎨 Material Presets", "description": "PCSS対応マテリアルプリセット集", "path": "Samples~/MaterialPresets" },
     { "displayName": "⚡ Performance Optimization", "description": "パフォーマンス最適化サンプル", "path": "Samples~/PerformanceOptimization" },
     { "displayName": "🔴 Red Face Light", "description": "表情が赤くなるライト機能サンプル (Baseレイヤー)", "path": "Samples~/RedFaceLight" },
-    { "displayName": "🛡️ Power Protection", "description": "電源断保護機能のサンプル", "path": "Samples~/PowerProtection" }
+    { "displayName": "🛡️ Power Protection", "description": "電源断保護機能のサンプル", "path": "Samples~/PowerProtection" },
+    { "displayName": "🦊 Fur Subdivision", "description": "lilToon 2.1.9 ファー機能Subdivision統一サンプル", "path": "Samples~/FurSubdivision" }
   ],
   "editorCoroutineSupport": {
     "package": "com.unity.editor-coroutines",
     "version": "1.0.0",
     "description": "Unity公式のEditorコルーチンに完全対応。エディタ拡張の非同期処理が安定・高速に動作します。"
   },
+  "lilToon29Compatibility": {
+    "version": "2.1.9",
+    "unityMinVersion": "2022.3",
+    "breakingChanges": [
+      "Unity 2022以前のサポート終了",
+      "メッシュ暗号化（AvatarEncryption）削除",
+      "ファー機能のShrinkモード削除、Subdivisionモードに統一"
+    ],
+    "migrationGuide": "https://lilxyzw.github.io/lilToon/ja_JP/migrate1to2.html"
+  },
   "changelog": [
+    "[2.7.0] lilToon 2.1.9完全対応・Unity 2022以前サポート終了対応・メッシュ暗号化削除対応・ファー機能Subdivision統一対応・カスタムシェーダー周辺ツール互換性向上・パフォーマンス最適化強化。",
     "[2.6.0] Quick Addメニューとプリセット（Realistic/Anime/Cinematic）を追加。Modular Avatar準拠のトグル/パラメータ自動付与、メニュー階層統一、VRC Light Volumesユーティリティ再配置。後方互換の機能追加のため MINOR バージョンアップ。",
     "[2.5.0] nHaruka PCSSForVRC互換システム実装・PhysBone制御ライトシステム・ModularAvatar統合・ワンクリックセットアップ・リアルタイム影制御・距離制御・統合メニューシステム・競合製品互換性・高度なプリセット管理・実装ログ自動保存機能",
     "[2.0.1] 重複定義エラー修正・VRCPhysBoneCollider名前空間エラー修正・VRChat SDK参照エラー修正・文字化けエラー修正・PhysBoneColliderCreator重複ファイル削除・PCSSUtilities条件付きコンパイル対応・PhysBoneEmissiveController文字化け修正・AutomatedMaterialBackup文字化け修正・CompetitorSetupWizard文字化け修正・実装ログ自動保存機能",
@@ -55,7 +67,10 @@
       "VRChat SDK参照エラー修正（条件付きコンパイル対応）",
       "文字化けエラー修正（PhysBoneEmissiveController、AutomatedMaterialBackup、CompetitorSetupWizard）",
       "ApplyModularAvatarIntegration関数の未宣言エラー修正",
-      "PCSSFilterRadius重複定義エラー修正（2箇所）"
+      "PCSSFilterRadius重複定義エラー修正（2箇所）",
+      "lilToon 2.1.9互換性エラー修正",
+      "メッシュ暗号化削除対応",
+      "ファー機能Subdivision統一対応"
     ],
     "newFeatures": [
       "nHaruka PCSSForVRC互換システム",
@@ -76,7 +91,12 @@
       "異常終了検出",
       "復旧システム",
       "データ整合性確保",
-      "実装ログ自動保存"
+      "実装ログ自動保存",
+      "lilToon 2.1.9完全対応",
+      "Unity 2022以前サポート終了対応",
+      "メッシュ暗号化削除対応",
+      "ファー機能Subdivision統一対応",
+      "カスタムシェーダー周辺ツール互換性向上"
     ]
   }
 }

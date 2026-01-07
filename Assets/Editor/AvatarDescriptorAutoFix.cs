@@ -1,7 +1,6 @@
 using System.Linq;
 using UnityEditor;
 using UnityEditor.Animations;
-using UnityEditor.Animations;
 using UnityEngine;
 
 #if VRC_SDK_VRCSDK3

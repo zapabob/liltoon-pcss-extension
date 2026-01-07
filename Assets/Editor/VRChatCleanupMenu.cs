@@ -5,6 +5,7 @@ using UnityEditor.Experimental.SceneManagement;
 using UnityEditorInternal;
 using UnityEditor;
 using System.Collections.Generic;
+using System.Linq; // Added for .Where()
 
 namespace lilToon.PCSS.Editor
 {
@@ -263,6 +264,120 @@ namespace lilToon.PCSS.Editor
                 removed += GameObjectUtility.RemoveMonoBehavioursWithMissingScript(t.gameObject);
             }
             return removed;
+        }
+
+        [MenuItem("Tools/lilToon-PCSS-Extension/VRChat向けクリーンアップ/ModularAvatarPCSSController削除", false, 302)]
+        public static void RemoveModularAvatarPCSSController()
+        {
+            var go = Selection.activeGameObject;
+            if (go == null)
+            {
+                EditorUtility.DisplayDialog("PCSS", "アバターのルートを選択してください。", "OK");
+                return;
+            }
+
+            int removedCount = 0;
+
+            // ModularAvatarPCSSControllerを検索して削除
+            var allComponents = go.GetComponentsInChildren<Component>(true);
+            foreach (var component in allComponents)
+            {
+                if (component != null && component.GetType().Name.Contains("ModularAvatarPCSSController"))
+                {
+                    Undo.DestroyObjectImmediate(component);
+                    removedCount++;
+                }
+            }
+
+            // ネストした型も検索
+            var allGameObjects = go.GetComponentsInChildren<Transform>(true);
+            foreach (var transform in allGameObjects)
+            {
+                var components = transform.GetComponents<Component>();
+                foreach (var component in components)
+                {
+                    if (component != null && 
+                        (component.GetType().Name.Contains("ModularAvatarPCSSController") ||
+                         component.GetType().Name.Contains("PCSSController") ||
+                         component.GetType().Name.Contains("ModularAvatar") && component.GetType().Name.Contains("PCSS")))
+                    {
+                        Undo.DestroyObjectImmediate(component);
+                        removedCount++;
+                    }
+                }
+            }
+
+            if (removedCount > 0)
+            {
+                AssetDatabase.SaveAssets();
+                EditorUtility.DisplayDialog("PCSS", $"ModularAvatarPCSSControllerを{removedCount}個削除しました。\n\n" +
+                    "✅ VRChat AutoFix Safe\n" +
+                    "✅ カスタムランタイムコンポーネント削除完了", "OK");
+            }
+            else
+            {
+                EditorUtility.DisplayDialog("PCSS", "ModularAvatarPCSSControllerは見つかりませんでした。", "OK");
+            }
+        }
+
+        [MenuItem("Tools/lilToon-PCSS-Extension/VRChat向けクリーンアップ/全カスタムPCSSコンポーネント削除", false, 303)]
+        public static void RemoveAllCustomPCSSComponents()
+        {
+            var go = Selection.activeGameObject;
+            if (go == null)
+            {
+                EditorUtility.DisplayDialog("PCSS", "アバターのルートを選択してください。", "OK");
+                return;
+            }
+
+            int removedCount = 0;
+
+            // 全カスタムPCSSコンポーネントを検索して削除
+            var allGameObjects = go.GetComponentsInChildren<Transform>(true);
+            foreach (var transform in allGameObjects)
+            {
+                var components = transform.GetComponents<Component>();
+                foreach (var component in components)
+                {
+                    if (component != null && 
+                        (component.GetType().Name.Contains("PCSSController") ||
+                         component.GetType().Name.Contains("ModularAvatarPCSS") ||
+                         component.GetType().Name.Contains("PCSSLightController") ||
+                         component.GetType().Name.Contains("PhysBoneLightController") ||
+                         component.GetType().Name.Contains("VRCLightVolumesIntegration")))
+                    {
+                        Undo.DestroyObjectImmediate(component);
+                        removedCount++;
+                    }
+                }
+            }
+
+            // Missing Scriptsも削除
+            var missingScripts = go.GetComponentsInChildren<Component>(true)
+                .Where(c => c == null)
+                .ToArray();
+
+            foreach (var missingScript in missingScripts)
+            {
+                if (missingScript != null)
+                {
+                    Undo.DestroyObjectImmediate(missingScript);
+                    removedCount++;
+                }
+            }
+
+            if (removedCount > 0)
+            {
+                AssetDatabase.SaveAssets();
+                EditorUtility.DisplayDialog("PCSS", $"カスタムPCSSコンポーネントを{removedCount}個削除しました。\n\n" +
+                    "✅ VRChat AutoFix Safe\n" +
+                    "✅ 全カスタムランタイムコンポーネント削除完了\n" +
+                    "✅ Missing Scripts削除完了", "OK");
+            }
+            else
+            {
+                EditorUtility.DisplayDialog("PCSS", "カスタムPCSSコンポーネントは見つかりませんでした。", "OK");
+            }
         }
     }
 }

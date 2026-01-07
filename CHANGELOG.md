@@ -1,335 +1,79 @@
-# Changelog
+﻿# Changelog
 
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-
-## [2.5.0] - 2025-08-07
-
+## [Unreleased] - 2025-12-30
 ### Added
-- **NEW**: Complete repository cleanup and product-ready implementation
-- **NEW**: Advanced competitive features implementation for market share gain
-- **NEW**: Comprehensive performance optimization system with real-time monitoring
-- **NEW**: Advanced error handling system with auto-detection and auto-fix capabilities
-- **NEW**: lilToon 2.1.7 compatibility preparation and optimization
-- **NEW**: AMD GPU optimization and hardware-specific performance tuning
-- **NEW**: VRC Light Volumes 2.0.0 integration and enhancement
-- **NEW**: Advanced mask system with CastMask/ReceiveMask separation
-- **NEW**: One-click setup wizard for easy avatar configuration
-- **NEW**: Universal avatar preset system using Modular Avatar
-- **NEW**: Enhanced Unity menu organization with MenuConstants
-- **NEW**: Comprehensive implementation logs and documentation
-- **NEW**: Product-ready Unity package structure with semantic versioning
-- **NEW**: Automated packaging scripts with PowerShell integration
-- **NEW**: Competitive analysis and strategic feature implementation
+- PCSS Hub (PC) to simplify setup and apply presets.
+- Light presets (Anime / Realistic / Cinematic) for PCSS shadows and hip light rig.
+- PhysBone-based light sway with optional MA slider.
+- VRChat Light Volumes enable option in Hub.
 
 ### Changed
-- **IMPROVEMENT**: Updated package version to 2.5.0 following semantic versioning (MINOR bump for new features)
-- **IMPROVEMENT**: Enhanced package description with competitive features and lilToon 2.1.7 compatibility
-- **IMPROVEMENT**: Updated VPM repository with 2.5.0 version and new samples
-- **IMPROVEMENT**: Enhanced Unity menu structure for product-ready experience
-- **IMPROVEMENT**: Improved shader compilation and error handling
-- **IMPROVEMENT**: Better performance optimization for AMD/NVIDIA/Mobile/Quest GPUs
-- **IMPROVEMENT**: Enhanced VRChat compatibility and VCC integration
-- **IMPROVEMENT**: Updated .gitignore for clean repository management
+- Moved existing menus to Legacy paths (including GameObject/Assets context menus).
+- MA toggle builder: shared parameters and sway slider support.
 
 ### Fixed
-- **IMPROVEMENT**: Resolved all compilation errors and namespace issues
-- **IMPROVEMENT**: Fixed Japanese character encoding issues in C# scripts
-- **IMPROVEMENT**: Corrected shader include paths and syntax errors
-- **IMPROVEMENT**: Enhanced material property handling and validation
-- **IMPROVEMENT**: Improved error recovery and backup system stability
-
-### Security
-- **NEW**: Enhanced package integrity verification for VCC distribution
-- **NEW**: Improved dependency security with semantic versioning constraints
-- **NEW**: Better asset reference security with proper validation
-
-## [2.3.0] - 2025-01-24
-
+- PhysBoneEmissiveLightSetup: AdvancedBool + collider base list for latest SDK compile.
+## [2.5.0] - 2025-08-08
 ### Added
-- **NEW**: Advanced Missing Material AutoFixer system with comprehensive backup and restore functionality
-- **NEW**: Intelligent material property serialization with JSON-based backup format
-- **NEW**: VRChat avatar integration with automatic detection and handling
-- **NEW**: Modern user interface with real-time statistics and backup information display
-- **NEW**: Auto-import material remapping for FBX/Prefab imports via LilToonMaterialRemapper
-- **NEW**: Full Unity Undo system integration for all material operations
-- **NEW**: Silent restore mode for background material restoration
-- **NEW**: GUID-based asset tracking for reliable material reference management
-- **NEW**: Property validation and fallback mechanisms for robust error handling
-- **NEW**: Comprehensive material backup system with shader properties, textures, and settings
-- **NEW**: Path-based material mapping using GameObject paths for accurate restoration
-- **NEW**: Batch processing capabilities for efficient handling of multiple missing materials
-- **NEW**: Progress tracking and detailed logging for all operations
+- **nHaruka PCSSForVRC莠呈鋤繧ｷ繧ｹ繝・Β**: PhysBone蛻ｶ蠕｡繝ｩ繧､繝医す繧ｹ繝・Β縺ｮ螳悟・螳溯｣・
+- **PhysBoneLightController**: 繝ｪ繧｢繝ｫ繧ｿ繧､繝蠖ｱ蛻ｶ蠕｡縲∬ｷ晞屬蛻ｶ蠕｡縲∬・蜍墓､懷・讖溯・
+- **ModularAvatarPCSSSetupWizard**: 繝ｯ繝ｳ繧ｯ繝ｪ繝・け繧ｻ繝・ヨ繧｢繝・・繧ｦ繧｣繧ｶ繝ｼ繝・
+- **UnifiedPCSSMenuSystem**: 邨ｱ蜷医Γ繝九Η繝ｼ繧ｷ繧ｹ繝・Β
+- **繝ｪ繧｢繝ｫ繧ｿ繧､繝蠖ｱ蛻ｶ蠕｡**: 繧｢繝九Γ繝ｻ譏逕ｻ鬚ｨ縺ｮ鬮伜刀雉ｪ縺ｪ蠖ｱ陦ｨ迴ｾ
+- **霍晞屬蛻ｶ蠕｡**: 繝励Ξ繧､繝､繝ｼ縺九ｉ縺ｮ霍晞屬縺ｫ蝓ｺ縺･縺上Λ繧､繝医・繝輔ぉ繝ｼ繝牙宛蠕｡
+- **遶ｶ蜷郁｣ｽ蜩∽ｺ呈鋤諤ｧ**: 莉悶・PCSS繧ｷ繧ｹ繝・Β縺ｨ縺ｮ莠呈鋤諤ｧ
+- **鬮伜ｺｦ縺ｪ繝励Μ繧ｻ繝・ヨ邂｡逅・*: 繧ｫ繧ｹ繧ｿ繝繝励Μ繧ｻ繝・ヨ縺ｮ菴懈・繝ｻ邂｡逅・
 
 ### Changed
-- **IMPROVEMENT**: Enhanced error handling and validation throughout the material system
-- **IMPROVEMENT**: Updated package version to 2.3.0 following semantic versioning (MINOR bump for new features)
-- **IMPROVEMENT**: Enhanced package description with advanced material recovery features
-- **IMPROVEMENT**: Added material-fixer and auto-recovery keywords for better discoverability
-- **IMPROVEMENT**: Updated sample organization with Material Recovery System examples
-- **IMPROVEMENT**: Enhanced changelog organization with comprehensive feature documentation
+- 繝舌・繧ｸ繝ｧ繝ｳ繧・.5.0縺ｫ譖ｴ譁ｰ
+- package.json縺ｮ萓晏ｭ倬未菫ゅｒ譛譁ｰ迚医↓譖ｴ譁ｰ
+- 螳溯｣・Ο繧ｰ縺ｮ閾ｪ蜍穂ｿ晏ｭ俶ｩ溯・繧貞ｼｷ蛹・
 
-### Fixed
-- **IMPROVEMENT**: Better material property serialization and deserialization
-- **IMPROVEMENT**: Enhanced asset reference validation and recovery
-- **IMPROVEMENT**: Improved error recovery for backup corruption and missing assets
-- **IMPROVEMENT**: Better performance optimization and memory management
-
-### Security
-- **NEW**: Enhanced material backup integrity with JSON validation and GUID verification
-- **NEW**: Improved data safety with comprehensive backup rotation and file integrity checks
-- **NEW**: Better asset reference security with proper validation and fallback mechanisms
-
-## [2.2.0] - 2025-07-23
-
-### Added
-- **NEW**: Version 2.2.0 with enhanced VCC compatibility
-- **NEW**: Semantic versioning implementation following [Semantic Versioning 2.0.0](https://semver.org/)
-
+## [1.5.10] - 2025-07-04
 ### Changed
-- **IMPROVEMENT**: Updated package version to 2.2.0 following semantic versioning
+- PhysBoneEmissiveController險ｭ險域晄Φ繝ｻAutoFIX螳悟・蟇ｾ蠢懊・蜻ｽ蜷崎ｦ丞援蠕ｹ蠎輔・MaterialPropertyBlock豢ｻ逕ｨ繝ｻModularAvatar/PhysBone騾｣謳ｺ繝ｪ繝輔ぃ繧ｯ繧ｿ繝ｪ繝ｳ繧ｰ
+- 螳溯｣・Ο繧ｰ縺ｫ蝓ｺ縺･縺丞宍蟇・↑繝ｪ繝輔ぃ繧ｯ繧ｿ繝ｪ繝ｳ繧ｰ
 
-
-## [2.1.0] - 2025-01-24
-
-### Added
-- **NEW**: Enhanced semantic versioning implementation following [Semantic Versioning 2.0.0](https://semver.org/) specification
-- **NEW**: Improved VCC (VRChat Creator Companion) compatibility with enhanced package metadata
-- **NEW**: Added semantic-versioning and power-protection keywords for better discoverability
-- **NEW**: Enhanced package description with VCC compatibility information
-- **NEW**: Added Power Protection System sample demonstrating checkpoint and recovery features
-- **NEW**: Improved version matching system for better dependency management
-- **NEW**: Enhanced package repository structure for VCC integration
-- **NEW**: Added comprehensive version history tracking in VPM repository
-
+## [1.5.9] - 2025-07-03
 ### Changed
-- **IMPROVEMENT**: Updated package version to 2.1.0 following semantic versioning (MINOR version bump for new features)
-- **IMPROVEMENT**: Enhanced VPM repository structure with multiple version support
-- **IMPROVEMENT**: Updated package description to highlight VCC compatibility
-- **IMPROVEMENT**: Added new keywords for better package discovery in VCC
-- **IMPROVEMENT**: Enhanced sample organization with Power Protection System examples
-- **IMPROVEMENT**: Updated download URLs to reflect new version structure
-- **IMPROVEMENT**: Enhanced changelog organization with semantic versioning compliance
+- PhysBoneLightController繧単hysBoneEmissiveController縺ｸ繝ｪ繝輔ぃ繧ｯ繧ｿ繝ｪ繝ｳ繧ｰ
+- 繧ｯ繝ｩ繧ｹ蜷阪・繝輔ぃ繧､繝ｫ蜷阪・AddComponentMenu繝ｻ繧ｳ繝｡繝ｳ繝医ｒ荳諡ｬ菫ｮ豁｣
+- 蜻ｽ蜷崎ｦ冗ｴ・・Unity繝舌Μ繝・・繧ｷ繝ｧ繝ｳ繝ｻVRChat AutoFIX螳悟・蟇ｾ蠢・
+- 繧ｨ繝溘ャ繧ｷ繝門宛蠕｡逕ｨ騾斐↓迚ｹ蛹悶＠縺溯ｨｭ險医∈
+- 繝槭ユ繝ｪ繧｢繝ｫ縺ｮ繝舌ャ繧ｯ繧｢繝・・繝ｻ繝ｪ繧ｹ繝医い縺隈UID繝吶・繧ｹ縺ｫ縺ｪ繧翫√ヱ繧ｹ螟画峩繧・Μ繝阪・繝蠕後ｂ豁｣遒ｺ縺ｫ蠕ｩ蜈・庄閭ｽ縲・
+- 繝舌ャ繧ｯ繧｢繝・・縺ｯJSON蠖｢蠑上〒菫晏ｭ倥＆繧後∝ｾｩ蜈・凾縺ｯGUID荳閾ｴ縺ｧ繝槭ユ繝ｪ繧｢繝ｫ繧堤音螳壹・
+- 繝・け繧ｹ繝√Ε繧・UID縺ｧ邂｡逅・＠縲∝盾辣ｧ蛻・ｌ繧貞､ｧ蟷・↓髦ｲ豁｢縲・
 
+## [1.5.7] - 2025-06-24
+
+### Added / Changed
+- MissingMaterialAutoFixer・・ditor諡｡蠑ｵ・峨ｒ霑ｽ蜉: 繧ｷ繝ｼ繝ｳ蜀・・Missing繝槭ユ繝ｪ繧｢繝ｫ讀懷・・・・蜍穂ｿｮ蠕ｩ繧ｦ繧｣繝ｳ繝峨え
+- FBX/Prefab繧､繝ｳ繝昴・繝域凾縺ｮ閾ｪ蜍輔Μ繝槭ャ繝玲ｩ溯・繧定ｿｽ蜉・・ssetPostprocessor縺ｫ繧医ｋMissing繧ｹ繝ｭ繝・ヨ閾ｪ蜍戊｣懷ｮ鯉ｼ・
+- package.json縺ｮ繝舌・繧ｸ繝ｧ繝ｳ繧・.5.7縺ｫ譖ｴ譁ｰ
+
+## [1.5.5] - 2025-06-24
+
+### Added / Changed
+- AutoFIX Prefab蟇ｾ蠢・ Prefab繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ縺ｮ繝槭ユ繝ｪ繧｢繝ｫ閾ｪ蜍穂ｿｮ蠕ｩ譎ゅ√せ繧ｯ繝ｪ繝励ヨ・・onoBehaviour遲会ｼ峨′辟｡蜉ｹ蛹悶＆繧後ｋ迴ｾ雎｡繧帝亟豁｢
+- 繝槭ユ繝ｪ繧｢繝ｫ閾ｪ蜍穂ｿｮ蠕ｩ蠑ｷ蛹・ missing繧・ilToon邉ｻ繧ｷ繧ｧ繝ｼ繝繝ｼ繧り・蜍輔〒蠕ｩ譌ｧ繝ｻ陬懷ｮ・
+- 繧ｷ繝ｼ繝ｳ/繝励Ο繧ｸ繧ｧ繧ｯ繝亥・菴薙・繝槭ユ繝ｪ繧｢繝ｫ繧剃ｸ諡ｬ菫ｮ蠕ｩ蜿ｯ閭ｽ
+- ModularAvatar 1.12.5譛驕ｩ蛹・ MAMaterialSwap/MAPlatformFilter閾ｪ蜍戊ｿｽ蜉縲√・繝ｪ繧ｻ繝・ヨ驕ｩ逕ｨ縺ｮModularAvatar豬∝ｯｾ蠢懊＿uest/PC蛻・ｲ蝉ｾ九ｂ繧ｵ繝昴・繝・
+
+## [1.5.4] - 2025-06-23
+
+### Booth迚医Μ繝ｪ繝ｼ繧ｹ
+- Booth蜷代￠繝代ャ繧ｱ繝ｼ繧ｸ縺ｨ縺励※v1.5.4繧偵Μ繝ｪ繝ｼ繧ｹ縲・
+- 1.5.3縺ｮ蜈ｨ讖溯・繝ｻ菫ｮ豁｣繧貞性繧縲・
+- Runtime/驟堺ｸ九・繧ｹ繧ｯ繝ｪ繝励ヨ繝ｻasmdef繧貞性繧√◆螳悟・迚医・
+
+## [1.5.3] - 2025-06-23
+
+### Booth迚医Μ繝ｪ繝ｼ繧ｹ
+- Booth蜷代￠繝代ャ繧ｱ繝ｼ繧ｸ縺ｨ縺励※v1.5.3繧偵Μ繝ｪ繝ｼ繧ｹ縲・
+- 1.5.3縺ｮ蜈ｨ讖溯・繝ｻ菫ｮ豁｣繧貞性繧縲・
+- Runtime/驟堺ｸ九・繧ｹ繧ｯ繝ｪ繝励ヨ繝ｻasmdef繧貞性繧√◆螳悟・迚医・
+
+## [1.5.8] - 2025-07-03
 ### Fixed
-- **IMPROVEMENT**: Better version compatibility checking in VCC package manager
-- **IMPROVEMENT**: Enhanced package metadata validation for VCC integration
-- **IMPROVEMENT**: Improved dependency resolution for VRChat SDK compatibility
-- **IMPROVEMENT**: Better error handling for version conflicts in VCC
-
-### Security
-- **NEW**: Enhanced package integrity verification for VCC distribution
-- **NEW**: Improved dependency security with semantic versioning constraints
-- **NEW**: Better package signing and validation for VCC repository
-
-## [2.0.0] - 2025-07-24
-
-### Fixed
-- **CRITICAL**: Fixed ApplyModularAvatarIntegration function undeclared identifier error in AdvancedLilToonModularAvatarShader.shader
-- **CRITICAL**: Fixed _PCSSFilterRadius redefinition errors in AdvancedRealisticShadowSystem.shader and UniversalAdvancedShadowSystem.shader
-- **CRITICAL**: Fixed VRCPhysBoneCollider namespace error in PhysBoneColliderCreator.cs
-- **CRITICAL**: Fixed shader compilation errors and function definition order issues
-- **CRITICAL**: Fixed property naming conflicts across multiple shader files
-- **IMPROVEMENT**: Enhanced shader compilation stability and error handling
-- **IMPROVEMENT**: Improved VRChat SDK compatibility with correct namespace usage
-- **IMPROVEMENT**: Better ModularAvatar integration stability
-
-### Added
-- **NEW**: Power protection system with automatic checkpoint saving (5-minute intervals)
-- **NEW**: Emergency save functionality for Ctrl+C and abnormal termination
-- **NEW**: Backup rotation system with maximum 10 automatic backups
-- **NEW**: Session management with unique ID for complete session tracking
-- **NEW**: Signal handler support for SIGINT, SIGTERM, SIGBREAK
-- **NEW**: Abnormal termination detection with automatic data protection
-- **NEW**: Recovery system for automatic restoration from previous session
-- **NEW**: Data integrity with JSON+Pickle composite saving
-- **NEW**: Automatic implementation log saving in _docs directory
-- **NEW**: Enhanced error handling and validation throughout the system
-- **NEW**: Improved shader function definition order normalization
-- **NEW**: Unified property naming conventions across shaders
-- **NEW**: Correct VRC SDK namespace usage verification
-
-### Changed
-- **BREAKING CHANGE**: Updated package version to 2.0.0 to reflect major fixes
-- **BREAKING CHANGE**: Enhanced package description with power protection features
-- **BREAKING CHANGE**: Updated keywords to include power-protection and error-fixes
-- **BREAKING CHANGE**: Added new sample for Power Protection functionality
-- **BREAKING CHANGE**: Updated changelog with comprehensive fix documentation
-- **BREAKING CHANGE**: Enhanced package metadata with fixes information
-
-### Security
-- **NEW**: Power protection system prevents data loss during unexpected shutdowns
-- **NEW**: Automatic checkpoint saving ensures work is never lost
-- **NEW**: Emergency save functionality protects against crashes and interruptions
-- **NEW**: Backup rotation system maintains multiple recovery points
-- **NEW**: Session tracking provides complete development history
-- **NEW**: Signal handling ensures graceful shutdown and data protection
-
-## [2.0.0-fixed] - 2025-01-24
-
-### Fixed
-- **CRITICAL**: Fixed VRChat SDK namespace errors (VRCPhysBoneCollider, VRCPhysBone)
-- **CRITICAL**: Fixed shader redefinition errors (_PCSSFilterRadius)
-- **CRITICAL**: Fixed duplicate method errors (SetDefaultValues)
-- **CRITICAL**: Fixed unused field warnings (showPerformanceStats)
-- **CRITICAL**: Fixed compilation errors in PhysBoneColliderCreator.cs
-- **CRITICAL**: Fixed compilation errors in AdvancedShadowSystemGUI.cs
-- **CRITICAL**: Fixed shader compilation errors in UniversalAdvancedShadowSystem.shader
-- **CRITICAL**: Fixed shader compilation errors in AdvancedRealisticShadowSystem.shader
-- **CRITICAL**: Fixed shader compilation errors in AdvancedLilToonModularAvatarShader.shader
-- **IMPROVEMENT**: Enhanced error handling and validation
-- **IMPROVEMENT**: Improved shader compilation stability
-- **IMPROVEMENT**: Better VRChat SDK compatibility
-- **IMPROVEMENT**: Enhanced ModularAvatar integration stability
-
-## [2.0.0] - 2025-07-22
-
-### Added
-- **BREAKING CHANGE**: Complete rewrite of the Advanced Realistic Shadow System
-- **BREAKING CHANGE**: New Modular Avatar AAO integration system
-- **BREAKING CHANGE**: Advanced lighting system with dynamic control
-- **BREAKING CHANGE**: Dynamic material system with quality-based, time-based, and distance-based control
-- **BREAKING CHANGE**: Advanced shader system with real-time optimization
-- **BREAKING CHANGE**: Performance optimization system with LOD, frame rate, memory, and GPU optimization
-- **BREAKING CHANGE**: New custom editor GUI with 18 categorized settings
-- **BREAKING CHANGE**: Complete lilToon integration with property mapping
-- **BREAKING CHANGE**: Reflection-based ModularAvatar integration for safe dependency management
-- **BREAKING CHANGE**: Real-time parameter control and automatic menu generation
-- **BREAKING CHANGE**: Blend shape control for dynamic avatar customization
-- **BREAKING CHANGE**: Volumetric shadows with density and step controls
-- **BREAKING CHANGE**: Real-time reflection with strength and roughness controls
-- **BREAKING CHANGE**: Subsurface scattering with strength and color controls
-- **BREAKING CHANGE**: Distance-based quality adjustment system
-- **BREAKING CHANGE**: VRC Light Volumes integration with intensity and tint controls
-- **BREAKING CHANGE**: Anime shadow system with strength and smoothness controls
-- **BREAKING CHANGE**: Cinematic shadow system with contrast and saturation controls
-- **BREAKING CHANGE**: Advanced performance benchmarking system
-- **BREAKING CHANGE**: Quality presets (Ultra Realistic, Photorealistic, Cinematic, Anime Enhanced, Performance)
-- **BREAKING CHANGE**: Auto-upgrade system for existing lilToon materials
-- **BREAKING CHANGE**: Force select functionality for advanced shadow system
-- **BREAKING CHANGE**: Comprehensive error handling and validation
-- **BREAKING CHANGE**: New shader variants and pre-compilation system
-- **BREAKING CHANGE**: Unity 2019.4 compatibility (downgraded from 2022.3)
-- **BREAKING CHANGE**: Updated dependencies to URP >=7.0.0 and Core >=7.0.0
-
-### Changed
-- **BREAKING CHANGE**: Package name updated to reflect advanced features
-- **BREAKING CHANGE**: Display name changed to "lilToon PCSS Extension - Advanced Realistic Shadow System"
-- **BREAKING CHANGE**: Description updated to highlight new advanced features
-- **BREAKING CHANGE**: Keywords updated to reflect new capabilities
-- **BREAKING CHANGE**: Author information updated with new contact details
-- **BREAKING CHANGE**: Repository structure reorganized for better maintainability
-- **BREAKING CHANGE**: Sample structure updated with new feature demonstrations
-- **BREAKING CHANGE**: License changed to MIT for broader adoption
-- **BREAKING CHANGE**: Documentation URLs updated to new repository structure
-
-### Removed
-- **BREAKING CHANGE**: Removed old PCSS implementation in favor of advanced system
-- **BREAKING CHANGE**: Removed old ModularAvatar integration in favor of reflection-based system
-- **BREAKING CHANGE**: Removed old editor extensions in favor of new comprehensive GUI
-- **BREAKING CHANGE**: Removed old shader variants in favor of new advanced system
-- **BREAKING CHANGE**: Removed Unity 2022.3 specific features for broader compatibility
-- **BREAKING CHANGE**: Removed old dependency requirements in favor of new minimal requirements
-
-### Fixed
-- **BREAKING CHANGE**: Complete rewrite of all systems to eliminate legacy issues
-- **BREAKING CHANGE**: Improved error handling and validation throughout
-- **BREAKING CHANGE**: Enhanced performance optimization algorithms
-- **BREAKING CHANGE**: Better compatibility with different Unity versions
-- **BREAKING CHANGE**: More robust ModularAvatar integration
-- **BREAKING CHANGE**: Improved shader compilation and variant management
-
-### Security
-- **BREAKING CHANGE**: Updated to reflection-based ModularAvatar integration for safer dependency management
-- **BREAKING CHANGE**: Enhanced validation and error handling for better security
-- **BREAKING CHANGE**: Improved resource management and memory optimization
-
-## [1.8.1] - 2024-12-15
-
-### Added
-- MissingMaterialAutoFixer Editor extension
-- FBX/Prefab auto-remap for missing materials
-- Enhanced avatar selector menu functionality
-- Improved preset system with Realistic/Anime/Cinematic options
-- One-click avatar setup with ModularAvatar integration
-- Base layer red face light implementation
-- Official support for Unity Editor Coroutines
-
-### Changed
-- Updated to Unity 2022.3 LTS compatibility
-- Enhanced URP 14.0.10 support
-
-### Fixed
-- Various bug fixes and performance improvements
-- Enhanced compatibility with different Unity versions
-- Improved ModularAvatar integration stability
-
-## [1.8.0] - 2024-11-20
-
-### Added
-- Professional PCSS (Percentage-Closer Soft Shadows) extension
-- lilToon and Poiyomi shader support
-- Avatar Selector Menu functionality
-- Built-in preset system
-- ModularAvatar integration
-- Performance optimization features
-
-### Changed
-- Initial release with core PCSS functionality
-- Basic ModularAvatar integration
-- Standard preset system
-
-### Fixed
-- Initial bug fixes and stability improvements
-
-## [1.0.0] - 2024-10-01
-
-### Added
-- Initial release of lilToon PCSS Extension
-- Basic PCSS implementation
-- lilToon shader integration
-- Simple preset system
-
----
-
-## Version History Summary
-
-### Major Version Changes (X.0.0)
-- **2.0.0**: Complete rewrite with Advanced Realistic Shadow System
-- **1.0.0**: Initial release
-
-### Minor Version Changes (X.Y.0)
-- **1.8.0**: Professional PCSS extension with advanced features
-- **1.8.1**: Enhanced functionality with MissingMaterialAutoFixer
-
-### Patch Version Changes (X.Y.Z)
-- Various bug fixes and minor improvements
-
-## Migration Guide
-
-### From 1.8.1 to 2.0.0
-Due to the complete rewrite in version 2.0.0, migration requires:
-
-1. **Backup your project** before upgrading
-2. **Remove old package** completely
-3. **Install new package** version 2.0.0
-4. **Run auto-upgrade** using the new menu items
-5. **Review and adjust** settings in the new advanced GUI
-6. **Test thoroughly** with your existing avatars
-
-### Breaking Changes in 2.0.0
-- Complete API rewrite
-- New shader names and properties
-- Different menu structure
-- New dependency requirements
-- Changed Unity version compatibility
-
-## Support
-
-For support and migration assistance:
-- GitHub Issues: https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension/issues
-- Documentation: https://github.com/liltoon-pcss-extension/com.liltoon.pcss-extension/wiki
-- Email: support@liltoon-pcss.com 
+- PhysBoneLightController: 蜈郁｡瑚｣ｽ蜩∽ｺ呈鋤諤ｧ繝ｻ螳牙ｮ壽ｧ蜷台ｸ翫∝､夜Κ繝ｩ繧､繝域欠螳壹・閾ｪ蜍墓､懷・縺ｮ蝣・欧蛹悶∬ｷ晞屬貂幄｡ｰ繝ｻ繧ｹ繝繝ｼ繧ｸ繝ｳ繧ｰ蛻ｶ蠕｡縺ｮ譛驕ｩ蛹悶√お繝ｩ繝ｼ譎ゅ・閾ｪ蜍慕┌蜉ｹ蛹悶・繝・ヰ繝・げ蠑ｷ蛹・
+- Unity 2022.3 LTS/VRChat SDK 譛譁ｰ迚医〒縺ｮ蜍穂ｽ懈､懆ｨｼ繝ｻ譛驕ｩ蛹・
