@@ -1,0 +1,423 @@
+using UnityEngine;
+using UnityEngine.Rendering;
+using System.Collections.Generic;
+using System.Linq;
+#if VRCHAT_SDK_AVAILABLE
+using VRC.SDKBase;
+using VRC.SDK3.Avatars.Components;
+#endif
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+using PCSSUtils = lilToon.PCSS.Runtime.PCSSUtilities;
+
+namespace lilToon.PCSS.Runtime
+{
+    [System.Serializable]
+    public class PoiyomiPCSSSettings
+    {
+        [Header("PCSS Configuration")]
+        public bool enablePCSS = true;
+        public PCSSUtils.PCSSQuality quality = PCSSUtils.PCSSQuality.Medium;
+        public float blockerSearchRadius = 0.01f;
+        public float filterRadius = 0.01f;
+        public int sampleCount = 6;
+        public float lightSize = 0.1f;
+        public float shadowBias = 0.001f;
+        
+        [Header("VRChat Expression")]
+        public bool enableVRChatExpression = false;
+        public bool useBaseLayer = true;
+        public string parameterPrefix = "PCSS";
+        
+        [Header("Poiyomi Compatibility")]
+        public bool maintainPoiyomiFeatures = true;
+        public bool autoDetectPoiyomiShader = true;
+    }
+    
+    // PCSSQuality enum is now defined in PCSSUtilities class
+    // Use PCSSUtilities.PCSSQuality instead
+    
+    /// <summary>
+    /// Poiyomi PCSS Integration Component
+    /// Provides runtime control and VRChat expression integration for Poiyomi PCSS Extension
+    /// </summary>
+    [AddComponentMenu("lilToon PCSS/Poiyomi PCSS Integration")]
+    public class PoiyomiPCSSIntegration : MonoBehaviour
+    {
+        [SerializeField] private PoiyomiPCSSSettings settings = new PoiyomiPCSSSettings();
+        [SerializeField] private List<Material> targetMaterials = new List<Material>();
+        [SerializeField] private List<Renderer> targetRenderers = new List<Renderer>();
+        
+        // VRChat Expression Parameters
+        private Dictionary<string, float> expressionParameters = new Dictionary<string, float>();
+        
+        // Quality presets
+        private static readonly Dictionary<PCSSUtils.PCSSQuality, PCSSQualityData> qualityPresets = 
+            new Dictionary<PCSSUtils.PCSSQuality, PCSSQualityData>
+        {
+            { PCSSUtils.PCSSQuality.Low, new PCSSQualityData(4, 0.004f, 0.004f, 0.045f, 0.0005f) },
+            { PCSSUtils.PCSSQuality.Medium, new PCSSQualityData(6, 0.008f, 0.008f, 0.085f, 0.0009f) },
+            { PCSSUtils.PCSSQuality.High, new PCSSQualityData(10, 0.012f, 0.012f, 0.12f, 0.0012f) },
+            { PCSSUtils.PCSSQuality.Ultra, new PCSSQualityData(16, 0.016f, 0.016f, 0.16f, 0.0015f) }
+        };
+        
+        public PoiyomiPCSSSettings Settings => settings;
+        public List<Material> TargetMaterials => targetMaterials;
+        public List<Renderer> TargetRenderers => targetRenderers;
+        
+        private void Start()
+        {
+            InitializePCSSIntegration();
+        }
+        
+        private void Update()
+        {
+            if (settings.enableVRChatExpression)
+            {
+                UpdateVRChatExpressionParameters();
+            }
+        }
+        
+        /// <summary>
+        /// Initialize PCSS integration
+        /// </summary>
+        public void InitializePCSSIntegration()
+        {
+            if (settings.autoDetectPoiyomiShader)
+            {
+                AutoDetectPoiyomiMaterials();
+            }
+            
+            ApplyPCSSSettings();
+            
+            if (settings.enableVRChatExpression)
+            {
+                InitializeVRChatExpressionParameters();
+            }
+        }
+        
+        /// <summary>
+        /// Auto-detect Poiyomi materials with PCSS support
+        /// </summary>
+        public void AutoDetectPoiyomiMaterials()
+        {
+            targetMaterials.Clear();
+            targetRenderers.Clear();
+            
+            // Get all renderers in this GameObject and children
+            var renderers = GetComponentsInChildren<Renderer>(true);
+            
+            foreach (var renderer in renderers)
+            {
+                foreach (var material in renderer.materials)
+                {
+                    if (IsPoiyomiPCSSMaterial(material))
+                    {
+                        if (!targetMaterials.Contains(material))
+                        {
+                            targetMaterials.Add(material);
+                        }
+                        
+                        if (!targetRenderers.Contains(renderer))
+                        {
+                            targetRenderers.Add(renderer);
+                        }
+                    }
+                }
+            }
+            
+            Debug.Log($"[PoiyomiPCSSIntegration] Auto-detected {targetMaterials.Count} PCSS materials on {targetRenderers.Count} renderers");
+        }
+        
+        /// <summary>
+        /// Check if material is a Poiyomi PCSS material
+        /// </summary>
+        private bool IsPoiyomiPCSSMaterial(Material material)
+        {
+            if (material == null || material.shader == null) return false;
+            
+            string shaderName = material.shader.name;
+            return shaderName.Contains("Poiyomi") && shaderName.Contains("PCSS");
+        }
+        
+        /// <summary>
+        /// Apply PCSS settings to all target materials
+        /// </summary>
+        public void ApplyPCSSSettings()
+        {
+            foreach (var material in targetMaterials)
+            {
+                if (material == null) continue;
+                
+                ApplyPCSSSettingsToMaterial(material);
+            }
+        }
+        
+        /// <summary>
+        /// Apply PCSS settings to a specific material
+        /// </summary>
+        public void ApplyPCSSSettingsToMaterial(Material material)
+        {
+            if (material == null) return;
+            
+            // Apply basic settings
+            material.SetFloat("_PCSSEnabled", settings.enablePCSS ? 1f : 0f);
+            material.SetFloat("_PCSSQuality", (float)settings.quality);
+            
+            // Apply quality preset or manual settings
+            if (qualityPresets.ContainsKey(settings.quality))
+            {
+                var preset = qualityPresets[settings.quality];
+                material.SetFloat("_PCSSSampleCount", preset.sampleCount);
+                material.SetFloat("_PCSSBlockerSearchRadius", preset.blockerSearchRadius);
+                material.SetFloat("_PCSSFilterRadius", preset.filterRadius);
+                material.SetFloat("_PCSSLightSize", preset.lightSize);
+                material.SetFloat("_PCSSShadowBias", preset.shadowBias);
+            }
+            else
+            {
+                // Apply manual settings
+                material.SetFloat("_PCSSSampleCount", settings.sampleCount);
+                material.SetFloat("_PCSSBlockerSearchRadius", settings.blockerSearchRadius);
+                material.SetFloat("_PCSSFilterRadius", settings.filterRadius);
+                material.SetFloat("_PCSSLightSize", settings.lightSize);
+                material.SetFloat("_PCSSShadowBias", settings.shadowBias);
+            }
+            
+            // VRChat Expression settings
+            material.SetFloat("_VRChatExpression", settings.enableVRChatExpression ? 1f : 0f);
+        }
+        
+        /// <summary>
+        /// Initialize VRChat expression parameters
+        /// </summary>
+        private void InitializeVRChatExpressionParameters()
+        {
+            expressionParameters.Clear();
+            
+            // Initialize default values
+            expressionParameters[$"{settings.parameterPrefix}_Enable"] = settings.enablePCSS ? 1f : 0f;
+            expressionParameters[$"{settings.parameterPrefix}_Quality"] = (float)settings.quality / 3f; // Normalize to 0-1
+            
+            Debug.Log($"[PoiyomiPCSSIntegration] Initialized VRChat expression parameters with prefix: {settings.parameterPrefix}");
+        }
+        
+        /// <summary>
+        /// Update VRChat expression parameters
+        /// </summary>
+        private void UpdateVRChatExpressionParameters()
+        {
+            // This would integrate with VRChat's parameter system
+            // For now, we simulate parameter updates
+            
+            bool enableParam = GetVRChatParameter($"{settings.parameterPrefix}_Enable", settings.enablePCSS ? 1f : 0f) > 0.5f;
+            float qualityParam = GetVRChatParameter($"{settings.parameterPrefix}_Quality", (float)settings.quality / 3f);
+            
+            // Update materials with expression parameters
+            foreach (var material in targetMaterials)
+            {
+                if (material == null) continue;
+                
+                material.SetFloat("_PCSSToggleParam", enableParam ? 1f : 0f);
+                material.SetFloat("_PCSSQualityParam", qualityParam);
+            }
+        }
+        
+        /// <summary>
+        /// Get VRChat parameter value.
+        /// EditorではアバターのExpressionParametersから既定値を参照し、
+        /// ランタイムでは内部ディクショナリを参照する。
+        /// </summary>
+        private float GetVRChatParameter(string parameterName, float defaultValue)
+        {
+#if UNITY_EDITOR && VRCHAT_SDK_AVAILABLE
+            var avatar = GetComponentInParent<VRCAvatarDescriptor>();
+            if (avatar != null && avatar.expressionParameters != null)
+            {
+                var ep = avatar.expressionParameters;
+                if (ep.parameters != null)
+                {
+                    var p = ep.parameters.FirstOrDefault(x => x != null && x.name == parameterName);
+                    if (p != null)
+                    {
+                        // Bool は 0/1、Float/Int は defaultValue を返す
+                        switch (p.valueType)
+                        {
+                            case VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionParameters.ValueType.Bool:
+                                return Mathf.Approximately(p.defaultValue, 0f) ? 0f : 1f;
+                            case VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionParameters.ValueType.Float:
+                            case VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionParameters.ValueType.Int:
+                                return p.defaultValue;
+                        }
+                    }
+                }
+            }
+#endif
+            return expressionParameters.ContainsKey(parameterName) ? expressionParameters[parameterName] : defaultValue;
+        }
+
+#if UNITY_EDITOR && VRCHAT_SDK_AVAILABLE
+        /// <summary>
+        /// アバターのExpressionParametersからPCSS関連プレフィックスの既定値を読み込み、即時反映する。
+        /// </summary>
+        [UnityEditor.MenuItem("Tools/lilToon-PCSS-Extension/Poiyomi/Sync From Avatar Expression Parameters", false, 1200)]
+        private static void SyncFromAvatarExpression()
+        {
+            var selected = UnityEditor.Selection.activeGameObject;
+            if (selected == null)
+            {
+                UnityEditor.EditorUtility.DisplayDialog("PCSS", "対象のオブジェクトを選択してください。", "OK");
+                return;
+            }
+            var integration = selected.GetComponentInParent<PoiyomiPCSSIntegration>();
+            if (integration == null)
+            {
+                UnityEditor.EditorUtility.DisplayDialog("PCSS", "PoiyomiPCSSIntegration が見つかりません。", "OK");
+                return;
+            }
+            integration.InitializePCSSIntegration();
+            integration.ApplyPCSSSettings();
+            UnityEditor.EditorUtility.SetDirty(integration);
+            UnityEditor.AssetDatabase.SaveAssets();
+            Debug.Log("[PoiyomiPCSSIntegration] Synced from avatar expression parameters.");
+        }
+#endif
+        
+        /// <summary>
+        /// Set VRChat parameter value (for testing/simulation)
+        /// </summary>
+        public void SetVRChatParameter(string parameterName, float value)
+        {
+            expressionParameters[parameterName] = value;
+        }
+        
+        /// <summary>
+        /// Toggle PCSS on/off
+        /// </summary>
+        public void TogglePCSS()
+        {
+            settings.enablePCSS = !settings.enablePCSS;
+            ApplyPCSSSettings();
+            
+            if (settings.enableVRChatExpression)
+            {
+                SetVRChatParameter($"{settings.parameterPrefix}_Enable", settings.enablePCSS ? 1f : 0f);
+            }
+        }
+        
+        /// <summary>
+        /// Set PCSS quality
+        /// </summary>
+        public void SetPCSSQuality(PCSSUtils.PCSSQuality quality)
+        {
+            settings.quality = quality;
+            ApplyPCSSSettings();
+            
+            if (settings.enableVRChatExpression)
+            {
+                SetVRChatParameter($"{settings.parameterPrefix}_Quality", (float)quality / 3f);
+            }
+        }
+        
+        /// <summary>
+        /// Get current PCSS status
+        /// </summary>
+        public bool IsPCSSEnabled()
+        {
+            return settings.enablePCSS;
+        }
+        
+        /// <summary>
+        /// Get current PCSS quality
+        /// </summary>
+        public PCSSUtils.PCSSQuality GetPCSSQuality()
+        {
+            return settings.quality;
+        }
+        
+        /// <summary>
+        /// Add material to target list
+        /// </summary>
+        public void AddTargetMaterial(Material material)
+        {
+            if (material != null && !targetMaterials.Contains(material))
+            {
+                targetMaterials.Add(material);
+                ApplyPCSSSettingsToMaterial(material);
+            }
+        }
+        
+        /// <summary>
+        /// Remove material from target list
+        /// </summary>
+        public void RemoveTargetMaterial(Material material)
+        {
+            targetMaterials.Remove(material);
+        }
+        
+        /// <summary>
+        /// Clear all target materials
+        /// </summary>
+        public void ClearTargetMaterials()
+        {
+            targetMaterials.Clear();
+            targetRenderers.Clear();
+        }
+        
+        // Unity Editor integration
+        #if UNITY_EDITOR
+        [UnityEditor.MenuItem("GameObject/lilToon PCSS/Add Poiyomi PCSS Integration (Runtime)", false, 10)]
+        private static void AddPoiyomiPCSSIntegration()
+        {
+            var selected = UnityEditor.Selection.activeGameObject;
+            if (selected != null)
+            {
+                var integration = selected.GetComponent<PoiyomiPCSSIntegration>();
+                if (integration == null)
+                {
+                    integration = selected.AddComponent<PoiyomiPCSSIntegration>();
+                    integration.InitializePCSSIntegration();
+                    
+                    UnityEditor.EditorUtility.SetDirty(selected);
+                    Debug.Log($"Added Poiyomi PCSS Integration to {selected.name}");
+                }
+                else
+                {
+                    Debug.LogWarning($"Poiyomi PCSS Integration already exists on {selected.name}");
+                }
+            }
+        }
+        
+        [UnityEditor.MenuItem("GameObject/lilToon PCSS/Add Poiyomi PCSS Integration (Runtime)", true)]
+        private static bool ValidateAddPoiyomiPCSSIntegration()
+        {
+            return UnityEditor.Selection.activeGameObject != null;
+        }
+        #endif
+    }
+    
+    /// <summary>
+    /// PCSS Quality data structure
+    /// </summary>
+    [System.Serializable]
+    public struct PCSSQualityData
+    {
+        public int sampleCount;
+        public float blockerSearchRadius;
+        public float filterRadius;
+        public float lightSize;
+        public float shadowBias;
+        
+        public PCSSQualityData(int sampleCount, float blockerSearchRadius, float filterRadius, 
+                              float lightSize, float shadowBias)
+        {
+            this.sampleCount = sampleCount;
+            this.blockerSearchRadius = blockerSearchRadius;
+            this.filterRadius = filterRadius;
+            this.lightSize = lightSize;
+            this.shadowBias = shadowBias;
+        }
+    }
+} 

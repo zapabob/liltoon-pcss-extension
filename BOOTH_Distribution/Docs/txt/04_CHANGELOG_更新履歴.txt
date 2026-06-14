@@ -1,0 +1,151 @@
+﻿# Changelog
+
+## [2.8.2] - 2026-06-14
+### Added
+- Added a PCVR Upload Audit menu that checks selected avatars for remaining avatar Lights, visible PCSS Light helpers, position-labeled PCSS menus, PCSS animator issues, RTX3060-safe material values, and broken lilToon project settings.
+- Added an Avatar Descriptor Guard menu for Modular Avatar outfit fitting; it resolves the humanoid root from the selection and repairs FBX avatar instances that lack `VRCAvatarDescriptor`.
+- Added scene-load and selection-time Descriptor auto-repair for active Humanoid FBX avatar instances that have a matching Prefab with `VRCAvatarDescriptor`, so duplicate roots such as `Hakua_Kisekae (2)` are ready before Modular Avatar outfit fitting starts.
+
+### Changed
+- Changed PCSS Hub's default workflow to a 0 Avatar Lights PCVR setup for RTX 3060-class VRChat use.
+- Made realtime PCSS Light rigs an explicit high-cost preview option instead of the default upload path.
+- Renamed generated light controls so menu entries show position and maximum intensity, such as Key Front-Right, Fill Front-Left, and Rim Back-Right.
+- Lowered runtime, Poiyomi, and mirrored shader quality tiers so RTX 3060-class GPUs do not get promoted into heavy Ultra-style PCSS sampling.
+- Added a PCVR/RTX3060 performance guide covering VRChat quality settings, mirror settings, AAO interaction, and the 10 meter Gaussian cutoff policy.
+
+### Fixed
+- Removed light-only avatar GameObjects during AAO-safe cleanup instead of leaving empty helper objects behind.
+- Hid generated light helpers with editor hide flags when optional realtime lights are created for preview.
+- Replaced the mirrored shader runtime optimizer placeholder with the same clamped optimizer used by the main runtime.
+- Prevented the runtime optimizer from raising already-safe material settings above the current PCVR-safe profile.
+- Repaired the project lilToon setting JSON so VRChat upload preprocessing no longer trips on an empty settings document.
+- Removed duplicate Poiyomi editor menu registration from the shader mirror runtime.
+- Integrated Avatar Descriptor repair into PCSS Hub so direct FBX instances such as `Hakua_Kisekae (2)` do not break Modular Avatar setup before PCSS/AAO repair starts.
+- Integrated the same Avatar Descriptor repair into the NDMF/AAO repair menu before Modular Avatar component fixes run.
+- Guarded NDMF/AAO auto-repair against Animator components that have no Humanoid Avatar assigned, preventing `Animator.GetBoneTransform` exceptions during scene reload.
+- Unified avatar root resolution across Descriptor repair, NDMF/AAO repair, PCVR upload audit, and AAO performance cleanup so selection of a child object resolves to the same Humanoid avatar root.
+
+## [2.8.1] - 2026-06-14
+### Changed
+- Updated the recommended PC VR quality profile for RTX 30-class GPUs such as RTX 3060: default runtime quality now favors High/Medium PCVR settings instead of heavy Ultra-style sampling.
+- Reduced PCSS sample amplification in the shader so High and Ultra quality stay within VRChat-friendly practical limits.
+- Unified PCSS realtime cutoff to a truncated Gaussian falloff that reaches exactly 0 at 10 meters.
+- Updated PCSS Hub, material presets, legacy intake, shader GUI, and runtime controllers so old 12m/14m distance presets do not survive reapplication.
+- Kept AAO Performance Safe as the default 0 avatar Light workflow while preserving material-side PCSS/gloss appearance.
+
+### Fixed
+- Fixed shader mirror line ending drift after updating the Gaussian cutoff implementation.
+
+## [2.8.0] - 2026-06-13
+### Added
+- Added VRChat performance gate controls for PCSS distance fade (`_UseVRChatPerformanceGate`, `_PCSSMaxDistance`, `_PCSSDistanceFade`).
+- Added gloss-shadow coherence controls for glossy, wet-look, and latex-like materials (`_UseGlossShadowCoherence`, `_GlossShadowCoherence`, `_GlossShadowBoost`, `_GlossShadowSuppression`, `_GlossRimStrength`, `_GlossSmoothness`).
+- Added shader GUI presets for hair shadow, face shadow, portrait gloss, VRChat safe, nHaruka Plus, skin gloss, and latex gloss.
+- Added deep research notes for the 2026-06-13 VRChat SDK, lilToon, Modular Avatar, VRC Light Volumes, and competitor update pass.
+- Added BOOTH-ready Japanese onboarding documents, sales page draft, usage terms, third-party notices, and license file for lilToon PCSS Studio for VRChat distribution.
+- Added AAO Performance Safe workflow that keeps the default PCSS setup at 0 generated avatar Lights.
+- Added removal of non-PCSS avatar Light components in the AAO Performance Safe workflow.
+- Added Dewy Skin Gloss / うるみ艶肌 presets to PCSS Hub, shader GUI, runtime PCSS presets, and legacy preset tools.
+- Added Soft Flush Skin / ほのか上気肌 presets with shader-side cheek flush controls, warm skin shadows, and AAO-safe 0-Light workflow support.
+- Added Legacy PCSS v2.2.0 Intake repair tool that migrates old PCSS material properties into the current AAO-safe shader workflow and removes legacy runtime components from selected avatars.
+- Added Excited Tone / 高揚発色 preset as an ethical replacement for adult-leaning legacy expression wording, with warm upper-face tone, restrained gloss, and AAO-safe material-only setup.
+- Added Camera Depth Preview editor menu based on the useful part of PCSS v2.2.0 camera support, without adding runtime camera components to avatars.
+
+### Changed
+- Updated package metadata for Unity 2022.3, VRChat SDK 3.10.3, lilToon 2.3.2, Modular Avatar 1.17.x, and optional VRC Light Volumes 2.1.x workflows.
+- Updated PCSS presets so Hub, runtime utilities, and material inspector apply the same shadow/gloss/performance values.
+- Changed PCSS Hub so generated hip lights and Modular Avatar light controls are opt-in and are removed automatically in the default AAO-safe workflow.
+- Changed AAO Performance Safe cleanup so existing avatar child Lights are removed as Light components without deleting their GameObjects.
+- Changed PCSS Hub material controls so the PCSS/gloss preset can be selected even when the 0 Lights workflow hides the light-rig section.
+- Mirrored updated shader, include, runtime, and package files into nested VPM package copies.
+- Documented the PCSS v2.2.0 unitypackage intake decision so adult-leaning legacy names are not shipped directly in the BOOTH package.
+
+### Fixed
+- Fixed invalid `package.json` files.
+- Fixed shader lines where include/fallback/functions or HLSL statements were swallowed by broken comments.
+- Fixed PCSS material compatibility detection so normalized shader names and PCSS properties are detected reliably.
+- Fixed PCSS Hub Modular Avatar light toggle generation so missing AnimatorController layers no longer throw `NullReferenceException`, and guarded the Hub window layout against setup exceptions.
+- Fixed Modular Avatar Menu Installer generation so PCSS light controls receive a concrete Expressions Menu asset instead of creating empty root installers.
+- Fixed Modular Avatar Bone Proxy setup for hip light rigs by assigning the Hips Transform target and bone reference.
+- Integrated NDMF/AAO compatibility repair into the PCSS Hub setup workflow, editor scene migration, and VRChat avatar preprocess hook so users do not need a separate repair step.
+- Fixed PCSS-generated avatar Lights and light-control MA components being able to keep avatars in VeryPoor despite AAO optimization.
+- Fixed generated BlendTree child motions by assigning explicit playback speed to avoid Animator warnings.
+
+## [Unreleased] - 2025-12-30
+### Added
+- PCSS Hub (PC) to simplify setup and apply presets.
+- Light presets (Anime / Realistic / Cinematic) for PCSS shadows and hip light rig.
+- PhysBone-based light sway with optional MA slider.
+- VRChat Light Volumes enable option in Hub.
+
+### Changed
+- Moved existing menus to Legacy paths (including GameObject/Assets context menus).
+- MA toggle builder: shared parameters and sway slider support.
+
+### Fixed
+- PhysBoneEmissiveLightSetup: AdvancedBool + collider base list for latest SDK compile.
+## [2.5.0] - 2025-08-08
+### Added
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+
+### Changed
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+
+## [1.5.10] - 2025-07-04
+### Changed
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+
+## [1.5.9] - 2025-07-03
+### Changed
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+
+## [1.5.7] - 2025-06-24
+
+### Added / Changed
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+
+## [1.5.5] - 2025-06-24
+
+### Added / Changed
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+
+## [1.5.4] - 2025-06-23
+
+### Legacy Notes
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+
+## [1.5.3] - 2025-06-23
+
+### Legacy Notes
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+
+## [1.5.8] - 2025-07-03
+### Fixed
+- Legacy note sanitized from unreadable mojibake text.
+- Legacy note sanitized from unreadable mojibake text.
+

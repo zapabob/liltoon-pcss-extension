@@ -1,0 +1,129 @@
+﻿# lilToon PCSS Studio for VRChat 導入手順
+
+PC向けVRChatアバターに、lilToonのやわらかい影と艶感を加えるための手順です。
+
+## 導入前の確認
+
+- VCCでVRChat Avatars SDKを導入済みにしてください。
+- lilToon 2.3.2以降を導入してください。
+- Modular Avatar 1.17.1以降を導入してください。
+- 既存アバターはUnity上で複製、またはプロジェクトごとバックアップしてください。
+- QuestやAndroid向けのアバターにはPCSS表現を含めないでください。
+
+VRC Light Volumesを使う場合は、VRC Light Volumes 2.1.3以降を先に導入してください。使わない場合でも、本パッケージの基本機能は利用できます。
+
+## 最短導入
+
+1. ZIPを展開します。
+2. `Package/lilToon PCSS Studio for VRChat` フォルダーをUnityプロジェクトの `Assets` 配下へ入れます。
+3. Unityへ戻り、スクリプトのコンパイルが終わるまで待ちます。
+4. 上部メニューから `Tools > lilToon-PCSS-Extension > PCSS Hub (PC)` を開きます。
+5. `Target Avatar` に対象アバターのルートを指定します。
+6. 必要な項目を選び、`PC向けセットアップ実行` を押します。
+7. NDMF ConsoleとVRChat SDK Builderの警告を確認します。
+8. 問題がなければVRChat SDKからPC向けにアップロードします。
+
+## PCSS Hubのおすすめ設定
+
+- lilToonをPCSS化
+  - 通常は有効にします。
+- VRC Light Volumesを有効化
+  - 導入済みの環境だけ有効にします。
+- 特殊lilToonも含める
+  - 髪、肌、衣装などをまとめて調整したい場合に有効にします。
+- 影プリセットも適用
+  - 初回導入では有効がおすすめです。
+- PCSS / 艶プリセット
+  - `DewySkin` は、汗ばみのような細いハイライトとしっとりした肌の艶を加える `うるみ艶肌` 向けの設定です。標準のAAO Performance Safeと併用できます。
+  - `SoftFlushSkin` は、顔まわりの柔らかな頬染め、暖かい影色、控えめな肌艶を加える `ほのか上気肌` 向けの設定です。標準のAAO Performance Safeと併用できます。
+- AAO Performance Safe (0 Lights)
+  - 通常は有効にしてください。PCSSの見た目はマテリアル側に残し、アバター内のPCSS生成ライトと既存のLightコンポーネントを0個にします。
+- Hip基準ライトリグを作成
+  - プレビューや意図的な高負荷構成で使う任意機能です。VRChatの性能ランクを保ちたい場合は `AAO Performance Safe (0 Lights)` を有効にしてください。
+- PhysBoneでライト方向を揺らす
+  - 影の変化を自然に加えたい場合に使います。
+- Modular Avatarのライトメニューを追加
+  - VRChat内でライトのON/OFF、強度、揺れを調整したい場合に使います。
+
+## 既存PCSS導入済みアバターでの注意
+
+すでに別のPCSSセットアップが入っている場合は、先に既存のライト、メニュー、FXレイヤーを確認してください。同じ役割のライトやExpression Parameterが重なると、見た目やパフォーマンスが不安定になることがあります。
+
+古い生成物を消してから入れ直す場合は、アバター直下の次のオブジェクトを確認してください。
+
+- `PCSS Hip Lights (MA)`
+- `PCSS Light Controls (MA)`
+- `PCSS External Lights (Auto)`
+
+削除前に必ずアバターを複製してください。
+
+`PCSS v2.2.0` のunitypackageを過去に入れている場合は、アバターのルートを選択して次を実行してください。
+
+`Tools > lilToon-PCSS-Extension > Repair > Legacy PCSS v2.2.0 Intake`
+
+この修復は、旧PCSSの `_PCSSBlockerSampleCount`、`_PCSSPCFSampleCount`、`_PCSSoftness`、`_PCSSSampleRadius` などを現在のPCSS Studio用プロパティへ移します。あわせて、旧ランタイムコンポーネントとアバター内Lightを取り除き、標準のAAO Performance Safe構成へ寄せます。旧パッケージ内の強い成人向け表現名は本パッケージには直接取り込まず、健全な血色・艶・影の調整として扱います。
+
+## よくある困りごと
+
+### NDMF ConsoleにMenu Installerの警告が出る
+
+本バージョンでは、PCSS Hubから作成するModular Avatar Menu Installerに専用のExpressions Menuを割り当てます。古いバージョンで生成した空のMenu Installerがアバター直下に残っている場合は、PCSS Hubをもう一度実行してください。
+
+### Bone Proxyのターゲット未設定警告が出る
+
+本バージョンでは、Hip基準ライトのBone ProxyにHips Transformを設定します。古い生成物が残っている場合は `PCSS Hip Lights (MA)` を削除してから、PCSS Hubで作り直してください。
+
+### AAO併用時にNDMF ConsoleへMA-1100が残る
+
+AAOの最適化メトリクス表示そのものは正常です。`[MA-1100] ターゲットオブジェクトが未設定であるか、存在しません` が `HipAnchor (MA Bone Proxy)` に出る場合は、古いPCSS生成物のBone ProxyにHipsが入っていません。
+
+対象アバターのルートを選択し、次のメニューを実行してください。
+
+`Tools > lilToon-PCSS-Extension > Repair > NDMF警告修復（AAO併用）`
+
+この修復は、PCSS生成物に限ってHipsを再割り当てし、古い空のMenu Installerも補正します。ユーザーが手で置いた別用途のBone Proxyには触れません。
+
+### AAOを入れてもVeryPoorから下がらない
+
+`AAO Performance Safe (0 Lights)` を有効にしたPCSS Hubでは、PCSSが生成したUnity Light、ライト用Modular Avatar制御、アバター配下に残っている既存のLightコンポーネントを自動で除去します。PCSS以外のライトはGameObject本体を消さず、Lightコンポーネントだけを外します。VRChatのPC性能ランクでは、アバター内のLightはPoorまで1個、2個以上でVeryPoor相当になります。無効なGameObjectや無効なLightも数に含まれるため、単にOFFにするだけでは下がりません。
+
+`AAO Performance Safe (0 Lights)` を無効にしてHip基準ライトリグを作成した場合は、アバター直下に `PCSS Allow Avatar Lights` が作られ、ビルド前の自動除去をスキップします。この設定はVeryPoorを招きやすいため、販売用の標準手順では使わないでください。
+
+それでもVeryPoorが残る場合は、PCSSではなく元アバター側の三角形数、Skinned Mesh Renderer数、マテリアルスロット数、PhysBone、Contact、Boundsなどが原因です。特にPCでは三角形数が70,000を超えるとVeryPoorになります。AAOはSkinned Meshやマテリアルスロットの整理には強い一方で、メッシュそのものの三角形数は自動では大きく減りません。必要に応じてメッシュ削減、衣装差分の削除、NDMF Mesh Simplifierなどを併用してください。
+
+### 影が強すぎる
+
+まずプリセットを `Portrait Gloss` または `VRChat Safe` に変更してください。その後、ライト強度とDistance Fadeを下げると扱いやすくなります。
+
+### 艶が白く浮いて見える
+
+Gloss Shadow Coherenceを有効にし、Gloss Boostを少し下げてください。肌は控えめ、衣装やラテックス素材はやや強めにすると自然に調整しやすいです。
+
+### うるみ艶肌を入れたい
+
+PCSS Hubの `PCSS / 艶プリセット` で `DewySkin` を選び、`AAO Performance Safe (0 Lights)` を有効にしたまま実行してください。肌・顔・体と分かるマテリアルにはしっとりした艶を強めに、衣装などには控えめな艶を適用します。個別に調整したい場合は、対象マテリアルのInspectorで `Dewy Skin` ボタンを押してください。
+
+### ほのか上気肌を入れたい
+
+PCSS Hubの `PCSS / 艶プリセット` で `SoftFlushSkin` を選び、`AAO Performance Safe (0 Lights)` を有効にしたまま実行してください。顔・頬・メイク系の名前を持つマテリアルにはSoft Flushの頬染めを、肌・体と分かるマテリアルには暖かい影色と控えめな艶を適用します。個別に調整したい場合は、対象マテリアルのInspectorで `Soft Flush Skin` ボタンを押してください。アバターごとに顔UVの配置が違うため、頬の位置がずれる場合は `Soft Flush Skin` の `Vertical Position` と `Cheek Width` を少し調整してください。
+
+### Questにも使いたい
+
+本パッケージのPCSS表現はPC向けです。QuestおよびAndroid向けでは、別マテリアルや別アップロード設定でPCSSを含めない構成にしてください。
+
+## 動作確認メモ
+
+- Unity 2022.3.22f1
+- VRChat Avatars SDK 3.10.3系
+- lilToon 2.3.2系
+- Modular Avatar 1.17.1系
+- VRC Light Volumes 2.1.3系は任意
+
+## 高揚発色 / Excited Tone の使い方
+
+`Excited Tone` は、旧PCSS v2.2.0系の成人寄り表現をそのまま使わず、健全な高揚感・体温感・ライブ照明のような温かい血色感として再設計したプリセットです。PCSS Hub のプリセット、Material Inspector の `Excited Tone`、Legacy Preset Manager の `Excited Tone Preset` から適用できます。
+
+標準設定では `AAO Performance Safe (0 Lights)` と併用できます。発色は顔・肌らしいマテリアルだけに乗り、衣装や髪には強い色が入らないよう調整しています。より控えめにしたい場合は、対象マテリアルの Inspector で `Excited Tone Strength` を下げてください。動きが不要な販売標準では `Excited Tone Breath` は 0 のままで構いません。
+
+PCSS v2.2.0 ZIP に含まれていたカメラ深度補助は、アバターへ常駐するコンポーネントではなく、Editor の確認用メニューとして取り込みました。SceneView やシーン内カメラで深度テクスチャ確認が必要な場合は、`Tools > lilToon-PCSS-Extension > Preview > Enable Camera Depth Texture` を実行してください。戻す場合は同じ階層の `Disable Camera Depth Texture` を使います。
+

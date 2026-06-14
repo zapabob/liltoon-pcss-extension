@@ -1,0 +1,22 @@
+{
+    "name": "lilToon.PCSS.Editor",
+    "rootNamespace": "lilToon.PCSS.Editor",
+    "references": [
+        "UnityEditor.CoreModule",
+        "UnityEngine.CoreModule",
+        "VRCSDK3A",
+        "VRCSDKBase",
+        "lilToon.PCSS.Runtime",
+        "nadena.dev.modular_avatar"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "noEngineReferences": false
+}

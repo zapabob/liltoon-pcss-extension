@@ -1,0 +1,15 @@
+﻿lilToon PCSS Studio for VRChat
+Version: 2.8.2
+Source commit: ff5b01e
+Generated: 2026-06-14 11:09:12 +09:00
+
+Included:
+- Package/lilToon PCSS Studio for VRChat: self-authored Unity editor/runtime/shader package only.
+- BOOTH販売用テンプレート: md/txt/html seller templates.
+- Docs: md/txt/html buyer-facing documents.
+- ThirdParty: notice document only; external dependencies are not bundled.
+
+Excluded intentionally:
+- Avatar, outfit, texture, FBX, material, scene, and sample character assets outside Assets/New Folder.
+- Internal research archive _docs and local agent files.
+- Mirrored duplicate package trees under Shaders/Runtime and Shaders/Shaders.

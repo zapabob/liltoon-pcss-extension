@@ -1,0 +1,44 @@
+﻿<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>06_FAQ_トラブルシュート</title>
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.75;margin:32px;max-width:980px;color:#222;background:#fff;}
+pre{white-space:pre-wrap;word-break:break-word;font-family:inherit;}
+</style>
+</head>
+<body>
+<pre># FAQ / トラブルシュート
+
+## Consoleに赤いC#エラーが出ます
+
+まずVRChat SDK、lilToon、Modular Avatar、Avatar OptimizerがVCCで正しく入っているか確認してください。古いPCSS系スクリプトが残っている場合は、`Legacy PCSS v2.2.0 Intake` を実行してください。
+
+## NDMF ConsoleにMA-1100やMA-1200が出ます
+
+古い生成物のMenu InstallerやBone Proxyが残っている可能性があります。PCSS Hubをもう一度実行し、必要に応じて `Repair` メニューを使ってください。
+
+## AAOを使ってもVeryPoorから下がりません
+
+`AAO Performance Safe (0 Lights)` はPCSS生成ライトや既存Lightコンポーネントを整理します。ただし三角形数、Skinned Mesh Renderer数、Material Slot、PhysBone、Contact、Animator、Audio Sourceなどは別要因です。VRChat SDK BuilderのPerformance項目を確認してください。
+
+## Quest/Androidで使えますか
+
+PCSS表現はPC向けです。Quest/Android向けアバターには含めないでください。必要な場合は別マテリアル、別アバター、または軽量な見た目調整で対応してください。
+
+## 高揚発色が強すぎます
+
+対象マテリアルのInspectorで `Excited Tone Strength` を下げてください。頬の位置がずれる場合は `Soft Flush Vertical Position` と `Cheek Width` を調整してください。
+
+## カメラ深度プレビューはアップロードに影響しますか
+
+影響しません。`Preview &gt; Enable Camera Depth Texture` はUnity Editor上の確認補助で、アバター本体にRuntimeコンポーネントを追加しません。
+
+## 旧PCSS v2.2.0を導入済みです
+
+アバターのルートを選び、`Tools &gt; lilToon-PCSS-Extension &gt; Repair &gt; Legacy PCSS v2.2.0 Intake` を実行してください。旧プロパティを現在の設定へ移し、不要な旧Runtimeコンポーネントを整理します。
+</pre>
+</body>
+</html>

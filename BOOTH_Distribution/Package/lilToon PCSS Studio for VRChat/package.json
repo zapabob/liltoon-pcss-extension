@@ -1,0 +1,58 @@
+{
+  "name": "com.liltoon.pcss-extension",
+  "displayName": "lilToon PCSS Studio for VRChat",
+  "version": "2.8.2",
+  "unity": "2022.3",
+  "unityRelease": "22f1",
+  "description": "PC avatar focused PCSS studio for lilToon with soft contact shadows, gloss-shadow coherence, Modular Avatar menu setup, and optional VRC Light Volumes workflow support.",
+  "author": {
+    "name": "lilToon PCSS Extension Team",
+    "email": "r.minegishi1987@gmail.com",
+    "url": "https://zapabob.github.io/liltoon-pcss-extension/"
+  },
+  "dependencies": {
+    "com.unity.editor-coroutines": "1.0.0",
+    "com.unity.render-pipelines.universal": "14.0.11"
+  },
+  "vpmDependencies": {
+    "com.vrchat.avatars": ">=3.10.3",
+    "com.vrchat.base": ">=3.10.3",
+    "jp.lilxyzw.liltoon": ">=2.3.2",
+    "nadena.dev.modular-avatar": ">=1.17.1"
+  },
+  "keywords": [
+    "shader",
+    "toon",
+    "avatar",
+    "pcss",
+    "soft-shadows",
+    "realistic-shadow",
+    "gloss",
+    "vrchat",
+    "lilToon",
+    "poiyomi",
+    "modular-avatar",
+    "vrc-light-volumes",
+    "unity-2022.3",
+    "sdk-3.10.3"
+  ],
+  "url": "https://github.com/zapabob/liltoon-pcss-extension/releases/download/v2.8.2/com.liltoon.pcss-extension-2.8.2.zip",
+  "changelogUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/CHANGELOG.md",
+  "documentationUrl": "https://zapabob.github.io/liltoon-pcss-extension/",
+  "licensesUrl": "https://github.com/zapabob/liltoon-pcss-extension/blob/main/LICENSE",
+  "hideInEditor": false,
+  "samples": [
+    {
+      "displayName": "Material Recovery System",
+      "description": "Utilities and notes for recovering avatar materials before PCSS migration.",
+      "path": "Samples~/MaterialRecoverySystem"
+    }
+  ],
+  "compatibility": {
+    "vrchatUnity": "2022.3.22f1",
+    "vrchatSdkStable": "3.10.3",
+    "lilToon": "2.3.2",
+    "modularAvatar": "1.17.1",
+    "vrcLightVolumesOptional": "2.1.3"
+  }
+}

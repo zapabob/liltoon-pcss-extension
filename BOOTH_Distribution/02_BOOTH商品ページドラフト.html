@@ -1,0 +1,81 @@
+﻿<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>02_BOOTH商品ページドラフト</title>
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.75;margin:32px;max-width:980px;color:#222;background:#fff;}
+pre{white-space:pre-wrap;word-break:break-word;font-family:inherit;}
+</style>
+</head>
+<body>
+<pre># BOOTH商品ページドラフト
+
+## 商品名
+
+lilToon PCSS Studio for VRChat
+
+PCアバター向け やわらか落ち影・艶感調整プラグイン
+
+## 短い説明
+
+lilToonアバター向けに、PCSS風のやわらかい落ち影、艶と影のまとまり、AAO併用を意識した0ライト構成をまとめてセットアップするUnity Editor拡張です。標準ワークフローではPCSS生成ライトだけでなく、アバター配下に残る既存Lightコンポーネントも整理します。汗ばみのような細いハイライトを健全な撮影向けに整える `うるみ艶肌` と、柔らかな頬染めで健康的な血色感を加える `ほのか上気肌` プリセットも同梱しています。Hip基準ライトリグとModular Avatarメニューは、必要な場合だけ使える任意機能として同梱しています。
+
+## できること
+
+- lilToonマテリアルへPCSS向け設定をまとめて適用
+- 髪、顔、肌、衣装向けの影と艶のプリセットを用意
+- うるみ艶肌プリセットで、しっとりした肌の艶と汗ばみのような控えめなハイライトを追加
+- ほのか上気肌プリセットで、顔まわりの柔らかな頬染め、暖かい影色、控えめな肌艶を追加
+- AAO併用向けにPCSS生成ライトと既存Lightコンポーネントを0個へ保つ安全ワークフロー
+- Hip基準のライトリグを任意で自動生成
+- Modular AvatarでライトON/OFF、強度、揺れ調整メニューを任意追加
+- VRC Light Volumes導入済み環境ではライトボリューム連携を利用可能
+- 遠距離での負荷を抑えるPC向け距離フェード設定を用意
+- 既存PCSS構成からの整理、入れ直しを支援
+- Legacy PCSS v2.2.0 Intakeで旧PCSS導入済みアバターの設定移行を支援
+
+## こういう方に向いています
+
+- lilToonアバターの影をもう少し柔らかく見せたい方
+- 顔、髪、衣装の艶感をUnity上でまとめて整えたい方
+- PC向けアバターの見た目を、手作業だけに頼らず短い手順で調整したい方
+- Modular Avatarの非破壊ワークフローでライト制御を追加したい方
+
+## 注意事項
+
+- 本商品はPC向けVRChatアバター用です。
+- QuestおよびAndroid向けのPCSS表現には対応していません。
+- VRChat公式機能、公式認定商品ではありません。
+- アバター、lilToon、VRChat SDK、Modular Avatar、VRC Light Volumesは同梱していません。
+- アバターごとにマテリアル構成が異なるため、最終的な見た目はUnity上で調整してください。
+
+## 同梱内容
+
+- lilToon PCSS Studio for VRChat 本体
+- 導入手順
+- 利用規約
+- 第三者表記
+- 更新履歴
+
+## 動作確認環境
+
+- Unity 2022.3.22f1
+- VRChat Avatars SDK 3.10.3以降
+- lilToon 2.3.2以降
+- Modular Avatar 1.17.1以降
+- VRC Light Volumes 2.1.3以降は任意
+
+## 販売ページ向けタグ案
+
+VRChat、lilToon、PCSS、アバター改変、Unity、Modular Avatar、影、ライト、艶、PCアバター
+
+## 追加訴求: 高揚発色 / Excited Tone
+
+- `Excited Tone / 高揚発色` プリセットを追加。成人寄りの表現名は使わず、運動後・ライブ照明・撮影用の温かい血色感として扱える健全な色調プリセットです。
+- 顔・肌マテリアルには温かい発色、控えめな艶、柔らかいPCSS影をまとめて適用し、衣装や髪へ強く色が乗らないよう配慮しています。
+- 旧PCSS v2.2.0 ZIP のカメラ深度補助から有用部分だけを取り込み、`Preview &gt; Enable Camera Depth Texture` としてEditorメニュー化。アバター本体へ不要なRuntimeコンポーネントを残しません。
+</pre>
+</body>
+</html>
